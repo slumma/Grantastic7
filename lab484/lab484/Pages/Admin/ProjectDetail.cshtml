@@ -1,0 +1,117 @@
+﻿@page "{projectID:int}"
+@model lab484.Pages.Admin.ProjectDetailModel
+@{
+}
+<head>
+	<meta charset="utf-8" />
+	<title>Project Name</title>
+</head>
+<br />
+<h2 class="text-center">@Model.project.ProjectName</h2>
+<br />
+
+<!-- Used AI for some formatting-->
+<div class="container mt-4 p-4 border rounded bg-light">
+	<h3>Project Staff</h3>
+	<table class="table table-bordered table-responsive table-hover bg-white">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Drop from Project</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var projectStaff in Model.userProjectList)
+			{
+				<tr>
+					<td>@projectStaff.FirstName @projectStaff.LastName</td>
+					<td>@projectStaff.Email</td>
+					<td>@projectStaff.Phone</td>
+					<td>
+						<a class="btn btn-outline-primary">Remove from Project</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<div>
+		<a class="btn btn-outline-primary" asp-page="/Admin/ProjectAssociateFac" asp-route-ProjectID="@Model.projectID">Add/Edit Staff</a>
+	</div>
+</div>
+
+<br />
+
+<!-- Used AI for some formatting-->
+<div class="container mt-4 p-4 border rounded bg-light">
+	<h3>Tasks</h3>
+	<table class="table table-bordered table-responsive table-hover bg-white">
+		<thead>
+			<tr>
+				<th>Objective</th>
+				<th>Due Date</th>
+				<th>Staff</th>
+				<th>Detailed View</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var task in Model.taskList)
+			{
+				<tr>
+					<td>@task.Objective</td>
+					<td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+					<td>
+						<select class="form-select">
+							<option value="x">View Staff</option>
+							@foreach (var staffer in Model.userTaskList)
+							{
+								<option value="x">@staffer.FirstName @staffer.LastName</option>
+							}
+						</select>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-outline-primary" asp-page="/Admin/TaskDetail" asp-route-taskID="@task.TaskID">Detailed View</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<br />
+
+<div class="container mt-4 p-4 border rounded bg-light">
+	<h3>Project Notes</h3>
+	<table class="table table-bordered table-responsive table-hover bg-white">
+		<thead>
+			<tr>
+				<th>Note</th>
+				<th>Author</th>
+				<th>Date Added</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (var note in Model.noteList)
+				{
+					<tr>
+						<td>@note.Content</td>
+						<td>@note.AuthorFirst @note.AuthorLast</td>
+						<td>@note.TimeAdded</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+
+	<div">
+		<a class="btn btn-outline-primary" asp-page="AddProjectNote" asp-route-projectID="@Model.projectID">Add Note</a>
+	</div>
+
+<br />
+<div class="text-center">
+	<a class="btn btn-outline-primary" asp-page="AdminLanding">Return to Projects</a>
+</div>
+</div>
+

@@ -1,0 +1,78 @@
+﻿@page
+@model lab484.Pages.Admin.AdminLandingModel
+@{
+}
+<head>
+    <meta charset="utf-8" />
+    <title>Projects</title>
+</head>
+<br />
+<h2 class="text-center">Available Projects</h2>
+<br />
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Due Date</th>
+            <th>Funding</th>
+            <th>Detailed View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int iteration = 0;
+            if (Model.HttpContext.Session.GetInt32("DisplayAll") == 1)
+            {
+                foreach (var project in @Model.projectList)
+                {
+                    <tr>
+                        <td>@project.ProjectName</td>
+                        <td>@project.DueDate.ToString("MM/dd/yyyy")</td> <! -- formats as date, no time !>
+                        <td>@string.Format("{0:C}", project.Amount)</td> <! -- formats as dollar value !>
+                        <td>
+                            <div class="text-center">
+                                <a class="btn btn-outline-primary" asp-page="/Admin/ProjectDetail" asp-route-ProjectID="@project.ProjectID">Detailed View</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                foreach (var project in @Model.projectList)
+                {
+                    if (iteration < 5)
+                    {
+                        <tr>
+                            <td>@project.ProjectName</td>
+                            <td>@project.DueDate.ToString("MM/dd/yyyy")</td> <! -- formats as date, no time !>
+                            <td>@string.Format("{0:C}", project.Amount)</td> <! -- formats as dollar value !>
+                            <td>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-primary" asp-page="/Admin/ProjectDetail" asp-route-ProjectID="@project.ProjectID">Detailed View</a>
+                                </div>
+                            </td>
+                        </tr>
+                        iteration++;
+                    }
+                    else { break; }
+                }
+            }
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    <form method="post">
+        @{
+            if (Model.projectList.Count() > 5)
+            {
+                <div class="text-center">
+                    <button type="submit" class="btn btn-outline-secondary" asp-page-handler="ToggleTable">@Model.TableButton</button>
+                </div>
+            }
+        }
+    </form>
+    <br />
+    <a class="btn btn-outline-primary" asp-page="AddProject">Add Project</a>
+    <a class="btn btn-outline-primary" asp-page="BusinessPartners">View Business Partners</a>
+</div>

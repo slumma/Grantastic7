@@ -1,0 +1,83 @@
+﻿@page "{grantID:int}"
+@model lab484.Pages.Faculty.DetailedViewModel
+@{
+}
+<div class="container mt-4 p-4 border rounded bg-light">
+    <br />
+    <h3 class="text-center">Grant Information</h3>
+    <br />
+    <table class="table table-bordered table-responsive table-hover bg-white">
+        <tbody>
+            <tr>
+                <th>Grant Name</th>
+                <td>@Model.grant.GrantName</td>
+            </tr>
+            <tr>
+                <th>Supplier</th>
+                <td>@Model.grant.Supplier</td>
+            </tr>
+            <tr>
+                <th>Project</th>
+                <td>@Model.grant.Project</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>@Model.grant.Amount.ToString("C")</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>@Model.grant.Category</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>@Model.grant.Status</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>@Model.grant.Description</td>
+            </tr>
+            <tr>
+                <th>Submission Date</th>
+                <td>@Model.grant.SubmissionDate.ToString("MM/dd/yyyy")</td>
+            </tr>
+            <tr>
+                <th>Award Date</th>
+                <td>@Model.grant.AwardDate.ToString("MM/dd/yyyy")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<div class="text-center">
+    <a class="btn btn-outline-primary" asp-page="EditGrant" asp-route-grantID="@Model.grant.GrantID">Edit Grant</a>
+    <a class="btn btn-outline-primary" asp-page="AssociateFac" asp-route-GrantID="@Model.grant.GrantID">Associate Member</a>
+    <a class="btn btn-outline-primary" asp-page="FacultyLanding">Return to Grant List</a>
+</div>
+<div class="container mt-4 p-4 border rounded bg-light">
+    <h3>Grant Notes</h3>
+    <table class="table table-bordered table-responsive table-hover bg-white">
+        <thead>
+            <tr>
+                <th>Note</th>
+                <th>Author</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var note in Model.noteList) 
+                {
+                    <tr>
+                        <td>@note.Content</td>
+                        <td>@note.AuthorFirst @note.AuthorLast</td>
+                        <td>@note.TimeAdded</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <br />
+    <a class="btn btn-outline-primary" asp-page="AddGrantNote" asp-route-grantID="@Model.grant.GrantID">Add Note</a>
+</div>

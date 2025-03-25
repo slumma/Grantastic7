@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - lab484</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lab484.styles.css" asp-append-version="true" />
+</head>
+@{
+    var loggedIn = Context.Session.GetInt32("loggedIn");
+    var adminStatus = Context.Session.GetInt32("adminStatus");
+    var facultyStatus = Context.Session.GetInt32("facultyStatus");
+    var username = Context.Session.GetString("username");
+}
+<body>
+    @{
+        if (loggedIn == 1)
+        {
+            if (adminStatus == 1)
+            {
+                <header>
+                    <nav class="navbar navbar-expand-sm bg-body-tertiary border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                            <a class="css-text navbar-brand" asp-area="" asp-page="/Index">Grant Management</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarScroll">
+                                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link active" asp-area="" asp-page="/Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link" asp-area="" asp-page="/Messages">Messages</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="css-text nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Projects
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-area="" asp-page="/Admin/AdminLanding">Admin Landing</a></li>
+                                            <li><a class="dropdown-item" asp-area="" asp-page="/Admin/BusinessPartners">Business Partners</a></li>
+                                            <li><a class="dropdown-item" asp-area="" asp-page="/Admin/AddProject">Add Project</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="css-text nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Grants
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <a class="dropdown-item" asp-area="" asp-page="/Faculty/FacultyLanding">Faculty Landing</a>
+                                            <a class="dropdown-item" asp-area="" asp-page="/Faculty/AddGrant">Add Grant</a>
+                                        </ul>
+
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link" asp-area="" asp-page="/Search">Search</a>
+                                    </li>
+                                </ul>
+                                
+                                
+                                <span class="fw-semibold text-dark fs-5">@username</span>
+                                <form asp-page="/Index" asp-page-handler="LogoutHandler" class="d-flex ms-3">
+                                    <button type="submit" class="btn-outline-danger">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+
+            }
+            else if (facultyStatus == 1)
+            {
+                <header>
+                    <nav class="navbar navbar-expand-sm bg-body-tertiary border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                            <a class="css-text navbar-brand" asp-area="" asp-page="/Index">Grant Management</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarScroll">
+                                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link active text-dark" asp-area="" asp-page="/Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link text-dark" asp-area="" asp-page="/Messages">Messages</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="css-text nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Grants
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-area="" asp-page="/Faculty/FacultyLanding">Faculty Landing</a></li>
+                                            <li><a class="dropdown-item" asp-area="" asp-page="/Faculty/AddGrant">Add Grant</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <span class="fw-semibold text-dark fs-5">@username</span>
+                                <form asp-page="/Index" asp-page-handler="LogoutHandler" class="d-flex ms-3">
+                                    <button type="submit" class="btn-outline-danger">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+
+            }
+            else
+            {
+                <header>
+                    <nav class="navbar navbar-expand-sm bg-body-tertiary border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                            <a class="css-text navbar-brand" asp-area="" asp-page="/Index">Grant Management</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarScroll">
+                                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link active" asp-area="" asp-page="/Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="css-text nav-link" asp-area="" asp-page="/Messages">Messages</a>
+                                    </li>
+                                </ul>
+                                <span class="fw-semibold text-dark fs-5">@username</span>
+                                <form asp-page="/Index" asp-page-handler="LogoutHandler" class="d-flex ms-3">
+                                    <button type="submit" class="btn-outline-danger">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+
+
+            }
+
+        }
+        else
+        {
+            <header>
+                <nav class="navbar navbar-expand-sm bg-body-tertiary border-bottom box-shadow mb-3">
+                    <div class="container-fluid">
+                        <a class="css-text navbar-brand" asp-area="" asp-page="/Index">Grant Management</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarScroll">
+                            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                                
+                            </ul>
+                            <span class="fw-semibold text-dark fs-5">@username</span>
+
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+        }
+    }
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+
+        <a>Nick Clement, Sam Ogden, Josh White, and Nadeem Hudson - CIS 484</a>
+
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

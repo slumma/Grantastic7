@@ -1,0 +1,44 @@
+﻿@page "{GrantID:int}"
+@model lab484.Pages.Faculty.AddGrantNoteModel
+@{
+}
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<head>
+    <meta charset="utf-8" />
+    <title>Add Grant Note for @Model.grant.GrantName</title>
+</head>
+<br />
+<h2 class="text-center">Add a Grant Note for @Model.grant.GrantName</h2>
+<br />
+<form method="post" class="form-horizontal">
+    <input type="hidden" asp-for="newGrantNote.GrantID" value="@Model.newGrantNote.GrantID" />
+    <input type="hidden" asp-for="newGrantNote.AuthorFirst" value="@Model.user.FirstName" />
+    <input type="hidden" asp-for="newGrantNote.AuthorLast" value="@Model.user.LastName" />
+    <input type="hidden" asp-for="newGrantNote.AuthorID" value="@Model.user.UserID" />
+    <input type="hidden" asp-for="newGrantNote.TimeAdded" value="@Model.newGrantNote.TimeAdded" />
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="newGrantNote.Content">Content</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="newGrantNote.Content" required />
+            <span class="text-danger" asp-validation-for="newGrantNote.Content"></span>
+        </div>
+    </div>
+    <br />
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+        <button type="submit" class="btn btn-outline-secondary" asp-page-handler="Clear" formnovalidate>Clear</button>
+        <a asp-page="DetailedView" asp-route-grantID="@Model.GrantID" class="btn btn-secondary">Cancel</a>
+        <br /><br />
+    </div>
+</form>

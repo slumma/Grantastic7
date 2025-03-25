@@ -1,0 +1,75 @@
+﻿@page 
+@model lab484.Pages.MessagesModel
+
+@{
+}
+<meta charset="utf-8" />
+<br />
+<h2 class="text-center">Received Messages</h2>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Sender</th>
+            <th>Contents</th>
+            <th>Received Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.receivedList != null && Model.receivedList.Count > 0)
+        {
+            @foreach (var message in Model.receivedList)
+            {
+                <tr>
+                    <td>@message.SubjectTitle</td>
+                    <td>@message.SenderUsername</td>
+                    <td>@message.Contents</td>
+                    <td>@message.SentTime</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No messages found.</td>
+            </tr>
+        }
+</table>
+<br />
+<br />
+<h2 class="text-center">Send Message</h2>
+<br />
+<form method="post">
+    @if (Model.SuccessMessage != null)
+    {
+        <div class="alert alert-success">
+            @Model.SuccessMessage
+        </div>
+    }
+<div class="form-group row justify-content-center">
+    <select class="form-control username-select" asp-for="SelectedUsername">
+        <option value="" disabled selected>Select Recipient</option>
+        @foreach (var item in Model.Usernames)
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    </select>
+    <span asp-validation-for="@Model.SelectedUsername" class="text-danger"></span>
+</div>
+<br />
+<div class="form-group row justify-content-center">
+    <input type="text" class="form-control subject-input" asp-for="MessageSubject"  placeholder="Enter Subject">
+    <span asp-validation-for="@Model.MessageSubject" class="text-danger"></span>
+</div>
+<br />
+<div class="form-group row justify-content-center">
+    <textarea class="form-control message-textarea" rows="5" asp-for="MessageContent"  placeholder="Enter Message"></textarea>
+    <span asp-validation-for="@Model.MessageContent" class="text-danger"></span>
+</div>
+<br />
+<div class="sendbutton form-group row justify-content-center">
+    <button type="submit" class="btn btn-primary">Send</button>
+</div>
+</form>
+

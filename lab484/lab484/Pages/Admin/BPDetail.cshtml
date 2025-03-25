@@ -1,0 +1,52 @@
+﻿@page
+@model lab484.Pages.Admin.BPDetailModel
+@{
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Details</title>
+</head>
+<body>
+    <div class="table-container">
+        <div class="details-container">
+            <h2>Partner Details</h2>
+            <table>
+                <tr>
+                    <th>Partner Name</th>
+                    <td id="partner-name">Federal Bureau of Investigation</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>Active Partner</td>
+                </tr>
+                <tr>
+                    <th>Primary Contact</th>
+                    <td>John Smith</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>johnsmith@gmail.com</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>(123) 456-7890</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>935 Pennsylvania Ave NW, Washington, DC</td>
+                </tr>
+                <tr>
+                    <th>Notes</th>
+                    <td>
+                        - The FBI collaborates on national security and intelligence initiatives.
+                        <br>- Meeting next Monday
+                        <br>- Talk about the stuff
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </div>
+    </div>
+</body>
+<a class="btn btn-outline-primary" asp-page="BusinessPartners">Return to Partners</a>

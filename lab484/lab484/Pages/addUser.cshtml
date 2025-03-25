@@ -1,0 +1,55 @@
+﻿@page
+@model lab484.Pages.addUserModel
+@{
+}
+<br />
+<h2 class="text-center">Add New User</h2>
+<br />
+<form method="post" class="form-horizontal">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.UserName" placeholder="Username" />
+        <label asp-for="NewUser.UserName">Username</label>
+        <span asp-validation-for="NewUser.UserName" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.Password" placeholder="Password" />
+        <label asp-for="NewUser.Password">Password</label>
+        <span asp-validation-for="NewUser.Password" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.FirstName" placeholder="First Name" />
+        <label asp-for="NewUser.FirstName">First Name</label>
+        <span asp-validation-for="NewUser.FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.LastName" placeholder="Last Name" />
+        <label asp-for="NewUser.LastName">Last Name</label>
+        <span asp-validation-for="NewUser.LastName" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" asp-for="NewUser.Email" placeholder="Email" />
+        <label asp-for="NewUser.Email">Email</label>
+        <span asp-validation-for="NewUser.Email" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.Phone" placeholder="Phone" />
+        <label asp-for="NewUser.Phone">Phone</label>
+        <span asp-validation-for="NewUser.Phone" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="NewUser.HomeAddress" placeholder="Home Address" />
+        <label asp-for="NewUser.HomeAddress">Home Address</label>
+        <span asp-validation-for="NewUser.HomeAddress" class="text-danger"></span>
+    </div>
+    <div class="text-center">
+        <input type="submit" class="btn btn-primary" asp-page-handler="Add" value=" Add User" />
+        <button type="submit" class="btn btn-warning" asp-page-handler="Clear">Clear</button>
+        <a asp-page="/index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+<br />
+<div class="text-center">
+    <form method="post">
+        <button type="submit" class="btn btn-outline-primary" asp-page-handler="Populate">Populate</button>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+﻿@page
+@model lab484.Pages.Admin.AddProjectModel
+@{
+}
+<head>
+	<meta charset="utf-8" />
+	<title>Add Project</title>
+</head>
+<br />
+<h2 class="text-center">Add a Project</h2>
+<br />
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form method="post" class="form-horizontal">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="newProject.ProjectName">Project Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="newProject.ProjectName" required/>
+            <span class="text-danger" asp-validation-for="newProject.ProjectName"></span>
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="newProject.DueDate">Submission Date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" asp-for="newProject.DueDate" required/>
+            <span class="text-danger" asp-validation-for="newProject.DueDate"></span>
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Associate Faculty</label>
+        <div class="col-sm-10">
+            @foreach (var faculty in Model.facultyList)
+            {
+                <div class="form-check d-block">
+                    <input type="checkbox" class="form-check-input" name="assignedFacultyList" value="@faculty.UserID" id="@faculty.UserID" />
+                    <label class="form-check-label" for="@faculty.UserID">@faculty.FirstName @faculty.LastName</label>
+                </div>
+            }
+        </div>
+    </div>
+    <br />
+    <div class="text-center">
+        <input type="submit" class="btn btn-outline-primary" asp-page-handler="AddProject" value="Add Project" />
+        <button type="submit" class="btn btn-outline-secondary" asp-page-handler="Clear" formnovalidate>Clear</button>
+        <a asp-page="AdminLanding" class="btn btn-secondary">Cancel</a>
+        <br /><br />
+    </div>
+</form>
+
+<div class="text-center">
+    <form method="post">
+        <button type="submit" class="btn btn-outline-primary" asp-page-handler="Populate">Populate</button>
+    </form>
+</div>
