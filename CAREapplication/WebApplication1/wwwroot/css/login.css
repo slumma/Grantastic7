@@ -1,6 +1,6 @@
 html, body {
-    height: 100%; /* Ensure full height for both html and body */
-    margin: 0; /* Remove any default margin */
+    height: 100%; 
+    margin: 0; 
 }
 
 body {
@@ -9,7 +9,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0; /* Ensure there's no margin that affects centering */
+    margin: 0;
 }
 
 .login-container {
