@@ -1,5 +1,6 @@
 body {
     background-color: #DACCE6 !important;
+    font-family: Arial, sans-serif;
     height: 100vh; /* Full height of the viewport */
     display: flex;
     justify-content: center;
