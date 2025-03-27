@@ -18,13 +18,14 @@
     <!-- END LOADING BOOTSTRAP CSS -->
     <!-- Custom styles -->
     <link href="/css/messages.css" rel="stylesheet">
-
 </head>
 
 <body>
     <div class="container-fluid main-container">
-        <div class="row">
-            <div class="col-md-3 sidebar p-3">
+        <div class="row g-2">
+            <!-- Add a small gap between columns using Bootstrap's grid gap utilities -->
+            <div class="col-12 col-md-3 sidebar p-3">
+                <!-- Sidebar with 3 columns on medium screens -->
                 <h5>RECENT MESSAGES</h5>
                 <input type="text" class="form-control mb-3" placeholder="Search">
                 <ul class="list-group message-list">
@@ -37,11 +38,13 @@
                 </ul>
                 <button class="btn btn-primary w-100 mt-3">NEW MESSAGE</button>
             </div>
-            <div class="col-md-9 chat-container p-3">
+            <div class="col-12 col-md-7 sidebar p-3">
+                <!-- Chat container with 9 columns on medium screens -->
                 <div class="chat-header d-flex align-items-center">
                     <div class="avatar">LM</div>
                     <h5 class="ms-2">Lexi Miller</h5>
                 </div>
+                <br />
                 <div class="chat-box">
                     <div class="message bg-light"></div>
                     <div class="message bg-secondary text-white"></div>
@@ -56,5 +59,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>
