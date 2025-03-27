@@ -1,0 +1,82 @@
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+ 		body {
+            background-color: #E6D9F3;
+        }
+        .bg-purple {
+            background-color: #4B0082;
+        }
+        .navbar-brand, .text-white {
+            font-size: 18px;
+
+        }
+        .profile-pic {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .main-container {
+            padding: 15px;
+        }
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .list-group-item {
+            border: none;
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+        .list-group-item.active {
+            background: #D3D3D3;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: red;
+            border-radius: 50%;
+            float: right;
+        }
+        .chat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .chat-header {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .avatar {
+            width: 30px;
+            height: 30px;
+            background: #B39DDB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .chat-box {
+            height: 250px;
+            background: #F5F5F5;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-input {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .btn, .btn-primary {
+            font-size: 12px;
+            padding: 5px 10px;
+            background-color: #b599ce !important;
+            border-color: #b599ce !important;
+        }
+        .main-container {
+      		 gap: 16px;
+		}	
