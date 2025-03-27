@@ -8,23 +8,47 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
 </head>
+
+
 <body>
     <header>
-        <nav>
-            <nav class="navbar navbar-dark bg-purple px-2 d-flex">
-                <div class="d-flex align-items-center gap-2 mx-auto">
-                    <a class="navbar-brand" href="#">HOME</a>
-                    <a class="navbar-brand" href="#">MESSAGES <span class="badge bg-danger">3</span></a>
-                    <a class="navbar-brand" href="#">PROJECTS &#9662;</a>
-                    <a class="navbar-brand" href="#">GRANTS &#9662;</a>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple px-4">
+            <a class="navbar-brand me-5" href="#">
+                <img src="/images/jmu_care.png" alt="Logo" height="80" />
+            </a>
+
+            <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
+                <a class="nav-link text-white" href="#home">MESSAGES</a>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
+                        PROJECTS
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
+                        <li><a class="dropdown-item" href="#">ADD PROJECT</a></li>
+                    </ul>
                 </div>
-                <div class="d-flex align-items-center gap-2">
-                    <img src="profile.jpg" alt="Profile" class="profile-pic">
-                    <span class="text-white">samogden</span>
-                    <button class="btn btn-light">LOGOUT</button>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white active-link" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
+                        GRANTS
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
+                        <li><a class="dropdown-item" href="#">ADD GRANT</a></li>
+                    </ul>
                 </div>
-            </nav>
+
+                <a class="nav-link text-white" href="#">SEARCH</a>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <span class="nav-link text-white">samogden</span>
+                <button class="btn logout-btn">LOGOUT</button>
+            </div>
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
