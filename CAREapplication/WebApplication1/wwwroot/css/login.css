@@ -1,10 +1,10 @@
-
 body {
-    background-color: #DACCE6 !important; 
-    height: 100vh;
+    background-color: #DACCE6 !important;
+    height: 100vh; /* Full height of the viewport */
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0; /* Ensure there's no margin that affects centering */
 }
 
 .login-container {
@@ -12,7 +12,8 @@ body {
     padding: 50px;
     border-radius: 15px;
     text-align: center;
-    width: 500px;
+    width: 100%;
+    max-width: 500px; /* Maximum width for responsiveness */
 }
 
 .logo {
@@ -41,6 +42,6 @@ body {
     transition: 0.3s;
 }
 
-.btn-login:hover {
-    background-color: #3a006e;
-}
+    .btn-login:hover {
+        background-color: #32005e; /* Darker purple for hover effect */
+    }
