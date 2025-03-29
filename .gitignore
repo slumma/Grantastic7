@@ -90,7 +90,6 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
-*.log
 *.vspscc
 *.vssscc
 .builds
@@ -101,6 +100,7 @@ StyleCopReport.xml
 *.vsidx
 *.suo
 .suo
+*.log
 
 # Chutzpah Test files
 _Chutzpah*
@@ -378,7 +378,6 @@ obj/
 *.cache
 
 # Ignore environment-specific config files
-wwwroot/
 *.csproj.user
 *.suo
 *.vscode/

@@ -1,0 +1,140 @@
+html {
+  font-size: 14px;
+}
+
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    background-color: #CBC3E3;
+    margin-bottom: 60px;
+}
+
+
+.btn {
+    border-radius: 20px; 
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #B599CE;
+    border-color: #B599CE;
+}
+.btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+        background-color: #c0392b;
+        border-color: #c0392b;
+}
+
+.username-select {
+    width: 200px;
+}
+
+
+.btn-outline-primary {
+    border: 2px solid #B599CE;
+    color: #B599CE;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #DACCE6;
+        color: #ffffff;
+        border-color: #DACCE6;
+    }
+
+
+.container {
+    background-color: white; 
+    border: 1px solid #d4af37; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px; 
+}
+
+
+
+
+
+.subject-input, .message-textarea {
+    width: 90%; 
+    max-width: 90%; 
+    margin: 0 auto; 
+}
+
+.sendbutton {
+    color: #ffffff; 
+    padding: 10px 20px; 
+    border-radius: 10px; 
+    font-weight: bold; 
+    transition: all 0.3s ease;
+}
+
+.css-text {
+    color: black;
+}
+
+.btn-outline-danger {
+    border: 2px solid #450084;
+    color: #450084;
+    background-color: #DACCE6;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.nav-item .nav-link {
+    text-transform: none;
+}
+
+
+
+.table {
+    color: #4b4453;
+    background-color: #ede7f6;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #d4af37;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #d4af37;
+    color: #4b4453;
+}
+
+.table th {
+    background-color: #7d6f8e;
+    color: #d4af37;
+}
+
+
