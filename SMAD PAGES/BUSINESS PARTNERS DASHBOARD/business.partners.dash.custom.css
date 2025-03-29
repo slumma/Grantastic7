@@ -1,4 +1,4 @@
-
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
 /* COLOR PALETTE */
 
 :root {
@@ -7,6 +7,9 @@
   --lightest-gray: #F5F5F5;
   --medium-gray: #D9D9D9;
   --dark-gray: #1E1E1E;
+  --green-text: #215923;
+  --yellow: #EEE5B0;
+  --red: #E3A6A6;
 }
 
 /* NAV BAR */
@@ -77,7 +80,6 @@
   border-radius: 0;
   font-weight: bold;
 }
-
 
 /* MAIN CONTENT SECTION */
 
@@ -187,6 +189,14 @@ table {
 
 .project-row {
   background-color: var(--medium-gray);
+}
+
+.table-link {
+	color: var(--dark-gray);
+}
+
+.table-link:hover {
+	color: var(--dark-purple);
 }
 
 /* TABLE SCROLLING FUNCTIONS */
