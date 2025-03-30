@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 
-namespace lab484.Pages.Data_Classes
+namespace CAREapplication.Pages.DataClasses
 {
     public class TaskStaff
     {

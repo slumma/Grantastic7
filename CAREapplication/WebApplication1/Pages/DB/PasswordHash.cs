@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 
-namespace lab484.Pages.DB
+namespace CAREapplication.Pages.DB
 {
     public class PasswordHash
     {

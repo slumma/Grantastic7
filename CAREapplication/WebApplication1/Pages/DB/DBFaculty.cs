@@ -1,9 +1,9 @@
-﻿using lab484.Pages.Data_Classes;
+﻿using CAREapplication.Pages.DataClasses;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
-namespace lab484.Pages.DB
+namespace CAREapplication.Pages.DB
 {
     public class DBFaculty
     {

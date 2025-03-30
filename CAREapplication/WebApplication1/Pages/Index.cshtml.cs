@@ -1,4 +1,4 @@
-using lab484.Pages.DB;
+using CAREapplication.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace lab484.Pages.Data_Classes
+namespace CAREapplication.Pages.DataClasses
 {
     public class GrantSimple
     {
