@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Scrolling Nav - Start Bootstrap Template 5.3.3</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <!-- END LOADING BOOTSTRAP CSS -->
+
+      
+    <!-- Custom styles -->
+    <link href="detailed.grant.custom.css" rel="stylesheet">
+
+
+    </head>
+
+<body>
+
+
+<!-- NAV BAR GOES HERE -->
+
+
+
+
+
+
+<!-- TREE FUND GRANT DETAIL PAGE -->
+<div class="container-fluid py-5 main-bg">
+<div class="container main-container">
+    <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
+  
+  <div class="d-flex justify-content-start mb-3">
+    <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+  </div>
+
+  <h2 class="text-center mb-4">GRANT: Tree Fund</h2>
+
+  <div class="d-flex align-items-center justify-content-between mb-4 px-3">
+  <div class="flex-grow-1">
+    <div class="progress" style="height: 16px; border-radius: 30px;">
+      <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="10"></div>
+    </div>
+    <small class="text-end d-block mt-1 fw-bold">3/10 TASKS COMPLETED</small>
+  </div>
+</div>
+
+
+  <!-- Grant Overview Section in Purple Box -->
+<h6 class="section-label">GRANT OVERVIEW</h6>
+<div class="overview-box p-4 mb-4">
+  <div class="row">
+  <div class="col-md-8 mb-3 ps-md-4">
+    <strong>Grant Description:</strong>
+    <div class="text-muted">The Tree Fund Grant ------------------.</div>
+  </div>
+
+  <div class="col-md-4 mb-3 pe-md-4">
+    <div class="d-flex justify-content-end gap-5">
+      <div>
+        <strong>Current Funding</strong>
+        <div class="text-muted">$15,000.00</div>
+      </div>
+      <div>
+        <strong>Associated Project/Grant Type</strong>
+        <div class="text-muted">----</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+  <div class="text-center mb-4">
+  <button class="btn sm-btn">EDIT OVERVIEW</button>
+</div>
+
+
+  <!-- Grant Staff Table -->
+<h6 class="section-label">GRANT STAFF</h6>
+  <div class="mb-4">
+    <table class="table text-center align-middle table-bordered header-table">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>ROLE</th>
+          <th>EMAIL</th>
+          <th>PHONE</th>
+          <th>EDIT USER/ PERMISSIONS</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="table-scroll">
+      <table class="table text-center align-middle table-bordered table-body mt-0">
+        <tbody>
+          <tr class="project-row">
+            <td class="fw-bold">Sarah Bennett</td>
+            <td>Admin/Lead PI</td>
+            <td>sarahbennett@example.com</td>
+            <td>(540) 555-5555</td>
+            <td><button class="btn sm-btn">Edit</button></td>
+          </tr>
+          <tr class="project-row">
+            <td class="fw-bold">Kayla Olden</td>
+            <td>Co-PI</td>
+            <td>kaylaolden8@example.com</td>
+            <td>(540) 555-5555</td>
+            <td><button class="btn sm-btn">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn sm-btn">EDIT/ADD STAFF</button>
+    </div>
+  </div>
+
+ <!-- Tasks Table -->
+<h6 class="section-label">GRANT TASKS</h6>
+
+<div class="table-container">
+  <!-- Header Table -->
+  <table class="table text-center align-middle table-bordered header-table">
+    <thead>
+      <tr>
+        <th>OBJECTIVE</th>
+        <th>DUE DATE</th>
+        <th>ASSOCIATED STAFF</th>
+        <th>DETAILED VIEW</th>
+      </tr>
+    </thead>
+  </table>
+
+  <!-- Body Table -->
+  <div class="table-scroll">
+    <table class="table text-center align-middle table-bordered table-body mt-0">
+      <tbody>
+
+        <!-- Task Row 1 -->
+        <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable1">
+          <td class="fw-bold">Edit for first review</td>
+          <td>08 / 30 / 2025</td>
+          <td>
+            <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
+              data-bs-toggle="collapse" data-bs-target="#staffTable1" aria-expanded="false">
+              View Staff
+            </button>
+          </td>
+          <td><button class="btn sm-btn">Detailed View</button></td>
+        </tr>
+        <tr class="collapse" id="staffTable1">
+          <td colspan="4" class="position-relative">
+            <div class="dropdown-popup mx-auto">
+              <div class="staff-scroll">
+                <table class="table table-sm mb-0">
+                  <tbody>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Task Row 2 -->
+               <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable2">
+          <td class="fw-bold">Finish Section 2</td>
+          <td>09 / 15 / 2025</td>
+          <td>
+            <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
+              data-bs-toggle="collapse" data-bs-target="#staffTable2" aria-expanded="false">
+              View Staff
+            </button>
+          </td>
+          <td><button class="btn sm-btn">Detailed View</button></td>
+        </tr>
+        <tr class="collapse" id="staffTable2">
+          <td colspan="4" class="position-relative">
+            <div class="dropdown-popup mx-auto">
+              <div class="staff-scroll">
+                <table class="table table-sm mb-0">
+                  <tbody>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
+                    <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+ <!-- Grant Notes / Updates Table -->
+<h6 class="section-label mt-5">GRANT UPDATES</h6>
+  <div class="mb-4">
+    <table class="table text-center align-middle table-bordered header-table">
+      <thead>
+        <tr>
+          <th>NOTE</th>
+          <th>AUTHOR</th>
+          <th>DATE ADDED</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="table-scroll">
+      <table class="table text-center align-middle table-bordered table-body mt-0">
+        <tbody>
+          <tr class="project-row">
+            <td class="fw-bold align-items-center">"Review recent edits ASAP"</td>
+            <td>Nadeem Hudson</td>
+            <td>08 / 12 / 2025 - 1:47:06 PM</td>
+          </tr>
+          <tr class="project-row">
+            <td class="fw-bold align-items-center">"Need confirmation on section 2."</td>
+            <td>Nick Clement</td>
+            <td>08 / 13 / 2025 - 11:30:26 AM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn sm-btn">EDIT/ADD STAFF</button>
+    </div>
+  </div>
+
+      <!-- Large Buttons -->
+            <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3 style=">
+              <button class="btn save-btn">SAVE CHANGES</button>
+            </div>
+            </div>
+
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

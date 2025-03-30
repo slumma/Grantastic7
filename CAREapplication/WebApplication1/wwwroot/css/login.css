@@ -1,10 +1,15 @@
+html, body {
+    height: 100%; 
+    margin: 0; 
+}
 
 body {
-    background-color: #DACCE6 !important; 
-    height: 100vh;
+    background-color: #DACCE6 !important;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 
 .login-container {
@@ -12,7 +17,10 @@ body {
     padding: 50px;
     border-radius: 15px;
     text-align: center;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto; /* Explicitly center the container */
+    box-sizing: border-box; /* Ensure padding is included in width/height calculations */
 }
 
 .logo {
@@ -41,6 +49,6 @@ body {
     transition: 0.3s;
 }
 
-.btn-login:hover {
-    background-color: #3a006e;
-}
+    .btn-login:hover {
+        background-color: #32005e; /* Darker purple for hover effect */
+    }

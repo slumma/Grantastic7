@@ -1,0 +1,166 @@
+        /* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+         	
+                /* COLOR PALETTE */
+
+        :root {
+          --dark-purple: #450084;
+          --light-purple: #DACCE6;
+          --lightest-gray: #F5F5F5;
+          --medium-gray: #D9D9D9;
+          --dark-gray: #1E1E1E;
+        }
+
+.underline-active {
+    text-decoration: underline;
+}
+
+.logout-btn {
+    background-color: var(--lightest-gray) !important;
+    color: var(--dark-purple) !important;
+    font-weight: 700;
+    font-size: 0.95rem; /* ~14px */
+    padding: 10px 30px;
+    margin: 15px;
+    border-radius: 8px;
+}
+
+    .logout-btn:hover {
+        background-color: var(--light-purple) !important;
+        color: black;
+    }
+
+
+
+
+/* DROPDOWN MENU DESIGN */
+
+.custom-dropdown {
+    border-radius: 0 0 5px 5px;
+    background-color: var(--dark-purple);
+    padding: 0.5rem 0;
+    border: none;
+    min-width: 180px;
+}
+
+    /* Dropdown items */
+    .custom-dropdown .dropdown-item {
+        color: var(--lightest-gray);
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+
+        /* Hover state */
+        .custom-dropdown .dropdown-item:hover {
+            text-decoration: underline;
+            border-radius: 0;
+            font-weight: bold;
+        }
+
+
+/* BUTTON DESIGN */
+.btn-primary {
+    font-size: 12px;
+    padding: 5px 10px;
+    background-color: #b599ce !important;
+    border-color: #b599ce !important;
+}
+
+
+.sm-btn {
+    background-color: var(--dark-purple);
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 5px 12px;
+    border: none;
+    font-size: 12px;
+}
+
+    .sm-btn:hover {
+        background-color: var(--light-purple);
+        color: black;
+    }
+
+.lg-btn {
+    background-color: var(--dark-purple) !important;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 12px 25px;
+    border: none;
+    font-size: 13px;
+    margin-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+    .lg-btn:hover {
+        background-color: var(--light-purple) !important;
+        color: black;
+    }
+        /* Hover state */
+          .custom-dropdown .dropdown-item:hover {           
+          text-decoration: underline;
+          border-radius: 0;
+          font-weight: bold;
+        }
+
+
+body {
+    background-color: var(--light-purple);
+}
+
+
+        .header{
+            font-family: arial;
+            font-weight: bold !important;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+
+    	.search-logo {
+     		position: absolute;
+            top: 400px;
+            margin-top: 40px; /* Adjust the position to move the logo lower */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%; /* Make the logo larger */
+            opacity: 0.15; /* Lower the opacity for faded effect */
+            z-index: -1; /* Place it behind the content */
+    	}
+
+    	.form-container {
+      		max-width: 500px;
+      		margin: 0 auto;
+            padding-top: 20px ;
+    	}
+
+
+    	.btn-dark-purple {
+  			background-color: #4b217c; /* Dark purple color */
+  			border-color: #4b217c; /* Match border color with background */
+  			color: white;
+		}
+
+		.btn-dark-purple:hover {
+			box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 
+			0 17px 50px 0 rgba(0,0,0,0.19);	
+			background-color: #4b217c;
+			color: white;
+		}
+
+		.search-logo {
+			opactiy: 0.8;
+		}
+
+
+
+
+
+
+
+
