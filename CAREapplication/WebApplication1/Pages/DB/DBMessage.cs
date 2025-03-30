@@ -12,10 +12,10 @@ namespace CAREapplication.Pages.DB
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
             "Server=Localhost;Database=Lab3;Trusted_Connection=True";
-        public static void InsertUserMessage(int? senderID, int recipientID, string subjectTitle, string contents)
+        public static void InsertUserMessage(int? senderID, int recipientID, string contents)
         {
-            String sqlQuery = "INSERT INTO UserMessage (SenderID, RecipientID, SubjectTitle, Contents, SentTime) " +
-                              "VALUES (@SenderID, @RecipientID, @SubjectTitle, @Contents, GETDATE())";
+            String sqlQuery = "INSERT INTO UserMessage (SenderID, RecipientID, Contents, SentTime) " +
+                              "VALUES (@SenderID, @RecipientID, @Contents, GETDATE())";
 
             // helped with AI for insertion statemetns so it doesnt break
             using (SqlCommand cmdInsertUserMessage = new SqlCommand(sqlQuery, DBConnection))
@@ -24,7 +24,6 @@ namespace CAREapplication.Pages.DB
 
                 cmdInsertUserMessage.Parameters.AddWithValue("@SenderID", senderID);
                 cmdInsertUserMessage.Parameters.AddWithValue("@RecipientID", recipientID);
-                cmdInsertUserMessage.Parameters.AddWithValue("@SubjectTitle", subjectTitle);
                 cmdInsertUserMessage.Parameters.AddWithValue("@Contents", contents);
 
                 cmdInsertUserMessage.Connection.Open();
@@ -82,6 +81,34 @@ namespace CAREapplication.Pages.DB
             cmdsingleSenderReader.Connection.Open(); // Open connection here, close in Model!
 
             SqlDataReader tempReader = cmdsingleSenderReader.ExecuteReader();
+
+            return tempReader;
+        }
+
+        public static SqlDataReader singleConvoReader(int? Recipient, int Sender)
+        {
+            SqlCommand cmdsingleConvoReader = new SqlCommand();
+            cmdsingleConvoReader.Connection = DBConnection;
+            cmdsingleConvoReader.Connection.ConnectionString = DBConnString;
+            cmdsingleConvoReader.CommandText = @"SELECT 
+                                                    userMessage.*,
+                                                    sender.Username AS SenderUsername,
+                                                    recipient.Username AS RecipientUsername
+                                                FROM 
+                                                    userMessage
+                                                JOIN 
+                                                    Users AS sender ON userMessage.SenderID = sender.UserID
+                                                JOIN 
+                                                    Users AS recipient ON userMessage.RecipientID = recipient.UserID
+                                                WHERE 
+                                                    userMessage.RecipientID = @Recipient AND userMessage.SenderID = @Sender;";
+
+            cmdsingleConvoReader.Parameters.AddWithValue("@Recipient", Recipient);
+            cmdsingleConvoReader.Parameters.AddWithValue("@Sender", Sender);
+
+            cmdsingleConvoReader.Connection.Open(); // Open connection here, close in Model!
+
+            SqlDataReader tempReader = cmdsingleConvoReader.ExecuteReader();
 
             return tempReader;
         }
