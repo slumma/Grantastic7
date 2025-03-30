@@ -5,15 +5,27 @@ namespace WebApplication1.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    [BindProperty]
+    public string Username { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger)
+    [BindProperty]
+    public string Password { get; set; }
+
+    public IActionResult OnGet(string logout)
     {
-        _logger = logger;
-    }
+        if (logout == "true")
+        {
+            HttpContext.Session.Clear();
+            ViewData["LoginMessage"] = "Successfully Logged Out!";
+        }
 
-    public void OnGet()
-    {
+        string loginError = HttpContext.Session.GetString("LoginError");
+        if (!string.IsNullOrEmpty(loginError))
+        {
+            ViewData["LoginMessage"] = loginError;
+            HttpContext.Session.Remove("LoginError"); // Clear after displaying
+        }
 
+        return Page();
     }
 }

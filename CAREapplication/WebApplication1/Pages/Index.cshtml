@@ -23,9 +23,9 @@
 
     <div class="login-container">
         <img src="/images/JMU.Care.png" alt="JMU CARE Logo" class="logo mb-4">
-        <form>
-            <input type="text" class="form-control mb-3" placeholder="USERNAME" required>
-            <input type="password" class="form-control mb-3" placeholder="PASSWORD" required>
+        <form method="post" asp-page="Index">
+            <input asp-for="Username" type="text" class="form-control mb-3" placeholder="USERNAME" required>
+            <input asp-for="Password" type="password" class="form-control mb-3" placeholder="PASSWORD" required>
             <button type="submit" class="btn-login btn btn-primary">LOGIN</button>
         </form>
     </div>

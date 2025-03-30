@@ -1,23 +1,16 @@
-﻿namespace CAREapplication.Pages.Data_Classes
+﻿namespace lab484.Pages.Data_Classes
 {
     public class GrantStaff
     {
-        public int GrantStaffId { get; set; }
-
-        public int StaffedID { get; set; }
-
-        public int StafferID { get; set; }
-
+        public int GrantStaffID { get; set; }
         public int GrantID { get; set; }
-
-        public int Active { get; set;}
-
-        public int ViewGrant { get; set; }
-
-        public int EditGrant { get; set; }
-
-        public int PIStatus {  get; set; }
-        
-
+        public string GrantName { get; set; }
+        public int UserID { get; set; }
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string HomeAddress { get; set; }
     }
 }
