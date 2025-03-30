@@ -53,7 +53,7 @@ public class IndexModel : PageModel
             if (adminStatus == 1)
             {
                 HttpContext.Session.SetInt32("adminStatus", 1);
-                return RedirectToPage("/Admin/AdminLanding");
+                return RedirectToPage("/Project/ProjectDashboard");
             }
             else
             {
