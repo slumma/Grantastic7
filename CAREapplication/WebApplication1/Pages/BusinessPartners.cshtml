@@ -18,12 +18,9 @@
     <!-- END LOADING BOOTSTRAP CSS -->
     <!-- Custom styles -->
     <link href="/css/business.partners.dash.custom.css" rel="stylesheet">
-
-
 </head>
 
 <body>
-
     <!-- Main Content -->
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container">
@@ -37,7 +34,7 @@
                 <table class="table text-center align-middle table-bordered header-table">
                     <thead>
                         <tr>
-                            <th>PROJECT NAME</th>
+                            <th>BUSINESS PARTNER</th>
                             <th>STATUS</th>
                             <th>PRIMARY CONTACT</th>
                             <th>CONTACT</th>
@@ -46,52 +43,20 @@
                     </thead>
                 </table>
 
-                <!-- Project Table -->
+                <!-- Dynamic Project Table -->
                 <div class="table-scroll">
                     <table class="table text-center align-middle table-bordered table-body mt-0">
                         <tbody>
-                            <tr class="project-row">
-                                <td class="fw-bold">TechCorp</td>
-                                <td>Active</td>
-                                <td>Alysun Sanders</td>
-                                <td><a class="table-link" href="#">sandersal@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
-                            <tr class="project-row">
-                                <td class="fw-bold">HealthFunds</td>
-                                <td>Pending</td>
-                                <td>Lexi Miller</td>
-                                <td><a class="table-link" href="#">leximiller55@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
-                            <tr class="project-row">
-                                <td class="fw-bold">EduFunds</td>
-                                <td>Active</td>
-                                <td>Kayla Olden</td>
-                                <td><a class="table-link" href="#">kaylaolden8@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
-                            <tr class="project-row">
-                                <td class="fw-bold">MedFunds</td>
-                                <td>Inactive</td>
-                                <td>Josh White</td>
-                                <td><a class="table-link" href="#">joshwhite@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
-                            <tr class="project-row">
-                                <td class="fw-bold">ScienceTrust</td>
-                                <td>Pending</td>
-                                <td>Nadeem Hudson</td>
-                                <td><a class="table-link" href="#">nadeemhud@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
-                            <tr class="project-row">
-                                <td class="fw-bold">EduTrust</td>
-                                <td>Active</td>
-                                <td>Sam Ogden</td>
-                                <td><a class="table-link" href="#">samogden@example.com</a></td>
-                                <td><button class="btn sm-btn">DETAILED VIEW</button></td>
-                            </tr>
+                            @foreach (var bp in Model.bpList)
+                            {
+                                <tr class="project-row">
+                                    <td class="fw-bold">@bp.SupplierName</td>
+                                    <td>@bp.SupplierStatus</td>
+                                    <td>@bp.FirstName @bp.LastName</td>
+                                    <td><a class="table-link" href="mailto:@bp.Email">@bp.Email</a></td>
+                                    <td><a class="btn sm-btn" asp-page="BPDetail">DETAILED VIEW</a></td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +64,7 @@
 
             <!-- Large Buttons -->
             <div class="d-flex justify-content-end gap-3 mt-3">
-                <button class="btn lg-btn">BACK TO PROJECT DASHBOARD</button>
+                <a class="btn lg-btn" asp-page="AdminLanding">BACK TO PROJECT DASHBOARD</a>
             </div>
         </div>
     </div>
