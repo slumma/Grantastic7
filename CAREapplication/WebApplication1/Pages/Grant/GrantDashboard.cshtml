@@ -14,6 +14,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="styles.css" rel="stylesheet">
     <!-- END LOADING BOOTSTRAP CSS -->
     <!-- Custom styles -->
@@ -36,22 +37,28 @@
                     <thead>
                         <tr>
                             <th>
-                                <!-- looked this up and used Copilot to help implement, but essentially this allows the user to click on the header of the table to sort by it -->
-                                <a asp-page="./GrantDashboard" class="text-primary font-weight-bold text-decoration-none" asp-route-sortOrder="@(Model.CurrentSortOrder == "name_asc" ? "name_desc" : "name_asc")">GRANT NAME</a>
+                                <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "name_asc" ? "name_desc" : "name_asc")">GRANT NAME</a>
                             </th>
                             <th>
-                                <a asp-page="./GrantDashboard" class="text-primary font-weight-bold text-decoration-none" asp-route-sortOrder="@(Model.CurrentSortOrder == "amount_asc" ? "amount_desc" : "amount_asc")">AMOUNT</a>
+                                <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "amount_asc" ? "amount_desc" : "amount_asc")">AMOUNT</a>
                             </th>
                             <th>
-                                <a asp-page="./GrantDashboard" class="text-primary font-weight-bold text-decoration-none" asp-route-sortOrder="@(Model.CurrentSortOrder == "supp_asc" ? "supp_desc" : "supp_asc")">SUPPLIER</a>
+                                <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "supp_asc" ? "supp_desc" : "supp_asc")">SUPPLIER</a>
                             </th>
                             <th>
-                                <a asp-page="./GrantDashboard" class="text-primary font-weight-bold text-decoration-none" asp-route-sortOrder="@(Model.CurrentSortOrder == "date_asc" ? "date_desc" : "date_asc")">AWARD DATE</a>
+                                <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "date_asc" ? "date_desc" : "date_asc")">AWARD DATE</a>
                             </th>
                             <th>
-                                <a asp-page="./GrantDashboard" class="text-primary font-weight-bold text-decoration-none" asp-route-sortOrder="@(Model.CurrentSortOrder == "proj_asc" ? "proj_desc" : "proj_asc")">PROJECT</a>
+                                <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "proj_asc" ? "proj_desc" : "proj_asc")">PROJECT</a>
                             </th>
-                            <th>DETAILED VIEW</th>
+                            <th>
+                                DETAILED VIEW
+                            </th>
                         </tr>
                     </thead>
                 </table>

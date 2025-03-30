@@ -210,3 +210,8 @@ table {
   background-color: var(--light-purple) !important;
   color: black;
 }
+
+.no-link-color {
+    color: inherit; 
+    text-decoration: none; 
+}
