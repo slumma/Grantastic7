@@ -160,12 +160,13 @@ table {
   background-color: var(--dark-gray) !important;
 }
 
-.header-table th {
-  padding: 12px !important;
-  color: white;
-  border: 1px solid var(--dark-gray); /* Match background color to "hide" borders */
-  margin: 0;
-}
+	.header-table th {
+		padding: 12px !important;
+		color: white;
+		background: var(--dark-purple);
+		border: 1px solid var(--dark-gray); /* Match background color to "hide" borders */
+		margin: 0;
+	}
 
 /* TABLE BODY */
 
