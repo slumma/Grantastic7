@@ -46,7 +46,7 @@
                                             <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
                                             <td>@string.Format("{0:C}", project.Amount)</td>
                                             <td>
-                                            <a class="btn sm-btn" asp-page="/Project/ProjectDetail" asp-route-ProjectID="@project.ProjectID">DETAILED VIEW</a>
+                                            <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="/DetailedProject">DETAILED VIEW</a>
                                             </td>
                                         </tr>
                                     }

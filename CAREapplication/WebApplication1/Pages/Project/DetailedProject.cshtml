@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{projectID:int}"
 @model CAREapplication.Pages.Project.DetailedProjectModel
 @{
 }
@@ -8,32 +8,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Scrolling Nav - Start Bootstrap Template 5.3.3</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="styles.css" rel="stylesheet">
-    <!-- END LOADING BOOTSTRAP CSS -->
-    <!-- Custom styles -->
+    <title>@Model.Project.ProjectName - Project Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/detailed.project.view.custom.css" rel="stylesheet">
-
-
 </head>
-
 <body>
-    <!-- PROJECT ALPHA DETAIL PAGE -->
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container">
             <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
 
                 <div class="d-flex justify-content-start mb-3">
-                    <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+                    <a class="btn back-btn px-0 fw-bold" asp-page="AdminLanding">&lt; PREVIOUS</a>
                 </div>
 
-                <h2 class="text-center mb-4">PROJECT ALPHA</h2>
+                <h2 class="text-center mb-4">@Model.Project.ProjectName</h2>
 
                 <div class="d-flex align-items-center justify-content-between mb-4 px-3">
                     <div class="flex-grow-1">
@@ -44,208 +32,102 @@
                     </div>
                 </div>
 
-
-                <!-- Project Overview Section in Purple Box -->
                 <h6 class="section-label">PROJECT OVERVIEW</h6>
                 <div class="overview-box p-4 mb-4">
-                    <div class="row">
-                        <div class="col-md-8 mb-3 ps-md-4">
-                            <strong>Project Description:</strong>
-                            <div class="text-muted">Project Alpha is focused on developing a sustainable urban forestry initiative that leverages data analytics and community partnerships to increase green canopy coverage in underserved neighborhoods. The project aims to plant 5,000 trees by the end of 2025 while tracking environmental impact metrics such as air quality improvement, stormwater runoff reduction, and temperature moderation.</div>
-                        </div>
-
-                        <div class="col-md-4 mb-3 pe-md-4">
-                            <div class="d-flex justify-content-end gap-5">
-                                <div>
-                                    <strong>Current Funding</strong>
-                                    <div class="text-muted">$450,000.00</div>
-                                </div>
-                                <div>
-                                    <strong>Associated Grant</strong>
-                                    <div class="text-muted">Tree Fund</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <strong>Project Description:</strong>
+                    <div class="text-muted">Model.Project.Description</div>
+                    <strong>Current Funding:</strong> <span class="text-muted">$Model.Project.Funding.ToString("N2")</span>
                 </div>
 
-
-
-                <div class="text-center mb-4">
-                    <button class="btn sm-btn">EDIT OVERVIEW</button>
-                </div>
-
-
-                <!-- Project Staff Table -->
                 <h6 class="section-label">PROJECT STAFF</h6>
-                <div class="mb-4">
-                    <table class="table text-center align-middle table-bordered header-table">
-                        <thead>
+                <table class="table text-center align-middle table-bordered">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>REMOVE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var staff in Model.UserProjectList)
+                        {
                             <tr>
-                                <th>NAME</th>
-                                <th>ROLE</th>
-                                <th>EMAIL</th>
-                                <th>PHONE</th>
-                                <th>EDIT USER/ PERMISSIONS</th>
+                                <td>@staff.FirstName @staff.LastName</td>
+                                <td>@staff.Email</td>
+                                <td>@staff.Phone</td>
+                                <td><a class="btn btn-outline-primary">Remove</a></td>
                             </tr>
-                        </thead>
-                    </table>
-
-                    <div class="table-scroll">
-                        <table class="table text-center align-middle table-bordered table-body mt-0">
-                            <tbody>
-                                <tr class="project-row">
-                                    <td class="fw-bold">Sarah Bennett</td>
-                                    <td>Admin/Lead PI</td>
-                                    <td>sarahbennett@example.com</td>
-                                    <td>(540) 555-5555</td>
-                                    <td><button class="btn sm-btn">Edit</button></td>
-                                </tr>
-                                <tr class="project-row">
-                                    <td class="fw-bold">Kayla Olden</td>
-                                    <td>Co-PI</td>
-                                    <td>kaylaolden8@example.com</td>
-                                    <td>(540) 555-5555</td>
-                                    <td><button class="btn sm-btn">Edit</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-center mt-2">
-                        <button class="btn sm-btn">EDIT/ADD STAFF</button>
-                    </div>
+                        }
+                    </tbody>
+                </table>
+                <div class="text-center mt-2">
+                    <a class="btn sm-btn" asp-page="" asp-route-ProjectID="@Model.ProjectID">EDIT/ADD STAFF</a>
                 </div>
 
-                <!-- Tasks Table -->
                 <h6 class="section-label">PROJECT TASKS</h6>
-
-                <div class="table-container">
-                    <!-- Header Table -->
-                    <table class="table text-center align-middle table-bordered header-table">
-                        <thead>
+                <table class="table text-center align-middle table-bordered">
+                    <thead>
+                        <tr>
+                            <th>OBJECTIVE</th>
+                            <th>DUE DATE</th>
+                            <th>ASSOCIATED STAFF</th>
+                            <th>DETAIL VIEW</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var task in Model.TaskList)
+                        {
                             <tr>
-                                <th>OBJECTIVE</th>
-                                <th>DUE DATE</th>
-                                <th>ASSOCIATED STAFF</th>
-                                <th>DETAILED VIEW</th>
+                                <td>@task.Objective</td>
+                                <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option>View Staff</option>
+                                        @foreach (var staffer in Model.UserTaskList)
+                                        {
+                                            <option>@staffer.FirstName @staffer.LastName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn sm-btn" asp-page="/Admin/TaskDetail" asp-route-taskID="@task.TaskID">Detailed View</a>
+                                </td>
                             </tr>
-                        </thead>
-                    </table>
+                        }
+                    </tbody>
+                </table>
 
-                    <!-- Body Table -->
-                    <div class="table-scroll">
-                        <table class="table text-center align-middle table-bordered table-body mt-0">
-                            <tbody>
-
-                                <!-- Task Row 1 -->
-                                <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable1">
-                                    <td class="fw-bold">Edit for first review</td>
-                                    <td>08 / 30 / 2025</td>
-                                    <td>
-                                        <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#staffTable1" aria-expanded="false">
-                                            View Staff
-                                        </button>
-                                    </td>
-                                    <td><button class="btn sm-btn">Detailed View</button></td>
-                                </tr>
-                                <tr class="collapse" id="staffTable1">
-                                    <td colspan="4" class="position-relative">
-                                        <div class="dropdown-popup mx-auto">
-                                            <div class="staff-scroll">
-                                                <table class="table table-sm mb-0">
-                                                    <tbody>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Task Row 2 -->
-                                <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable2">
-                                    <td class="fw-bold">Finish Section 2</td>
-                                    <td>09 / 15 / 2025</td>
-                                    <td>
-                                        <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#staffTable2" aria-expanded="false">
-                                            View Staff
-                                        </button>
-                                    </td>
-                                    <td><button class="btn sm-btn">Detailed View</button></td>
-                                </tr>
-                                <tr class="collapse" id="staffTable2">
-                                    <td colspan="4" class="position-relative">
-                                        <div class="dropdown-popup mx-auto">
-                                            <div class="staff-scroll">
-                                                <table class="table table-sm mb-0">
-                                                    <tbody>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
-                                                        <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+                <h6 class="section-label">PROJECT UPDATES</h6>
+                <table class="table text-center align-middle table-bordered">
+                    <thead>
+                        <tr>
+                            <th>NOTE</th>
+                            <th>AUTHOR</th>
+                            <th>DATE ADDED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var note in Model.NoteList)
+                        {
+                            <tr>
+                                <td>@note.Content</td>
+                                <td>@note.AuthorFirst @note.AuthorLast</td>
+                                <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="text-center mt-2">
+                    <a class="btn sm-btn" asp-page="AddProjectNote" asp-route-projectID="@Model.ProjectID">Add Note</a>
                 </div>
 
-
-                <!-- Project Notes / Updates Table -->
-                <h6 class="section-label mt-5">PROJECT UPDATES</h6>
-                <div class="mb-4">
-                    <table class="table text-center align-middle table-bordered header-table">
-                        <thead>
-                            <tr>
-                                <th>NOTE</th>
-                                <th>AUTHOR</th>
-                                <th>DATE ADDED</th>
-                            </tr>
-                        </thead>
-                    </table>
-
-                    <div class="table-scroll">
-                        <table class="table text-center align-middle table-bordered table-body mt-0">
-                            <tbody>
-                                <tr class="project-row">
-                                    <td class="fw-bold align-items-center">"Review recent edits ASAP"</td>
-                                    <td>Nadeem Hudson</td>
-                                    <td>08 / 12 / 2025 - 1:47:06 PM</td>
-                                </tr>
-                                <tr class="project-row">
-                                    <td class="fw-bold align-items-center">"Need confirmation on section 2."</td>
-                                    <td>Nick Clement</td>
-                                    <td>08 / 13 / 2025 - 11:30:26 AM</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-center mt-2">
-                        <button class="btn sm-btn">EDIT/ADD STAFF</button>
-                    </div>
-                </div>
-
-                <!-- Large Buttons -->
-                <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3 style=">
+                <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3">
                     <button class="btn save-btn">SAVE CHANGES</button>
                 </div>
             </div>
-
         </div>
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
