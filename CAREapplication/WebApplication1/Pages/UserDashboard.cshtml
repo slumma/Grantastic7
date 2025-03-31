@@ -1,0 +1,74 @@
+﻿@page
+@model CAREapplication.Pages.UserDashboardModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Project Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
+    <link href="/css/https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+    <!-- END LOADING BOOTSTRAP CSS -->
+    <!-- Custom styles -->
+    <link href="/css/userdash.custom.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <!-- Main Content -->
+    <div class="container-fluid py-5 main-bg">
+        <div class="container main-container text-center py-5">
+            <p class="date-text">April 1st, 2025</p>
+            <h2>Welcome, Sarah</h2>
+            <!-- Status Boxes -->
+            <div class="stats-container d-flex justify-content-center gap-3 mt-3">
+                <div class="stat-box"> <span> 2 </span> tasks remaining</div>
+                <div class="stat-box"> <span> 8 </span> grants pending</div>
+                <div class="stat-box"> <span> 3 </span> active projects</div>
+            </div>
+            <!-- Projects & Tasks Section -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="content-box">
+                        <h4 class="box-title">MY PROJECTS</h4>
+                        <ul class="list-unstyled">
+                            <li class="task-item">■ Project Alpha</li>
+                            <li class="task-item">■ Project Beta</li>
+                            <li class="task-item">■ Project Gamma</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-box">
+                        <h4 class="box-title">MY TASKS</h4>
+                        <ul class="list-unstyled">
+                            <li class="task-item">■ Review Project Gamma Progress</li>
+                            <li class="task-item">■ Finish Project Alpha Section 2.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Grant Updates Section -->
+            <div class="mt-4 p-3 grant-box rounded-3">
+                <h4>Recent Grant Updates</h4>
+                <span class="grant-update awarded">Tree Fund: Awarded</span>
+                <span class="grant-update pending">Cat Scratch 3000: Pending</span>
+                <span class="grant-update pending">Morty's Biscuits: Pending</span>
+                <span class="grant-update rejected">K-12 Hospital: Rejected</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
