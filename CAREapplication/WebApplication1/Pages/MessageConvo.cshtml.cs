@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace CAREapplication.Pages
 {
@@ -52,15 +53,67 @@ namespace CAREapplication.Pages
             return Page();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int sender)
         {
             Trace.WriteLine("Executed OnPost");
+
+            Usernames = new List<SelectListItem>();
+
+            // Execute the userReader method from DBClass to load the usernames 
+            using (SqlDataReader reader = DBClass.UserReader())
+            {
+                while (reader.Read())
+                {
+                    Usernames.Add(new SelectListItem
+                    {
+                        Value = reader["UserID"].ToString(),
+                        Text = reader["Username"].ToString()
+                    });
+                }
+                reader.Close();
+                DBClass.DBConnection.Close();
+            }
+
+            Trace.WriteLine(sender); // works 
+
+            otherUser = DBClass.GetUserByID(sender);
+
+            LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
+
+            Trace.WriteLine(receivedList.Count);
+
             return Page();
         }
 
-        public IActionResult OnPostSendMessage()
+        public IActionResult OnPostSendMessage(int sender)
         {
             Trace.WriteLine("Executed SendMessage");
+
+            Usernames = new List<SelectListItem>();
+
+            // Execute the userReader method from DBClass to load the usernames 
+            using (SqlDataReader reader = DBClass.UserReader())
+            {
+                while (reader.Read())
+                {
+                    Usernames.Add(new SelectListItem
+                    {
+                        Value = reader["UserID"].ToString(),
+                        Text = reader["Username"].ToString()
+                    });
+                }
+                reader.Close();
+                DBClass.DBConnection.Close();
+            }
+
+            Trace.WriteLine(sender); // works 
+
+            otherUser = DBClass.GetUserByID(sender);
+
+            LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
+
+            Trace.WriteLine(receivedList.Count);
+
             return Page();
         }
 
