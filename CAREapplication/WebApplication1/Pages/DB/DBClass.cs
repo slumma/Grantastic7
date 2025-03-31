@@ -183,6 +183,23 @@ namespace CAREapplication.Pages.DB
             return correctHash;
         }
 
+        public static bool UserCheck(string username)
+        {
+            string userCheckQuery = "SELECT COUNT(*) FROM HashedCredentials WHERE username = @Username";
+            SqlCommand cmdLogin = new SqlCommand();
+            cmdLogin.Connection = DBConnection;
+            cmdLogin.Connection.ConnectionString = AUTHConnString;
+            cmdLogin.CommandText = userCheckQuery;
+            cmdLogin.Parameters.AddWithValue("@Username", username);
+
+            cmdLogin.Connection.Open();
+            int rowCount = (int)cmdLogin.ExecuteScalar();
+            cmdLogin.Connection.Close();
+
+            if (rowCount > 0) { return true; }
+            else { return false; }
+        }
+
         public static bool HashedLogin(string Username, string Password)
         {
             
