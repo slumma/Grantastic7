@@ -52,6 +52,17 @@ namespace CAREapplication.Pages
             return Page();
         }
 
+        public IActionResult OnPost()
+        {
+            Trace.WriteLine("Executed OnPost");
+            return Page();
+        }
+
+        public IActionResult OnPostSendMessage()
+        {
+            Trace.WriteLine("Executed SendMessage");
+            return Page();
+        }
 
         private void LoadReceivedMessages(int? recipient, int sender)
         {
