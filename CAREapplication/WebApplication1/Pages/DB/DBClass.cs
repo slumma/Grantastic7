@@ -37,7 +37,7 @@ namespace CAREapplication.Pages.DB
             return tempReader;
         }
 
-        public static User GetUserByID(int userID)
+        public static User GetUserByID(int? userID)
         {
             User user = null;
             String sqlQuery = "SELECT * FROM users WHERE UserID = @UserID";

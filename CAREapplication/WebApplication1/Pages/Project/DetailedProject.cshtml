@@ -18,7 +18,7 @@
             <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
 
                 <div class="d-flex justify-content-start mb-3">
-                    <a class="btn back-btn px-0 fw-bold" asp-page="AdminLanding">&lt; PREVIOUS</a>
+                    <a class="btn back-btn px-0 fw-bold" asp-page="ProjectDashboard">&lt; PREVIOUS</a>
                 </div>
 
                 <h2 class="text-center mb-4">@Model.Project.ProjectName</h2>
@@ -35,8 +35,8 @@
                 <h6 class="section-label">PROJECT OVERVIEW</h6>
                 <div class="overview-box p-4 mb-4">
                     <strong>Project Description:</strong>
-                    <div class="text-muted">Model.Project.Description</div>
-                    <strong>Current Funding:</strong> <span class="text-muted">$Model.Project.Funding.ToString("N2")</span>
+                    <class class="text-muted">@Model.Project.ProjectDescription</div>
+                    <strong>Current Funding:</strong> <span class="text-muted">$@Model.Project.Amount.ToString("N2")</span>
                 </div>
 
                 <h6 class="section-label">PROJECT STAFF</h6>

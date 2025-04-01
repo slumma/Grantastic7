@@ -10,9 +10,11 @@ DELETE FROM supplierStatus;*/
 DELETE FROM grants;
 DELETE FROM projectNotes;
 DELETE FROM grantNotes;
-DELETE FROM taskStaff;
+DELETE FROM projectTaskStaff;
+DELETE FROM grantTaskStaff;
 DELETE FROM grantStaff;
-DELETE FROM task;
+DELETE FROM projectTask;
+DELETE FROM grantTask;
 DELETE FROM projectStaff;
 DELETE FROM meeting;
 /*DELETE FROM faculty;

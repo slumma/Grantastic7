@@ -13,8 +13,8 @@ namespace CAREapplication.Pages.Project
         public ProjectSimple Project { get; set; }
         public List<User> UserProjectList { get; set; } = new List<User>();
         public List<User> UserTaskList { get; set; } = new List<User>();
-        public List<TaskStaff> TaskStaffList { get; set; } = new List<TaskStaff>();
-        public List<Tasks> TaskList { get; set; } = new List<Tasks>();
+        public List<ProjectTaskStaff> TaskStaffList { get; set; } = new List<ProjectTaskStaff>();
+        public List<ProjectTask> TaskList { get; set; } = new List<ProjectTask>();
         public List<ProjectNote> NoteList { get; set; } = new List<ProjectNote>();
 
         public IActionResult OnGet(int projectID)
@@ -42,8 +42,10 @@ namespace CAREapplication.Pages.Project
                         Project.ProjectName = reader["ProjectName"].ToString();
                         Project.DueDate = DateTime.Parse(reader["DueDate"].ToString());
                         Project.Amount = float.Parse(reader["Amount"].ToString());
+                        Project.ProjectDescription = reader["ProjectDescription"].ToString();
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
                 {
@@ -58,12 +60,13 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.taskStaffReader(projectID))
                 {
                     while (reader.Read())
                     {
-                        TaskStaffList.Add(new TaskStaff
+                        TaskStaffList.Add(new ProjectTaskStaff
                         {
                             TaskStaffID = Convert.ToInt32(reader["TaskStaffID"]),
                             TaskID = Convert.ToInt32(reader["TaskID"]),
@@ -78,12 +81,13 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
-                using (SqlDataReader reader = DBProject.taskReader(projectID))
+                using (SqlDataReader reader = DBProject.projectTaskReader(projectID))
                 {
                     while (reader.Read())
                     {
-                        TaskList.Add(new Tasks
+                        TaskList.Add(new ProjectTask
                         {
                             TaskID = Convert.ToInt32(reader["TaskID"]),
                             Objective = reader["Objective"].ToString(),
@@ -91,6 +95,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.ProjectNoteReader(projectID))
                 {
@@ -106,6 +111,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
             }
             catch (Exception ex)
             {

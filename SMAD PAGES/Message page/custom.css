@@ -70,6 +70,7 @@
         .chat-input {
             display: flex;
             align-items: center;
+            overflow-wrap: break-word;
         }
         .navbar .btn, .btn-primary {
             font-size: 12px;

@@ -164,10 +164,9 @@ body {
 
 
 .chat-box {
-    height: 75%;
+    height: 400px;
     background: #F5F5F5 !important;
     border-radius: 10px !important;
-    padding: 10px !important;
     margin-bottom: 10px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -176,10 +175,28 @@ body {
     overflow-y: auto;
 }
 
+.sidebar.p-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+}
+
+input {
+    display: flex;
+    align-items: center;
+    overflow-wrap: break-word;
+}
+
 .chat-input {
     display: flex;
     align-items: center;
-    
+    overflow-wrap: break-word;
+}
+
+.form-control {
+    display: flex;
+    align-items: center;
+    overflow-wrap: break-word;
 }
 
 .btn-primary {
@@ -199,6 +216,7 @@ body {
 .list-group-item {
     border-radius: 5px;
     margin-bottom: 5px;
+    background-color: var(--light-purple) !important;
 }
 
 /* Style chat messages */
@@ -212,20 +230,14 @@ body {
     padding: 10px;
     border-radius: 10px;
     margin: 5px 0;
-    max-width: 70%;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 /* Different colors for sender and receiver */
 .sender {
     background: #d1e7dd; /* Light green */
     align-self: flex-end;
-}
-
-.message {
-    max-width: 70%;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 10px;
 }
 
 .bg-light {
