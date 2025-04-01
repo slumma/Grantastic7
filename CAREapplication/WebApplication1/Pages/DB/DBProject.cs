@@ -101,7 +101,7 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectDescription, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate;";
+            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectDescription, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate, project.ProjectDescription;";
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
             return tempReader;
