@@ -54,7 +54,7 @@
                         <ul class="list-unstyled">
                             @foreach (var task in Model.UserTaskList){
                                 <li class="task-item">
-                                    <a class="task-item" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">■ @task.Objective</a>
+                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">■ @task.Objective</a>
                                 </li>
                             }
                         </ul>
