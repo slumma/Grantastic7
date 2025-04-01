@@ -172,7 +172,31 @@ namespace CAREapplication.Pages.DB
             cmdTaskRead.Connection = DBConnection;
             cmdTaskRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskRead.CommandText = "SELECT t.TaskID, t.ProjectID, t.DueDate, t.Objective\r\nFROM task t\r\nJOIN TaskStaff ts ON t.TaskID = ts.TaskID\r\nWHERE ts.AssigneeID = @UserID\r\nORDER BY t.DueDate;";
+            cmdTaskRead.CommandText = @"SELECT 
+                                            gt.TaskID, 
+                                            g.GrantID AS RelatedEntityID, 
+                                            g.GrantName AS RelatedEntityName, 
+                                            gt.DueDate, 
+                                            gt.Objective, 
+                                            'Grant Task' AS TaskType
+                                        FROM grantTaskStaff gts
+                                        JOIN grantTask gt ON gts.TaskID = gt.TaskID
+                                        JOIN grants g ON gt.GrantID = g.GrantID
+                                        WHERE gts.AssigneeID = @UserID
+
+                                        UNION ALL
+
+                                        SELECT 
+                                            pt.TaskID, 
+                                            p.ProjectID AS RelatedEntityID, 
+                                            p.ProjectName AS RelatedEntityName, 
+                                            pt.DueDate, 
+                                            pt.Objective, 
+                                            'Project Task' AS TaskType
+                                        FROM projectTaskStaff pts
+                                        JOIN projectTask pt ON pts.TaskID = pt.TaskID
+                                        JOIN project p ON pt.ProjectID = p.ProjectID
+                                        WHERE pts.AssigneeID = @UserID;";
             cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();

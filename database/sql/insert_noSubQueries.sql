@@ -195,7 +195,7 @@ VALUES
 (9, '2025-03-01', 'User Needs Assessment'),
 (10, '2025-09-01', 'Security Evaluation');
 
-INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
+INSERT INTO grantTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
 (1, 1, 2, '2025-04-25'),
 (2, 2, 3, '2025-06-15'),
