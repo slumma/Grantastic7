@@ -44,7 +44,17 @@ namespace CAREapplication.Pages.Project
                     {
                         Project.ProjectName = reader["ProjectName"].ToString();
                         Project.DueDate = DateTime.Parse(reader["DueDate"].ToString());
-                        Project.Amount = float.Parse(reader["Amount"].ToString());
+
+                        // Check if 'Amount' is not NULL before setting it
+                        if (!reader.IsDBNull(reader.GetOrdinal("Amount")))
+                        {
+                            Project.Amount = float.Parse(reader["Amount"].ToString());
+                        }
+                        else
+                        {
+                            Project.Amount = 0; // Set a default value (e.g., 0) if Amount is NULL
+                        }
+
                         Project.ProjectDescription = reader["ProjectDescription"].ToString();
                     }
                     reader.Close();
