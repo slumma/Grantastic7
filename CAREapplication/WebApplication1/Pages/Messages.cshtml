@@ -32,7 +32,7 @@
                     @foreach (var username in Model.Usernames)
                     {
                         <li class="list-group-item">
-                            <a asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text </a>
+                            <a class="list-group-item" asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text</a>
                         </li>
                     }
                 </ul>

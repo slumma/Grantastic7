@@ -20,6 +20,7 @@ public class IndexModel : PageModel
             ViewData["LoginMessage"] = "Successfully Logged Out!";
         }
 
+        // Check for stored login error messages
         string loginError = HttpContext.Session.GetString("LoginError");
         if (!string.IsNullOrEmpty(loginError))
         {
@@ -32,8 +33,6 @@ public class IndexModel : PageModel
 
     public IActionResult OnPost()
     {
-        string loginQuery = "SELECT COUNT(*) FROM users WHERE Username = @Username AND Password = @Password";
-        string findUserID = "SELECT UserID FROM users WHERE Username = @Username AND Password = @Password";
         if (DBClass.UserCheck(Username))
         {
             if (DBClass.HashedLogin(Username, Password))
@@ -42,14 +41,15 @@ public class IndexModel : PageModel
                 HttpContext.Session.SetInt32("loggedIn", 1);
                 HttpContext.Session.SetString("username", Username);
 
-                // retrieve userIDs
+                // Retrieve user ID
                 int userID = DBClass.HashedUserID(Username);
                 HttpContext.Session.SetInt32("userID", userID);
                 DBClass.DBConnection.Close();
 
-                // check user permissions
+                // Check user permissions
                 int adminStatus = DBClass.adminCheck(userID);
                 DBClass.DBConnection.Close();
+
                 if (adminStatus == 1)
                 {
                     HttpContext.Session.SetInt32("adminStatus", 1);
@@ -58,15 +58,15 @@ public class IndexModel : PageModel
                 else
                 {
                     int facultyStatus = DBClass.facultyCheck(userID);
+                    DBClass.DBConnection.Close();
+
                     if (facultyStatus == 1)
                     {
-                        DBClass.DBConnection.Close();
                         HttpContext.Session.SetInt32("facultyStatus", 1);
                         return RedirectToPage("/Faculty/FacultyLanding");
                     }
                     else
                     {
-                        DBClass.DBConnection.Close();
                         return RedirectToPage("/NoPermissions");
                     }
                 }
@@ -82,14 +82,11 @@ public class IndexModel : PageModel
             ViewData["LoginMessage"] = "Username and/or Password Incorrect";
             return Page();
         }
-        // check if login credentials are valid
-        
     }
-
 
     public IActionResult OnPostLogoutHandler()
     {
         HttpContext.Session.Clear();
-        return Page();
+        return RedirectToPage("Index");
     }
 }

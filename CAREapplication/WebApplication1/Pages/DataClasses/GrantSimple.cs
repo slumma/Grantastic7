@@ -8,19 +8,21 @@ namespace CAREapplication.Pages.DataClasses
         public int GrantID { get; set; }
 
         [Required(ErrorMessage = "Grant Name is required")]
-        public String? GrantName { get; set; }
+        public string GrantName { get; set; }  // Changed from string? to string
+
         public int? ProjectID { get; set; }
 
         [Required(ErrorMessage = "Supplier is required")]
         public string Supplier { get; set; }
 
         public int SupplierID { get; set; }
+
         [Required(ErrorMessage = "Project is required")]
-        public String? Project { get; set; }
+        public string Project { get; set; }  // Changed from string? to string
 
         [Required(ErrorMessage = "Amount is required")]
-        [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
-        public float Amount { get; set; }
+        [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+        public float Amount { get; set; }  
 
         [Required(ErrorMessage = "Category is required")]
         public string Category { get; set; }
