@@ -44,6 +44,7 @@ namespace CAREapplication.Pages.Project
                         Project.Amount = float.Parse(reader["Amount"].ToString());
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
                 {
@@ -58,6 +59,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.taskStaffReader(projectID))
                 {
@@ -78,6 +80,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.taskReader(projectID))
                 {
@@ -91,6 +94,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
 
                 using (SqlDataReader reader = DBProject.ProjectNoteReader(projectID))
                 {
@@ -106,6 +110,7 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                DBProject.DBConnection.Close();
             }
             catch (Exception ex)
             {
