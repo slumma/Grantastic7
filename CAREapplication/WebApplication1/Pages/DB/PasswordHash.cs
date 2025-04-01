@@ -45,6 +45,14 @@ namespace CAREapplication.Pages.DB
 
         public static bool ValidatePassword(string password, string correctHash)
         {
+            if (password == null)
+            {
+                return false;
+            }
+            if (correctHash == null)
+            {
+                return false;
+            }
             char[] delimiter = { ':' }; // this section takes the whole stored string and splits it up into the 3 parts
             var split = correctHash.Split(delimiter); // splits the long string at the : character
             var iterations = Int32.Parse(split[IterationIndex]); // picks out the first section and assigns the stored number of iterations to new variable
