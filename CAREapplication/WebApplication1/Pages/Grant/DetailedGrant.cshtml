@@ -95,20 +95,18 @@
                     <div class="table-scroll">
                         <table class="table text-center align-middle table-bordered table-body mt-0">
                             <tbody>
-                                <tr class="project-row">
-                                    <td class="fw-bold">Sarah Bennett</td>
-                                    <td>Admin/Lead PI</td>
-                                    <td>sarahbennett@example.com</td>
-                                    <td>(540) 555-5555</td>
-                                    <td><button class="btn sm-btn">Edit</button></td>
-                                </tr>
-                                <tr class="project-row">
-                                    <td class="fw-bold">Kayla Olden</td>
-                                    <td>Co-PI</td>
-                                    <td>kaylaolden8@example.com</td>
-                                    <td>(540) 555-5555</td>
-                                    <td><button class="btn sm-btn">Edit</button></td>
-                                </tr>
+                                @{
+                                    foreach (var staff in Model.staffList) 
+                                    {
+                                        <tr class="project-row">
+                                            <td class="fw-bold">@staff.FirstName @staff.LastName</td>
+                                            <td>@staff.UserRole</td>
+                                            <td>@staff.Email</td>
+                                            <td>@staff.Phone</td>
+                                            <td><button class="btn sm-btn">Edit</button></td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
                         </table>
                     </div>

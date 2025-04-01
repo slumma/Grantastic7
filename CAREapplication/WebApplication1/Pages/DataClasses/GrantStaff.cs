@@ -5,6 +5,7 @@
         public int GrantStaffID { get; set; }
         public int GrantID { get; set; }
         public string GrantName { get; set; }
+        public string UserRole {  get; set; }
         public int UserID { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }

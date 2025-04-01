@@ -13,6 +13,8 @@ namespace CAREapplication.Pages.Grant
         // empty grant object to populate it
         public GrantSimple grant { get; set; }
         public List<GrantNote> noteList { get; set; } = new List<GrantNote>();
+
+        public List<GrantStaff> staffList = new List<GrantStaff>();
         public IActionResult OnGet(int grantID)
         {
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
@@ -27,6 +29,7 @@ namespace CAREapplication.Pages.Grant
             }
             // fills the grant object with the info in the db so the user can see and edit it 
             grant = new GrantSimple(); // Initialize the grant object
+
             SqlDataReader grantReader = DBGrant.SingleGrantReader(grantID);
 
             while (grantReader.Read())
@@ -59,12 +62,34 @@ namespace CAREapplication.Pages.Grant
             }
             DBGrant.DBConnection.Close();
 
+            staffList = grantStaffReader(grantID);
 
             return Page();
         }
         public IActionResult OnPost()
         {
             return RedirectToPage("DetailedView");
+        }
+
+        public List<GrantStaff> grantStaffReader(int grantID)
+        {
+            List<GrantStaff> staffList = new List<GrantStaff>();
+
+            SqlDataReader staffReader = DBFaculty.singleFacultyReader(grantID);
+
+            while(staffReader.Read())
+            {
+                staffList.Add(new GrantStaff
+                {
+                    FirstName = staffReader["FirstName"].ToString(),
+                    LastName = staffReader["LastName"].ToString(),
+                    Email = staffReader["Email"].ToString(),
+                    Phone = staffReader["Phone"].ToString(),
+                    UserRole = staffReader["UserRole"].ToString()
+                });
+            }
+
+            return staffList;
         }
     }
 }
