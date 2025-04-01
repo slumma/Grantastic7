@@ -164,16 +164,21 @@ body {
 
 
 .chat-box {
-    height: 75%;
+    height: 400px;
     background: #F5F5F5 !important;
     border-radius: 10px !important;
-    padding: 10px !important;
     margin-bottom: 10px !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
     flex-grow: 1;
     overflow-y: auto;
+}
+
+.sidebar.p-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
 }
 
 input {
