@@ -40,7 +40,8 @@ namespace CAREapplication.Pages.DB
                                             u.Email,
                                             u.Phone,
                                             u.HomeAddress,
-                                            g.GrantName
+                                            g.GrantName,
+                                            gs.UserRole
                                         FROM 
                                             grantStaff gs
                                         JOIN 
