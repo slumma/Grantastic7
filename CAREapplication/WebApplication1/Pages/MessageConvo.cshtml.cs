@@ -114,6 +114,9 @@ namespace CAREapplication.Pages
 
             DBMessage.InsertUserMessage(HttpContext.Session.GetInt32("userID"), otherUser.UserID, MessageContent);
 
+            ModelState.Clear();
+            MessageContent = string.Empty;
+
             LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
 
             Trace.WriteLine(receivedList.Count);
