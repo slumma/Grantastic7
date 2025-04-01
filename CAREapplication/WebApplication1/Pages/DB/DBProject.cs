@@ -188,8 +188,8 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection = DBConnection;
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskStaffRead.CommandText = "SELECT * from taskStaff\r\njoin task on task.taskid = taskstaff.taskid\r\n" +
-                "join users on taskstaff.assigneeID = users.UserID\r\nWHERE ProjectID = 1";
+            cmdTaskStaffRead.CommandText = "SELECT * from projectTaskStaff\r\njoin projectTask on projectTask.taskid = projecttaskstaff.taskid\r\n" +
+                "join users on projecttaskstaff.assigneeID = users.UserID\r\nWHERE ProjectID = @ProjectID";
             cmdTaskStaffRead.Parameters.AddWithValue("@ProjectID", projectID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();

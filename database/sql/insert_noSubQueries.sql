@@ -69,7 +69,7 @@ VALUES
 (5, 10, 0, 1);
 
 
-INSERT INTO task (ProjectID, DueDate, Objective)
+INSERT INTO projectTask (ProjectID, DueDate, Objective)
 VALUES
 (1, '2025-05-01', 'Initial Research'),
 (2, '2025-07-01', 'Development'),
@@ -82,7 +82,7 @@ VALUES
 (9, '2025-03-01', 'Requirement Gathering'),
 (10, '2025-09-01', 'Risk Assessment');
 
-INSERT INTO TaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
+INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
 (1, 1, 2, '2025-04-25'),
 (2, 2, 3, '2025-06-15'),
@@ -170,20 +170,46 @@ VALUES
 (5, 'Bus from Speed', 2, 'Under Review', 'State', '2025-03-20', 'Grant for state projects', '2025-07-20', 75000, 'Pending'),
 (1, 'Tom Cruise', 3, 'Awarded', 'Business', '2025-06-20', 'Grant for business ventures', '2025-11-20', 195000, 'Inactive');
 
-INSERT INTO grantStaff(GrantID, UserID)
+INSERT INTO grantStaff(GrantID, UserID, UserRole)
 VALUES
-(1, 1),
-(1, 2),
-(2, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
+(1, 1, 'Principal Investigator'),
+(1, 2, 'Co-PI'),
+(2, 1, 'Researcher'),
+(2, 2, 'Principal Investigator'),
+(3, 3, 'Assistant'),
+(4, 4, 'Researcher'),
+(5, 5, 'Researcher'),
+(6, 6, 'Researcher'),
+(7, 7, 'Researcher'),
+(8, 8, 'Researcher'),
+(9, 9, 'Researcher'),
+(10, 10, 'Researcher');
+
+INSERT INTO grantTask(GrantID, DueDate, Objective)
+VALUES
+(1, '2025-05-01', 'Industry Trends Analysis'),
+(2, '2025-07-01', 'Algorithm Development'),
+(3, '2025-11-01', 'Quality Assurance'),
+(4, '2025-04-01', 'Competitor Benchmarking'),
+(5, '2025-06-01', 'UI/UX Wireframing'),
+(6, '2025-08-01', 'Beta Testing'),
+(7, '2025-10-01', 'Performance Optimization'),
+(8, '2025-12-01', 'Deployment Strategy'),
+(9, '2025-03-01', 'User Needs Assessment'),
+(10, '2025-09-01', 'Security Evaluation');
+
+INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
+VALUES
+(1, 1, 2, '2025-04-25'),
+(2, 2, 3, '2025-06-15'),
+(3, 3, 1, '2025-10-01'),
+(4, 4, 5, '2025-03-25'),
+(5, 5, 6, '2025-05-15'),
+(6, 6, 4, '2025-07-25'),
+(7, 7, 8, '2025-09-15'),
+(8, 8, 9, '2025-11-25'),
+(9, 9, 10, '2025-02-15'),
+(10, 10, 7, '2025-08-15');
 
 INSERT INTO grantNotes (GrantID, AuthorID, Content, noteDate)
 VALUES
