@@ -43,6 +43,8 @@ namespace CAREapplication.Pages.Grant
             ProjectList = LoadProjects();
 
 
+
+            // debugging from AI
             foreach (var key in ModelState.Keys)
             {
                 if (ModelState[key].Errors.Count > 0)
