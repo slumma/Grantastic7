@@ -17,6 +17,7 @@ namespace CAREapplication.Pages.Project
         public List<ProjectTaskStaff> TaskStaffList { get; set; } = new List<ProjectTaskStaff>();
         public List<ProjectTask> TaskList { get; set; } = new List<ProjectTask>();
         public List<ProjectNote> NoteList { get; set; } = new List<ProjectNote>();
+        public string SupportingGrants { get; set; }
 
         public IActionResult OnGet(int projectID)
         {
@@ -49,6 +50,7 @@ namespace CAREapplication.Pages.Project
                         if (!reader.IsDBNull(reader.GetOrdinal("Amount")))
                         {
                             Project.Amount = float.Parse(reader["Amount"].ToString());
+                            SupportingGrants = reader["GrantNames"].ToString();
                         }
                         else
                         {

@@ -146,20 +146,21 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = @"SELECT 
-                                                project.ProjectID, 
-                                                project.ProjectName, 
-                                                project.ProjectDescription, 
-                                                project.DueDate, 
-                                                SUM(grants.Amount) AS Amount
-                                            FROM project
-                                            LEFT JOIN grants ON project.ProjectID = grants.ProjectID
-                                            WHERE project.ProjectID = @ProjectID
-                                            GROUP BY 
-                                                project.ProjectID, 
-                                                project.ProjectName, 
-                                                project.ProjectDescription, 
-                                                project.DueDate; ";
+            cmdProjectRead.CommandText = @"	SELECT 
+                                            project.ProjectID, 
+                                            project.ProjectName, 
+                                            project.ProjectDescription, 
+                                            project.DueDate, 
+                                            SUM(grants.Amount) AS Amount,
+                                            STRING_AGG(grants.GrantName, ', ') WITHIN GROUP (ORDER BY grants.GrantName) AS GrantNames
+                                        FROM project
+                                        LEFT JOIN grants ON project.ProjectID = grants.ProjectID
+                                        WHERE project.ProjectID = @ProjectID
+                                        GROUP BY 
+                                            project.ProjectID, 
+                                            project.ProjectName, 
+                                            project.ProjectDescription, 
+                                            project.DueDate;";
             cmdProjectRead.Parameters.AddWithValue("@ProjectID", ProjectID);
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();

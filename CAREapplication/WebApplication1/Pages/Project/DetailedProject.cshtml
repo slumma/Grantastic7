@@ -22,7 +22,13 @@
                 </div>
 
                 <h2 class="text-center mb-4">@Model.Project.ProjectName</h2>
-
+                @{
+                    if (Model.SupportingGrants != null)
+                    {
+                        <h6 class="text-center mb-4">Grants: @Model.SupportingGrants</h6>
+                    }
+                    
+                }
                 <div class="d-flex align-items-center justify-content-between mb-4 px-3">
                     <div class="flex-grow-1">
                         <div class="progress" style="height: 16px; border-radius: 30px;">
