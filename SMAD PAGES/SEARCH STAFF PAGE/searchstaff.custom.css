@@ -105,6 +105,39 @@
   color: var(--dark-gray);
 }
 
+/* MODAL STYLES */
+.custom-modal {
+  background-color: var(--medium-gray);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+}
 
+.modal-role-select {
+  background-color: var(--lightest-gray);
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 500;
+}
 
+.text-purple {
+  color: var(--dark-purple);
+}
+
+.btn-dark-purple {
+  background-color: var(--dark-purple);
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+}
+
+.btn-dark-purple:hover {
+  background-color: #3a006b;
+  color: white;
+}
 

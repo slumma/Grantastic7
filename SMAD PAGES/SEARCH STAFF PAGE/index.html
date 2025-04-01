@@ -41,52 +41,109 @@
 
   <!-- Results list -->
   <div class="results-container">
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-      <span class="fw-bold">Lexi Miller</span>
-    </div>
+    <div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Lexi Miller')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Lexi Miller</span>
   </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Sam Ogden</span>
+  <span class="arrow">&gt;</span>
+</div>
+<div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Sam Ogden')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Sam Ogden</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+<div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Kayla Olden')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Kayla Olden</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+    <div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Alysun Saunders')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Alysun Saunders</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+   <div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Josh White')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Josh White</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+<div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Nick Clement')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Nick Clement</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+<div class="result-row d-flex justify-content-between align-items-center"
+     data-bs-toggle="modal"
+     data-bs-target="#addStaffModal"
+     onclick="setSelectedStaff('Nadeem Hudson')">
+  <div class="d-flex align-items-center gap-3">
+    <i class="fas fa-user staff-icon"></i>
+    <span class="fw-bold">Nadeem Hudson</span>
+  </div>
+  <span class="arrow">&gt;</span>
+</div>
+  </div>
+</div>
+
+  </div>
+
+<!-- MODAL: Add Staff -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal text-center">
+      <div class="modal-header border-0 justify-content-end">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Kayla Olden</span>
-      </div>
-    </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Alysun Saunders</span>
-      </div>
-    </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Josh White</span>
-      </div>
-    </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Nick Clement</span>
-      </div>
-    </div>
-    <div class="result-row">
-      <div class="d-flex align-items-center gap-3">
-        <i class="fas fa-user staff-icon"></i>
-        <span class="fw-bold">Nadeem Hudson</span>
+      <div class="modal-body">
+        <h4 class="fw-bold">Add Selected Staff Member?</h4>
+        <p class="text-purple" id="staffName">"Kayla Olden"</p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <select class="form-select modal-role-select w-25">
+            <option selected>Co-PI</option>
+            <option>PI</option>
+            <option>Faculty</option>
+          </select>
+          <button class="btn btn-dark-purple">Add Staff</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-  </div>
+<script>
+  function setSelectedStaff(name) {
+    document.getElementById('staffName').textContent = `"${name}"`;
+  }
+</script>
 
  </body>
  </html>
