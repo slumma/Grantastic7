@@ -29,6 +29,7 @@ CREATE TABLE BPrep (
 CREATE TABLE project(
     ProjectID int Identity(1,1) PRIMARY KEY,
     ProjectName nvarchar(200), 
+	ProjectDescription nvarchar(200),
     DueDate datetime);
 
 CREATE TABLE projectStaff(

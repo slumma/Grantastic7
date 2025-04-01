@@ -27,18 +27,18 @@ VALUES
 
 
 
-INSERT INTO project (ProjectName, DueDate)
+INSERT INTO project (ProjectName, DueDate, ProjectDescription)
 VALUES
-('Project Alpha', '2025-06-01'),
-('Project Beta', '2025-08-15'),
-('Project Gamma', '2025-12-31'),
-('Project Delta', '2025-04-20'),
-('Project Epsilon', '2025-07-10'),
-('Project Zeta', '2025-09-25'),
-('Project Eta', '2025-11-15'),
-('Project Theta', '2025-03-05'),
-('Project Iota', '2025-10-20'),
-('Project Kappa', '2025-05-25');
+('Project Alpha', '2025-06-01', 'Development of an AI-powered analytics tool'),
+('Project Beta', '2025-08-15', 'Enhancement of cybersecurity measures for internal systems'),
+('Project Gamma', '2025-12-31', 'Implementation of a cloud-based data storage solution'),
+('Project Delta', '2025-04-20', 'Market research and competitor analysis for a new product launch'),
+('Project Epsilon', '2025-07-10', 'User interface redesign to improve customer experience'),
+('Project Zeta', '2025-09-25', 'Machine learning model optimization for predictive analysis'),
+('Project Eta', '2025-11-15', 'Testing and deployment of an automated customer support chatbot'),
+('Project Theta', '2025-03-05', 'Requirement gathering and feasibility study for a new software initiative'),
+('Project Iota', '2025-10-20', 'Security audit and compliance assessment for regulatory standards'),
+('Project Kappa', '2025-05-25', 'Integration of AI-driven automation into business processes');
 
 
 
@@ -123,7 +123,6 @@ VALUES
 (5, 9),
 (5, 10);
 
-
 INSERT INTO meetingMinutes (MeetingID, UserID, MinutesDate)
 VALUES
 (1, 1, '2025-03-02'),
@@ -136,8 +135,6 @@ VALUES
 (8, 8, '2025-12-02'),
 (9, 9, '2025-03-16'),
 (10, 10, '2025-09-16');
-
-
 
 INSERT INTO projectNotes (ProjectID, AuthorID, Content, noteDate)
 VALUES
@@ -237,8 +234,6 @@ VALUES
 (9, 'Denied', '2025-11-01'),
 (10, 'Approved', '2025-05-01');
 
-
-
 INSERT INTO supplierStatus (SupplierID, StatusName, ChangeDate)
 VALUES
 (1, 'Active', '2025-01-01'),
@@ -251,9 +246,6 @@ VALUES
 (8, 'Inactive', '2025-03-15'),
 (9, 'Pending', '2025-06-15'),
 (10, 'Active', '2025-02-15');*/
-
-
-
 
 INSERT INTO userMessage (SenderID, RecipientID, SubjectTitle, Contents, SentTime)
 VALUES
