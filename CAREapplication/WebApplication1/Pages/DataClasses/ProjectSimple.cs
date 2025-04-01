@@ -12,6 +12,6 @@ namespace CAREapplication.Pages.DataClasses
         public DateTime DueDate { get; set; }
         [Required(ErrorMessage = "DueDate is required")]
         public float Amount { get; set; }
-
+        public string ProjectDescription { get; set; }
     }
 }

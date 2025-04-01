@@ -2,7 +2,7 @@
 
 namespace CAREapplication.Pages.DataClasses
 {
-    public class TaskStaff
+    public class ProjectTaskStaff
     {
         public int TaskStaffID { get; set; }
         public int TaskID { get; set; }

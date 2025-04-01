@@ -101,7 +101,7 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate;";
+            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectDescription, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate;";
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
             return tempReader;
@@ -153,7 +153,7 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
             return tempReader;
         }
-        public static SqlDataReader taskReader(int projectID)
+        public static SqlDataReader projectTaskReader(int projectID)
         {
             SqlCommand cmdTaskRead = new SqlCommand();
             cmdTaskRead.Connection = DBConnection;
@@ -172,6 +172,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskRead.Connection = DBConnection;
             cmdTaskRead.Connection.ConnectionString = DBConnString;
 
+<<<<<<< Updated upstream
             cmdTaskRead.CommandText = @"SELECT 
                                             gt.TaskID, 
                                             g.GrantID AS RelatedEntityID, 
@@ -197,6 +198,9 @@ namespace CAREapplication.Pages.DB
                                         JOIN projectTask pt ON pts.TaskID = pt.TaskID
                                         JOIN project p ON pt.ProjectID = p.ProjectID
                                         WHERE pts.AssigneeID = @UserID;";
+=======
+            cmdTaskRead.CommandText = "SELECT t.TaskID, t.ProjectID, t.DueDate, t.Objective\r\nFROM projectTask t\r\nJOIN projectTaskStaff ts ON t.TaskID = ts.TaskID\r\nWHERE ts.AssigneeID = @UserID\r\nORDER BY t.DueDate;";
+>>>>>>> Stashed changes
             cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
