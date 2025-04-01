@@ -53,7 +53,7 @@
           </div>
 
           <div class="d-flex align-items-center gap-3">
-            <span class="nav-link text-white" href="#">samogden</span>
+            <span class="nav-link text-white">samogden</span>
             <button class="btn logout-btn">LOGOUT</button>
           </div>
         </nav>
@@ -176,60 +176,98 @@
           <td class="fw-bold">Edit for first review</td>
           <td>08 / 30 / 2025</td>
           <td>
-            <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
-              data-bs-toggle="collapse" data-bs-target="#staffTable1" aria-expanded="false">
-              View Staff
-            </button>
-          </td>
-          <td><button class="btn sm-btn">Detailed View</button></td>
-        </tr>
-        <tr class="collapse" id="staffTable1">
-          <td colspan="4" class="position-relative">
-            <div class="dropdown-popup mx-auto">
-              <div class="staff-scroll">
-                <table class="table table-sm mb-0">
-                  <tbody>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
-                  </tbody>
-                </table>
+            <div class="result-row d-flex justify-content-between align-items-center"
+               data-bs-toggle="modal"
+               data-bs-target="#addStaffModal"
+               onclick="setSelectedStaff('Staff Member')">
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn dropdown-button text-start dropdown-toggle" type="button">
+              <i class="fas fa-user staff-icon"></i>
+              <span class="fw-bold">View Staff</span>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- MODAL: Add Staff -->
+        <div class="modal fade" id="addStaffModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal text-center">
+              <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 class="fw-bold">Select a Staff Member</h4>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <select class="form-select modal-role-select w-50">
+                    <option selected>Staff Member 1</option>
+                    <option>Staff Member 2</option>
+                    <option>Staff Member 3</option>
+                    <option>Staff Member 4</option>
+                    <option>Staff Member 5</option>
+                    <option>Staff Member 6</option>
+                  </select>
+                  <button class="btn btn-dark-purple">Add Staff</button>
+                </div>
               </div>
             </div>
-          </td>
-        </tr>
+            <td><button class="btn sm-btn">Detailed View</button></td>
+        </div>
+        </td>
+      </tr>
 
-        <!-- Task Row 2 -->
-               <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable2">
+        <!-- Task Row 1 -->
+        <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable2">
           <td class="fw-bold">Finish Section 2</td>
           <td>09 / 15 / 2025</td>
           <td>
-            <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
-              data-bs-toggle="collapse" data-bs-target="#staffTable2" aria-expanded="false">
-              View Staff
-            </button>
-          </td>
-          <td><button class="btn sm-btn">Detailed View</button></td>
-        </tr>
-        <tr class="collapse" id="staffTable2">
-          <td colspan="4" class="position-relative">
-            <div class="dropdown-popup mx-auto">
-              <div class="staff-scroll">
-                <table class="table table-sm mb-0">
-                  <tbody>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Sarah Bennett</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">John Lane</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Emily Fox</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Derek Smith</a></td></tr>
-                    <tr><td class="text-center"><a href="#" class="staff-link">Nina Patel</a></td></tr>
-                  </tbody>
-                </table>
+            <div class="result-row d-flex justify-content-between align-items-center"
+               data-bs-toggle="modal"
+               data-bs-target="#addStaffModal"
+               onclick="setSelectedStaff('Staff Member')">
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn dropdown-button text-start dropdown-toggle" type="button">
+              <i class="fas fa-user staff-icon"></i>
+              <span class="fw-bold">View Staff</span>
+            </div>
+          </div>
+        </button>
+
+          <!-- MODAL: Add Staff -->
+        <div class="modal fade" id="addStaffModal2" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal text-center">
+              <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 class="fw-bold">Select a Staff Member</h4>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <select class="form-select modal-role-select w-50">
+                    <option selected>Staff Member 1</option>
+                    <option>Staff Member 2</option>
+                    <option>Staff Member 3</option>
+                    <option>Staff Member 4</option>
+                    <option>Staff Member 5</option>
+                    <option>Staff Member 6</option>
+                  </select>
+                  <button class="btn btn-dark-purple">Add Staff</button>
+                </div>
               </div>
             </div>
-          </td>
-        </tr>
+          </div>
+          <td><button class="btn sm-btn">Detailed View</button></td>
+        </div>
+        </td>
+      </tr>
+
+
+<script>
+  function setSelectedStaff(name) {
+    document.getElementById('staffName').textContent = `"${name}"`;
+  }
+</script>
+
 
       </tbody>
     </table>
