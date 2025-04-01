@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CAREapplication.Pages.DB
@@ -145,9 +146,20 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount from project" +
-                                            " JOIN grants on project.ProjectID = grants.ProjectID where project.ProjectID = @ProjectID" +
-                                            " group by project.ProjectID, project.ProjectName, project.duedate;";
+            cmdProjectRead.CommandText = @"SELECT 
+                                    project.ProjectID, 
+                                    project.ProjectName, 
+                                    project.ProjectDescription, 
+                                    project.DueDate, 
+                                    SUM(grants.Amount) AS Amount
+                                FROM project
+                                JOIN grants ON project.ProjectID = grants.ProjectID
+                                WHERE project.ProjectID = @ProjectID
+                                GROUP BY
+                                    project.ProjectID, 
+                                    project.ProjectName, 
+                                    project.ProjectDescription, 
+                                    project.DueDate; ";
             cmdProjectRead.Parameters.AddWithValue("@ProjectID", ProjectID);
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
@@ -159,7 +171,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskRead.Connection = DBConnection;
             cmdTaskRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskRead.CommandText = "SELECT * from task WHERE ProjectID = @ProjectID";
+            cmdTaskRead.CommandText = "SELECT * from ProjectTask WHERE ProjectID = @ProjectID";
             cmdTaskRead.Parameters.AddWithValue("@ProjectID", projectID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();

@@ -3,6 +3,7 @@ using CAREapplication.Pages.DataClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 
 namespace CAREapplication.Pages.Project
@@ -19,6 +20,7 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnGet(int projectID)
         {
+            Trace.WriteLine($"Received projectID: {projectID}");
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
@@ -35,6 +37,7 @@ namespace CAREapplication.Pages.Project
 
             try
             {
+                Trace.WriteLine("Executing singleProjectReader query...");
                 using (SqlDataReader reader = DBProject.singleProjectReader(projectID))
                 {
                     if (reader.Read())
@@ -44,9 +47,14 @@ namespace CAREapplication.Pages.Project
                         Project.Amount = float.Parse(reader["Amount"].ToString());
                         Project.ProjectDescription = reader["ProjectDescription"].ToString();
                     }
+                    reader.Close();
                 }
+                Trace.WriteLine("singleProjectReader query completed successfully.");
+
                 DBProject.DBConnection.Close();
 
+
+                Trace.WriteLine("Executing projectStaffReader query...");
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
                 {
                     while (reader.Read())
@@ -60,15 +68,18 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                Trace.WriteLine("projectStaffReader query completed successfully.");
+
                 DBProject.DBConnection.Close();
 
+                Trace.WriteLine("Executing taskStaffReader query...");
                 using (SqlDataReader reader = DBProject.taskStaffReader(projectID))
                 {
                     while (reader.Read())
                     {
                         TaskStaffList.Add(new ProjectTaskStaff
                         {
-                            TaskStaffID = Convert.ToInt32(reader["TaskStaffID"]),
+                            TaskStaffID = Convert.ToInt32(reader["ProjectTaskStaffID"]),
                             TaskID = Convert.ToInt32(reader["TaskID"]),
                             AssigneeID = Convert.ToInt32(reader["AssigneeID"]),
                             AssignerID = Convert.ToInt32(reader["AssignerID"]),
@@ -81,8 +92,11 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                Trace.WriteLine("taskStaffReader query completed successfully.");
+
                 DBProject.DBConnection.Close();
 
+                Trace.WriteLine("Executing projectTaskReader query...");
                 using (SqlDataReader reader = DBProject.projectTaskReader(projectID))
                 {
                     while (reader.Read())
@@ -95,8 +109,11 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                Trace.WriteLine("projectTaskReader query completed successfully.");
+
                 DBProject.DBConnection.Close();
 
+                Trace.WriteLine("Executing ProjectNoteReader query...");
                 using (SqlDataReader reader = DBProject.ProjectNoteReader(projectID))
                 {
                     while (reader.Read())
@@ -111,12 +128,20 @@ namespace CAREapplication.Pages.Project
                         });
                     }
                 }
+                Trace.WriteLine("ProjectNoteReader query completed successfully.");
+
                 DBProject.DBConnection.Close();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
+                Trace.WriteLine($"SQL Error: {ex.Message}");
+                foreach (SqlError error in ex.Errors)
+                {
+                    Trace.WriteLine($"SQL Error Detail: {error.Message}");
+                }
                 ModelState.AddModelError("", "An error occurred while retrieving project details: " + ex.Message);
             }
+
 
             return Page();
         }

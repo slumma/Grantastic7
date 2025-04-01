@@ -5,6 +5,7 @@ using CAREapplication.Pages.DataClasses;
 using System.Data.SqlClient;
 using CAREapplication.Pages.DataClasses;
 using CAREapplication.Pages.DB;
+using System.Diagnostics;
 
 namespace CAREapplication.Pages.Project
 {
@@ -30,6 +31,7 @@ namespace CAREapplication.Pages.Project
             }
             DBProject.DBConnection.Close();
             LoadProjects();
+            Trace.WriteLine(projectList.Count);
             return Page();
         }
 
