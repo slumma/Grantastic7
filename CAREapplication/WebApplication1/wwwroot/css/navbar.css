@@ -1,9 +1,18 @@
 
 /* NAV BAR */
 
+header {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 100px; /* Match navbar height */
+    overflow: hidden;
+}
 .navbar {
     min-height: 100px;
     background-color: var(--dark-purple) !important;
+    padding: 0;
+    margin: 0;
 }
 
 .navbar-nav .nav-link {

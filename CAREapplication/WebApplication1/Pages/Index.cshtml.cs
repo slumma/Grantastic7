@@ -53,7 +53,7 @@ public class IndexModel : PageModel
                 if (adminStatus == 1)
                 {
                     HttpContext.Session.SetInt32("adminStatus", 1);
-                    return RedirectToPage("/Project/ProjectDashboard");
+                    return RedirectToPage("/UserDashboard");
                 }
                 else
                 {
@@ -63,7 +63,7 @@ public class IndexModel : PageModel
                     if (facultyStatus == 1)
                     {
                         HttpContext.Session.SetInt32("facultyStatus", 1);
-                        return RedirectToPage("/Faculty/FacultyLanding");
+                        return RedirectToPage("/UserDashboard");
                     }
                     else
                     {
