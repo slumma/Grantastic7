@@ -28,7 +28,7 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
                 return RedirectToPage("../Index");
             }
-
+            DBProject.DBConnection.Close();
             LoadProjects();
             return Page();
         }
