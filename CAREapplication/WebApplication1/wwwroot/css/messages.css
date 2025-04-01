@@ -216,6 +216,7 @@ input {
 .list-group-item {
     border-radius: 5px;
     margin-bottom: 5px;
+    background-color: var(--light-purple) !important;
 }
 
 /* Style chat messages */

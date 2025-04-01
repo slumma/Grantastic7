@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace CAREapplication.Pages.DB
 {
@@ -164,6 +165,22 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
             return tempReader;
         }
+
+        public static SqlDataReader UserTaskReader(int? UserID)
+        {
+            SqlCommand cmdTaskRead = new SqlCommand();
+            cmdTaskRead.Connection = DBConnection;
+            cmdTaskRead.Connection.ConnectionString = DBConnString;
+
+            cmdTaskRead.CommandText = "SELECT t.TaskID, t.ProjectID, t.DueDate, t.Objective\r\nFROM task t\r\nJOIN TaskStaff ts ON t.TaskID = ts.TaskID\r\nWHERE ts.AssigneeID = @UserID\r\nORDER BY t.DueDate;";
+            cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
+            cmdTaskRead.Connection.Open();
+            SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
+            return tempReader;
+        }
+
+        
+
 
         public static SqlDataReader taskStaffReader(int projectID)
         {

@@ -28,11 +28,11 @@
     <!-- Main Content -->
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container text-center py-5">
-            <p class="date-text">April 1st, 2025</p>
-            <h2>Welcome, Sarah</h2>
+            <p class="date-text">@DateTime.Now.ToString("MMMM d, yyyy")</p>
+            <h2>Welcome, @($"{char.ToUpper(Model.activeUser.FirstName[0])}{Model.activeUser.FirstName.Substring(1).ToLower()}")</h2>
             <!-- Status Boxes -->
             <div class="stats-container d-flex justify-content-center gap-3 mt-3">
-                <div class="stat-box"> <span> 2 </span> tasks remaining</div>
+                <div class="stat-box"> <span> @Model.UserTaskList.Count </span> tasks remaining</div>
                 <div class="stat-box"> <span> 8 </span> grants pending</div>
                 <div class="stat-box"> <span> 3 </span> active projects</div>
             </div>
@@ -52,8 +52,11 @@
                     <div class="content-box">
                         <h4 class="box-title">MY TASKS</h4>
                         <ul class="list-unstyled">
-                            <li class="task-item">■ Review Project Gamma Progress</li>
-                            <li class="task-item">■ Finish Project Alpha Section 2.</li>
+                            @foreach (var task in Model.UserTaskList){
+                                <li class="task-item">
+                                    <a class="task-item" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">■ @task.Objective</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
