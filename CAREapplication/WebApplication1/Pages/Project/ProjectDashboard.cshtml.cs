@@ -1,0 +1,69 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using CAREapplication.Pages.DB;
+using CAREapplication.Pages.DataClasses;
+using System.Data.SqlClient;
+using CAREapplication.Pages.DataClasses;
+using CAREapplication.Pages.DB;
+
+namespace CAREapplication.Pages.Project
+{
+    public class ProjectDashboardModel : PageModel
+    {
+        public required List<ProjectSimple> projectList { get; set; } = new List<ProjectSimple>();
+        [BindProperty]
+        public bool DisplayAll { get; set; }
+        [BindProperty]
+        public String TableButton { get; set; } = "Expand";
+
+        public IActionResult OnGet()
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            LoadProjects();
+            return Page();
+        }
+
+        public IActionResult OnPostToggleTable()
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            LoadProjects();
+            return Page();
+        }
+
+        private void LoadProjects()
+        {
+            SqlDataReader projectReader = DBProject.ProjectReader();
+            while (projectReader.Read())
+            {
+                projectList.Add(new ProjectSimple
+                {
+                    ProjectID = Int32.Parse(projectReader["ProjectID"].ToString()),
+                    ProjectName = projectReader["ProjectName"].ToString(),
+                    DueDate = DateTime.Parse(projectReader["DueDate"].ToString()),
+                    Amount = projectReader["Amount"] != DBNull.Value && projectReader["Amount"].ToString() != "" ? float.Parse(projectReader["Amount"].ToString()) : 0f
+                });
+            }
+            DBProject.DBConnection.Close();
+        }
+    }
+}

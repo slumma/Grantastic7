@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Add Grant</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <!-- END LOADING BOOTSTRAP CSS -->
+  <!-- LOADING JAVA -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- END LOADING JAVA -->  
+  <!-- Custom styles -->
+  <link href="addgrant.custom.css" rel="stylesheet">
+  </head>
+    
+  <body>
+  <!-- Main Content -->
+  <div class="container-fluid py-5 main-bg">
+    <div class="container main-container">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="row px-5">
+  <h2 class="text-center mb-4">ADD NEW GRANT</h2>
+
+  <div class="col-md-6">
+    <form>
+      <div class="mb-3">
+        <label>Grant Name</label>
+        <input type="text" class="form-control custom-input" placeholder="Name">
+      </div>
+      <div class="mb-3">
+        <label>Supplier</label>
+        <select class="form-select custom-input">
+          <option disabled selected>Select Supplier</option>
+          <option>Supplier A</option>
+          <option>Supplier B</option>
+          <option>Supplier C</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Project</label>
+        <select class="form-select custom-input">
+          <option disabled selected>Select Project</option>
+          <option>Project 1</option>
+          <option>Project 2</option>
+          <option>Project 3</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Amount</label>
+        <input type="number" class="form-control custom-input" placeholder="$" min="0" step="0.01">
+      </div>
+      <div class="mb-3">
+        <label>Category</label>
+        <select class="form-select custom-input">
+          <option disabled selected>Select Category</option>
+          <option>Technology</option>
+          <option>Education</option>
+          <option>Community</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Status</label>
+        <select class="form-select custom-input">
+          <option disabled selected>Select Status</option>
+          <option>Pending</option>
+          <option>Approved</option>
+          <option>Declined</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-6">
+    <form>
+      <div class="mb-3">
+        <label>Description</label>
+        <textarea class="form-control custom-input" rows="6" placeholder="Type here..."></textarea>
+      </div>
+      <div class="mb-3">
+        <label>Submission Date</label>
+        <input type="date" class="form-control custom-input">
+      </div>
+      <div class="mb-3">
+        <label>Award Date</label>
+        <input type="date" class="form-control custom-input">
+      </div>
+    </form>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4 gap-3">
+    <button class="lg-btn">CLEAR</button>
+    <button class="lg-btn">CANCEL</button>
+    <button class="lg-btn">POPULATE</button>
+    <button class="lg-btn" style="background-color: #3BB54A !important;">ADD GRANT</button>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
