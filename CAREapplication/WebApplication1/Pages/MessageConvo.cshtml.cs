@@ -112,7 +112,10 @@ namespace CAREapplication.Pages
 
             LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
 
-            DBMessage.InsertUserMessage(HttpContext.Session.GetInt32("userID"), otherUser.UserID, MessageContent);
+            if (MessageContent != null)
+            {
+                DBMessage.InsertUserMessage(HttpContext.Session.GetInt32("userID"), otherUser.UserID, MessageContent);
+            }
 
             ModelState.Clear();
             MessageContent = string.Empty;

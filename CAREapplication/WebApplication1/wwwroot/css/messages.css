@@ -107,6 +107,7 @@ body {
 
 .main-container {
     padding: 15px;
+    margin-top: 0px;
     margin-left: 35px;
     margin-right: auto;
 }
