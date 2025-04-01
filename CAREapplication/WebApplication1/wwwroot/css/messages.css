@@ -187,3 +187,55 @@ body {
     background-color: #b599ce !important;
     border-color: #b599ce !important;
 }
+
+/*sam*/
+.recent-messages {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.list-group-item {
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* Style chat messages */
+.message-container {
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 10px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    max-width: 70%;
+}
+
+/* Different colors for sender and receiver */
+.sender {
+    background: #d1e7dd; /* Light green */
+    align-self: flex-end;
+}
+
+.message {
+    max-width: 70%;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.bg-secondary {
+    background-color: #6c757d !important;
+}
+
+.receiver {
+    background: #f8d7da; /* Light red */
+    align-self: flex-start;
+}

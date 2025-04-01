@@ -85,26 +85,29 @@ namespace CAREapplication.Pages.DB
             return tempReader;
         }
 
-        public static SqlDataReader singleConvoReader(int? Recipient, int Sender)
+        public static SqlDataReader singleConvoReader(int? UserID1, int UserID2)
         {
             SqlCommand cmdsingleConvoReader = new SqlCommand();
             cmdsingleConvoReader.Connection = DBConnection;
             cmdsingleConvoReader.Connection.ConnectionString = DBConnString;
             cmdsingleConvoReader.CommandText = @"SELECT 
-                                                    userMessage.*,
-                                                    sender.Username AS SenderUsername,
-                                                    recipient.Username AS RecipientUsername
-                                                FROM 
-                                                    userMessage
-                                                JOIN 
-                                                    Users AS sender ON userMessage.SenderID = sender.UserID
-                                                JOIN 
-                                                    Users AS recipient ON userMessage.RecipientID = recipient.UserID
-                                                WHERE 
-                                                    userMessage.RecipientID = @Recipient AND userMessage.SenderID = @Sender;";
+                                            userMessage.*,
+                                            sender.Username AS SenderUsername,
+                                            recipient.Username AS RecipientUsername
+                                        FROM 
+                                            userMessage
+                                        JOIN 
+                                            Users AS sender ON userMessage.SenderID = sender.UserID
+                                        JOIN 
+                                            Users AS recipient ON userMessage.RecipientID = recipient.UserID
+                                        WHERE 
+                                            (userMessage.SenderID = @UserID1 AND userMessage.RecipientID = @UserID2)
+                                            OR 
+                                            (userMessage.SenderID = @UserID2 AND userMessage.RecipientID = @UserID1)
+                                        ORDER BY SentTime ASC;";
 
-            cmdsingleConvoReader.Parameters.AddWithValue("@Recipient", Recipient);
-            cmdsingleConvoReader.Parameters.AddWithValue("@Sender", Sender);
+    cmdsingleConvoReader.Parameters.AddWithValue("@UserID1", UserID1);
+            cmdsingleConvoReader.Parameters.AddWithValue("@UserID2", UserID2);
 
             cmdsingleConvoReader.Connection.Open(); // Open connection here, close in Model!
 

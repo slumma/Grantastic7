@@ -112,6 +112,10 @@ namespace CAREapplication.Pages
 
             LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
 
+            DBMessage.InsertUserMessage(HttpContext.Session.GetInt32("userID"), otherUser.UserID, MessageContent);
+
+            LoadReceivedMessages(HttpContext.Session.GetInt32("userID"), otherUser.UserID);
+
             Trace.WriteLine(receivedList.Count);
 
             return Page();

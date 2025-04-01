@@ -32,7 +32,7 @@
                     @foreach (var username in Model.Usernames)
                     {
                         <li class="list-group-item">
-                            <a asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text</a>
+                            <a class="list-group-item" asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text</a>
                         </li>
                     }
                 </ul>
@@ -61,10 +61,11 @@
                     <div class="chat-box">
                         @foreach (var message in Model.receivedList)
                         {
-                            <div class="message @(message.SenderUsername == Model.otherUser.UserName ? "bg-light" : "bg-secondary text-white")">
+                            <div class="message @(message.SenderUsername == Model.otherUser.UserName ? "bg-light text-dark" : "bg-secondary text-white") p-2 rounded">
                                 <strong>@message.SenderUsername:</strong> @message.Contents
                             </div>
                         }
+
                     </div>
                 }
                 else
@@ -93,10 +94,10 @@
                 <form method="post">
                     <div class="chat-input d-flex">
                         <input asp-for="MessageContent" type="text" class="form-control" placeholder="Type a message">
-                        <button class="btn btn-light mx-2">✎</button>
                         <button class="btn btn-light">+</button>
+                        <button asp-page-handler="SendMessage" asp-route-sender="@Model.otherUser.UserID" type=" submit" class="btn btn-primary ms-2">Send</button>
                     </div>
-                    <button asp-page-handler="SendMessage" asp-route-sender="@Model.otherUser.UserID" type=" submit" class="btn btn-primary ms-2">Send</button>
+                    
                     <span asp-validation-for="MessageContent" class="text-danger"></span>
                 </form>
             </div>
