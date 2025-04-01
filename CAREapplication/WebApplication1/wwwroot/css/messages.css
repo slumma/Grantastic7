@@ -176,10 +176,22 @@ body {
     overflow-y: auto;
 }
 
+input {
+    display: flex;
+    align-items: center;
+    overflow-wrap: break-word;
+}
+
 .chat-input {
     display: flex;
     align-items: center;
-    
+    overflow-wrap: break-word;
+}
+
+.form-control {
+    display: flex;
+    align-items: center;
+    overflow-wrap: break-word;
 }
 
 .btn-primary {
@@ -212,20 +224,14 @@ body {
     padding: 10px;
     border-radius: 10px;
     margin: 5px 0;
-    max-width: 70%;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 /* Different colors for sender and receiver */
 .sender {
     background: #d1e7dd; /* Light green */
     align-self: flex-end;
-}
-
-.message {
-    max-width: 70%;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 10px;
 }
 
 .bg-light {
