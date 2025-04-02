@@ -380,5 +380,5 @@ table {
 
 .save-btn:hover {
   background-color: var(--dark-purple);
-  color: black;
+  color: white;
 }
