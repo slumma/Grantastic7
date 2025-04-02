@@ -125,7 +125,8 @@ namespace CAREapplication.Pages.Project
                         {
                             TaskID = Convert.ToInt32(reader["TaskID"]),
                             Objective = reader["Objective"].ToString(),
-                            DueDate = Convert.ToDateTime(reader["DueDate"])
+                            DueDate = Convert.ToDateTime(reader["DueDate"]),
+                            Completed = Convert.ToInt32(reader["Completed"])
                         });
                     }
                 }

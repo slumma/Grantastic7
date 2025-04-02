@@ -84,6 +84,7 @@
                             <th>OBJECTIVE</th>
                             <th>DUE DATE</th>
                             <th>ASSOCIATED STAFF</th>
+                            <th>STATUS</th>
                             <th>DETAIL VIEW</th>
                         </tr>
                     </thead>
@@ -101,7 +102,8 @@
                                             <option>@staffer.FirstName @staffer.LastName</option>
                                         }
                                     </select>
-                                </td>
+                                @if (task.Completed == 1) {<td>Complete</td>}
+                                else {<td>Incomplete</td>}
                                 <td>
                                     <a class="btn sm-btn" asp-page="/Admin/TaskDetail" asp-route-taskID="@task.TaskID">Detailed View</a>
                                 </td>
