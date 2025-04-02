@@ -20,9 +20,12 @@ namespace CAREapplication.Pages
         [Required(ErrorMessage = "Must include message content.")]
         public string MessageContent { get; set; }
 
+        public string currentuser { get; set; } 
+        
 
         public IActionResult OnGet(int sender)
         {
+            currentuser = HttpContext.Session.GetString("username");
             Usernames = new List<SelectListItem>();
 
             // Execute the userReader method from DBClass to load the usernames 

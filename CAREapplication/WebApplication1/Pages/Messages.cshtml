@@ -31,9 +31,14 @@
                 <ul class="list-group message-list">
                     @foreach (var username in Model.Usernames)
                     {
-                        <li class="list-group-item">
-                            <a class="list-group-item" asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text</a>
-                        </li>
+
+                        if (username.Text != Model.usr)
+                        {
+                            <li class="list-group-item">
+                                <a class="list-group-item" asp-page="MessageConvo" asp-route-sender="@username.Value">@username.Text</a>
+                            </li>
+                        }
+
                     }
                 </ul>
                 <button class="btn btn-primary w-100 mt-3">NEW MESSAGE</button>

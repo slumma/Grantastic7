@@ -88,6 +88,7 @@ namespace CAREapplication.Pages.Grant
                     UserRole = staffReader["UserRole"].ToString()
                 });
             }
+            DBFaculty.DBConnection.Close();
 
             return staffList;
         }

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Add Project</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <!-- END LOADING BOOTSTRAP CSS -->
+  <!-- LOADING JAVA -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- END LOADING JAVA -->  
+  <!-- Custom styles -->
+  <link href="addproject.custom.css" rel="stylesheet">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- jQuery (required by Select2) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  </head>
+    
+  <body>
+  <!-- Main Content -->
+  <div class="container-fluid py-5 main-bg">
+    <div class="container main-container">
+        <h2 class="text-center mb-4">ADD NEW PROJECT</h2>
+     <div class="row px-5 g-4 mb-3">
+<!-- LEFT COLUMN -->
+<div class="col-md-6">
+  <form>
+    <div class="mb-3">
+      <label>Project Name</label>
+      <input type="text" class="form-control custom-input" placeholder="Name">
+    </div>
+    <div class="mb-3">
+      <label>Set Status</label>
+      <select class="form-select custom-input">
+        <option disabled selected>Select Status</option>
+        <option>Planning</option>
+        <option>Active</option>
+        <option>Completed</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>Associated Grant (Optional)</label>
+      <input type="text" class="form-control custom-input" placeholder="Grant">
+    </div>
+   <div class="d-flex align-items-center mb-2">
+  <label class="me-2 mb-0">Associated Staff</label>
+    <button type="button" class="btn btn-sm purple-btn px-2 py-1" data-bs-toggle="modal" data-bs-target="#addStaffModal">+</button>
+</div>
+   <div id="staffList" class="p-3" style="background-color: var(--light-purple); border-radius: 10px;">
+   <!-- Staff badges will appear here dynamically -->
+</div>
+  </form>
+</div>
+
+<!-- RIGHT COLUMN -->
+<div class="col-md-6 align-self-start project-right-column">
+  <form>
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea class="form-control custom-input" rows="6" placeholder="Type here..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Due Date</label>
+      <input type="date" class="form-control custom-input">
+    </div>
+  </form>
+</div>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-md-auto mb-2">
+    <button class="lg-btn w-100">CLEAR</button>
+  </div>
+  <div class="col-md-auto mb-2">
+    <button class="lg-btn w-100">CANCEL</button>
+  </div>
+  <div class="col-md-auto mb-2">
+    <button class="lg-btn w-100">POPULATE</button>
+  </div>
+  <div class="col-md-auto mb-2">
+    <button class="lg-btn green-btn w-100" style="background-color: #3BB54A !important;" >ADD PROJECT</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color: var(--medium-gray); border-radius: 12px;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="addStaffModalLabel">Add Associated Staff Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-column gap-3">
+      <!-- Select Dropdown for Staff (inside the modal) -->
+      <select id="staffSelect" class="form-control custom-input" style="width: 100%;">
+        <option></option> <!-- placeholder -->
+        <option>Kayla Olden</option>
+        <option>Lexi Miller</option>
+        <option>Alysun Sanders</option>
+        <option>Sam Ogden</option>
+        <option>Josh White</option>
+        <option>Nick Clement</option>
+        <option>Nadeem Husdon</option>
+      </select>
+        <button id="addStaffBtn" class="btn purple-btn w-100">Add Staff</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery + Select2 + Custom Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+  // Initialize Select2 dropdown inside modal
+  $('#staffSelect').select2({
+    placeholder: 'Search Staff',
+    allowClear: true,
+    width: 'resolve',
+    dropdownParent: $('#addStaffModal'),
+    language: {
+      inputTooShort: function () {
+        return "Type here...";
+      },
+      noResults: function () {
+        return "No matches found";
+      }
+    }
+  });
+
+  // Add staff badge when button is clicked
+  $('#addStaffBtn').on('click', function () {
+    const selectedName = $('#staffSelect').val();
+
+    if (selectedName) {
+      // Check if staff already exists in badge list
+      const existingBadges = $('#staffList .badge').toArray().map(el => $(el).text().trim());
+      if (existingBadges.includes(selectedName)) {
+        $('#addStaffModal').modal('hide');
+        $('#staffSelect').val(null).trigger('change');
+        return;
+      }
+
+      // Create and append badge with "X"
+      const badge = `
+        <span class="badge rounded-pill text-dark bg-light-gray shadow-sm px-3 py-2 m-1 d-inline-flex align-items-center">
+          ${selectedName}
+          <button type="button" class="btn-close btn-close-black btn-sm ms-2 remove-staff" aria-label="Remove" style="font-size: 0.6rem;"></button>
+        </span>`;
+
+      $('#staffList').append(badge);
+      $('#addStaffModal').modal('hide');
+      $('#staffSelect').val(null).trigger('change');
+    }
+  });
+
+  // Remove staff badge when "X" is clicked
+  $('#staffList').on('click', '.remove-staff', function () {
+    $(this).closest('.badge').remove();
+  });
+});
+</script>
+
+</body>
+</html>

@@ -5,6 +5,9 @@ using CAREapplication.Pages.DataClasses;
 using System.Data.SqlClient;
 using CAREapplication.Pages.DataClasses;
 using CAREapplication.Pages.DB;
+using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CAREapplication.Pages.Project
 {
@@ -15,6 +18,11 @@ namespace CAREapplication.Pages.Project
         public bool DisplayAll { get; set; }
         [BindProperty]
         public String TableButton { get; set; } = "Expand";
+
+        [BindProperty]
+        [Required(ErrorMessage = "You must have a search term.")]
+        public String searchTerm { get; set; }
+        public required List<ProjectSimple> searchedProjectList { get; set; } = new List<ProjectSimple>();
 
         public IActionResult OnGet()
         {
@@ -28,8 +36,9 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
                 return RedirectToPage("../Index");
             }
-
+            DBProject.DBConnection.Close();
             LoadProjects();
+            Trace.WriteLine(projectList.Count);
             return Page();
         }
 
@@ -47,6 +56,33 @@ namespace CAREapplication.Pages.Project
             }
 
             LoadProjects();
+            return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            ModelState.Clear();
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
+                LoadProjects(); // Load all projects so they still display
+                return Page();
+            }
+
+            SqlDataReader projectSearch = DBProject.projectSearch(searchTerm);
+            while (projectSearch.Read())
+            {
+                searchedProjectList.Add(new ProjectSimple
+                {
+                    ProjectID = Int32.Parse(projectSearch["ProjectID"].ToString()),
+                    ProjectName = projectSearch["ProjectName"].ToString(),
+                    DueDate = DateTime.Parse(projectSearch["DueDate"].ToString()),
+                    Amount = projectSearch["Amount"] != DBNull.Value && projectSearch["Amount"].ToString() != "" ? float.Parse(projectSearch["Amount"].ToString()) : 0f
+                });
+            }
+            DBProject.DBConnection.Close();
+
             return Page();
         }
 
