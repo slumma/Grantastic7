@@ -46,7 +46,7 @@
                             </th>
                             <th>
                                 <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
-                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "supp_asc" ? "supp_desc" : "supp_asc")">SUPPLIER</a>
+                                   asp-route-sortOrder="@(Model.CurrentSortOrder == "supp_asc" ? "supp_desc" : "supp_asc")">FUNDER</a>
                             </th>
                             <th>
                                 <a asp-page="./GrantDashboard" class="font-weight-bold text-decoration-none no-link-color"
@@ -75,7 +75,7 @@
                                         <tr class="project-row-approved">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
-                                            <td>@grant.Supplier</td>
+                                            <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
                                             <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
                                             <td>@grant.Project</td>
                                             <td>
@@ -90,7 +90,7 @@
                                         <tr class="project-row-pending">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
-                                            <td>@grant.Supplier</td>
+                                            <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
                                             <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
                                             <td>@grant.Project</td>
                                             <td>
@@ -105,7 +105,7 @@
                                         <tr class="project-row-declined">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
-                                            <td>@grant.Supplier</td>
+                                            <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
                                             <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
                                             <td>@grant.Project</td>
                                             <td>
@@ -124,8 +124,7 @@
 
             <!-- Large Buttons -->
             <div class="d-flex justify-content-end gap-3 mt-3">
-                <button class="btn lg-btn">VIEW BUSINESS PARTNERS</button>
-                <button class="btn lg-btn">ADD PROJECT</button>
+                <a class="btn lg-btn" asp-page="AddGrant">ADD GRANT</a>
             </div>
         </div>
     </div>
