@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.Identity.Client;
 
 
 namespace CAREapplication.Pages.Project
@@ -17,10 +18,15 @@ namespace CAREapplication.Pages.Project
         public List<ProjectTaskStaff> TaskStaffList { get; set; } = new List<ProjectTaskStaff>();
         public List<ProjectTask> TaskList { get; set; } = new List<ProjectTask>();
         public List<ProjectNote> NoteList { get; set; } = new List<ProjectNote>();
+        public List<int> progressList { get; set; } = new List<int>();
         public string SupportingGrants { get; set; }
+        public int progressPercent { get; set; }
+        public int total { get; set; }
+        public int progress { get; set; }
 
         public IActionResult OnGet(int projectID)
         {
+
             Trace.WriteLine($"Received projectID: {projectID}");
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
@@ -35,6 +41,8 @@ namespace CAREapplication.Pages.Project
 
             ProjectID = projectID;
             Project = new ProjectSimple();
+
+            List<int> progressList = new List<int>();
 
             try
             {
@@ -154,6 +162,13 @@ namespace CAREapplication.Pages.Project
                 ModelState.AddModelError("", "An error occurred while retrieving project details: " + ex.Message);
             }
 
+            progressList = DBProject.ProjectProgress(projectID);
+            DBProject.DBConnection.Close();
+
+            progress = progressList[0];
+            total = progressList[1];
+
+            progressPercent = Convert.ToInt32(progress / total);
 
             return Page();
         }

@@ -109,6 +109,34 @@ namespace CAREapplication.Pages.DB
             return tempReader;
         }
 
+        public static List<int> ProjectProgress(int ProjectID)
+        {
+            List<int> progressList = new List<int>();
+
+            SqlCommand cmdProgressRead = new SqlCommand();
+            cmdProgressRead.Connection = DBConnection;
+            cmdProgressRead.Connection.ConnectionString = DBConnString;
+            cmdProgressRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID AND Completed = 1;";
+            cmdProgressRead.Connection.Open();
+            cmdProgressRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+            int progress = Convert.ToInt32(cmdProgressRead.ExecuteScalar());
+            DBProject.DBConnection.Close();
+
+            SqlCommand cmdTotalRead = new SqlCommand();
+            cmdTotalRead.Connection = DBConnection;
+            cmdTotalRead.Connection.ConnectionString = DBConnString;
+            cmdTotalRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID;";
+            cmdTotalRead.Connection.Open();
+            cmdTotalRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+            int total = Convert.ToInt32(cmdTotalRead.ExecuteScalar());
+            DBProject.DBConnection.Close();
+
+            progressList.Add(progress);
+            progressList.Add(total);
+
+            return progressList;
+        }
+
         public static SqlDataReader projectStaffReader(int ProjectID)
         {
             SqlCommand cmdProjectStaffReader = new SqlCommand();
