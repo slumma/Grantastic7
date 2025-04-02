@@ -22,11 +22,19 @@
         <img src="/images/JMU.Care.png" alt="JMU CARE Logo" class="logo mb-4">
 
         <!-- Error Message Display -->
-        @if (ViewData["LoginMessage"] != null)
-        {
-            <div class="alert alert-danger text-center">
-                @ViewData["LoginMessage"]
-            </div>
+        @{
+            if (ViewData["LoginMessage"] != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @ViewData["LoginMessage"]
+                </div>
+            }
+            else if (ViewData["LogoutMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    @ViewData["LogoutMessage"]
+                </div>
+            }
         }
 
         <form method="post">

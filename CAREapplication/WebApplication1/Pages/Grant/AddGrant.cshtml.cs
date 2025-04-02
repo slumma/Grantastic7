@@ -42,8 +42,6 @@ namespace CAREapplication.Pages.Grant
             SupplierList = LoadSuppliers();
             ProjectList = LoadProjects();
 
-
-
             // debugging from AI
             foreach (var key in ModelState.Keys)
             {
