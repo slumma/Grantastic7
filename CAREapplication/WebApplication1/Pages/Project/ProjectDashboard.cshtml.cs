@@ -7,6 +7,7 @@ using CAREapplication.Pages.DataClasses;
 using CAREapplication.Pages.DB;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CAREapplication.Pages.Project
 {
@@ -19,7 +20,7 @@ namespace CAREapplication.Pages.Project
         public String TableButton { get; set; } = "Expand";
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "You must have a search term.")]
         public String searchTerm { get; set; }
         public required List<ProjectSimple> searchedProjectList { get; set; } = new List<ProjectSimple>();
 
@@ -60,6 +61,13 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnPostSearch()
         {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
+                LoadProjects(); // Load all projects so they still display
+                return Page();
+            }
+
             SqlDataReader projectSearch = DBProject.projectSearch(searchTerm);
             while (projectSearch.Read())
             {
@@ -69,10 +77,10 @@ namespace CAREapplication.Pages.Project
                     ProjectName = projectSearch["ProjectName"].ToString(),
                     DueDate = DateTime.Parse(projectSearch["DueDate"].ToString()),
                     Amount = projectSearch["Amount"] != DBNull.Value && projectSearch["Amount"].ToString() != "" ? float.Parse(projectSearch["Amount"].ToString()) : 0f
-                
-            });
+                });
             }
             DBProject.DBConnection.Close();
+
             return Page();
         }
 

@@ -24,7 +24,15 @@
                     <input type="search" asp-for="searchTerm" class="form-control w-auto" placeholder="Search" />
                     <button asp-page-handler="Search" class="btn search-btn">Search</button>
                 </form>
+                
             </div>
+            <br />
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger text-danger ">
+                    <span asp-validation-for="searchTerm"></span>
+                </div>
+            }
             <br />
             <div class="table-container">
                 <table class="table text-center align-middle table-bordered header-table">
@@ -40,37 +48,39 @@
                 <div class="table-scroll">
                     <table class="table text-center align-middle table-bordered table-body mt-0">
                         <tbody>
-                            @{
-                                if (Model.searchedProjectList.Count > 0)
+                            @if (Model.searchedProjectList.Count > 0)
+                            {
+                                foreach (var project in Model.searchedProjectList)
                                 {
-                                    foreach (var project in Model.searchedProjectList)
-                                    {
-                                        <tr class="project-row">
-                                            <td class="fw-bold">@project.ProjectName</td>
-                                            <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
-                                            <td>@string.Format("{0:C}", project.Amount)</td>
-                                            <td>
-                                                <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
-                                            </td>
-                                        </tr>
-                                    }
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@project.ProjectName</td>
+                                        <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
+                                        <td>@string.Format("{0:C}", project.Amount)</td>
+                                        <td>
+                                            <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
+                                        </td>
+                                    </tr>
                                 }
-                                else
+                            }
+                            else if (!string.IsNullOrWhiteSpace(Model.searchTerm)) // Check if a search was performed
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center fw-bold text-danger">No results found.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var project in Model.projectList)
                                 {
-                                    foreach (var project in Model.projectList)
-                                    {
-                                        <tr class="project-row">
-                                            <td class="fw-bold">@project.ProjectName</td>
-                                            <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
-                                            <td>@string.Format("{0:C}", project.Amount)</td>
-                                            <td>
-                                                <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
-                                            </td>
-                                        </tr>
-                                    }
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@project.ProjectName</td>
+                                        <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
+                                        <td>@string.Format("{0:C}", project.Amount)</td>
+                                        <td>
+                                            <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
+                                        </td>
+                                    </tr>
                                 }
-                                
-
                             }
                         </tbody>
                     </table>
