@@ -77,18 +77,51 @@
                                 {
                                     foreach (var grant in Model.searchedGrantList)
                                     {
-                                        <tr class="project-row-pending">
-                                            <td class="fw-bold">@grant.GrantName</td>
-                                            <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
-                                            <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
-                                            <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
-                                            <td>@grant.Project</td>
-                                            <td>
-                                                <div class="text-center">
-                                                    <a class="btn sm-btn" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">Detailed View</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        if (grant.Status.Equals("Active"))
+                                        {
+                                            <tr class="table-success text-black">
+                                                <td class="fw-bold">@grant.GrantName</td>
+                                                <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
+                                                <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
+                                                <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
+                                                <td>@grant.Project</td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <a class="btn sm-btn" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">Detailed View</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else if (grant.Status.Equals("Pending"))
+                                        {
+                                            <tr class="table-warning text-black">
+                                                <td class="fw-bold">@grant.GrantName</td>
+                                                <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
+                                                <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
+                                                <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
+                                                <td>@grant.Project</td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <a class="btn sm-btn" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">Detailed View</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="table-danger text-black">
+                                                <td class="fw-bold">@grant.GrantName</td>
+                                                <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
+                                                <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
+                                                <td>@grant.AwardDate.ToString("MM/dd/yyyy")</td> <!-- formats as date, no time -->
+                                                <td>@grant.Project</td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <a class="btn sm-btn" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">Detailed View</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
                                 }
                                 else if (!string.IsNullOrWhiteSpace(Model.searchTerm)) // Check if a search was performed
@@ -102,7 +135,7 @@
                                 {
                                     if (grant.Status.Equals("Active"))
                                     {
-                                        <tr class="project-row-approved">
+                                            <tr class="table-success text-black">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
                                             <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
@@ -117,7 +150,7 @@
                                     }
                                     else if (grant.Status.Equals("Pending"))
                                     {
-                                        <tr class="project-row-pending">
+                                            <tr class="table-warning text-black">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
                                             <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
@@ -132,7 +165,7 @@
                                     }
                                     else
                                     {
-                                        <tr class="project-row-declined">
+                                            <tr class="table-danger text-black">
                                             <td class="fw-bold">@grant.GrantName</td>
                                             <td>@string.Format("{0:C}", grant.Amount)</td> <!-- formats as dollar value -->
                                             <td><a asp-page="/BusinessPartners">@grant.Supplier</a></td>
