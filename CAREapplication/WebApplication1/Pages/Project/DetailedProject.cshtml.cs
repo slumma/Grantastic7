@@ -20,9 +20,9 @@ namespace CAREapplication.Pages.Project
         public List<ProjectNote> NoteList { get; set; } = new List<ProjectNote>();
         public List<int> progressList { get; set; } = new List<int>();
         public string SupportingGrants { get; set; }
-        public int progressPercent { get; set; }
-        public int total { get; set; }
         public int progress { get; set; }
+        public int total { get; set; }
+        public int completed { get; set; }
 
         public IActionResult OnGet(int projectID)
         {
@@ -165,10 +165,10 @@ namespace CAREapplication.Pages.Project
             progressList = DBProject.ProjectProgress(projectID);
             DBProject.DBConnection.Close();
 
-            progress = progressList[0];
+            completed = progressList[0];
             total = progressList[1];
 
-            progressPercent = Convert.ToInt32(progress / total);
+            progress = Convert.ToInt32(completed / total);
 
             return Page();
         }
