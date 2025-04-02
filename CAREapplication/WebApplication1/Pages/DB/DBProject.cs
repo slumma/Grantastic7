@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -259,6 +260,31 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
             return tempReader;
+        }
+
+        public static SqlDataReader projectSearch(string searchTerm)
+        {
+            SqlCommand cmdProjectSearch = new SqlCommand();
+            cmdProjectSearch.Connection = DBConnection;
+            cmdProjectSearch.Connection.ConnectionString = DBConnString;
+
+            cmdProjectSearch.CommandText = @"SELECT 
+                                                project.ProjectID, 
+                                                project.ProjectDescription, 
+                                                project.ProjectName, 
+                                                project.DueDate, 
+                                                SUM(grants.amount) AS Amount
+                                            FROM project
+                                            LEFT JOIN grants ON project.ProjectID = grants.ProjectID
+                                            WHERE project.ProjectName LIKE '%' + @SearchTerm + '%'
+                                            GROUP BY project.ProjectID, project.ProjectName, project.DueDate, project.ProjectDescription;";
+
+            cmdProjectSearch.Parameters.AddWithValue("@SearchTerm", searchTerm);
+            cmdProjectSearch.Connection.Open();
+            SqlDataReader tempReader = cmdProjectSearch.ExecuteReader();
+
+            return tempReader;
+
         }
     }
 }

@@ -16,6 +16,14 @@
   <!-- END LOADING JAVA -->  
   <!-- Custom styles -->
   <link href="addproject.custom.css" rel="stylesheet">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- jQuery (required by Select2) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </head>
     
   <body>
@@ -46,13 +54,11 @@
     </div>
    <div class="d-flex align-items-center mb-2">
   <label class="me-2 mb-0">Associated Staff</label>
-  <button type="button" class="btn btn-sm purple-btn px-2 py-1">+</button>
+    <button type="button" class="btn btn-sm purple-btn px-2 py-1" data-bs-toggle="modal" data-bs-target="#addStaffModal">+</button>
 </div>
-    <div class="p-3" style="background-color: var(--medium-gray); border-radius: 10px;">
-      <span class="badge rounded-pill text-dark bg-light-purple shadow-sm px-3 py-2 m-1">Nick C.</span>
-      <span class="badge rounded-pill text-dark bg-light-purple shadow-sm px-3 py-2 m-1">Lexi M.</span>
-      <span class="badge rounded-pill text-dark bg-light-purple shadow-sm px-3 py-2 m-1">Josh W.</span>
-    </div>
+   <div id="staffList" class="p-3" style="background-color: var(--light-purple); border-radius: 10px;">
+   <!-- Staff badges will appear here dynamically -->
+</div>
   </form>
 </div>
 
@@ -85,9 +91,93 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color: var(--medium-gray); border-radius: 12px;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="addStaffModalLabel">Add Associated Staff Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-column gap-3">
+      <!-- Select Dropdown for Staff (inside the modal) -->
+      <select id="staffSelect" class="form-control custom-input" style="width: 100%;">
+        <option></option> <!-- placeholder -->
+        <option>Kayla Olden</option>
+        <option>Lexi Miller</option>
+        <option>Alysun Sanders</option>
+        <option>Sam Ogden</option>
+        <option>Josh White</option>
+        <option>Nick Clement</option>
+        <option>Nadeem Husdon</option>
+      </select>
+        <button id="addStaffBtn" class="btn purple-btn w-100">Add Staff</button>
       </div>
     </div>
   </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery + Select2 + Custom Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+  // Initialize Select2 dropdown inside modal
+  $('#staffSelect').select2({
+    placeholder: 'Search Staff',
+    allowClear: true,
+    width: 'resolve',
+    dropdownParent: $('#addStaffModal'),
+    language: {
+      inputTooShort: function () {
+        return "Type here...";
+      },
+      noResults: function () {
+        return "No matches found";
+      }
+    }
+  });
+
+  // Add staff badge when button is clicked
+  $('#addStaffBtn').on('click', function () {
+    const selectedName = $('#staffSelect').val();
+
+    if (selectedName) {
+      // Check if staff already exists in badge list
+      const existingBadges = $('#staffList .badge').toArray().map(el => $(el).text().trim());
+      if (existingBadges.includes(selectedName)) {
+        $('#addStaffModal').modal('hide');
+        $('#staffSelect').val(null).trigger('change');
+        return;
+      }
+
+      // Create and append badge with "X"
+      const badge = `
+        <span class="badge rounded-pill text-dark bg-light-gray shadow-sm px-3 py-2 m-1 d-inline-flex align-items-center">
+          ${selectedName}
+          <button type="button" class="btn-close btn-close-black btn-sm ms-2 remove-staff" aria-label="Remove" style="font-size: 0.6rem;"></button>
+        </span>`;
+
+      $('#staffList').append(badge);
+      $('#addStaffModal').modal('hide');
+      $('#staffSelect').val(null).trigger('change');
+    }
+  });
+
+  // Remove staff badge when "X" is clicked
+  $('#staffList').on('click', '.remove-staff', function () {
+    $(this).closest('.badge').remove();
+  });
+});
+</script>
 
 </body>
 </html>

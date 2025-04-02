@@ -163,3 +163,4 @@ CREATE TABLE userMessage(
     Contents nvarchar(MAX),
     SentTime datetime DEFAULT GETDATE(),
     FOREIGN KEY (SenderID) REFERENCES users(UserID));
+

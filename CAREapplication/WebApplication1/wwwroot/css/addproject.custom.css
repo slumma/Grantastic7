@@ -122,26 +122,3 @@ button.lg-btn {
   color: black;
 }
 
-.modal-content {
-  padding: 20px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-.bg-light-gray {
-  background-color: var(--lightest-gray) !important;
-}
-
-.btn-close-black {
-  background-color: black;
-}
-
-.badge .btn-close {
-  padding: 0;
-  margin-left: 0.5rem;
-  background-color: transparent;
-  opacity: 0.6;
-}
-
-.badge .btn-close:hover {
-  opacity: 1;
-}
