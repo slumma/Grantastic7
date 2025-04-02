@@ -61,6 +61,8 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnPostSearch()
         {
+            ModelState.Clear();
+
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
