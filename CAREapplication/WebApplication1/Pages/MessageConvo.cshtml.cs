@@ -33,11 +33,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+                    
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();
@@ -67,11 +71,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();
@@ -99,11 +107,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();
