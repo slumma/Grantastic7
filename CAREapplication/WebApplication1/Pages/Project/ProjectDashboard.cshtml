@@ -27,13 +27,6 @@
                 
             </div>
             <br />
-            @if (!ViewData.ModelState.IsValid)
-            {
-                <div class="alert alert-danger text-danger ">
-                    <span asp-validation-for="searchTerm"></span>
-                </div>
-            }
-            <br />
             <div class="table-container">
                 <table class="table text-center align-middle table-bordered header-table">
                     <thead>

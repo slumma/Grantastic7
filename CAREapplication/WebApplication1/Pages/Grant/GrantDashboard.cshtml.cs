@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 
 
@@ -21,6 +22,11 @@ namespace CAREapplication.Pages.Grant
         public string SortOrder { get; set; }
 
         public string CurrentSortOrder { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "You must have a search term.")]
+        public String searchTerm { get; set; }
+
+        public required List<GrantSimple> searchedGrantList { get; set; } = new List<GrantSimple>();
 
         public IActionResult OnGet()
         {
@@ -134,5 +140,72 @@ namespace CAREapplication.Pages.Grant
             // redirects to the detailed view page with the specific grant using asp-route
             return RedirectToPage("DetailedView");
         }
+
+        public IActionResult OnPostSearch()
+        {
+            ModelState.Clear(); // Clear previous validation errors
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
+
+                // Load all grants to keep them visible
+                grantList.Clear(); // Prevent duplicates
+                SqlDataReader grantReader = DBGrant.adminGrantReader();
+
+                while (grantReader.Read())
+                {
+                    grantList.Add(new GrantSimple
+                    {
+                        GrantID = Convert.ToInt32(grantReader["GrantID"]),
+                        GrantName = grantReader["GrantName"].ToString(),
+                        ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null,
+                        Supplier = grantReader["Supplier"].ToString(),
+                        Project = grantReader["Project"].ToString(),
+                        Amount = Convert.ToSingle(grantReader["Amount"]),
+                        Category = grantReader["Category"].ToString(),
+                        Status = grantReader["GrantStatus"].ToString(),
+                        Description = grantReader["descriptions"].ToString(),
+                        SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
+                        AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
+                    });
+                }
+                DBGrant.DBConnection.Close(); // Close connection
+
+                return Page();
+            }
+
+            // If a search term is provided, perform project search
+            searchedGrantList.Clear(); // Prevent old search results from persisting
+            SqlDataReader projectSearch = DBGrant.searchGrant(searchTerm);
+
+            if (!projectSearch.HasRows)
+            {
+                ModelState.AddModelError("searchTerm", "No projects found with the given search term.");
+            }
+
+            while (projectSearch.Read())
+            {
+                searchedGrantList.Add(new GrantSimple
+                {
+                    GrantID = Convert.ToInt32(projectSearch["GrantID"]),
+                    GrantName = projectSearch["GrantName"].ToString(),
+                    ProjectID = projectSearch["ProjectID"] != DBNull.Value ? Convert.ToInt32(projectSearch["ProjectID"]) : (int?)null,
+                    Supplier = projectSearch["Supplier"].ToString(),
+                    Project = projectSearch["Project"].ToString(),
+                    Amount = Convert.ToSingle(projectSearch["Amount"]),
+                    Category = projectSearch["Category"].ToString(),
+                    Status = projectSearch["GrantStatus"].ToString(),
+                    Description = projectSearch["descriptions"].ToString(),
+                    SubmissionDate = Convert.ToDateTime(projectSearch["SubmissionDate"]),
+                    AwardDate = Convert.ToDateTime(projectSearch["AwardDate"])
+                });
+            }
+            DBGrant.DBConnection.Close(); // Close connection
+
+            return Page();
+        }
+
+
     }
 }
