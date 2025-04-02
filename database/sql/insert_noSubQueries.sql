@@ -1,6 +1,6 @@
 INSERT INTO users (Username, Password, FirstName, LastName, Email, Phone, HomeAddress, AdminStatus, EmployeeStatus, FacultyStatus, NonFacultyStatus)
 VALUES
-('samogden', 'password123', 'sam', 'ogden', 'sam@example.com', '555-1234', '123 Elm St', 1, 1, 1, 1),
+('sarahbennett', 'password123', 'Sarah', 'Bennett', 'sbennett@example.com', '555-1234', '123 Elm St', 1, 1, 1, 1),
 ('nickclement', 'password456', 'nick', 'clement', 'nickclement@example.com', '555-5678', '456 Oak St', 1, 1, 1, 1),
 ('nadeemhudson', 'password789', 'nadeem', 'hudson', 'nadeemhudson@example.com', '555-9876', '789 Pine St', 0, 1, 1, 1),
 ('joshwhite', 'password234', 'josh', 'White', 'joshwhite@example.com', '555-2234', '321 Birch St', 0, 1, 0, 1),
@@ -69,31 +69,123 @@ VALUES
 (5, 10, 0, 1);
 
 
-INSERT INTO projectTask (ProjectID, DueDate, Objective)
+INSERT INTO projectTask (ProjectID, DueDate, Objective, Completed)
 VALUES
-(1, '2025-05-01', 'Initial Research'),
-(2, '2025-07-01', 'Development'),
-(3, '2025-11-01', 'Final Review'),
-(4, '2025-04-01', 'Market Analysis'),
-(5, '2025-06-01', 'Product Design'),
-(6, '2025-08-01', 'Prototyping'),
-(7, '2025-10-01', 'Testing'),
-(8, '2025-12-01', 'Launch Plan'),
-(9, '2025-03-01', 'Requirement Gathering'),
-(10, '2025-09-01', 'Risk Assessment');
+(1, '2025-04-15', 'Initial Research', 1), -- ProjectTaskID: 1
+(1, '2025-05-01', 'Draft Report', 0), -- ProjectTaskID: 2
+(1, '2025-05-15', 'Stakeholder Interviews', 1), -- ProjectTaskID: 3
+(1, '2025-06-01', 'Review Findings', 0), -- ProjectTaskID: 4
+(1, '2025-06-15', 'Submit Report', 1), -- ProjectTaskID: 5
+
+(2, '2025-06-01', 'Project Setup', 1), -- ProjectTaskID: 6
+(2, '2025-06-15', 'Database Design', 0), -- ProjectTaskID: 7
+(2, '2025-07-01', 'Development', 1), -- ProjectTaskID: 8
+(2, '2025-07-15', 'API Integration', 0), -- ProjectTaskID: 9
+(2, '2025-08-01', 'Feature Testing', 1), -- ProjectTaskID: 10
+
+(3, '2025-09-01', 'Code Review', 0), -- ProjectTaskID: 11
+(3, '2025-09-15', 'Bug Fixing', 1), -- ProjectTaskID: 12
+(3, '2025-10-01', 'Performance Optimization', 0), -- ProjectTaskID: 13
+(3, '2025-10-15', 'User Acceptance Testing', 1), -- ProjectTaskID: 14
+(3, '2025-11-01', 'Final Review', 1), -- ProjectTaskID: 15
+
+(4, '2025-03-15', 'Industry Research', 1), -- ProjectTaskID: 16
+(4, '2025-04-01', 'Market Analysis', 0), -- ProjectTaskID: 17
+(4, '2025-04-15', 'Competitor Benchmarking', 1), -- ProjectTaskID: 18
+(4, '2025-05-01', 'Customer Surveys', 0), -- ProjectTaskID: 19
+
+(5, '2025-05-15', 'Brainstorming Session', 0), -- ProjectTaskID: 20
+(5, '2025-06-01', 'Product Design', 1), -- ProjectTaskID: 21
+(5, '2025-06-15', '3D Modeling', 0), -- ProjectTaskID: 22
+(5, '2025-07-01', 'Material Selection', 1), -- ProjectTaskID: 23
+(5, '2025-07-15', 'Prototype Sketching', 1), -- ProjectTaskID: 24
+
+(6, '2025-07-01', 'Gather Requirements', 1), -- ProjectTaskID: 25
+(6, '2025-07-15', 'Build First Prototype', 0), -- ProjectTaskID: 26
+(6, '2025-08-01', 'Testing and Refinements', 1), -- ProjectTaskID: 27
+(6, '2025-08-15', 'User Feedback Collection', 0), -- ProjectTaskID: 28
+
+(7, '2025-09-01', 'Test Plan Development', 1), -- ProjectTaskID: 29
+(7, '2025-09-15', 'Alpha Testing', 0), -- ProjectTaskID: 30
+(7, '2025-10-01', 'Beta Testing', 1), -- ProjectTaskID: 31
+(7, '2025-10-15', 'Usability Testing', 0), -- ProjectTaskID: 32
+(7, '2025-11-01', 'Final Bug Fixes', 1), -- ProjectTaskID: 33
+
+(8, '2025-11-15', 'Marketing Strategy', 0), -- ProjectTaskID: 34
+(8, '2025-12-01', 'Launch Plan', 1), -- ProjectTaskID: 35
+(8, '2025-12-15', 'Public Relations', 0), -- ProjectTaskID: 36
+(8, '2026-01-01', 'Final Campaign Review', 1), -- ProjectTaskID: 37
+
+(9, '2025-02-15', 'Stakeholder Meetings', 1), -- ProjectTaskID: 38
+(9, '2025-03-01', 'Requirement Gathering', 0), -- ProjectTaskID: 39
+(9, '2025-03-15', 'Feature Prioritization', 1), -- ProjectTaskID: 40
+(9, '2025-04-01', 'Documentation', 0), -- ProjectTaskID: 41
+(9, '2025-04-15', 'Sign-Off from Team', 1), -- ProjectTaskID: 42
+
+(10, '2025-08-15', 'Identify Risks', 0), -- ProjectTaskID: 43
+(10, '2025-09-01', 'Risk Assessment', 1), -- ProjectTaskID: 44
+(10, '2025-09-15', 'Mitigation Strategies', 0), -- ProjectTaskID: 45
+(10, '2025-10-01', 'Contingency Planning', 1), -- ProjectTaskID: 46
+(10, '2025-10-15', 'Final Review & Approval', 1); -- ProjectTaskID: 47
 
 INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
-(1, 1, 2, '2025-04-25'),
-(2, 2, 3, '2025-06-15'),
-(3, 3, 1, '2025-10-01'),
-(4, 4, 5, '2025-03-25'),
-(5, 5, 6, '2025-05-15'),
-(6, 6, 4, '2025-07-25'),
-(7, 7, 8, '2025-09-15'),
-(8, 8, 9, '2025-11-25'),
-(9, 9, 10, '2025-02-15'),
-(10, 10, 7, '2025-08-15');
+(1, 1, 1, '2025-04-15'),  -- Project 1
+(2, 2, 1, '2025-05-01'),
+(3, 1, 2, '2025-05-15'),
+(4, 2, 1, '2025-06-01'),
+(5, 1, 2, '2025-06-15'),
+
+(6, 3, 3, '2025-06-01'),  -- Project 2
+(7, 4, 3, '2025-06-15'),
+(8, 3, 4, '2025-07-01'),
+(9, 4, 3, '2025-07-15'),
+(10, 3, 4, '2025-08-01'),
+
+(11, 5, 5, '2025-09-01'),  -- Project 3
+(12, 6, 5, '2025-09-15'),
+(13, 5, 6, '2025-10-01'),
+(14, 6, 5, '2025-10-15'),
+(15, 5, 6, '2025-11-01'),
+
+(16, 7, 7, '2025-03-15'),  -- Project 4
+(17, 8, 7, '2025-04-01'),
+(18, 7, 8, '2025-04-15'),
+(19, 8, 7, '2025-05-01'),
+
+(20, 9, 9, '2025-05-15'),  -- Project 5
+(21, 10, 9, '2025-06-01'),
+(22, 9, 10, '2025-06-15'),
+(23, 10, 9, '2025-07-01'),
+(24, 9, 10, '2025-07-15'),
+
+(25, 9, 9, '2025-07-01'),  -- Project 6
+(26, 10, 9, '2025-07-15'),
+(27, 9, 10, '2025-08-01'),
+(28, 10, 9, '2025-08-15'),
+
+(29, 7, 7, '2025-09-01'),  -- Project 7
+(30, 8, 7, '2025-09-15'),
+(31, 7, 8, '2025-10-01'),
+(32, 8, 7, '2025-10-15'),
+(33, 7, 8, '2025-11-01'),
+
+(34, 5, 5, '2025-11-15'),  -- Project 8
+(35, 6, 5, '2025-12-01'),
+(36, 5, 6, '2025-12-15'),
+(37, 6, 5, '2026-01-01'),
+
+(38, 3, 3, '2025-02-15'),  -- Project 9
+(39, 4, 3, '2025-03-01'),
+(40, 3, 4, '2025-03-15'),
+(41, 4, 3, '2025-04-01'),
+(42, 3, 4, '2025-04-15'),
+
+(43, 1, 1, '2025-08-15'),  -- Project 10
+(44, 2, 1, '2025-09-01'),
+(45, 1, 2, '2025-09-15'),
+(46, 2, 1, '2025-10-01'),
+(47, 1, 2, '2025-10-15');
 
 
 INSERT INTO meeting (ProjectID, MeetingDate, Purpose)
@@ -151,21 +243,18 @@ VALUES
 
 INSERT INTO grants (SupplierID, GrantName, ProjectID, StatusName, Category, SubmissionDate, descriptions, AwardDate, Amount, GrantStatus)
 VALUES
-(1, 'Tree Fund', 1, 'Submitted', 'Federal', '2025-01-01', 'Grant for tech development', '2025-05-01', 100000, 'Active'),
-(2, 'Timeless Treasure', 2, 'Under Review', 'State', '2025-03-01', 'Grant for educational programs', '2025-07-01', 50000, 'Pending'),
-(3, 'K-12 Hospital Grant', 3, 'Awarded', 'Business', '2025-06-01', 'Grant for health initiatives', '2025-11-01', 200000, 'Inactive'),
-(4, 'Dog Park 5000', 1, 'Submitted', 'University', '2025-02-01', 'Grant for research', '2025-06-01', 150000, 'Active'),
-(5, '75 Dalmations', 2, 'Under Review', 'Federal', '2025-04-01', 'Grant for tech infrastructure', '2025-08-01', 80000, 'Pending'),
-(6, 'The other 26 Dalmations', 3, 'Awarded', 'State', '2025-05-01', 'Grant for educational tools', '2025-09-01', 120000, 'Inactive'),
-(7, 'Egg', 1, 'Submitted', 'Business', '2025-01-15', 'Grant for business development', '2025-06-15', 95000, 'Active'),
-(8, 'Peanut Butter', 2, 'Under Review', 'University', '2025-03-15', 'Grant for academic research', '2025-07-15', 50000, 'Pending'),
-(9, 'Firetruck!', 3, 'Awarded', 'Federal', '2025-06-15', 'Grant for health research', '2025-11-15', 220000, 'Inactive'),
-(10, 'Eggs Benedict', 1, 'Submitted', 'State', '2025-02-15', 'Grant for public health', '2025-06-15', 130000, 'Active'),
-(4, 'Benedict Cumberbatch', 2, 'Under Review', 'Business', '2025-04-15', 'Grant for business innovation', '2025-08-15', 85000, 'Pending'),
-(9, 'Cabbage Patch Kids', 3, 'Awarded', 'University', '2025-05-15', 'Grant for educational research', '2025-09-15', 140000, 'Inactive'),
-(3, 'Kids on the Bus', 1, 'Submitted', 'Federal', '2025-01-20', 'Grant for tech advancement', '2025-06-20', 105000, 'Active'),
-(5, 'Bus from Speed', 2, 'Under Review', 'State', '2025-03-20', 'Grant for state projects', '2025-07-20', 75000, 'Pending'),
-(1, 'Tom Cruise', 3, 'Awarded', 'Business', '2025-06-20', 'Grant for business ventures', '2025-11-20', 195000, 'Inactive');
+(1, 'AI Innovation Grant', 1, 'Submitted', 'Federal', '2025-01-01', 'Grant for tech development', '2025-05-01', 100000, 'Active'),
+(2, 'State Education Initiative', 2, 'Under Review', 'State', '2025-03-01', 'Grant for educational programs', '2025-07-01', 50000, 'Pending'),
+(3, 'Healthcare Impact Grant', 3, 'Awarded', 'Business', '2025-06-01', 'Grant for health initiatives', '2025-11-01', 200000, 'Inactive'),
+(4, 'NextGen Research Fund', 1, 'Submitted', 'University', '2025-02-01', 'Grant for AI research', '2025-06-01', 150000, 'Active'),
+(5, 'Infrastructure Enhancement Grant', 2, 'Under Review', 'Federal', '2025-04-01', 'Grant for tech infrastructure', '2025-08-01', 80000, 'Pending'),
+(6, 'Educational Tools Development', 3, 'Awarded', 'State', '2025-05-01', 'Grant for educational tools', '2025-09-01', 120000, 'Inactive'),
+(8, 'University Research Support', 2, 'Under Review', 'University', '2025-03-15', 'Grant for academic research', '2025-07-15', 50000, 'Pending'),
+(9, 'Medical Research Advancement', 3, 'Awarded', 'Federal', '2025-06-15', 'Grant for health research', '2025-11-15', 220000, 'Inactive'),
+(4, 'Business Innovation Fund', 2, 'Under Review', 'Business', '2025-04-15', 'Grant for business innovation', '2025-08-15', 85000, 'Pending'),
+(9, 'STEM Education Grant', 3, 'Awarded', 'University', '2025-05-15', 'Grant for educational research', '2025-09-15', 140000, 'Inactive'),
+(5, 'State Development Initiative', 2, 'Under Review', 'State', '2025-03-20', 'Grant for state projects', '2025-07-20', 75000, 'Pending'),
+(1, 'AI Business Accelerator', 3, 'Awarded', 'Business', '2025-06-20', 'Grant for business ventures', '2025-11-20', 195000, 'Inactive');
 
 INSERT INTO grantStaff(GrantID, UserID, UserRole)
 VALUES
