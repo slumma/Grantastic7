@@ -25,6 +25,16 @@ namespace CAREapplication.Pages
 
         public IActionResult OnGet(int sender)
         {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
+            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
             currentuser = HttpContext.Session.GetString("username");
             Usernames = new List<SelectListItem>();
 
