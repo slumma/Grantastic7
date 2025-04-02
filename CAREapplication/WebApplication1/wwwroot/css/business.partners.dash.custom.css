@@ -107,7 +107,7 @@ table {
 	.header-table th {
 		padding: 12px !important;
 		color: white;
-		background: var(--dark-purple);
+		background: var(--dark-gray);
 		border: 1px solid var(--dark-gray); /* Match background color to "hide" borders */
 		margin: 0;
 	}

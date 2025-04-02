@@ -370,8 +370,7 @@ namespace CAREapplication.Pages.DB
                     UNION ALL
                     SELECT 'User Messages', 'Contents', Contents 
                     FROM userMessage 
-                    WHERE Contents LIKE '%' + @searchWord + '%';
-                ";
+                    WHERE Contents LIKE '%' + @searchWord + '%';";
 
 
             SqlCommand cmdSearch = new SqlCommand();
