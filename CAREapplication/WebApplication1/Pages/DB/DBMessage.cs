@@ -106,7 +106,7 @@ namespace CAREapplication.Pages.DB
                                             (userMessage.SenderID = @UserID2 AND userMessage.RecipientID = @UserID1)
                                         ORDER BY SentTime ASC;";
 
-    cmdsingleConvoReader.Parameters.AddWithValue("@UserID1", UserID1);
+            cmdsingleConvoReader.Parameters.AddWithValue("@UserID1", UserID1);
             cmdsingleConvoReader.Parameters.AddWithValue("@UserID2", UserID2);
 
             cmdsingleConvoReader.Connection.Open(); // Open connection here, close in Model!

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using CAREapplication.Pages.DataClasses;
 using CAREapplication.Pages.DB;
 using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
 
 namespace CAREapplication.Pages.Project
 {
@@ -16,6 +17,11 @@ namespace CAREapplication.Pages.Project
         public bool DisplayAll { get; set; }
         [BindProperty]
         public String TableButton { get; set; } = "Expand";
+
+        [BindProperty]
+        [Required]
+        public String searchTerm { get; set; }
+        public required List<ProjectSimple> searchedProjectList { get; set; } = new List<ProjectSimple>();
 
         public IActionResult OnGet()
         {
@@ -49,6 +55,24 @@ namespace CAREapplication.Pages.Project
             }
 
             LoadProjects();
+            return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            SqlDataReader projectSearch = DBProject.projectSearch(searchTerm);
+            while (projectSearch.Read())
+            {
+                searchedProjectList.Add(new ProjectSimple
+                {
+                    ProjectID = Int32.Parse(projectSearch["ProjectID"].ToString()),
+                    ProjectName = projectSearch["ProjectName"].ToString(),
+                    DueDate = DateTime.Parse(projectSearch["DueDate"].ToString()),
+                    Amount = projectSearch["Amount"] != DBNull.Value && projectSearch["Amount"].ToString() != "" ? float.Parse(projectSearch["Amount"].ToString()) : 0f
+                
+            });
+            }
+            DBProject.DBConnection.Close();
             return Page();
         }
 
