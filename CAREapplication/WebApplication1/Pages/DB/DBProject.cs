@@ -109,6 +109,34 @@ namespace CAREapplication.Pages.DB
             return tempReader;
         }
 
+
+        public static SqlDataReader UserProjectReader(int? userID)
+        {
+            SqlCommand cmdProjectRead = new SqlCommand();
+            cmdProjectRead.Connection = DBConnection;
+            cmdProjectRead.Connection.ConnectionString = DBConnString;
+            cmdProjectRead.CommandText = @"SELECT 
+                                            p.ProjectID, 
+                                            p.ProjectName, 
+                                            p.ProjectDescription, 
+                                            p.DueDate, 
+                                            SUM(g.Amount) AS Amount
+                                        FROM 
+                                            project p
+                                        JOIN 
+                                            projectStaff ps ON p.ProjectID = ps.ProjectID
+                                        LEFT JOIN 
+                                            grants g ON p.ProjectID = g.ProjectID
+                                        WHERE 
+                                            ps.UserID = @UserID
+                                        GROUP BY 
+                                            p.ProjectID, p.ProjectName, p.ProjectDescription, p.DueDate;";
+            cmdProjectRead.Parameters.AddWithValue("@UserID", userID);
+            cmdProjectRead.Connection.Open();
+            SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
+            return tempReader;
+        }
+
         public static List<int> ProjectProgress(int ProjectID)
         {
             List<int> progressList = new List<int>();

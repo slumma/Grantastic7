@@ -41,9 +41,14 @@
                     <div class="content-box">
                         <h4 class="box-title">MY PROJECTS</h4>
                         <ul class="list-unstyled">
-                            <li class="task-item">■ Project Alpha</li>
-                            <li class="task-item">■ Project Beta</li>
-                            <li class="task-item">■ Project Gamma</li>
+                            @foreach (var proj in Model.ProjectList)
+                            {
+                                <li class="task-item">
+                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@proj.ProjectID">
+                                        ■ @proj.ProjectName
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

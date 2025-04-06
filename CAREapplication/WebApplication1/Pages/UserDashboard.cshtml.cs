@@ -13,6 +13,7 @@ namespace CAREapplication.Pages
 
         public List<ProjectTask> ProjectTaskList { get; set; } = new List<ProjectTask>();
         public List<GrantTask> GrantTaskList { get; set; } = new List<GrantTask>();
+        public List<ProjectSimple> ProjectList { get; set; } = new List<ProjectSimple>();
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
@@ -56,6 +57,22 @@ namespace CAREapplication.Pages
                 }
             }
             DBProject.DBConnection.Close();
+
+            using (SqlDataReader reader = DBProject.UserProjectReader(HttpContext.Session.GetInt32("userID")))
+            {
+                while (reader.Read())
+                {
+                    ProjectList.Add(new ProjectSimple
+                    {
+                        ProjectID = Int32.Parse(reader["ProjectID"].ToString()),
+                        ProjectName = reader["ProjectName"].ToString(),
+                        DueDate = DateTime.Parse(reader["DueDate"].ToString()),
+                        Amount = reader["Amount"] != DBNull.Value && reader["Amount"].ToString() != "" ? float.Parse(reader["Amount"].ToString()) : 0f
+                    });
+                }
+            }
+            DBProject.DBConnection.Close();
+
             return Page();
         }
     }
