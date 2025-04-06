@@ -1,0 +1,450 @@
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+/* COLOR PALETTE */
+
+:root {
+  --dark-purple: #450084;
+  --light-purple: #DACCE6;
+  --lightest-gray: #F5F5F5;
+  --medium-gray: #D9D9D9;
+  --dark-gray: #1E1E1E;
+}
+
+/* NAV BAR */
+
+.navbar {
+  min-height: 100px;
+  background-color: var(--dark-purple) !important;
+}
+
+.navbar-nav .nav-link {
+  color: var(--lightest-gray) !important;
+  margin: 0 1rem;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  border-bottom: none;
+  font-weight: normal;
+}
+
+.navbar-nav .nav-link:hover {
+  font-weight: bold;
+  color: white !important;
+  text-decoration: underline !important;
+}
+
+.navbar-nav .nav-link.active-link {
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+.logout-btn {
+  background-color: var(--lightest-gray) !important;
+  color: var(--dark-purple) !important;
+  font-weight: 700;
+  font-size: 0.95rem; /* ~14px */
+  padding: 10px 30px;
+  margin: 15px;
+  border-radius: 8px;
+}
+
+.logout-btn:hover {
+  background-color: var(--light-purple) !important;
+  color: black;
+}
+
+/* DROPDOWN MENU DESIGN */
+
+.custom-dropdown {
+  border-radius: 0 0 5px 5px;
+  background-color: var(--dark-purple);
+  padding: 0.5rem 0;
+  border: none;
+  min-width: 180px;
+}
+
+/* Dropdown items */
+.custom-dropdown .dropdown-item {
+  color: var(--lightest-gray);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+/* Hover state */
+.custom-dropdown .dropdown-item:hover {           
+  text-decoration: underline;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+
+/* MAIN CONTENT SECTION */
+
+.main-bg {
+  background-color: var(--light-purple);
+}
+
+.gray-box {
+  background-color: var(--medium-gray);
+  border-radius: 12px;
+  height: 100%;
+}
+
+.gray-box p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.partnership-info p {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.primary-contact {
+  max-width: 250px;
+  color: var(--dark-gray);
+}
+
+.contact-icon i {
+  color: var(--dark-purple);
+}
+
+.status-meter svg {
+  display: block;
+  margin: auto;
+}
+
+h2 {
+  font-family: Arial;
+  color: var(--dark-gray);
+  font-weight: bold;
+  font-size: 30px;
+}
+
+h6 {
+  font-family: Arial;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  color: #5a5a5a;
+  font-weight: 700;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--light-purple);
+  padding-bottom: 20px;
+}
+
+input[type="search"] {
+  background-color: #E2E2E2;
+  border: none;
+  border-radius: 7px !important;
+  padding: 8px;
+  margin-right: 15px;
+}
+
+.back-btn {
+  color: #5a5a5a;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+}
+
+.back-btn:hover {
+  color: var(--dark-purple)
+}
+
+/* MAIN TABLE */
+
+.table-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  table-layout: fixed;
+}
+
+.main-container {
+  background-color: #F5F5F5;
+  border-radius: 12px !important;
+  padding: 25px 8px;
+}
+
+
+.scrollable-container {
+  overflow-y: auto;
+  overflow-x: hidden; /* updated: vertical scroll only */
+  max-height: 600px;
+  padding-left: 20px;
+  padding-right: 0px;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 7px;
+
+}
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: #8A8A8A !important;
+  border-radius: 8px;
+
+}
+.scrollable-container {
+  scrollbar-color: var(--medium-gray)
+}
+
+
+/* TABLE HEADER */
+
+.header-table {
+  border-radius: 12px 12px 0 0; /* Rounded top corners only */
+  overflow: hidden;
+  border-collapse: collapse !important;
+  width: 100%;
+  border-spacing: 0 !important; /* Ensures no gaps */
+  margin-bottom: 0 !important;
+}
+
+.header-table thead {
+  background-color: var(--dark-gray) !important;
+}
+
+.header-table th {
+  padding: 12px !important;
+  color: white;
+  border: 1px solid var(--dark-gray); /* Match background color to "hide" borders */
+  margin: 0;
+}
+
+/* TABLE BODY */
+
+.table-body {
+  border-collapse: separate;
+  border-spacing: 1 2px; /* Spacing between body rows */
+  margin-top: -1px; /* Visually attach to header table */
+}
+
+.table-body tbody tr {
+  background-color: var(--medium-gray); /* Or whatever default row color */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table-body tbody tr:first-child td {
+  border-top: none; /* Remove double top border */
+}
+
+.table-body td {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  background-color: #D9D9D9; /* Optional: ensure consistent fill */
+}
+
+.table-body tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.table-body tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+.project-row {
+  background-color: var(--medium-gray);
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.dropdown-header {
+	color: var(--dark-gray) !important;
+	border: none !important;
+}
+
+.dropdown-button {
+  background-color: var(--lightest-gray);
+  padding: 10px;
+  border-radius: 7px;
+  width: 250px !important;
+}
+
+.dropdown-button:hover{
+  background-color: var(--lightest-gray);
+}
+
+/* MODAL STYLES */
+.custom-modal {
+  background-color: var(--medium-gray);
+  border-radius: 12px;
+  padding:  0 25px;
+  padding-bottom: 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+}
+
+.modal-role-select {
+  background-color: var(--lightest-gray);
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.text-purple {
+  color: var(--dark-purple);
+}
+
+.btn-dark-purple {
+  background-color: var(--dark-purple);
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+}
+
+.btn-dark-purple:hover {
+  background-color: #3a006b;
+  color: white;
+}
+
+/* Optional: Style the scrollbar */
+.staff-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.staff-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--dark-purple);
+  border-radius: 4px;
+}
+
+.staff-scroll::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+}
+
+
+/* TABLE SCROLLING FUNCTIONS */
+
+.table-scroll {
+  max-height: 300px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.table-scroll table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-scroll table td {
+  border-top: none;
+}
+
+/*NOTES DESIGN*/
+
+.notes-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.note-card {
+  background-color: #EAE6ED; /* soft lavender background */
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.note-header {
+  background-color: var(--medium-gray);
+  padding: 20px 12px 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.note-outer {
+  background-color: var(--light-purple);
+  flex-grow: 1;
+  padding: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.note-inner {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.note-inner p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+
+
+/* BUTTON DESIGN */
+
+.sm-btn {
+  background-color: var(--dark-purple);
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 5px 12px;
+  border: none;
+  font-size: 12px;
+}
+
+.sm-btn:hover {
+  background-color: var(--light-purple);
+  color: black;
+}
+
+.lg-btn {
+  background-color: var(--dark-purple) !important;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px 25px;
+  border: none;
+  font-size: 13px;
+  margin-right: 25px;
+  margin-bottom: 4px;
+}
+
+.lg-btn:hover {
+  background-color: var(--light-purple) !important;
+  color: black;
+}
+
+
+.save-btn {
+  background-color: #1ABA1A;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.save-btn:hover {
+  background-color: var(--dark-purple);
+  color: white;
+}
+
