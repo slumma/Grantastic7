@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>TechCorp Partnership Detail</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet" />
+  <link href="partner.details.custom.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple px-4">
+    <a class="navbar-brand me-5" href="#">
+      <img src="jmu_care.png" alt="Logo" height="80" />
+    </a>
+
+    <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
+      <a class="nav-link text-white" href="#home">MESSAGES</a>
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white active-link" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
+          PROJECTS
+        </a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
+          <li><a class="dropdown-item" href="#">ADD PROJECT</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
+          GRANTS
+        </a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
+          <li><a class="dropdown-item" href="#">ADD GRANT</a></li>
+        </ul>
+      </div>
+
+      <a class="nav-link text-white" href="#">SEARCH</a>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <span class="nav-link text-white">samogden</span>
+      <button class="btn logout-btn">LOGOUT</button>
+    </div>
+  </nav>
+
+  <!-- Main Page Content -->
+  <div class="container-fluid py-5 main-bg">
+    <div class="container main-container">
+      <div class="scrollable-container">
+        <div class="d-flex justify-content-start mb-3">
+          <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+        </div>
+
+        <h2 class="text-center mb-4">TechCorp</h2>
+
+        <!-- Partnership Overview Section -->
+        <h6 class="section-label">PARTNERSHIP OVERVIEW</h6>
+        <div class="row gx-4 mb-4">
+          
+          <!-- Left Box: Partnership Info + Contact -->
+          <div class="col-md-8">
+            <div class="gray-box position-relative d-flex flex-row justify-content-between align-items-stretch p-4" style="min-height: 280px;">
+              
+              <!-- Left: Info Headers -->
+              <div class="d-flex flex-column justify-content-between ps-4 pt-4 pb-4" style="gap: 1.5rem;">
+                <p><strong>Partnership Details:</strong> ----------------------</p>
+                <p><strong>Sector:</strong> ----------------------</p>
+                <p><strong>Affiliation:</strong> ----------------------</p>
+                <p><strong>Type:</strong> ----------------------</p>
+              </div>
+
+              <!-- Right: Primary Contact -->
+              <div class="text-center d-flex flex-column align-items-center justify-content-center position-relative pe-4 pb-4" style="width: 350px;">
+                <div class="mb-3">
+                  <img src="user.png" alt="Primary Contact" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                </div>
+                <p class="fw-bold mb-1 fs-5">Alysun Sanders</p>
+                <p class="mb-1"><strong>Phone:</strong> +1 (555) 555-555</p>
+                <p class="mb-1"><strong>Email:</strong> alysunsanders@example.com</p>
+              </div>
+            </div>
+
+            <!-- Centered Edit Overview Button -->
+            <div class="text-center mt-2">
+              <button class="btn sm-btn mt-2">Edit Overview</button>
+            </div>
+          </div>
+
+          <!-- Right Box: Status Tracking -->
+          <div class="col-md-4 pe-md-4">
+            <div class="gray-box text-center p-4" style="min-height: 280px;">
+              <h5 class="pt-4 fw-bold">Status Tracking:</h4>
+              <div class="status-meter my-3 position-relative">
+                <svg width="160" height="160" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
+                  <circle id="statusArc" cx="60" cy="60" r="50" 
+                          stroke="#450084" 
+                          stroke-width="17" 
+                          fill="none"
+                          stroke-dasharray="314" 
+                          stroke-dashoffset="314" 
+                          stroke-linecap="round"
+                          transform="rotate(-90 60 60)" />
+                </svg>
+              </div>
+              <p><strong>Current Status:</strong> <span class="text-purple">Negotiation</span></p>
+            </div>
+
+            <!-- Centered Edit Progress Button -->
+            <div class="text-center mt-2">
+              <button class="btn sm-btn mt-2">Edit Progress</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional sections can go here -->
+        <!-- Notes Section -->
+        <h6 class="section-label mt-5">Notes:</h6>
+        <div class="notes-wrapper d-flex flex-wrap gap-4">
+
+            <!-- Note Card -->
+              <div class="note-card">
+                <div class="note-header d-flex flex-column text-center">
+                  <h6 class="fw-bold mb-1 text-purple">4/08/25 - Note</h6>
+                  <p class="mb-2"><strong>Note Author: </strong>Kayla Olden</p>
+                </div>
+                <div class="note-outer">
+                  <div class="note-inner">
+                    <p><strong>Subject:</strong> Kickoff Meeting Recap</p>
+                    <p class="text-muted">We held the project kickoff meeting with TechCorp on 4/03. Discussed initial deliverables, defined roles, and agreed on bi-weekly check-ins. Action item: finalize data sharing agreement by next Friday.</p>
+                  </div>
+                </div>
+              </div>
+
+          <!-- Note 2 -->
+              <div class="note-card">
+                <div class="note-header d-flex flex-column text-center">
+                  <h6 class="fw-bold mb-1 text-purple">4/06/25 - Note</h6>
+                  <p class="mb-2"><strong>Note Author:</strong> Lexi Miller</p>
+                </div>
+                <div class="note-outer">
+                  <div class="note-inner">
+                    <p><strong>Subject:</strong> Grant Budget Revision</p>
+                    <p class="text-muted">The Tree Fund grant proposal was updated to reflect adjusted staffing costs. Reallocated $10,000 from outreach to technology support. Final version submitted to finance for approval.</p>
+                  </div>
+                </div>
+              </div>
+
+          <!-- Note 3 -->
+              <div class="note-card">
+                <div class="note-header d-flex flex-column text-center">
+                  <h6 class="fw-bold mb-1 text-purple">3/27/25 - Note</h6>
+                  <p class="mb-2"><strong>Note Author:</strong> Nick Clement</p>
+                </div>
+                <div class="note-outer">
+                  <div class="note-inner">
+                    <p><strong>Subject:</strong> Status Change- Prospect to Negotiation</p>
+                    <p class="text-muted">Partnership with TechCorp has officially moved into the “Negotiation” phase. Alysun is now listed as the primary contact. Please update all records and documents to reflect this change.</p>
+                  </div>
+                </div>
+              </div>
+
+
+      </div> <!-- End scrollable-container -->
+    </div> <!-- End main-container -->
+  </div> <!-- End main-bg -->
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateStatusProgress(percent) {
+      const arc = document.getElementById("statusArc");
+      const circumference = 314;
+      const offset = circumference - (percent / 100) * circumference;
+      arc.style.strokeDashoffset = offset;
+    }
+
+    // Example: Set progress to 75%
+    updateStatusProgress(75);
+  </script>
+</body>
+</html>
+
