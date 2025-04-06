@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab3;Trusted_Connection=True";
+            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
         public static void InsertUserMessage(int? senderID, int recipientID, string contents)
         {
             String sqlQuery = "INSERT INTO UserMessage (SenderID, RecipientID, Contents, SentTime) " +
@@ -106,7 +106,7 @@ namespace CAREapplication.Pages.DB
                                             (userMessage.SenderID = @UserID2 AND userMessage.RecipientID = @UserID1)
                                         ORDER BY SentTime ASC;";
 
-    cmdsingleConvoReader.Parameters.AddWithValue("@UserID1", UserID1);
+            cmdsingleConvoReader.Parameters.AddWithValue("@UserID1", UserID1);
             cmdsingleConvoReader.Parameters.AddWithValue("@UserID2", UserID2);
 
             cmdsingleConvoReader.Connection.Open(); // Open connection here, close in Model!

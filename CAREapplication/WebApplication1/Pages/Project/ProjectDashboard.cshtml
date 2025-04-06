@@ -18,11 +18,15 @@
 <body>
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center">
                 <h2>PROJECT DASHBOARD</h2>
-                <input type="search" class="form-control w-25" placeholder="Search" />
+                <form method="post" class="d-flex align-items-center gap-2">
+                    <input type="search" asp-for="searchTerm" class="form-control w-auto" placeholder="Search" />
+                    <button asp-page-handler="Search" class="btn search-btn">Search</button>
+                </form>
+                
             </div>
-
+            <br />
             <div class="table-container">
                 <table class="table text-center align-middle table-bordered header-table">
                     <thead>
@@ -37,20 +41,39 @@
                 <div class="table-scroll">
                     <table class="table text-center align-middle table-bordered table-body mt-0">
                         <tbody>
-                            @{
-                                
-                                    foreach (var project in Model.projectList)
-                                    {
-                                        <tr class="project-row">
-                                            <td class="fw-bold">@project.ProjectName</td>
-                                            <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
-                                            <td>@string.Format("{0:C}", project.Amount)</td>
-                                            <td>
+                            @if (Model.searchedProjectList.Count > 0)
+                            {
+                                foreach (var project in Model.searchedProjectList)
+                                {
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@project.ProjectName</td>
+                                        <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
+                                        <td>@string.Format("{0:C}", project.Amount)</td>
+                                        <td>
                                             <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
-                                            </td>
-                                        </tr>
-                                    }
-
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else if (!string.IsNullOrWhiteSpace(Model.searchTerm)) // Check if a search was performed
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center fw-bold text-danger">No results found.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var project in Model.projectList)
+                                {
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@project.ProjectName</td>
+                                        <td>@project.DueDate.ToString("MM / dd / yyyy")</td>
+                                        <td>@string.Format("{0:C}", project.Amount)</td>
+                                        <td>
+                                            <a class="btn sm-btn" asp-route-projectID="@project.ProjectID" asp-page="DetailedProject">DETAILED VIEW</a>
+                                        </td>
+                                    </tr>
+                                }
                             }
                         </tbody>
                     </table>

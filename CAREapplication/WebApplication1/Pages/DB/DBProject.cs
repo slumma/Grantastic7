@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CAREapplication.Pages.DB
@@ -12,7 +14,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab3;Trusted_Connection=True";
+            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
 
         //Methods
         public static void AddProject(ProjectSimple project, List<int> assignedFacultyList)
@@ -101,10 +103,66 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectDescription, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate;";
+            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectDescription, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount\r\nfrom project\r\nLEFT JOIN grants on project.ProjectID = grants.ProjectID\r\ngroup by project.ProjectID, project.ProjectName, project.duedate, project.ProjectDescription;";
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
             return tempReader;
+        }
+
+
+        public static SqlDataReader UserProjectReader(int? userID)
+        {
+            SqlCommand cmdProjectRead = new SqlCommand();
+            cmdProjectRead.Connection = DBConnection;
+            cmdProjectRead.Connection.ConnectionString = DBConnString;
+            cmdProjectRead.CommandText = @"SELECT 
+                                            p.ProjectID, 
+                                            p.ProjectName, 
+                                            p.ProjectDescription, 
+                                            p.DueDate, 
+                                            SUM(g.Amount) AS Amount
+                                        FROM 
+                                            project p
+                                        JOIN 
+                                            projectStaff ps ON p.ProjectID = ps.ProjectID
+                                        LEFT JOIN 
+                                            grants g ON p.ProjectID = g.ProjectID
+                                        WHERE 
+                                            ps.UserID = @UserID
+                                        GROUP BY 
+                                            p.ProjectID, p.ProjectName, p.ProjectDescription, p.DueDate;";
+            cmdProjectRead.Parameters.AddWithValue("@UserID", userID);
+            cmdProjectRead.Connection.Open();
+            SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
+            return tempReader;
+        }
+
+        public static List<int> ProjectProgress(int ProjectID)
+        {
+            List<int> progressList = new List<int>();
+
+            SqlCommand cmdProgressRead = new SqlCommand();
+            cmdProgressRead.Connection = DBConnection;
+            cmdProgressRead.Connection.ConnectionString = DBConnString;
+            cmdProgressRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID AND Completed = 1;";
+            cmdProgressRead.Connection.Open();
+            cmdProgressRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+            int progress = Convert.ToInt32(cmdProgressRead.ExecuteScalar());
+            DBProject.DBConnection.Close();
+
+            SqlCommand cmdTotalRead = new SqlCommand();
+            cmdTotalRead.Connection = DBConnection;
+            cmdTotalRead.Connection.ConnectionString = DBConnString;
+            cmdTotalRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID;";
+            cmdTotalRead.Connection.Open();
+            cmdTotalRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+            int total = Convert.ToInt32(cmdTotalRead.ExecuteScalar());
+            DBProject.DBConnection.Close();
+
+            progressList.Add(progress);
+            progressList.Add(total);
+
+            return progressList;
         }
 
         public static SqlDataReader projectStaffReader(int ProjectID)
@@ -145,9 +203,21 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
-            cmdProjectRead.CommandText = "SELECT project.ProjectID, project.ProjectName, project.DueDate, sum(grants.amount) AS Amount from project" +
-                                            " JOIN grants on project.ProjectID = grants.ProjectID where project.ProjectID = @ProjectID" +
-                                            " group by project.ProjectID, project.ProjectName, project.duedate;";
+            cmdProjectRead.CommandText = @"	SELECT 
+                                            project.ProjectID, 
+                                            project.ProjectName, 
+                                            project.ProjectDescription, 
+                                            project.DueDate, 
+                                            SUM(grants.Amount) AS Amount,
+                                            STRING_AGG(grants.GrantName, ', ') WITHIN GROUP (ORDER BY grants.GrantName) AS GrantNames
+                                        FROM project
+                                        LEFT JOIN grants ON project.ProjectID = grants.ProjectID
+                                        WHERE project.ProjectID = @ProjectID
+                                        GROUP BY 
+                                            project.ProjectID, 
+                                            project.ProjectName, 
+                                            project.ProjectDescription, 
+                                            project.DueDate;";
             cmdProjectRead.Parameters.AddWithValue("@ProjectID", ProjectID);
             cmdProjectRead.Connection.Open();
             SqlDataReader tempReader = cmdProjectRead.ExecuteReader();
@@ -159,7 +229,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskRead.Connection = DBConnection;
             cmdTaskRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskRead.CommandText = "SELECT * from task WHERE ProjectID = @ProjectID";
+            cmdTaskRead.CommandText = "SELECT * from ProjectTask WHERE ProjectID = @ProjectID";
             cmdTaskRead.Parameters.AddWithValue("@ProjectID", projectID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
@@ -172,8 +242,6 @@ namespace CAREapplication.Pages.DB
             cmdTaskRead.Connection = DBConnection;
             cmdTaskRead.Connection.ConnectionString = DBConnString;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             cmdTaskRead.CommandText = @"SELECT 
                                             gt.TaskID, 
                                             g.GrantID AS RelatedEntityID, 
@@ -199,12 +267,6 @@ namespace CAREapplication.Pages.DB
                                         JOIN projectTask pt ON pts.TaskID = pt.TaskID
                                         JOIN project p ON pt.ProjectID = p.ProjectID
                                         WHERE pts.AssigneeID = @UserID;";
-=======
-            cmdTaskRead.CommandText = "SELECT t.TaskID, t.ProjectID, t.DueDate, t.Objective\r\nFROM projectTask t\r\nJOIN projectTaskStaff ts ON t.TaskID = ts.TaskID\r\nWHERE ts.AssigneeID = @UserID\r\nORDER BY t.DueDate;";
->>>>>>> Stashed changes
-=======
-            cmdTaskRead.CommandText = "SELECT t.TaskID, t.ProjectID, t.DueDate, t.Objective\r\nFROM projectTask t\r\nJOIN projectTaskStaff ts ON t.TaskID = ts.TaskID\r\nWHERE ts.AssigneeID = @UserID\r\nORDER BY t.DueDate;";
->>>>>>> Stashed changes
             cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
@@ -226,6 +288,31 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
             return tempReader;
+        }
+
+        public static SqlDataReader projectSearch(string searchTerm)
+        {
+            SqlCommand cmdProjectSearch = new SqlCommand();
+            cmdProjectSearch.Connection = DBConnection;
+            cmdProjectSearch.Connection.ConnectionString = DBConnString;
+
+            cmdProjectSearch.CommandText = @"SELECT 
+                                                project.ProjectID, 
+                                                project.ProjectDescription, 
+                                                project.ProjectName, 
+                                                project.DueDate, 
+                                                SUM(grants.amount) AS Amount
+                                            FROM project
+                                            LEFT JOIN grants ON project.ProjectID = grants.ProjectID
+                                            WHERE project.ProjectName LIKE '%' + @SearchTerm + '%'
+                                            GROUP BY project.ProjectID, project.ProjectName, project.DueDate, project.ProjectDescription;";
+
+            cmdProjectSearch.Parameters.AddWithValue("@SearchTerm", searchTerm);
+            cmdProjectSearch.Connection.Open();
+            SqlDataReader tempReader = cmdProjectSearch.ExecuteReader();
+
+            return tempReader;
+
         }
     }
 }

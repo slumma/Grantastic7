@@ -46,6 +46,7 @@ CREATE TABLE projectTask(
     ProjectID int, 
     DueDate date,
     Objective nvarchar(200),
+	Completed bit default 0,
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
 
 CREATE TABLE projectTaskStaff(
@@ -109,6 +110,7 @@ CREATE TABLE grantTask(
     GrantID int, 
     DueDate date,
     Objective nvarchar(200),
+	Completed bit default 0,
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
 
 CREATE TABLE grantTaskStaff(
@@ -161,3 +163,4 @@ CREATE TABLE userMessage(
     Contents nvarchar(MAX),
     SentTime datetime DEFAULT GETDATE(),
     FOREIGN KEY (SenderID) REFERENCES users(UserID));
+

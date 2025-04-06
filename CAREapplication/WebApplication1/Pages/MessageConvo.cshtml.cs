@@ -20,9 +20,22 @@ namespace CAREapplication.Pages
         [Required(ErrorMessage = "Must include message content.")]
         public string MessageContent { get; set; }
 
+        public string currentuser { get; set; } 
+        
 
         public IActionResult OnGet(int sender)
         {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
+            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
+            currentuser = HttpContext.Session.GetString("username");
             Usernames = new List<SelectListItem>();
 
             // Execute the userReader method from DBClass to load the usernames 
@@ -30,11 +43,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+                    
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();
@@ -64,11 +81,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();
@@ -96,11 +117,15 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    Usernames.Add(new SelectListItem
+                    if (!(reader["Username"].ToString()).Equals(currentuser))
                     {
-                        Value = reader["UserID"].ToString(),
-                        Text = reader["Username"].ToString()
-                    });
+                        Usernames.Add(new SelectListItem
+                        {
+                            Value = reader["UserID"].ToString(),
+                            Text = reader["Username"].ToString()
+                        });
+                    }
+
                 }
                 reader.Close();
                 DBClass.DBConnection.Close();

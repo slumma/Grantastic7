@@ -218,8 +218,8 @@ table {
 }
 
 .table-secondary th {
-  background-color: #e0e0e0 !important;
-  font-weight: bold;
+	background: var(--dark-purple);
+	font-weight: bold;
 }
 
 .dropdown-header {

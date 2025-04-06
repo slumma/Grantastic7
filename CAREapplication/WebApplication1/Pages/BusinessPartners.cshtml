@@ -34,10 +34,11 @@
                 <table class="table text-center align-middle table-bordered header-table">
                     <thead>
                         <tr>
-                            <th>BUSINESS PARTNER</th>
+                            <th>PARTNER</th>
+                            <th>ORGANIZATION TYPE</th>
                             <th>STATUS</th>
                             <th>PRIMARY CONTACT</th>
-                            <th>CONTACT</th>
+
                             <th>DETAILED VIEW</th>
                         </tr>
                     </thead>
@@ -51,9 +52,10 @@
                             {
                                 <tr class="project-row">
                                     <td class="fw-bold">@bp.SupplierName</td>
+                                    <td>@bp.OrgType</td>
                                     <td>@bp.SupplierStatus</td>
                                     <td>@bp.FirstName @bp.LastName</td>
-                                    <td><a class="table-link" href="mailto:@bp.Email">@bp.Email</a></td>
+                                    
                                     <td><a class="btn sm-btn" asp-page="BPDetail">DETAILED VIEW</a></td>
                                 </tr>
                             }
@@ -64,7 +66,7 @@
 
             <!-- Large Buttons -->
             <div class="d-flex justify-content-end gap-3 mt-3">
-                <a class="btn lg-btn" asp-page="AdminLanding">BACK TO PROJECT DASHBOARD</a>
+                <a class="btn lg-btn" asp-page="/Project/ProjectDashboard">BACK TO PROJECT DASHBOARD</a>
             </div>
         </div>
     </div>

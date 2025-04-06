@@ -17,7 +17,7 @@ public class IndexModel : PageModel
         if (logout == "true")
         {
             HttpContext.Session.Clear();
-            ViewData["LoginMessage"] = "Successfully Logged Out!";
+            ViewData["LogoutMessage"] = "Successfully Logged Out!";
         }
 
         // Check for stored login error messages
@@ -27,6 +27,14 @@ public class IndexModel : PageModel
             ViewData["LoginMessage"] = loginError;
             HttpContext.Session.Remove("LoginError"); // Clear after displaying
         }
+
+        string logoutMessage = HttpContext.Session.GetString("LogoutMessage");
+        if (!string.IsNullOrEmpty(logoutMessage))
+        {
+            ViewData["LogoutMessage"] = logoutMessage;
+            HttpContext.Session.Remove("LogoutMessage"); // Clear after displaying
+        }
+
 
         return Page();
     }
@@ -86,7 +94,7 @@ public class IndexModel : PageModel
 
     public IActionResult OnPostLogoutHandler()
     {
-        HttpContext.Session.Clear();
+        HttpContext.Session.SetString("LogoutMessage", "Successfully logged out.");
         return RedirectToPage("Index");
     }
 }

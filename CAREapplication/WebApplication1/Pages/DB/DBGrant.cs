@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab3;Trusted_Connection=True";
+            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
         public static SqlDataReader adminGrantReader()
         {
             SqlCommand cmdGrantReader = new SqlCommand();
@@ -246,6 +246,36 @@ namespace CAREapplication.Pages.DB
                     cmdGrantUpdate.ExecuteNonQuery();
                 }
             }
+        }
+
+
+        public static SqlDataReader searchGrant(string searchTerm)
+        {
+            SqlCommand cmdGrantReader = new SqlCommand();
+            cmdGrantReader.Connection = DBConnection;
+            cmdGrantReader.Connection.ConnectionString = DBConnString;
+            cmdGrantReader.CommandText = @"SELECT 
+                                            g.GrantID, 
+                                            g.GrantName,
+                                            p.ProjectID,
+                                            s.SupplierName AS Supplier, 
+                                            p.ProjectName AS Project, 
+                                            g.Amount,
+                                            g.Category,
+                                            g.GrantStatus, 
+                                            g.descriptions,
+                                            g.SubmissionDate, 
+                                            g.AwardDate
+                                        FROM grants g
+                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
+                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+                                        WHERE g.GrantName LIKE '%' + @SearchTerm + '%'
+                                        ORDER BY g.AwardDate";
+
+            cmdGrantReader.Parameters.AddWithValue("@SearchTerm", searchTerm);
+            cmdGrantReader.Connection.Open();
+            SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
+            return tempReader;
         }
     }
 }

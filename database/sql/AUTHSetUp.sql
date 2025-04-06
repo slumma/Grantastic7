@@ -5,7 +5,7 @@ CREATE TABLE HashedCredentials(
 
 INSERT INTO HashedCredentials (Username, Password)
 VALUES
-('samogden', '1000:xDT3hh8w4Dqtocj5u/jOG6A29gskdU35:8x9ILOZKjhT4uEUp/QkKEJPW5yE='),
+('sarahbennett', '1000:xDT3hh8w4Dqtocj5u/jOG6A29gskdU35:8x9ILOZKjhT4uEUp/QkKEJPW5yE='),
 ('nickclement', '1000:1j5om/w9GjN7so5k+zaSTB5NSleADa0R:a7qucL+7oS41Hx4PgR56pe1sCic='),
 ('nadeemhudson', '1000:tdLYK3BlToGRL6Z9s9xkAdXwMiuHewEP:U0P2vWYdf7nQVlRFIct8E3a8skk='),
 ('joshwhite', '1000:lUpd7evTLNvYJwA4VzVPv8UTbTiqMETA:t8e8kug3nV+5MI3ooy88i21N1SI='),
