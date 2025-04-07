@@ -85,7 +85,7 @@ CREATE TABLE projectNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     ProjectID int, 
 	AuthorID int,
-    Content text, 
+    Content nvarchar(max), 
     NoteDate datetime DEFAULT GETDATE(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
@@ -98,7 +98,7 @@ CREATE TABLE grants(
     StatusName nvarchar(200),
     Category nvarchar(200),
     SubmissionDate date, 
-    descriptions text,
+    descriptions nvarchar(max),
     AwardDate date,
     Amount float,
 	GrantStatus nvarchar(200), --temporary
@@ -135,7 +135,7 @@ CREATE TABLE grantNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     GrantID int, 
 	AuthorID int,
-    Content text, 
+    Content nvarchar(max), 
     NoteDate datetime DEFAULT GETDATE(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
