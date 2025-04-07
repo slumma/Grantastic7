@@ -75,20 +75,32 @@
             </div>
             <!-- Grant Updates Section -->
             <div class="mt-4 p-3 grant-box rounded-3">
-                <h4>Recent Grant Updates</h4>
+                <h4>YOUR GRANTS</h4>
                 @foreach (var grant in @Model.GrantList)
                 {
                     if (grant.Status.Equals("Active"))
                     {
-                        <span class="grant-update awarded">@grant.GrantName: @grant.Status</span>
+                        <span class="grant-update awarded">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
                     }
                     else if (grant.Status.Equals("Pending"))
                     {
-                        <span class="grant-update pending">@grant.GrantName: @grant.Status</span>
+                        <span class="grant-update pending">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
                     }
                     else
                     {
-                        <span class="grant-update rejected">@grant.GrantName: @grant.Status</span>
+                        <span class="grant-update rejected">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
                     }
                 }
             </div>
