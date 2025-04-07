@@ -26,7 +26,7 @@
     <div class="header">
         <h1> <b> SEARCH SYSTEM </b></h1>
         <div class="form-container">
-            <form>
+            <form method="post">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control w-25" placeholder="Search" aria-label="Search Projects">
                     <button class="btn btn-dark-purple" type="submit">Submit</button> <!-- need to change so that button is separated from search bar -->
@@ -35,8 +35,40 @@
         </div>
         <!-- Search Bar -->
         <!-- JMU CARE Logo -->
+
         <img src="/images/JMUCare-purple.png" alt="JMU CARE Logo" class="search-logo">
     </div>
+
+    @if (Model.searchList != null && Model.searchList.Count > 0)
+    {
+        <h3 class="text-center">@Model.searchList.Count Results for "<span class="text-primary">@Model.searchWord</span>":</h3>
+        <br />
+        <table class="table table-bordered table-hover table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Table Name</th>
+                    <th>Column Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.searchList)
+                {
+                    <tr>
+                        <td>@result.TableName</td>
+                        <td>@result.ColumnName</td>
+                        <td>@result.foundValue</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (!string.IsNullOrEmpty(Model.searchWord))
+    {
+        <div class="alert alert-warning text-center">
+            No results found for "<span class="text-danger">@Model.searchWord</span>".
+        </div>
+    }
 
     <!-- Bootstrap % JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

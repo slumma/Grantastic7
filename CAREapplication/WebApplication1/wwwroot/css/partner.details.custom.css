@@ -358,7 +358,7 @@ table {
   background-color: #EAE6ED; /* soft lavender background */
   border-radius: 12px;
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   min-height: 320px;
   display: flex;
   flex-direction: column;
