@@ -28,7 +28,6 @@
                     {
                         <h6 class="text-center mb-4">Grants: @Model.SupportingGrants</h6>
                     }
-                    
                 }
                 <div class="d-flex align-items-center justify-content-between mb-4 px-3">
                     <div class="flex-grow-1">
@@ -40,8 +39,6 @@
                         <small id="taskProgressText" class="text-end d-block mt-1 fw-bold">0/10 TASKS COMPLETED</small>
                     </div>
                 </div>
-
-
 
                 <h6 class="section-label">PROJECT OVERVIEW</h6>
                 <div class="overview-box p-4 mb-4">
@@ -102,8 +99,15 @@
                                             <option>@staffer.FirstName @staffer.LastName</option>
                                         }
                                     </select>
-                                @if (task.Completed == 1) {<td>Complete</td>}
-                                else {<td>Incomplete</td>}
+                                </td>
+                                @if (task.Completed == 1)
+                                {
+                                    <td>Complete</td>
+                                }
+                                else
+                                {
+                                    <td>Incomplete</td>
+                                }
                                 <td>
                                     <a class="btn sm-btn" asp-page="/Admin/TaskDetail" asp-route-taskID="@task.TaskID">Detailed View</a>
                                 </td>
@@ -133,18 +137,43 @@
                     </tbody>
                 </table>
                 <div class="text-center mt-2">
-                    <a class="btn sm-btn" asp-page="AddProjectNote" asp-route-projectID="@Model.ProjectID">Add Note</a>
+                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+                        Add Note
+                    </button>
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3">
-                    
-                        <button asp-page="ProjectDashboard" class="btn save-btn">SAVE CHANGES</button>
-                    
+                    <button asp-page="ProjectDashboard" class="btn save-btn">SAVE CHANGES</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Add Note Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" asp-page-handler="AddNote">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNoteModalLabel">Add Project Note</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="noteContent">Note Content</label>
+                            <textarea class="form-control" id="noteContent" name="NoteContent" rows="4" required></textarea>
+                        </div>
+                        <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Note</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         function updateTaskProgress(completed, total) {
             const progressBar = document.getElementById("taskProgressBar");
@@ -163,6 +192,5 @@
         // Ensure Razor values are properly inserted
         updateTaskProgress(@(@Model.completed), @(@Model.total));
     </script>
-
 </body>
 </html>

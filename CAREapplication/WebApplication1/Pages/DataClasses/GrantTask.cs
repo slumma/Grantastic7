@@ -6,6 +6,6 @@
         public int GrantID { get; set; }
         public DateTime DueDate { get; set; }
         public String? Objective { get; set; }
-
+        public int Completed { get; set; }
     }
 }

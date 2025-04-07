@@ -1,4 +1,4 @@
-2/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
 /* COLOR PALETTE */
 
 :root {
@@ -85,23 +85,34 @@
   background-color: var(--light-purple);
 }
 
-.overview-box {
-  background-color: var(--light-purple); /* matches your light lavender theme */
+.gray-box {
+  background-color: var(--lightest-gray);
   border-radius: 12px;
-  padding: 20px;
+  height: 100%;
 }
 
-.overview-box div strong {
-  display: block;
-  margin-bottom: 4px;
-}
-
-.overview-box .text-muted {
+.gray-box p {
+  margin-bottom: 0;
   font-size: 0.95rem;
 }
 
-.progress-bar {
-	background-color: var(--dark-purple);
+.partnership-info p {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.primary-contact {
+  max-width: 250px;
+  color: var(--dark-gray);
+}
+
+.contact-icon i {
+  color: var(--dark-purple);
+}
+
+.status-meter svg {
+  display: block;
+  margin: auto;
 }
 
 h2 {
@@ -163,9 +174,11 @@ table {
   padding: 25px 8px;
 }
 
+
 .scrollable-container {
-  max-height: 600px;
   overflow-y: auto;
+  overflow-x: hidden; /* updated: vertical scroll only */
+  max-height: 600px;
   padding-left: 20px;
   padding-right: 0px;
 }
@@ -333,22 +346,87 @@ table {
   border-top: none;
 }
 
+/*NOTES DESIGN*/
 
-/* BUTTON DESIGN */
+#notesCarousel {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+}
 
-.sm-btn, .onclick {
-  background-color: var(--dark-purple);
+#notesSlider {
+  display: flex;
+  transition: transform 0.4s ease;
+  gap: 2rem;
+}
+
+.note-card {
+  background-color: #EAE6ED;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+}
+
+.note-header {
+  background-color: #D9D9D9;
+  padding: 20px 12px 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.note-outer {
+  background-color: #DACCE6;
+  padding: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  flex-grow: 1;
+}
+
+.note-inner {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  height: 100%;
+}
+
+.btn.sm-btn {
+  background-color: #450084;
   color: white;
   font-weight: bold;
   border-radius: 6px;
   padding: 5px 12px;
   border: none;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-.sm-btn:hover, .onclick{
-  background-color: var(--light-purple);
-  color: black;
+.btn.sm-btn:hover {
+  background-color: #DACCE6;
+  color: #450084;
+}
+
+.add-note-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+
+/* BUTTON DESIGN */
+
+.btn.sm-btn {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 5px 12px;
+  border: none;
+  font-size: 14px;
+}
+
+.btn.sm-btn:hover {
+  background-color: #DACCE6;
+  color: #450084;
 }
 
 .lg-btn {
@@ -379,72 +457,176 @@ table {
 }
 
 .save-btn:hover {
-  background-color: var(--dark-purple);
+  background-color: #450084;
   color: white;
 }
 
-
-/*ADD PROJEC NOTE title */
-#notetitle {
-  text-align: center;
+/* Apply Arial to all modal text */
+#noteModal, 
+#noteModal * {
+  font-family: Arial, sans-serif;
 }
 
-/* Overlay background */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1050; /* Ensure it sits above other content */
-}
-
-/* Overlay content */
-.overlay-content {
-  background: rgba(232, 232, 232, 1);
-  padding: 20px;
-  border-radius: 8px;
-  width: 75%;
-  max-width: 600px;
-  position: relative;
-}
-
-/* Close button */
-.overlay-content .closeOverlay {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* Textarea styling */
-.overlay-content textarea {
-  width: 100%;
-  height: 160px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid var(--medium-gray);
-  border-radius: 4px;
-  resize: none;
-}
-
-/* Save button styling */
-.overlay-content .save {
-  background-color: var(--dark-purple);
+/* Style for the cancel button */
+#noteModal .btn-cancel {
+  background-color: #450084; /* dark purple pantone */
   color: white;
-  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
+  font-size: 14px;
 }
 
-.overlay-content .save:hover {
-  background-color: var(--light-purple);
+#noteModal .btn-cancel:hover {
+  background-color: #DACCE6; /* lavender */
   color: black;
 }
+
+#progressModal,
+#progressModal * {
+  font-family: Arial, sans-serif;
+}
+
+#progressModal .btn-cancel {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+#progressModal .btn-cancel:hover {
+  background-color: #DACCE6;
+  color: black;
+}
+
+
+
+
+
+
+
+/* Interaction Detail View - Custom Styles */
+
+/* General Typography */
+body,
+#noteModal,
+#overviewModal,
+#progressModal {
+  font-family: Arial, sans-serif;
+}
+
+/* Note Cards */
+.note-card {
+  background-color: #EAE6ED;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 380px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+  flex-shrink: 0;
+}
+
+.note-header {
+  background-color: #D9D9D9;
+  padding: 20px 12px 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.note-outer {
+  background-color: #DACCE6;
+  padding: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  flex-grow: 1;
+}
+
+.note-inner {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  height: 100%;
+}
+
+/* Slide Button */
+.btn.sm-btn {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 5px 12px;
+  border: none;
+  font-size: 14px;
+}
+
+.btn.sm-btn:hover {
+  background-color: #DACCE6;
+  color: #450084;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.btn-cancel:hover {
+  background-color: #DACCE6;
+  color: black;
+}
+
+/* Save Button */
+.save-btn {
+  background-color: #1ABA1A;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.save-btn:hover {
+  background-color: #450084;
+  color: white;
+}
+
+/* Carousel */
+#notesCarousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+#notesSlider {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.4s ease;
+}
+
+/* Action Items */
+.bg-danger-subtle {
+  background-color: #f8d7da !important;
+}
+
+.bg-warning-subtle {
+  background-color: #fff3cd !important;
+}
+
+/* Modal Container */
+.custom-modal {
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */

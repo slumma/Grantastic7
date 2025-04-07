@@ -1,0 +1,162 @@
+<!-- Interaction Detail View Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interaction Detail View</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet" />
+  <link href="interaction.detailed.view.custom.css" rel="stylesheet" />
+  <link href="notes-carousel.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Navbar (Unchanged) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple px-4">
+    <a class="navbar-brand me-5" href="#"><img src="jmu_care.png" alt="Logo" height="80" /></a>
+    <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
+      <a class="nav-link text-white" href="#home">MESSAGES</a>
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white active-link" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">PROJECTS</a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
+          <li><a class="dropdown-item" href="#">ADD PROJECT</a></li>
+        </ul>
+      </div>
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">GRANTS</a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
+          <li><a class="dropdown-item" href="#">ADD GRANT</a></li>
+        </ul>
+      </div>
+      <a class="nav-link text-white" href="#">SEARCH</a>
+      <a class="nav-link text-white" href="#">PARTNERS</a>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <span class="nav-link text-white">sarahbennett</span>
+      <button class="btn logout-btn">LOGOUT</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container-fluid py-5 main-bg">
+    <div class="container main-container">
+      <div class="scrollable-container">
+
+        <!-- Back Button -->
+        <div class="d-flex justify-content-start mb-3">
+          <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+        </div>
+
+        <h2 class="text-center mb-4">INTERACTION DETAILED VIEW</h2>
+
+        <!-- Interaction Form Grid -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Partner Name:</label>
+            <select class="form-control"> <option>TechCorp</option> </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Logged By:</label>
+            <select class="form-control"> <option>Sarah Bennett</option> </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Date:</label>
+            <input type="text" class="form-control" value="2/13/25" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Interaction Type:</label>
+            <input type="text" class="form-control" value="Meeting - In Person" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Subject:</label>
+            <input type="text" class="form-control" value="Establish KPIs" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Meeting Minutes:</label>
+            <input type="text" class="form-control" value="105" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Meeting Link:</label>
+            <input type="text" class="form-control" value="zoom.us/join" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">View Documents:</label>
+            <select class="form-control"> <option>Documents</option> </select>
+          </div>
+        </div>
+
+        <!-- Action Items Section -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Action Items:</label>
+            <div class="bg-light p-3 rounded">
+              <div class="bg-danger-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
+                Action Item #1 <input type="checkbox" />
+              </div>
+              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
+                Action Item #2 <input type="checkbox" />
+              </div>
+              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
+                Action Item #3 <input type="checkbox" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes Section (Slideshow) -->
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Additional Note(s):</label>
+            <div class="position-relative d-flex align-items-center">
+              <button class="btn sm-btn me-2" onclick="slideNotes(-1)">&lt;</button>
+              <div id="notesCarousel" style="overflow: hidden; width: 100%;">
+                <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
+
+                  <!-- Single Note Card (repeatable) -->
+                  <div class="note-card">
+                    <div class="note-header text-center">
+                      <h6 class="fw-bold mb-1 text-purple">2/13/25 - Note</h6>
+                      <p><strong>Subject:</strong> Meeting Attendees</p>
+                    </div>
+                    <div class="note-outer">
+                      <div class="note-inner">
+                        <p><strong>Note Author:</strong> Sarah Bennett</p>
+                        <p class="text-muted">
+                          Meeting Attendees:<br />
+                          • Sarah Bennett (JMU CARE)<br />
+                          • Nick Clement (JMU CARE)<br />
+                          • Josh White (JMU CARE)<br />
+                          • Katie Murden (TechCorp)<br />
+                          • Cameron McKinney (TechCorp)<br />
+                          • Will Drezzon (TechCorp)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Add more .note-card blocks here -->
+                </div>
+              </div>
+              <button class="btn sm-btn ms-2" onclick="slideNotes(1)">&gt;</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentNoteSlide = 0;
+    function slideNotes(direction) {
+      const slider = document.getElementById("notesSlider");
+      const cards = slider.querySelectorAll(".note-card");
+      const cardWidth = cards[0].offsetWidth + 32;
+      currentNoteSlide = Math.max(0, Math.min(currentNoteSlide + direction, cards.length - 1));
+      slider.style.transform = `translateX(-${currentNoteSlide * cardWidth}px)`;
+    }
+  </script>
+</body>
+</html>

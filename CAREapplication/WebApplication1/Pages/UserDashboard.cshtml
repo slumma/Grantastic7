@@ -32,8 +32,9 @@
             <h2>Welcome, @($"{char.ToUpper(Model.activeUser.FirstName[0])}{Model.activeUser.FirstName.Substring(1).ToLower()}")</h2>
             <!-- Status Boxes -->
             <div class="stats-container d-flex justify-content-center gap-3 mt-3">
+                <div class="stat-box"> <span> @Model.ProjectList.Count </span> active projects</div>
                 <div class="stat-box"> <span> @(Model.ProjectTaskList.Count + Model.GrantTaskList.Count) </span> tasks remaining</div>
-                <div class="stat-box"> <span> 3 </span> active projects</div>
+
             </div>
             <!-- Projects & Tasks Section -->
             <div class="row mt-4">
@@ -41,9 +42,14 @@
                     <div class="content-box">
                         <h4 class="box-title">MY PROJECTS</h4>
                         <ul class="list-unstyled">
-                            <li class="task-item">■ Project Alpha</li>
-                            <li class="task-item">■ Project Beta</li>
-                            <li class="task-item">■ Project Gamma</li>
+                            @foreach (var proj in Model.ProjectList)
+                            {
+                                <li class="task-item">
+                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@proj.ProjectID">
+                                        ■ @proj.ProjectName
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -69,11 +75,34 @@
             </div>
             <!-- Grant Updates Section -->
             <div class="mt-4 p-3 grant-box rounded-3">
-                <h4>Recent Grant Updates</h4>
-                <span class="grant-update awarded">Tree Fund: Awarded</span>
-                <span class="grant-update pending">Cat Scratch 3000: Pending</span>
-                <span class="grant-update pending">Morty's Biscuits: Pending</span>
-                <span class="grant-update rejected">K-12 Hospital: Rejected</span>
+                <h4>YOUR GRANTS</h4>
+                @foreach (var grant in @Model.GrantList)
+                {
+                    if (grant.Status.Equals("Active"))
+                    {
+                        <span class="grant-update awarded">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
+                    }
+                    else if (grant.Status.Equals("Pending"))
+                    {
+                        <span class="grant-update pending">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="grant-update rejected">
+                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                @grant.GrantName: @grant.Status
+                            </a>
+                        </span>
+                    }
+                }
             </div>
         </div>
     </div>

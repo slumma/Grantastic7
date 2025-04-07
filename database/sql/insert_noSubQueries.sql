@@ -243,59 +243,155 @@ VALUES
 
 INSERT INTO grants (SupplierID, GrantName, ProjectID, StatusName, Category, SubmissionDate, descriptions, AwardDate, Amount, GrantStatus)
 VALUES
-(1, 'AI Innovation Grant', 1, 'Submitted', 'Federal', '2025-01-01', 'Grant for tech development', '2025-05-01', 100000, 'Active'),
-(2, 'State Education Initiative', 2, 'Under Review', 'State', '2025-03-01', 'Grant for educational programs', '2025-07-01', 50000, 'Pending'),
-(3, 'Healthcare Impact Grant', 3, 'Awarded', 'Business', '2025-06-01', 'Grant for health initiatives', '2025-11-01', 200000, 'Inactive'),
-(4, 'NextGen Research Fund', 1, 'Submitted', 'University', '2025-02-01', 'Grant for AI research', '2025-06-01', 150000, 'Active'),
-(5, 'Infrastructure Enhancement Grant', 2, 'Under Review', 'Federal', '2025-04-01', 'Grant for tech infrastructure', '2025-08-01', 80000, 'Pending'),
-(6, 'Educational Tools Development', 3, 'Awarded', 'State', '2025-05-01', 'Grant for educational tools', '2025-09-01', 120000, 'Inactive'),
-(8, 'University Research Support', 2, 'Under Review', 'University', '2025-03-15', 'Grant for academic research', '2025-07-15', 50000, 'Pending'),
-(9, 'Medical Research Advancement', 3, 'Awarded', 'Federal', '2025-06-15', 'Grant for health research', '2025-11-15', 220000, 'Inactive'),
-(4, 'Business Innovation Fund', 2, 'Under Review', 'Business', '2025-04-15', 'Grant for business innovation', '2025-08-15', 85000, 'Pending'),
-(9, 'STEM Education Grant', 3, 'Awarded', 'University', '2025-05-15', 'Grant for educational research', '2025-09-15', 140000, 'Inactive'),
-(5, 'State Development Initiative', 2, 'Under Review', 'State', '2025-03-20', 'Grant for state projects', '2025-07-20', 75000, 'Pending'),
-(1, 'AI Business Accelerator', 3, 'Awarded', 'Business', '2025-06-20', 'Grant for business ventures', '2025-11-20', 195000, 'Inactive');
+(1, 'AI Innovation Grant', 1, 'Submitted', 'Federal', '2025-01-01', 'This grant is focused on advancing the development and application of artificial intelligence technologies. The goal is to create cutting-edge solutions that can be integrated into existing systems, improving efficiency and capability in various industries, from healthcare to business automation. The funds will support research and development teams, along with necessary infrastructure.', '2025-05-01', 100000, 'Active'),
+(2, 'State Education Initiative', 2, 'Under Review', 'State', '2025-03-01', 'The State Education Initiative aims to enhance the quality of education in underfunded regions. This grant will support the creation and implementation of educational programs designed to bridge gaps in accessibility and quality. Funds will be allocated to developing curricula, training teachers, and providing educational resources to underserved communities.', '2025-07-01', 50000, 'Pending'),
+(3, 'Healthcare Impact Grant', 3, 'Awarded', 'Business', '2025-06-01', 'This grant is dedicated to funding projects that aim to improve healthcare delivery systems, focusing on technological advancements, patient care innovation, and improving access to services in rural and underserved areas. The grant will fund new research, pilot programs, and solutions for improving healthcare infrastructure.', '2025-11-01', 200000, 'Inactive'),
+(4, 'NextGen Research Fund', 1, 'Submitted', 'University', '2025-02-01', 'The NextGen Research Fund is designed to support cutting-edge academic research in the field of artificial intelligence. Researchers will focus on pushing the boundaries of AI theory and practical applications, exploring new techniques and algorithms that could revolutionize industries like healthcare, education, and autonomous systems.', '2025-06-01', 150000, 'Active'),
+(5, 'Infrastructure Enhancement Grant', 2, 'Under Review', 'Federal', '2025-04-01', 'This federal grant is aimed at enhancing technological infrastructure in regions that are currently lacking in high-speed internet and modern tech resources. The funding will help to build the necessary backbone for digital transformation, focusing on rural broadband projects and other critical infrastructure improvements to support technological growth.', '2025-08-01', 80000, 'Pending'),
+(6, 'Educational Tools Development', 3, 'Awarded', 'State', '2025-05-01', 'This grant supports the development and deployment of innovative educational tools that leverage technology to enhance learning experiences. It will fund the creation of new digital platforms, software, and tools that can be used by educators to improve engagement and the effectiveness of teaching in classrooms across the state.', '2025-09-01', 120000, 'Inactive'),
+(8, 'University Research Support', 2, 'Under Review', 'University', '2025-03-15', 'The University Research Support grant will fund academic research across a variety of disciplines, with a focus on interdisciplinary projects that have the potential to yield real-world applications. This includes funding for pilot studies, data collection, and collaboration between different academic departments within the university.', '2025-07-15', 50000, 'Pending'),
+(9, 'Medical Research Advancement', 3, 'Awarded', 'Federal', '2025-06-15', 'The Medical Research Advancement grant is designed to support groundbreaking medical research initiatives. This funding will support new clinical trials, drug development, and public health initiatives aimed at improving patient outcomes and advancing scientific knowledge in fields such as oncology, neuroscience, and infectious diseases.', '2025-11-15', 220000, 'Inactive'),
+(4, 'Business Innovation Fund', 2, 'Under Review', 'Business', '2025-04-15', 'The Business Innovation Fund supports businesses working on innovative projects that aim to create new market opportunities and solve pressing global challenges. The fund will focus on startups and small businesses that are developing breakthrough technologies, services, or processes with the potential for significant industry disruption.', '2025-08-15', 85000, 'Pending'),
+(9, 'STEM Education Grant', 3, 'Awarded', 'University', '2025-05-15', 'The STEM Education Grant is focused on increasing participation in science, technology, engineering, and math education, particularly among underrepresented groups. This grant will support the development of STEM curricula, teacher training programs, and student engagement initiatives to encourage more students to pursue STEM careers.', '2025-09-15', 140000, 'Inactive');
 
 INSERT INTO grantStaff(GrantID, UserID, UserRole)
 VALUES
 (1, 1, 'Principal Investigator'),
 (1, 2, 'Co-PI'),
-(2, 1, 'Researcher'),
-(2, 2, 'Principal Investigator'),
-(3, 3, 'Assistant'),
-(4, 4, 'Researcher'),
-(5, 5, 'Researcher'),
-(6, 6, 'Researcher'),
-(7, 7, 'Researcher'),
-(8, 8, 'Researcher'),
-(9, 9, 'Researcher'),
-(10, 10, 'Researcher');
+(1, 3, 'Researcher'),
 
-INSERT INTO grantTask(GrantID, DueDate, Objective)
+(2, 4, 'Principal Investigator'),
+(2, 5, 'Researcher'),
+
+(3, 6, 'Principal Investigator'),
+(3, 7, 'Researcher'),
+
+(4, 8, 'Principal Investigator'),
+(4, 9, 'Research Assistant'),
+
+(5, 10, 'Principal Investigator'),
+(5, 1, 'Data Scientist'),
+
+(6, 2, 'Principal Investigator'),
+(6, 3, 'Developer'),
+
+(7, 4, 'Principal Investigator'),
+(7, 5, 'QA Engineer'),
+
+(8, 6, 'Principal Investigator'),
+(8, 7, 'Marketing Analyst'),
+
+(9, 8, 'Principal Investigator'),
+(9, 9, 'Clinical Researcher'),
+
+(10, 10, 'Principal Investigator'),
+(10, 1, 'Cybersecurity Specialist');
+
+INSERT INTO grantTask (GrantID, DueDate, Objective, Completed)
 VALUES
-(1, '2025-05-01', 'Industry Trends Analysis'),
-(2, '2025-07-01', 'Algorithm Development'),
-(3, '2025-11-01', 'Quality Assurance'),
-(4, '2025-04-01', 'Competitor Benchmarking'),
-(5, '2025-06-01', 'UI/UX Wireframing'),
-(6, '2025-08-01', 'Beta Testing'),
-(7, '2025-10-01', 'Performance Optimization'),
-(8, '2025-12-01', 'Deployment Strategy'),
-(9, '2025-03-01', 'User Needs Assessment'),
-(10, '2025-09-01', 'Security Evaluation');
+-- Grant 1
+(1, '2025-02-15', 'Needs Assessment', 1),
+(1, '2025-03-15', 'Data Collection', 1),
+(1, '2025-04-15', 'Preliminary Analysis', 0),
+(1, '2025-05-01', 'Industry Trends Analysis', 0),
+
+-- Grant 2
+(2, '2025-04-01', 'Stakeholder Interviews', 1),
+(2, '2025-05-01', 'Curriculum Design', 0),
+(2, '2025-07-01', 'Algorithm Development', 0),
+
+-- Grant 3
+(3, '2025-07-15', 'Pilot Testing', 1),
+(3, '2025-09-01', 'Data Review', 0),
+(3, '2025-11-01', 'Quality Assurance', 1),
+
+-- Grant 4
+(4, '2025-03-15', 'Literature Review', 1),
+(4, '2025-04-01', 'Competitor Benchmarking', 0),
+(4, '2025-06-01', 'White Paper Drafting', 0),
+
+-- Grant 5
+(5, '2025-05-01', 'Requirement Gathering', 1),
+(5, '2025-06-01', 'UI/UX Wireframing', 0),
+(5, '2025-07-01', 'Design Review', 0),
+
+-- Grant 6
+(6, '2025-06-15', 'Tool Design', 1),
+(6, '2025-07-15', 'User Testing Prep', 0),
+(6, '2025-08-01', 'Beta Testing', 0),
+
+-- Grant 7
+(7, '2025-08-01', 'System Setup', 1),
+(7, '2025-09-01', 'Performance Optimization', 0),
+(7, '2025-10-01', 'Documentation Finalization', 0),
+
+-- Grant 8
+(8, '2025-10-01', 'Deployment Plan', 1),
+(8, '2025-11-01', 'Rollout Timeline Review', 0),
+(8, '2025-12-01', 'Deployment Strategy', 0),
+
+-- Grant 9
+(9, '2025-02-01', 'Stakeholder Research', 1),
+(9, '2025-03-01', 'User Needs Assessment', 0),
+(9, '2025-04-01', 'Report Compilation', 0),
+
+-- Grant 10
+(10, '2025-07-01', 'Security Audit', 1),
+(10, '2025-08-01', 'Penetration Testing', 0),
+(10, '2025-09-01', 'Security Evaluation', 0);
 
 INSERT INTO grantTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
-(1, 1, 2, '2025-04-25'),
-(2, 2, 3, '2025-06-15'),
-(3, 3, 1, '2025-10-01'),
-(4, 4, 5, '2025-03-25'),
-(5, 5, 6, '2025-05-15'),
-(6, 6, 4, '2025-07-25'),
-(7, 7, 8, '2025-09-15'),
-(8, 8, 9, '2025-11-25'),
-(9, 9, 10, '2025-02-15'),
-(10, 10, 7, '2025-08-15');
+-- Grant 1 (Users: 1, 2, 3)
+(1, 1, 2, '2025-02-15'),
+(2, 2, 1, '2025-03-15'),
+(3, 3, 1, '2025-04-15'),
+(4, 1, 2, '2025-05-01'),
+
+-- Grant 2 (Users: 4, 5)
+(5, 4, 1, '2025-04-01'),
+(6, 5, 2, '2025-05-01'),
+(7, 4, 1, '2025-07-01'),
+
+-- Grant 3 (Users: 6, 7)
+(8, 6, 2, '2025-07-15'),
+(9, 7, 1, '2025-09-01'),
+(10, 6, 1, '2025-11-01'),
+
+-- Grant 4 (Users: 8, 9)
+(11, 8, 1, '2025-03-15'),
+(12, 9, 2, '2025-04-01'),
+(13, 8, 1, '2025-06-01'),
+
+-- Grant 5 (Users: 10, 1)
+(14, 10, 1, '2025-05-01'),
+(15, 1, 2, '2025-06-01'),
+(16, 10, 2, '2025-07-01'),
+
+-- Grant 6 (Users: 2, 3)
+(17, 2, 1, '2025-06-15'),
+(18, 3, 2, '2025-07-15'),
+(19, 2, 1, '2025-08-01'),
+
+-- Grant 7 (Users: 4, 5)
+(20, 4, 2, '2025-08-01'),
+(21, 5, 1, '2025-09-01'),
+(22, 4, 2, '2025-10-01'),
+
+-- Grant 8 (Users: 6, 7)
+(23, 6, 1, '2025-10-01'),
+(24, 7, 2, '2025-11-01'),
+(25, 6, 1, '2025-12-01'),
+
+-- Grant 9 (Users: 8, 9)
+(26, 8, 2, '2025-02-01'),
+(27, 9, 1, '2025-03-01'),
+(28, 8, 2, '2025-04-01'),
+
+-- Grant 10 (Users: 10, 1)
+(29, 10, 2, '2025-07-01'),
+(30, 1, 1, '2025-08-01'),
+(31, 10, 2, '2025-09-01');
 
 INSERT INTO grantNotes (GrantID, AuthorID, Content, noteDate)
 VALUES
