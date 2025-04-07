@@ -85,6 +85,61 @@ namespace CAREapplication.Pages.DB
 
             return tempReader;
         }
+
+        public static SqlDataReader grantTaskReader(int grantID)
+        {
+            SqlCommand cmdTaskRead = new SqlCommand();
+            cmdTaskRead.Connection = DBConnection;
+            cmdTaskRead.Connection.ConnectionString = DBConnString;
+
+            cmdTaskRead.CommandText = "SELECT * from GrantTask WHERE grantID = @grantID";
+            cmdTaskRead.Parameters.AddWithValue("@grantID", grantID);
+            cmdTaskRead.Connection.Open();
+            SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
+            return tempReader;
+        }
+        public static SqlDataReader taskStaffReader(int grantID)
+        {
+            SqlCommand cmdTaskStaffRead = new SqlCommand();
+            cmdTaskStaffRead.Connection = DBConnection;
+            cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
+
+            cmdTaskStaffRead.CommandText = "SELECT * from grantTaskStaff\r\njoin grantTask on grantTask.taskid = granttaskstaff.taskid\r\n" +
+                "join users on granttaskstaff.assigneeID = users.UserID\r\nWHERE GrantID = @GrantID";
+            cmdTaskStaffRead.Parameters.AddWithValue("@GrantID", grantID);
+            cmdTaskStaffRead.Connection.Open();
+            SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
+            return tempReader;
+        }
+
+        public static List<int> GrantProgress(int GrantID)
+        {
+            List<int> progressList = new List<int>();
+
+            SqlCommand cmdProgressRead = new SqlCommand();
+            cmdProgressRead.Connection = DBConnection;
+            cmdProgressRead.Connection.ConnectionString = DBConnString;
+            cmdProgressRead.CommandText = "SELECT count(*) FROM grantTask WHERE GrantID = @GrantID AND Completed = 1;";
+            cmdProgressRead.Connection.Open();
+            cmdProgressRead.Parameters.AddWithValue("@GrantID", GrantID);
+            int progress = Convert.ToInt32(cmdProgressRead.ExecuteScalar());
+            DBGrant.DBConnection.Close();
+
+            SqlCommand cmdTotalRead = new SqlCommand();
+            cmdTotalRead.Connection = DBConnection;
+            cmdTotalRead.Connection.ConnectionString = DBConnString;
+            cmdTotalRead.CommandText = "SELECT count(*) FROM grantTask WHERE GrantID = @GrantID;";
+            cmdTotalRead.Connection.Open();
+            cmdTotalRead.Parameters.AddWithValue("@GrantID", GrantID);
+            int total = Convert.ToInt32(cmdTotalRead.ExecuteScalar());
+            DBGrant.DBConnection.Close();
+
+            progressList.Add(progress);
+            progressList.Add(total);
+
+            return progressList;
+        }
+
         public static void InsertGrant(GrantSimple g, int supplierID, int projectID, int userID)
         {
             String insertGrantQuery = "INSERT INTO grants (SupplierID, GrantName, ProjectID, GrantStatus, Category, SubmissionDate, descriptions, AwardDate, Amount) " +

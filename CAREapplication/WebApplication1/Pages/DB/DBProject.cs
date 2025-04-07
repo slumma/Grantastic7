@@ -314,5 +314,19 @@ namespace CAREapplication.Pages.DB
             return tempReader;
 
         }
+        public static void InsertProjectNote(int projectID, string content, int userID)
+        {
+            string query = @"INSERT INTO ProjectNotes (ProjectID, Content, AuthorID, NoteDate)
+                     VALUES (@ProjectID, @Content, @AuthorID, GETDATE())";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@Content", content);
+            cmd.Parameters.AddWithValue("@AuthorID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
     }
 }

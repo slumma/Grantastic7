@@ -173,5 +173,32 @@ namespace CAREapplication.Pages.Project
 
             return Page();
         }
+        public IActionResult OnPostAddNote(int ProjectID, string NoteContent)
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+
+                DBProject.InsertProjectNote(ProjectID, NoteContent, userID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Insert Note): {ex.Message}");
+                ModelState.AddModelError("", "Error saving note: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
     }
 }

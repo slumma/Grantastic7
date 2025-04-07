@@ -348,71 +348,86 @@ table {
 
 /*NOTES DESIGN*/
 
-.notes-wrapper {
+#notesCarousel {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+}
+
+#notesSlider {
   display: flex;
-  flex-wrap: wrap;
+  transition: transform 0.4s ease;
   gap: 2rem;
 }
 
 .note-card {
-  background-color: #EAE6ED; /* soft lavender background */
+  flex: 0 0 calc(33.333% - 1.34rem); /* 3 per row with gap accounted */
+  background-color: #EAE6ED;
   border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  min-height: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  min-height: 320px;
 }
 
 .note-header {
-  background-color: var(--medium-gray);
+  background-color: #D9D9D9;
   padding: 20px 12px 12px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
 .note-outer {
-  background-color: var(--light-purple);
-  flex-grow: 1;
+  background-color: #DACCE6;
   padding: 12px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-grow: 1;
 }
 
 .note-inner {
   background-color: white;
   border-radius: 12px;
   padding: 20px;
-  width: 100%;
   height: 100%;
 }
 
-.note-inner p {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-}
-
-
-
-/* BUTTON DESIGN */
-
-.sm-btn {
-  background-color: var(--dark-purple);
+.btn.sm-btn {
+  background-color: #450084;
   color: white;
   font-weight: bold;
   border-radius: 6px;
   padding: 5px 12px;
   border: none;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-.sm-btn:hover {
-  background-color: var(--light-purple);
-  color: black;
+.btn.sm-btn:hover {
+  background-color: #DACCE6;
+  color: #450084;
+}
+
+.add-note-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+
+/* BUTTON DESIGN */
+
+.btn.sm-btn {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 5px 12px;
+  border: none;
+  font-size: 14px;
+}
+
+.btn.sm-btn:hover {
+  background-color: #DACCE6;
+  color: #450084;
 }
 
 .lg-btn {
@@ -432,7 +447,6 @@ table {
   color: black;
 }
 
-
 .save-btn {
   background-color: #1ABA1A;
   color: white;
@@ -444,7 +458,53 @@ table {
 }
 
 .save-btn:hover {
-  background-color: var(--dark-purple);
+  background-color: #450084;
   color: white;
 }
+
+/* Apply Arial to all modal text */
+#noteModal, 
+#noteModal * {
+  font-family: Arial, sans-serif;
+}
+
+/* Style for the cancel button */
+#noteModal .btn-cancel {
+  background-color: #450084; /* dark purple pantone */
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+#noteModal .btn-cancel:hover {
+  background-color: #DACCE6; /* lavender */
+  color: black;
+}
+
+#progressModal,
+#progressModal * {
+  font-family: Arial, sans-serif;
+}
+
+#progressModal .btn-cancel {
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+#progressModal .btn-cancel:hover {
+  background-color: #DACCE6;
+  color: black;
+}
+
+
+
+
 
