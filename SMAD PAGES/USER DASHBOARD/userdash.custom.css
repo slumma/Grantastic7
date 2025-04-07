@@ -30,6 +30,13 @@ h2 {
   padding-bottom: 15px;
 }
 
+.grant-box h4,
+.chart-box h4 {
+  font-weight: bold !important;
+  font-size: 20px;
+  color: #1E1E1E;
+}
+
 .date-text {
     font-size: 18px;
     color: var(--lightest-gray);
@@ -83,6 +90,17 @@ h2 {
 
 }
 
+.task-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.task-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: #000;
+}
 /* Ensure the .row is using flexbox for the layout */
 .row {
     display: flex;
@@ -128,32 +146,48 @@ h2 {
 }
 
 /* Grant Update Section */
+/* Container becomes a flex grid */
 .grant-box {
-    background-color: var(--lightest-gray) !important; /* Light gray background */
-    padding: 15px;
-    border-radius: 10px;
-    text-align: left; /* Left-align title and content */
+  background-color: #F5F5F5; /* or white, for contrast */
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+
 }
 
-/* Title - Making it Uppercase and Bold */
-.grant-box h4 {
-    margin-bottom: 10px; /* Space between title and boxes */
-    margin-left: 10px;
-    font-size: 18px; /* Adjust title font size */
-    font-weight: bold; /* Make the title bold */
-    text-transform: uppercase; /* Make title uppercase */
-}
-
-/* Style for individual grant updates */
+/* Grant boxes share width on larger screens */
 .grant-update {
-    border-radius: 10px;
-    padding: 20px 30px;  /* Increased padding for bigger boxes */
-    font-weight: bold;
-    margin: 8px 10px;  /* Add space between boxes */
-    display: inline-block;
-    font-size: 16px; /* Increase font size for better readability */
-    white-space: nowrap; /* Prevent text wrapping */
-    color: #333; /* Darker text for better contrast */
+  flex: 1 1 calc(48% - 10px); /* Two in a row, slight gap */
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Mobile — full width stacked */
+@media (max-width: 768px) {
+  .grant-update {
+    flex: 1 1 100%;
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+
+  .grant-box {
+    gap: 12px;
+  }
+}
+
+/* Hover state */
+.grant-update:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* Awarded, Pending, and Rejected Styles */
@@ -190,4 +224,5 @@ table {
   table-layout: fixed;
 
 }
+
 
