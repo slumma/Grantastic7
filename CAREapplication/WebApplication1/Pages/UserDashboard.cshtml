@@ -32,8 +32,9 @@
             <h2>Welcome, @($"{char.ToUpper(Model.activeUser.FirstName[0])}{Model.activeUser.FirstName.Substring(1).ToLower()}")</h2>
             <!-- Status Boxes -->
             <div class="stats-container d-flex justify-content-center gap-3 mt-3">
+                <div class="stat-box"> <span> @Model.ProjectList.Count </span> active projects</div>
                 <div class="stat-box"> <span> @(Model.ProjectTaskList.Count + Model.GrantTaskList.Count) </span> tasks remaining</div>
-                <div class="stat-box"> <span> 3 </span> active projects</div>
+
             </div>
             <!-- Projects & Tasks Section -->
             <div class="row mt-4">
@@ -75,10 +76,21 @@
             <!-- Grant Updates Section -->
             <div class="mt-4 p-3 grant-box rounded-3">
                 <h4>Recent Grant Updates</h4>
-                <span class="grant-update awarded">Tree Fund: Awarded</span>
-                <span class="grant-update pending">Cat Scratch 3000: Pending</span>
-                <span class="grant-update pending">Morty's Biscuits: Pending</span>
-                <span class="grant-update rejected">K-12 Hospital: Rejected</span>
+                @foreach (var grant in @Model.GrantList)
+                {
+                    if (grant.Status.Equals("Active"))
+                    {
+                        <span class="grant-update awarded">@grant.GrantName: @grant.Status</span>
+                    }
+                    else if (grant.Status.Equals("Pending"))
+                    {
+                        <span class="grant-update pending">@grant.GrantName: @grant.Status</span>
+                    }
+                    else
+                    {
+                        <span class="grant-update rejected">@grant.GrantName: @grant.Status</span>
+                    }
+                }
             </div>
         </div>
     </div>

@@ -277,5 +277,38 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+
+        public static SqlDataReader UserGrantReader(int? UserID)
+        {
+            SqlCommand cmdUserGrantRead = new SqlCommand();
+            cmdUserGrantRead.Connection = DBConnection;
+            cmdUserGrantRead.Connection.ConnectionString = DBConnString;
+
+            cmdUserGrantRead.CommandText = @"SELECT 
+                                                g.GrantID,
+                                                g.GrantName,
+                                                g.StatusName,
+                                                g.Category,
+                                                g.SubmissionDate,
+                                                g.AwardDate,
+                                                g.Amount,
+                                                g.GrantStatus,
+                                                gs.UserRole,
+                                                s.SupplierName
+                                            FROM 
+                                                grants g
+                                            JOIN 
+                                                grantStaff gs ON g.GrantID = gs.GrantID
+                                            LEFT JOIN 
+                                                grantSupplier s ON g.SupplierID = s.SupplierID
+                                            WHERE 
+                                                gs.UserID = @UserID;";
+
+            cmdUserGrantRead.Parameters.AddWithValue("@UserID", UserID);
+
+            cmdUserGrantRead.Connection.Open();
+            SqlDataReader tempReader = cmdUserGrantRead.ExecuteReader();
+            return tempReader;
+        }
     }
 }
