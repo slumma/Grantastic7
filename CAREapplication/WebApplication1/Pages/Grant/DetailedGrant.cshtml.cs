@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using global::CAREapplication.Pages.DataClasses;
 using global::CAREapplication.Pages.DB;
+using System.Diagnostics;
 
 namespace CAREapplication.Pages.Grant
 {
@@ -13,8 +14,14 @@ namespace CAREapplication.Pages.Grant
         // empty grant object to populate it
         public GrantSimple grant { get; set; }
         public List<GrantNote> noteList { get; set; } = new List<GrantNote>();
-
-        public List<GrantStaff> staffList = new List<GrantStaff>();
+        public List<GrantStaff> staffList { get; set; } = new List<GrantStaff>();
+        public List<GrantTask> TaskList { get; set; } = new List<GrantTask>();
+        public List<GrantTaskStaff> TaskStaffList { get; set; } = new List<GrantTaskStaff>();
+        public List<User> UserTaskList { get; set; } = new List<User>();
+        public List<int> progressList { get; set; } = new List<int>();
+        public int progress { get; set; }
+        public int total { get; set; }
+        public int completed { get; set; }
         public IActionResult OnGet(int grantID)
         {
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
@@ -62,7 +69,52 @@ namespace CAREapplication.Pages.Grant
             }
             DBGrant.DBConnection.Close();
 
+            using (SqlDataReader reader = DBGrant.grantTaskReader(grantID))
+            {
+                while (reader.Read())
+                {
+                    TaskList.Add(new GrantTask
+                    {
+                        TaskID = Convert.ToInt32(reader["TaskID"]),
+                        Objective = reader["Objective"].ToString(),
+                        DueDate = Convert.ToDateTime(reader["DueDate"]),
+                        Completed = Convert.ToInt32(reader["Completed"])
+                    });
+                }
+            }
+            DBGrant.DBConnection.Close();
+
+            using (SqlDataReader reader = DBGrant.taskStaffReader(grantID))
+            {
+                while (reader.Read())
+                {
+                    TaskStaffList.Add(new GrantTaskStaff
+                    {
+                        TaskStaffID = Convert.ToInt32(reader["GrantTaskStaffID"]),
+                        TaskID = Convert.ToInt32(reader["TaskID"]),
+                        AssigneeID = Convert.ToInt32(reader["AssigneeID"]),
+                        AssignerID = Convert.ToInt32(reader["AssignerID"]),
+                        DueDate = Convert.ToDateTime(reader["DueDate"])
+                    });
+                    UserTaskList.Add(new User
+                    {
+                        FirstName = reader["FirstName"].ToString(),
+                        LastName = reader["LastName"].ToString()
+                    });
+                }
+            }
+            DBGrant.DBConnection.Close();
+
             staffList = grantStaffReader(grantID);
+
+            progressList = DBGrant.GrantProgress(grantID);
+            DBGrant.DBConnection.Close();
+
+            completed = progressList[0];
+            total = progressList[1];
+
+            progress = Convert.ToInt32(completed / total);
+
 
             return Page();
         }
