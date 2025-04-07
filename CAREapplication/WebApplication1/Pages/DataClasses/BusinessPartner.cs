@@ -4,7 +4,7 @@
     {
         public int SupplierID { get; set; }
         public String SupplierName { get; set; }
-        public String OrgType { get; set; }
+        public String? OrgType { get; set; }
         public String? CommunicationStatus { get; set; }
         public int UserID { get; set; }
         public String? FirstName { get; set; }

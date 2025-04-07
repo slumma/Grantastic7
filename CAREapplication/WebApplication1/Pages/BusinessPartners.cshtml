@@ -56,7 +56,7 @@
                                     <td>@bp.SupplierStatus</td>
                                     <td>@bp.FirstName @bp.LastName</td>
                                     
-                                    <td><a class="btn sm-btn" asp-page="BPDetail">DETAILED VIEW</a></td>
+                                    <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
                                 </tr>
                             }
                         </tbody>
