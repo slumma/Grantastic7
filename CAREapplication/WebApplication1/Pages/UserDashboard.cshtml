@@ -36,7 +36,7 @@
             <!-- Projects & Tasks Section -->
             <div class="row mt-4">
                 <div class="col-md-6">
-                    <div class="content-box">
+                    <div class="scrollable-container content-box">
                         <h4 class="box-title">MY PROJECTS</h4>
                         <ul class="list-unstyled">
                             @foreach (var proj in Model.ProjectList)
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="content-box">
+                    <div class=" scrollable-container content-box">
                         <h4 class="box-title">MY TASKS</h4>
                         <ul class="list-unstyled">
                             @foreach (var task in Model.ProjectTaskList)
@@ -97,7 +97,7 @@
             <div class="row mt-4">
                 <!-- Grant Updates Section -->
                 <div class="col-md-6">
-                    <div class="grant-box rounded-3 p-3">
+                    <div class="scrollable-container grant-box rounded-3 p-3">
                         <h4>YOUR GRANTS</h4>
                         @foreach (var grant in @Model.GrantList)
                         {
@@ -250,7 +250,7 @@
     </script>
 
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>
