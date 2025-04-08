@@ -30,7 +30,7 @@
                     <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
                 </div>
 
-                <h2 class="text-center mb-4">TechCorp</h2>
+                <h2 class="text-center mb-4">@Model.BP.SupplierName</h2>
 
                 <!-- Partnership Overview Section -->
                 <h6 class="section-label">PARTNERSHIP OVERVIEW</h6>
@@ -41,11 +41,11 @@
                         <div class="gray-box position-relative d-flex flex-row justify-content-between align-items-stretch p-4" style="min-height: 280px;">
 
                             <!-- Left: Info Headers -->
-                            <div class="d-flex flex-column justify-content-between ps-4 pt-4 pb-4" style="gap: 1.5rem;">
+                            <div class="d-flex flex-column justify-content-start ps-4 pt-4 pb-4" style="gap: 1.5rem;">
                                 <!--<p><strong>Partnership Details:</strong> ----------------------</p>-->
-                                <p><strong>Sector:</strong> @Model.BP.OrgType</p>
-                                <p><strong>Affiliation:</strong> ----------------------</p>
-                                <p><strong>Type:</strong> ----------------------</p>
+                                <p><strong>Organization Type</strong> @Model.BP.OrgType</p>
+                                <p><strong>Funder Status:</strong> @Model.BP.SupplierStatus</p>
+                                <!--<p><strong>Type:</strong> ----------------------</p>-->
                             </div>
 
                             <!-- Right: Primary Contact -->
@@ -53,9 +53,10 @@
                                 <div class="mb-3">
                                     <img src="/images/user.png" alt="Primary Contact" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
                                 </div>
-                                <p class="fw-bold mb-1 fs-5">Alysun Sanders</p>
-                                <p class="mb-1"><strong>Phone:</strong> +1 (555) 555-555</p>
-                                <p class="mb-1"><strong>Email:</strong> alysunsanders@example.com</p>
+                                <p class="fw-bold mb-1 fs-5">@Model.BP.FirstName @Model.BP.LastName</p>
+                                <p class="mb-1"><strong>Phone:</strong> @Model.BP.Phone</p>
+                                <p class="mb-1"><strong>Email:</strong> @Model.BP.Email</p>
+                                <p class="mb-1"><strong>Address:</strong> @Model.BP.BusinessAddress</p>
                             </div>
                         </div>
 
@@ -67,23 +68,46 @@
 
                     <!-- Right Box: Status Tracking -->
                     <div class="col-md-4 pe-md-4">
+                        @{
+                            string statusColor = "#808080";
+                            int statusOffset = 314;
+
+                            if (Model.BP.CommunicationStatus == "Active")
+                            {
+                                statusColor = "#4CAF50"; // Muted green
+                                statusOffset = 0; // Full circle
+                            }
+                            if (Model.BP.CommunicationStatus == "Pending")
+                            {
+                                statusColor = "#FF9800"; // Muted orange
+                                statusOffset = 157; // Half circle
+                            }
+                            if (Model.BP.CommunicationStatus == "Inactive")
+                            {
+                                statusColor = "#F44336"; // Muted red
+                                statusOffset = 314; // Empty circle
+                            }
+                        }
+
                         <div class="gray-box text-center p-4" style="min-height: 280px;">
                             <h4 class="pt-4 fw-bold">Status Tracking:</h4>
-                                <div class="status-meter my-3 position-relative">
-                                    <svg width="160" height="160" viewBox="0 0 120 120">
-                                        <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
-                                        <circle id="statusArc" cx="60" cy="60" r="50"
-                                                stroke="#450084"
-                                                stroke-width="17"
-                                                fill="none"
-                                                stroke-dasharray="314"
-                                                stroke-dashoffset="314"
-                                                stroke-linecap="round"
-                                                transform="rotate(-90 60 60)" />
-                                    </svg>
-                                </div>
-                                <p><strong>Current Status:</strong> <span class="text-purple">Negotiation</span></p>
+                            <div class="status-meter my-3 position-relative">
+                                <svg width="160" height="160" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
+                                    <circle id="statusArc" cx="60" cy="60" r="50"
+                                            stroke="@statusColor"
+                                            stroke-width="17"
+                                            fill="none"
+                                            stroke-dasharray="314"
+                                            stroke-dashoffset="@statusOffset"
+                                            stroke-linecap="round"
+                                            transform="rotate(-90 60 60)" />
+                                </svg>
+                            </div>
+                            <p><strong>Communication Status:</strong> <span class="text-purple">@Model.BP.CommunicationStatus</span></p>
                         </div>
+
+
 
                         <!-- Centered Edit Progress Button -->
                         <div class="text-center mt-2">
