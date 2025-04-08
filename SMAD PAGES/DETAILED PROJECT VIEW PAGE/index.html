@@ -21,43 +21,6 @@
 
 <body>
 
-  <!-- Navbar -->
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple px-4">
-          <a class="navbar-brand me-5" href="#">
-            <img src="jmu_care.png" alt="Logo" height="80" />
-          </a>
-
-          <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
-            
-            <a class="nav-link text-white" href="#home">MESSAGES</a>
-
-            <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-white active-link" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
-                PROJECTS
-              </a>
-              <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
-                <li><a class="dropdown-item" href="#">ADD PROJECT</a></li>
-              </ul>
-            </div>
-
-            <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
-                GRANTS
-              </a>
-              <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
-                <li><a class="dropdown-item" href="#">ADD GRANT</a></li>
-              </ul>
-            </div>
-
-            <a class="nav-link text-white" href="#">SEARCH</a>
-          </div>
-
-          <div class="d-flex align-items-center gap-3">
-            <span class="nav-link text-white">samogden</span>
-            <button class="btn logout-btn">LOGOUT</button>
-          </div>
-        </nav>
-
 <!-- PROJECT ALPHA DETAIL PAGE -->
 <div class="container-fluid py-5 main-bg">
 <div class="container main-container">
@@ -135,14 +98,22 @@
             <td>Admin/Lead PI</td>
             <td>sarahbennett@example.com</td>
             <td>(540) 555-5555</td>
-            <td><button class="btn sm-btn">Edit</button></td>
+            <td>
+            <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addEditStaffModal">
+            Edit
+            </button>
+          </td>
           </tr>
           <tr class="project-row">
             <td class="fw-bold">Kayla Olden</td>
             <td>Co-PI</td>
             <td>kaylaolden8@example.com</td>
             <td>(540) 555-5555</td>
-            <td><button class="btn sm-btn">Edit</button></td>
+            <td>
+            <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addEditStaffModal">
+            Edit
+            </button>
+          </td>
           </tr>
         </tbody>
       </table>
@@ -151,6 +122,41 @@
       <button class="btn sm-btn">EDIT/ADD STAFF</button>
     </div>
   </div>
+
+<!-- MODAL: Add/Edit Staff -->
+<div class="modal fade" id="addEditStaffModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+    <div class="modal-content custom-modal text-center p-4">
+      <div class="modal-header border-0 justify-content-end">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <h4 class="fw-bold mb-3">Add/Edit Staff</h4>
+
+      <!-- Search Bar with Suggestions -->
+      <div class="mb-4 position-relative">
+        <label class="fw-bold d-block text-start">Add Staff:</label>
+        <input id="staffSearchInput" type="text" class="form-control text-center"
+         placeholder="Search Name" style="border-radius: 10px; background-color: #f5f5f5;" />
+      <!-- Suggestions dropdown -->
+        <div id="staffSuggestions" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+      </div>
+
+      <!-- Current Staff Display -->
+      <div class="bg-white p-3 rounded mb-4">
+        <h6 class="fw-bold mb-3">Current Staff</h6>
+        <div id="currentStaffContainer" class="d-flex flex-wrap justify-content-center gap-2">
+          <!-- Tags get added here -->
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="text-center">
+        <button class="btn save-btn mt-2 px-5">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
  <!-- Tasks Table -->
 <h6 class="section-label">PROJECT TASKS</h6>
@@ -213,9 +219,13 @@
                 </div>
               </div>
             </div>
-            <td><button class="btn sm-btn">Detailed View</button></td>
-        </div>
-        </td>
+            <td>
+                  <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#detailedViewModal">
+                  Detailed View
+                  </button>
+            </td>
+            </div>
+            </td>
       </tr>
 
         <!-- Task Row 1 -->
@@ -258,11 +268,54 @@
               </div>
             </div>
           </div>
-          <td><button class="btn sm-btn">Detailed View</button></td>
+                <td>
+                  <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#detailedViewModal">
+                  Detailed View
+                  </button>
+                </td>
         </div>
         </td>
       </tr>
+<!-- MODAL: Task Detailed View -->
+<div class="modal fade" id="detailedViewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 700px;"> <!-- LIMIT WIDTH -->
+    <div class="modal-content custom-modal">
+      <div class="modal-header border-0 justify-content-center">
+        <h5 class="modal-title fw-bold text-center w-100">Detailed View</h5>
+        <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-wrap justify-content-between gap-3 px-4">
+        <!-- Left: Project Objective -->
+        <div style="flex: 1 1 58%;">
+          <label class="fw-bold mb-1">Project Objective</label>
+          <textarea class="form-control" rows="6" placeholder="Objective here"
+            style="background-color: #f5f5f5; border: none; border-radius: 12px;"></textarea>
+        </div>
 
+        <!-- Right: Due Date + Status -->
+        <div style="flex: 1 1 38%;">
+          <div class="mb-3">
+            <label class="fw-bold mb-1">Due Date:</label>
+            <input type="date" class="form-control"
+              style="background-color: #f5f5f5; border: none; border-radius: 12px;" />
+          </div>
+          <div class="mb-3">
+            <label class="fw-bold mb-1">Set Status:</label>
+            <select class="form-select"
+              style="background-color: #f5f5f5; border: none; border-radius: 12px;">
+              <option>Active</option>
+              <option>Pending</option>
+              <option>Denied</option>
+            </select>
+          </div>
+          <div class="text-end">
+            <button class="btn save-btn w-100">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   function setSelectedStaff(name) {
@@ -349,7 +402,58 @@
   });
     </script>
 
+<script>
+  const staffSearchInput = document.getElementById("staffSearchInput");
+  const staffSuggestions = document.getElementById("staffSuggestions");
+  const currentStaffContainer = document.getElementById("currentStaffContainer");
 
+  const mockStaffList = ["Nick C.", "Lexi M.", "Josh W.", "Kayla O.", "Nadeem H.", "Sarah B."];
+
+  staffSearchInput.addEventListener("input", () => {
+    const query = staffSearchInput.value.trim().toLowerCase();
+    staffSuggestions.innerHTML = "";
+
+    if (query.length === 0) return;
+
+    const filtered = mockStaffList.filter(name => name.toLowerCase().includes(query));
+
+    filtered.forEach(name => {
+      if (!isAlreadyAdded(name)) {
+        const item = document.createElement("button");
+        item.className = "list-group-item list-group-item-action";
+        item.textContent = name;
+        item.onclick = () => {
+          addStaffTag(name);
+          staffSearchInput.value = "";
+          staffSuggestions.innerHTML = "";
+        };
+        staffSuggestions.appendChild(item);
+      }
+    });
+  });
+
+  // Hide suggestions when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!staffSearchInput.contains(e.target)) {
+      staffSuggestions.innerHTML = "";
+    }
+  });
+
+  function isAlreadyAdded(name) {
+    const existingTags = currentStaffContainer.querySelectorAll(".staff-tag");
+    return Array.from(existingTags).some(tag => tag.textContent.includes(name));
+  }
+
+  function addStaffTag(name) {
+    const tag = document.createElement("div");
+    tag.className = "staff-tag px-3 py-2 rounded fw-bold text-dark";
+    tag.style.backgroundColor = "#DACCE6";
+    tag.style.boxShadow = "2px 2px 6px rgba(0,0,0,0.1)";
+    tag.textContent = name;
+
+    currentStaffContainer.appendChild(tag);
+  }
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
