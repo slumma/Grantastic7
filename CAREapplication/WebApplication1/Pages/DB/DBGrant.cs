@@ -197,20 +197,19 @@ namespace CAREapplication.Pages.DB
 
             connection.Close();
         }
-        public static void InsertGrantNote(GrantNote newNote)
-        {
-            SqlConnection connection = new SqlConnection(DBConnString);
+        public static void InsertGrantNote(int grantID, string content, int userID)
+        { 
 
-            String sqlQuery = "INSERT INTO grantNotes(GrantID, Content, AuthorID) VALUES (@GrantID, @Content, @AuthorID);";
-            SqlCommand cmdInsertGrantNote = new SqlCommand(sqlQuery, connection);
+            String query = "INSERT INTO grantNotes(GrantID, Content, AuthorID, NoteDate) VALUES (@GrantID, @Content, @AuthorID, GETDATE());";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
 
-            cmdInsertGrantNote.Parameters.AddWithValue("@GrantID", newNote.GrantID);
-            cmdInsertGrantNote.Parameters.AddWithValue("@Content", newNote.Content);
-            cmdInsertGrantNote.Parameters.AddWithValue("@AuthorID", newNote.AuthorID);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@Content", content);
+            cmd.Parameters.AddWithValue("@AuthorID", userID);
 
-            connection.Open();
-            cmdInsertGrantNote.ExecuteNonQuery();
-            connection.Close();
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
         }
 
         public static SqlDataReader SingleGrantReader(int GrantID)
@@ -365,5 +364,6 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdUserGrantRead.ExecuteReader();
             return tempReader;
         }
+        
     }
 }

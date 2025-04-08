@@ -15,38 +15,42 @@
     <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="/css/styles.css" rel="stylesheet">
-    <!-- END LOADING BOOTSTRAP CSS -->
-    <!-- Custom styles -->
     <link href="/css/userdash.custom.css" rel="stylesheet">
-
-
 </head>
 
 <body>
-
     <!-- Main Content -->
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container text-center py-5">
             <p class="date-text">@DateTime.Now.ToString("MMMM d, yyyy")</p>
             <h2>Welcome, @($"{char.ToUpper(Model.activeUser.FirstName[0])}{Model.activeUser.FirstName.Substring(1).ToLower()}")</h2>
+
             <!-- Status Boxes -->
             <div class="stats-container d-flex justify-content-center gap-3 mt-3">
                 <div class="stat-box"> <span> @Model.ProjectList.Count </span> active projects</div>
                 <div class="stat-box"> <span> @(Model.ProjectTaskList.Count + Model.GrantTaskList.Count) </span> tasks remaining</div>
-
             </div>
+
             <!-- Projects & Tasks Section -->
             <div class="row mt-4">
                 <div class="col-md-6">
-                    <div class="content-box">
+                    <div class="scrollable-container content-box">
                         <h4 class="box-title">MY PROJECTS</h4>
                         <ul class="list-unstyled">
                             @foreach (var proj in Model.ProjectList)
                             {
                                 <li class="task-item">
+                                    <span class="task-icon">
+                                        <!-- Corner Down Right icon (Lucide style) -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 10l5 5-5 5" />
+                                            <path d="M4 4v7a4 4 0 0 0 4 4h12" />
+                                        </svg>
+                                    </span>
                                     <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@proj.ProjectID">
-                                        ■ @proj.ProjectName
+                                        @proj.ProjectName
                                     </a>
                                 </li>
                             }
@@ -54,59 +58,200 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="content-box">
+                    <div class=" scrollable-container content-box">
                         <h4 class="box-title">MY TASKS</h4>
                         <ul class="list-unstyled">
-                            @foreach (var task in Model.ProjectTaskList){
+                            @foreach (var task in Model.ProjectTaskList)
+                            {
                                 <li class="task-item">
-                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">■ @task.Objective</a>
+                                    <span class="task-icon">
+                                        <!-- Corner Down Right icon (Lucide style) -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 10l5 5-5 5" />
+                                            <path d="M4 4v7a4 4 0 0 0 4 4h12" />
+                                        </svg>
+                                    </span>
+                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">@task.Objective</a>
                                 </li>
                             }
 
                             @foreach (var task in Model.GrantTaskList)
                             {
                                 <li class="task-item">
-                                    <a class="task-item text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@task.GrantID">■ @task.Objective</a>
+                                    <span class="task-icon">
+                                        <!-- Corner Down Right icon (Lucide style) -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 10l5 5-5 5" />
+                                            <path d="M4 4v7a4 4 0 0 0 4 4h12" />
+                                        </svg>
+                                    </span>
+                                    <a class="task-item text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@task.GrantID">@task.Objective</a>
                                 </li>
                             }
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- Grant Updates Section -->
-            <div class="mt-4 p-3 grant-box rounded-3">
-                <h4>YOUR GRANTS</h4>
-                @foreach (var grant in @Model.GrantList)
-                {
-                    if (grant.Status.Equals("Active"))
-                    {
-                        <span class="grant-update awarded">
-                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
-                                @grant.GrantName: @grant.Status
-                            </a>
-                        </span>
-                    }
-                    else if (grant.Status.Equals("Pending"))
-                    {
-                        <span class="grant-update pending">
-                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
-                                @grant.GrantName: @grant.Status
-                            </a>
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="grant-update rejected">
-                            <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
-                                @grant.GrantName: @grant.Status
-                            </a>
-                        </span>
-                    }
-                }
+
+            <!-- Grant Updates + Chart Row -->
+            <div class="row mt-4">
+                <!-- Grant Updates Section -->
+                <div class="col-md-6">
+                    <div class="scrollable-container grant-box rounded-3 p-3">
+                        <h4>YOUR GRANTS</h4>
+                        @foreach (var grant in @Model.GrantList)
+                        {
+                            if (grant.Status.Equals("Active"))
+                            {
+                                <span class="grant-update awarded">
+
+                                    <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                        @grant.GrantName: @grant.Status
+                                    </a>
+                                </span>
+                            }
+                            else if (grant.Status.Equals("Pending"))
+                            {
+                                <span class="grant-update pending">
+                                    <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                        @grant.GrantName: @grant.Status
+                                    </a>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="grant-update rejected">
+                                    <a class="text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@grant.GrantID">
+                                        @grant.GrantName: @grant.Status
+                                    </a>
+                                </span>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <!-- Grant Chart Section -->
+                <div class="col-md-6">
+                    <div class="grant-box rounded-3 p-3">
+                        <h4>Grant Chart</h4>
+                        <canvas id="grantChart"
+                                data-approved="@Model.GrantList.Count(g => g.Status == "Active")"
+                                data-pending="@Model.GrantList.Count(g => g.Status == "Pending")"
+                                data-denied="@Model.GrantList.Count(g => g.Status == "Inactive")"
+                                style="max-height: 300px;">
+                        </canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js Script -->
+    <script>
+        const canvas = document.getElementById('grantChart');
+        const ctx = canvas.getContext('2d');
+
+        const approved = parseInt(canvas.dataset.approved);
+        const pending = parseInt(canvas.dataset.pending);
+        const denied = parseInt(canvas.dataset.denied);
+
+        const centerTextPlugin = {
+            id: 'centerText',
+            afterDraw(chart) {
+                const { width, height, ctx } = chart;
+                const dataset = chart.data.datasets[0];
+                const meta = chart.getDatasetMeta(0);
+
+                // ✅ Correct visibility check for Chart.js 4.x
+                const visibleTotal = dataset.data.reduce((sum, val, i) => {
+                    return meta._hiddenIndices && meta._hiddenIndices.has(i) ? sum : sum + val;
+                }, 0);
+
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#450084';
+
+                const centerY = height / 2 + 35;
+                ctx.font = 'bold 30px Arial';
+                ctx.fillText(visibleTotal, width / 2, centerY - 12);
+
+                ctx.font = '18px Arial';
+                ctx.fillText('Total', width / 2, centerY + 12);
+
+                ctx.restore();
+            }
+        };
+
+        const spacingPlugin = {
+            id: 'legendSpacing',
+            beforeInit(chart) {
+                const originalFit = chart.legend.fit;
+                chart.legend.fit = function fit() {
+                    originalFit.bind(chart.legend)();
+                    this.height += 24;
+                };
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Denied', 'Pending', 'Approved'],
+                datasets: [{
+                    label: 'Grant Status',
+                    data: [denied, pending, approved],
+                    backgroundColor: ['#E57373', '#F4E19C', '#A8D5A0'],
+                    borderColor: '#DACCE6',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                cutout: '50%',
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            padding: 5,
+                            generateLabels: function(chart) {
+                                const dataset = chart.data.datasets[0];
+                                return chart.data.labels.map((label, i) => ({
+                                    text: label,
+                                    fillStyle: dataset.backgroundColor[i],
+                                    strokeStyle: 'transparent',
+                                    lineWidth: 0,
+                                    hidden: chart.getDatasetMeta(0)._hiddenIndices?.has(i),
+                                    index: i
+                                }));
+                            },
+                            color: '#1E1E1E',
+                            font: { weight: 'bold' },
+                            boxWidth: 20,
+                            boxHeight: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.parsed} grants`;
+                            },
+                            labelColor: function(context) {
+                                return {
+                                    borderColor: 'transparent',
+                                    backgroundColor: context.dataset.backgroundColor[context.dataIndex]
+                                };
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [centerTextPlugin, spacingPlugin]
+        });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
 </html>

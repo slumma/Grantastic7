@@ -105,13 +105,31 @@ namespace CAREapplication.Pages.Project
                             AssignerID = Convert.ToInt32(reader["AssignerID"]),
                             DueDate = Convert.ToDateTime(reader["DueDate"])
                         });
-                        UserTaskList.Add(new User
+
+                        string firstName = reader["FirstName"].ToString();
+                        string lastName = reader["LastName"].ToString();
+
+                        bool exists = false;
+                        foreach (var user in UserTaskList)
                         {
-                            FirstName = reader["FirstName"].ToString(),
-                            LastName = reader["LastName"].ToString()
-                        });
+                            if (user.FirstName == firstName && user.LastName == lastName)
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+
+                        if (!exists)
+                        {
+                            UserTaskList.Add(new User
+                            {
+                                FirstName = firstName,
+                                LastName = lastName
+                            });
+                        }
                     }
                 }
+
                 Trace.WriteLine("taskStaffReader query completed successfully.");
 
                 DBProject.DBConnection.Close();
