@@ -16,12 +16,11 @@
     <!-- Custom styles -->
     <link href="lognewinteraction.custom.css" rel="stylesheet">
 
-
     </head>
 
 <body>
 
- <!-- Main Content -->
+   <!-- Main Content -->
   <div class="container-fluid py-5 main-bg">
     <div class="container main-container">
       <div class="scrollable-container">
@@ -33,7 +32,7 @@
 
         <h2 class="text-center mb-4">INTERACTION DETAILED VIEW</h2>
 
-        <!-- Interaction Form Grid -->
+ <!-- Interaction Form Grid -->
  <div class="container py-5" id="firstcontainer">
   <form>
     <div class="row mb-4">
@@ -82,72 +81,122 @@
   </form>
 
 
-    <!-- Action Items Section -->
+  <!-- Second Big Row -->
+    <div class="container py-5" id="secondcontainer">
+      <div class="row justify-content-center align-items-start gx-4 gy-4">
 
-      <div class="container py-5" id="secondcontainer">
-        <div class="row g-3 mb-4">
-          <div class="col-md-6">
-            <label class="form-label fw-bold">Action Items:</label>
-            <div class="bg-light p-3 rounded">
-              <div class="bg-danger-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
-                Action Item #1 <input type="checkbox" />
-              </div>
-              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
-                Action Item #2 <input type="checkbox" />
-              </div>
-              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
-                Action Item #3 <input type="checkbox" />
-              </div>
-               <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
-                Action Item #4 <input type="checkbox" />
-              </div>
+      <!--Left: Action Items Column -->
+       <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold">Action Items:</label>
+          <button class="btn add-btn" id="addactionitem" data-modal-target="actionModal">+</button>
+            <div class="bg-light p-3 rounded d-flex flex-column gap-2">
+
+              <!-- Add action items here -->
+
             </div>
-          </div>
+        </div>
 
-          <!-- Notes Section (Slideshow) -->
-          <div class="col-md-6" id="notessection">
-            <label class="form-label fw-bold">Additional Note(s):</label>
-            <div class="bg-light p-3 rounded">
-            <div class="position-relative d-flex align-items-center">
-              <button class="btn sm-btn me-2" onclick="slideNotes(-1)">&lt;</button>
+     <!-- Right: Notes Section Column (Slideshow) -->
+      <div class="col-md-6 position-relative" id="notessection">
+          <label class="form-label fw-bold">Additional Note(s):</label>
+
+         <!-- add note button -->
+            <button class="btn add-btn" data-modal-target="noteModal">+</button>
+
+        <!-- Note coarousel wrapper -->
+          <div class="bg-light p-3 rounded position-relative" style="min-height: 360px;">
+            <div class="d-flex justify-content-center align-items-center h-100">
+
+            <!--left arrow -->
+            <button class="btn sm-btn me-3 shadow-custom" onclick="slideNotes(-1)">&lt;</button>
               <div id="notesCarousel" style="overflow: hidden; width: 100%;">
                 <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
 
-                  <!-- Single Note Card (repeatable) -->
-                  <div class="note-card">
-                    <div class="note-header text-center">
-                      <h6 class="fw-bold mb-1 text-purple">2/13/25 - Note</h6>
-                      <p id="subject"><strong>Subject:</strong> Meeting Attendees</p>
-                    </div>
-                    <div class="note-outer">
-                      <div class="note-inner">
-                        <p><strong>Note Author:</strong> Sarah Bennett</p>
-                        <p class="text-muted">
-                          Meeting Attendees:<br />
-                          • Sarah Bennett (JMU CARE)<br />
-                          • Nick Clement (JMU CARE)<br />
-                          • Josh White (JMU CARE)<br />
-                          • Katie Murden (TechCorp)<br />
-                          • Cameron McKinney (TechCorp)<br />
-                          • Will Drezzon (TechCorp)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- Add .note-card blocks here -->
 
-                  <!-- Add more .note-card blocks here -->
-                </div>
-              </div>
-              <button class="btn sm-btn ms-2" onclick="slideNotes(1)">&gt;</button>
-            </div>
-          </div>
-          </div>
+                </div> <!-- end notes slider div -->
+              </div> <!-- end notes carousel div -->
+
+
+              <!-- right arrow -->
+              <button class="btn sm-btn ms-3 shadow-custom" onclick="slideNotes(1)">&gt;</button>
+
+
+            </div> <!-- end justify content center div -->
+          </div> <!-- end bg-light div -->
+          </div> <!-- end notes column div -->
           
+      </div> <!-- end of second row div -->
+
+    </div> <!-- end of overall container for row 2 -->
+    
+    <!-- Bottom Buttons -->
+  <div class="d-flex justify-content-end mt-4 gap-3" id="buttonrow">
+    <button class="btn btn-purple shadow-custom">ATTACH DOCUMENTS</button>
+    <button class="btn btn-green shadow-custom">SAVE CHANGES</button>
+  </div>
+
+</div> <!-- end of overall page container div -->
+
+
+
+
+
+  <!-- ADD ACTION ITEM OVERLAY -->
+      <div id="actionModal" class="overlay">
+        <div class="modal-card">
+          <button class="close-btn" data-close-button>&times;</button>
+          <h5 class="text-center fw-bold mb-3">ADD ACTION ITEM</h5>
+
+          <div class="mb-3">
+            <label class="form-label"><strong>Importance:</strong></label>
+            <select class="form-select" id="selectimportance" placeholder="Select Importance">
+              <option selected>Select Importance</option>
+              <option id="high">High</option>
+              <option id="medium">Medium</option>
+              <option id="low">Low</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"><strong>Action Item:</strong></label>
+            <textarea class="form-control" rows="4" placeholder="Add Item"></textarea>
+          </div>
+
+          <div class="text-end">
+            <button class="btn btn-green">Save</button>
+          </div>
+        </div>
+      </div>
+
+  <!-- ADD NOTE OVERLAY -->
+    <div id="noteModal" class="overlay">
+      <div class="modal-card">
+        <button class="close-btn" data-close-button>&times;</button>
+        <h5 class="text-center fw-bold mb-3">ADD INTERACTION NOTE</h5>
+
+        <div class="row gx-3">
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><strong>Note Date:</strong></label>
+            <input type="date" class="custom-input form-control" placeholder="Add " />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><strong>Note Subject:</strong></label>
+            <input type="text" class="form-control" placeholder="Add Subject" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"><strong>Note:</strong></label>
+          <textarea class="form-control" rows="5" placeholder="Add Note"></textarea>
+        </div>
+
+        <div class="text-end">
+          <button class="btn btn-green">Save</button>
+        </div>
       </div>
     </div>
-    
 
-</div>
 
   <script>
     let currentNoteSlide = 0;
@@ -160,6 +209,45 @@
     }
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- changes checkbox color and crosses out text when action item is completed -->
+   <script>
+    document.querySelectorAll('.action-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const container = checkbox.closest('.action-item-box');
+      container.classList.toggle('completed', checkbox.checked);
+     });
+   });
+  </script>
+
+  <!-- Open and closes overlays --> 
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const openButtons = document.querySelectorAll('[data-modal-target]');
+        const closeButtons = document.querySelectorAll('[data-close-button]');
+
+        openButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const modal = document.getElementById(button.dataset.modalTarget);
+            if (modal) modal.style.display = 'flex';
+          });
+        });
+
+        closeButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const modal = button.closest('.overlay');
+            if (modal) modal.style.display = 'none';
+          });
+        });
+      });
+    </script>
+
+
+
+
+
+
+
+
 </body>
 </html>

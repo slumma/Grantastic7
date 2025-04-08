@@ -324,6 +324,16 @@ select.custom-input.form-select, input.custom-input.form-control{
   background-color: var(--lightest-gray);
 }
 
+
+
+::placeholder {
+  color:#595959 !important;
+}
+
+
+
+
+
 /* MODAL STYLES */
 .custom-modal {
   background-color: var(--medium-gray);
@@ -754,22 +764,44 @@ body,
 }
 
 
-/* Overlay style */
+
+/* Modal overlay background */
 .overlay {
-  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 1050;
+  z-index: 1055;
+  display: none;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
-.overlay-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+/* Modal card layout */
+.modal-card {
+  background-color: #cfcfcf;
+  border-radius: 6px;
+  padding: 24px;
+  max-width: 700px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal close (X) button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
+
+#selectimportance {
+  color: #595959;
 }
 
 

@@ -92,7 +92,7 @@
       </div>
       <div class="col-md-3">
         <label class="form-label fw-semibold">View Documents:</label>
-        <select class="custom-input form-select">
+        <select class="custom-input form-select" id="viewdocs">
           <option selected>Documents</option>
         </select>
       </div>
@@ -100,7 +100,7 @@
   </form>
 
 
-    <!-- Second Row -->
+    <!-- Second Big Row -->
 
       <div class="container py-5" id="secondcontainer">
         <div class="row justify-content-center align-items-start gx-4 gy-4">
@@ -109,8 +109,9 @@
 
        <div class="col-md-6 position-relative">
           <label class="form-label fw-bold">Action Items:</label>
-          <button class="btn add-btn" onclick="openModal('actionModal')">+</button>
+           <button class="btn add-btn" id="addactionitem" data-modal-target="actionModal">+</button>
             <div class="bg-light p-3 rounded d-flex flex-column gap-2">
+
               <div class="action-item-box bg-danger-subtle shadow-custom">
                 <span>Action Item #1 </span> <input type="checkbox" class="action-checkbox" />
               </div>
@@ -123,7 +124,9 @@
               <div class="action-item-box bg-success-subtle shadow-custom">
                 <span> Action Item #4 </span> <input type="checkbox" class="action-checkbox"/>
               </div>
+
               <!-- Add more items here if needed -->
+
             </div>
           </div>
 
@@ -133,7 +136,7 @@
 
 
             <!-- add note button -->
-            <button class="btn add-btn" onclick="openModal('noteModal')">+</button>
+              <button class="btn add-btn" data-modal-target="noteModal">+</button>
 
           <!-- Note coarousel wrapper -->
           <div class="bg-light p-3 rounded position-relative" style="min-height: 360px;">
@@ -179,32 +182,80 @@
 
               <!-- right arrow -->
               <button class="btn sm-btn ms-3 shadow-custom" onclick="slideNotes(1)">&gt;</button>
-            </div>
-          </div>
-          </div>
+
+            </div> <!-- end justify content center div -->
+          </div> <!-- end bg-light div -->
+          </div> <!-- end notes column div -->
           
-      </div>
+      </div> <!-- end of second row div -->
 
-
-       <!-- Overlay for add action item and add note -->
-          <div id="actionModal" class="overlay" onclick="closeModal('actionModal')">
-              <div class="overlay-content">New Action Item (modal content here)</div>
-          </div>
-
-           <div id="noteModal" class="overlay" onclick="closeModal('noteModal')">
-                <div class="overlay-content">New Note (modal content here)</div>
-             </div>
-    </div> <!-- end of container for row 2 -->
+    </div> <!-- end of overall container for row 2 -->
     
     <!-- Bottom Buttons -->
-  <div class="d-flex justify-content-end mt-4 gap-3" id="buttonrow">
-    <button class="btn btn-purple shadow-custom">ATTACH DOCUMENTS</button>
-    <button class="btn btn-green shadow-custom">SAVE CHANGES</button>
-  </div>
+      <div class="d-flex justify-content-end mt-4 gap-3" id="buttonrow">
+        <button class="btn btn-purple shadow-custom">ATTACH DOCUMENTS</button>
+        <button class="btn btn-green shadow-custom">SAVE CHANGES</button>
+      </div>
 
 </div> <!-- end of overall page container div -->
 
-  <script>
+     <!-- ADD ACTION ITEM OVERLAY -->
+      <div id="actionModal" class="overlay">
+        <div class="modal-card">
+          <button class="close-btn" data-close-button>&times;</button>
+          <h5 class="text-center fw-bold mb-3">ADD ACTION ITEM</h5>
+
+          <div class="mb-3">
+            <label class="form-label"><strong>Importance:</strong></label>
+            <select class="form-select" id="selectimportance" placeholder="Select Importance">
+              <option selected>Select Importance</option>
+              <option id="high">High</option>
+              <option id="medium">Medium</option>
+              <option id="low">Low</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"><strong>Action Item:</strong></label>
+            <textarea class="form-control" rows="4" placeholder="Add Item"></textarea>
+          </div>
+
+          <div class="text-end">
+            <button class="btn btn-green">Save</button>
+          </div>
+        </div>
+      </div>
+
+  <!-- ADD NOTE OVERLAY -->
+    <div id="noteModal" class="overlay">
+      <div class="modal-card">
+        <button class="close-btn" data-close-button>&times;</button>
+        <h5 class="text-center fw-bold mb-3">ADD INTERACTION NOTE</h5>
+
+        <div class="row gx-3">
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><strong>Note Date:</strong></label>
+            <input type="date" class="custom-input form-control" placeholder="Add " />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label"><strong>Note Subject:</strong></label>
+            <input type="text" class="form-control" placeholder="Add Subject" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"><strong>Note:</strong></label>
+          <textarea class="form-control" rows="5" placeholder="Add Note"></textarea>
+        </div>
+
+        <div class="text-end">
+          <button class="btn btn-green">Save</button>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
     let currentNoteSlide = 0;
     function slideNotes(direction) {
       const slider = document.getElementById("notesSlider");
@@ -228,13 +279,24 @@
 
   <!-- Open and closes overlays --> 
     <script>
-      function openModal(id) {
-        document.getElementById(id).style.display = 'flex';
-      }
+      document.addEventListener("DOMContentLoaded", function () {
+        const openButtons = document.querySelectorAll('[data-modal-target]');
+        const closeButtons = document.querySelectorAll('[data-close-button]');
 
-      function closeModal(id) {
-        document.getElementById(id).style.display = 'none';
-      }
+        openButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const modal = document.getElementById(button.dataset.modalTarget);
+            if (modal) modal.style.display = 'flex';
+          });
+        });
+
+        closeButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const modal = button.closest('.overlay');
+            if (modal) modal.style.display = 'none';
+          });
+        });
+      });
     </script>
 
 
