@@ -128,10 +128,26 @@ h2 {
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     font-weight: bold;
     color: #767676;
-
 }
+
+
+.task-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    margin-top: 2px; /* <-- adjust this to visually center if needed */
+}
+
+    .task-icon svg {
+        width: 16px;
+        height: 16px;
+        stroke: #000;
+    }
 
 /* Ensure the .row is using flexbox for the layout */
 .row {
@@ -159,16 +175,6 @@ h2 {
 }
 
 /* Ensure task items are aligned correctly */
-.task-item {
-    background: var(--lightest-gray);
-    padding: 10px;
-    border-radius: 7px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    color: #767676;
-}
 
 /*Phone Screen Sizing*/
 @media (max-width: 768px) {
