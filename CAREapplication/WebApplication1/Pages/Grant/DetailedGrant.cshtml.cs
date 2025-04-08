@@ -12,6 +12,7 @@ namespace CAREapplication.Pages.Grant
     public class DetailedGrantModel : PageModel
     {
         // empty grant object to populate it
+    
         public GrantSimple grant { get; set; }
         public List<GrantNote> noteList { get; set; } = new List<GrantNote>();
         public List<GrantStaff> staffList { get; set; } = new List<GrantStaff>();
@@ -36,7 +37,7 @@ namespace CAREapplication.Pages.Grant
             }
             // fills the grant object with the info in the db so the user can see and edit it 
             grant = new GrantSimple(); // Initialize the grant object
-
+            DBGrant.DBConnection.Close();
             SqlDataReader grantReader = DBGrant.SingleGrantReader(grantID);
 
             while (grantReader.Read())
@@ -144,5 +145,34 @@ namespace CAREapplication.Pages.Grant
 
             return staffList;
         }
+        public IActionResult OnPostAddNote(int grantID, string NoteContent)
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+
+                DBGrant.InsertGrantNote(grantID, NoteContent, userID);
+                DBGrant.DBConnection.Close();
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Insert Grant Note): {ex.Message}");
+                ModelState.AddModelError("", "Error saving grant note: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = grantID });
+        }
+
     }
 }

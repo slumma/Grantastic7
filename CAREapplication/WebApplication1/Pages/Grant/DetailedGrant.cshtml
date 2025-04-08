@@ -24,9 +24,6 @@
 
 <body>
 
-
-    <!-- NAV BAR GOES HERE -->
-    <!-- TREE FUND GRANT DETAIL PAGE -->
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container">
             <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
@@ -179,9 +176,8 @@
 
 
                 <!-- Grant Notes / Updates Table -->
-                <h6 class="section-label mt-5">GRANT UPDATES</h6>
-                <div class="mb-4">
-                    <table class="table text-center align-middle table-bordered header-table">
+                    <h6 class="section-label">GRANT UPDATES</h6>
+                    <table class="table text-center align-middle table-bordered">
                         <thead>
                             <tr>
                                 <th>NOTE</th>
@@ -189,36 +185,48 @@
                                 <th>DATE ADDED</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach (var note in Model.noteList)
+                            {
+                                <tr>
+                                    <td>@note.Content</td>
+                                    <td>@note.AuthorFirst @note.AuthorLast</td>
+                                    <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
 
-                    <div class="table-scroll">
-                        <table class="table text-center align-middle table-bordered table-body mt-0">
-                            <tbody>
-                                <tr class="project-row">
-                                    <td class="fw-bold align-items-center">"Review recent edits ASAP"</td>
-                                    <td>Nadeem Hudson</td>
-                                    <td>08 / 12 / 2025 - 1:47:06 PM</td>
-                                </tr>
-                                <tr class="project-row">
-                                    <td class="fw-bold align-items-center">"Need confirmation on section 2."</td>
-                                    <td>Nick Clement</td>
-                                    <td>08 / 13 / 2025 - 11:30:26 AM</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-center mt-2">
-                        <button class="btn sm-btn">EDIT/ADD STAFF</button>
-                    </div>
+                <div class="text-center mt-2">
+                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+                        Add Note
+                    </button>
                 </div>
 
-                <!-- Large Buttons -->
-                <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3 style=">
-                    <button class="btn save-btn">SAVE CHANGES</button>
-                </div>
-            </div>
-
-        </div>
+                <form method="post" asp-page-handler="AddNote">
+                    <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="addNoteModalLabel">Add Grant Note</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="noteContent">Note</label>
+                                        <textarea class="form-control" id="noteContent" name="NoteContent" rows="3" required></textarea>
+                                    </div>
+                                    
+                                    <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
