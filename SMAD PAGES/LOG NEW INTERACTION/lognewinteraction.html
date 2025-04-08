@@ -85,47 +85,45 @@
     <div class="container py-5" id="secondcontainer">
       <div class="row justify-content-center align-items-start gx-4 gy-4">
 
-      <!--Left: Action Items Column -->
-       <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold">Action Items:</label>
-          <button class="btn add-btn" id="addactionitem" data-modal-target="actionModal">+</button>
-            <div class="bg-light p-3 rounded d-flex flex-column gap-2">
+    <!--Left: Action Items Column -->
+    <div class="col-md-6">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <label class="form-label fw-bold">Action Items:</label>
+        <button class="btn add-btn" id="addactionitem" data-modal-target="actionModal">+</button>
+      </div>
 
-              <!-- Add action items here -->
+      <div class="action-items-box shadow-custom">
 
-            </div>
-        </div>
+         <!-- Add action items here -->
+
+      </div>
+    </div> <!-- end of action items column -->
 
      <!-- Right: Notes Section Column (Slideshow) -->
-      <div class="col-md-6 position-relative" id="notessection">
-          <label class="form-label fw-bold">Additional Note(s):</label>
+     <div class="col-md-6">
+        <!-- Top Label + Add Button -->
+          <div class="d-flex justify-content-between align-items-center position-relative mb-2">
+            <label class="form-label fw-bold">Additional Note(s):</label>
+            <button class="btn add-btn" id="addNoteBtn" data-modal-target="noteModal">+</button>
+          </div>
 
-         <!-- add note button -->
-            <button class="btn add-btn" data-modal-target="noteModal">+</button>
+          <!-- Note Container: always visible, responsive size -->
+          <div class="note-slider-container shadow-custom">
+            
+            <!-- Arrows INSIDE the gray box -->
+            <div id="noteNav" class="d-flex justify-content-between w-100 position-absolute top-50 start-0 px-3" style="display: none;">
+              <button class="btn btn-arrow" id="prevNote">&lt;</button>
+              <button class="btn btn-arrow" id="nextNote">&gt;</button>
+            </div>
 
-        <!-- Note coarousel wrapper -->
-          <div class="bg-light p-3 rounded position-relative" style="min-height: 360px;">
-            <div class="d-flex justify-content-center align-items-center h-100">
-
-            <!--left arrow -->
-            <button class="btn sm-btn me-3 shadow-custom" onclick="slideNotes(-1)">&lt;</button>
-              <div id="notesCarousel" style="overflow: hidden; width: 100%;">
-                <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
-
-                  <!-- Add .note-card blocks here -->
-
-                </div> <!-- end notes slider div -->
-              </div> <!-- end notes carousel div -->
-
-
-              <!-- right arrow -->
-              <button class="btn sm-btn ms-3 shadow-custom" onclick="slideNotes(1)">&gt;</button>
+            <!-- The slider with notes -->
+            <div id="noteSlider" class="note-slider d-flex gap-3">
+              <!-- Notes will be injected here -->
+            </div>
+          </div>
+        </div> <!-- end of notes column div -->
 
 
-            </div> <!-- end justify content center div -->
-          </div> <!-- end bg-light div -->
-          </div> <!-- end notes column div -->
-          
       </div> <!-- end of second row div -->
 
     </div> <!-- end of overall container for row 2 -->
@@ -243,8 +241,29 @@
     </script>
 
 
+    <!--Notes section arrows are hidden until a note is added and light grey box is small unitl a note is added -->
+    <script>
+          function checkForNotes() {
+            const slider = document.getElementById("noteSlider");
+            const nav = document.getElementById("noteNav");
+            const notes = slider.querySelectorAll(".note-card");
 
+            if (notes.length > 0) {
+              nav.style.display = "flex";
+            } else {
+              nav.style.display = "none";
+            }
+          }
 
+          function slideNotes(direction) {
+            const slider = document.getElementById("noteSlider");
+            const scrollAmount = 300;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+          }
+
+          // Run once on page load to set initial visibility
+          document.addEventListener("DOMContentLoaded", checkForNotes);
+    </script>
 
 
 

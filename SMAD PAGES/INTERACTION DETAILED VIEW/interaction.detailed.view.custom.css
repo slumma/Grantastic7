@@ -324,12 +324,16 @@ select.custom-input.form-select, input.custom-input.form-control{
   background-color: var(--lightest-gray);
 }
 
-
-
 ::placeholder {
   color:#595959 !important;
 }
 
+select.form-select {
+  padding-right: 2.5rem;  /* Makes space for the dropdown arrow */
+  white-space: nowrap;    /* Keeps the text on one line */
+  overflow: hidden;       /* Hides extra text if needed */
+  text-overflow: ellipsis; /* Adds ... if the text is still too long */
+}
 
 
 

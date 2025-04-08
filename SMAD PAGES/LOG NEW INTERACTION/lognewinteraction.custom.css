@@ -317,7 +317,7 @@ select.custom-input.form-select, input.custom-input.form-control{
 
 .dropdown-button {
   background-color: var(--lightest-gray);
-  padding: 10px;
+  padding:10px;
   border-radius: 7px;
   width: 250px !important;
 }
@@ -328,6 +328,13 @@ select.custom-input.form-select, input.custom-input.form-control{
 
 ::placeholder {
   color:#595959 !important;
+}
+
+select.form-select {
+  padding-right: 2.5rem;  /* Makes space for the dropdown arrow */
+  white-space: nowrap;    /* Keeps the text on one line */
+  overflow: hidden;       /* Hides extra text if needed */
+  text-overflow: ellipsis; /* Adds ... if the text is still too long */
 }
 
 
@@ -415,12 +422,15 @@ select.custom-input.form-select, input.custom-input.form-control{
 
 /*ACTION ITEMS DESIGN*/
 
-.action-item-box {
-  padding: 14px 16px;
+.action-items-box {
+  background-color: #f7f8f9;
+  padding: 2rem 1rem;
   border-radius: 8px;
+  min-height: 200px;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bg-danger-subtle {
@@ -463,11 +473,6 @@ input[type="checkbox"].action-checkbox:checked {
   align-content: center;
 }
 
-#notesSlider {
-  display: flex;
-  transition: transform 0.4s ease;
-  gap: 2rem;
-}
 
 .note-card {
   background-color: #EAE6ED;
@@ -723,19 +728,6 @@ body,
 
 /* Add Action Item + Add Note Overlays */
 
-.add-btn {
-  position: absolute;
-  top: 1px;
-  right: 8px;
-  font-size: 20px;
-  line-height: 1;
-  font-weight: normal;
-  padding: 0px 6px;
-  background-color: transparent;
-  border: none;
-  color: #555;
-  cursor: pointer;
-}
 
 .btn-arrow {
   font-size: 20px;
@@ -842,7 +834,34 @@ body,
   display: flex;
   gap: 2rem;
   transition: transform 0.4s ease;
+  padding: 0.5rem 0.25rem;
 }
+
+
+.note-slider-container {
+  background-color: #f7f8f9;
+  border-radius: 8px !important;
+  padding: 2rem 1rem;
+  min-height: 200px;
+  overflow-x: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.note-slider {
+  display: flex;
+  gap: 1rem;
+}
+
+#noteNav {
+  display: none !important;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
 
 /* Modal Container */
 .custom-modal {
@@ -850,5 +869,51 @@ body,
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+}
+
+
+.action-items-box,
+.note-slider-container {
+  background-color: #f7f8f9;
+  border-radius: 8px !important;
+  padding: 2rem 1rem;
+  min-height: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shadow-custom {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.add-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.btn-arrow {
+  background-color: #4b0c83;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
 
