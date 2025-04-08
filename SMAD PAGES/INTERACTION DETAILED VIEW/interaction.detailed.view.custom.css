@@ -1,4 +1,3 @@
-/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
 /* COLOR PALETTE */
 
 :root {
@@ -51,6 +50,8 @@
   color: black;
 }
 
+
+
 /* DROPDOWN MENU DESIGN */
 
 .custom-dropdown {
@@ -80,6 +81,37 @@
 
 
 /* MAIN CONTENT SECTION */
+
+#firstcontainer, #secondcontainer{
+  padding-top: 15px !important;
+}
+
+#secondcontainer{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.row.g-3.mb-4{
+  width: 889px;
+  padding: 0px;
+  margin-top: 0px;
+
+}
+
+.form-select, .custom-input {
+  background-color: var(--lightest-gray);
+}
+
+
+.container main-container{
+  background-color: white;
+}
+
+
+.container.main-container {
+  background-color: white;
+}
+
 
 .main-bg {
   background-color: var(--light-purple);
@@ -149,6 +181,7 @@ input[type="search"] {
   font-weight: bold;
   font-size: 16px;
   border: none;
+  padding-left: 12px !important;
 }
 
 .back-btn:hover {
@@ -174,12 +207,11 @@ table {
   padding: 25px 8px;
 }
 
-
 .scrollable-container {
   overflow-y: auto;
   overflow-x: hidden; /* updated: vertical scroll only */
   max-height: 600px;
-  padding-left: 20px;
+  padding-left: 0px;
   padding-right: 0px;
 }
 
@@ -197,6 +229,17 @@ table {
 }
 
 
+form {
+  padding-bottom: 18px;
+}
+
+#secondcontainer {
+  padding-bottom: 20px !important;
+}
+
+#firstcontainer{
+  padding-bottom: 20px !important;
+}
 /* TABLE HEADER */
 
 .header-table {
@@ -261,9 +304,13 @@ table {
   cursor: pointer;
 }
 
+select.custom-input.form-select, input.custom-input.form-control{
+  color: #595959;
+}
+
 .dropdown-header {
-	color: var(--dark-gray) !important;
-	border: none !important;
+  color: var(--medium-gray) !important;
+  border: none !important;
 }
 
 .dropdown-button {
@@ -328,6 +375,13 @@ table {
   background-color: #eaeaea;
 }
 
+#secondcontainer .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
 
 /* TABLE SCROLLING FUNCTIONS */
 
@@ -346,12 +400,60 @@ table {
   border-top: none;
 }
 
+
+/* Drop shadow on action items and note cards */
+.shadow-custom {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/*ACTION ITEMS DESIGN*/
+
+.action-item-box {
+  padding: 14px 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bg-danger-subtle {
+  background-color: #f8d7da !important;
+}
+
+.bg-warning-subtle {
+  background-color: #fff3cd !important;
+}
+
+
+
+/* Default checkbox color */
+input[type="checkbox"].action-checkbox {
+  accent-color: var(--lightest-gray);
+}
+
+/* Change checkbox color when checked */
+input[type="checkbox"].action-checkbox:checked {
+  accent-color: var(--dark-purple); /* JMU purple when checked */
+}
+
+/* Crosses item off when checked */
+.action-item-box.completed span {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+
 /*NOTES DESIGN*/
+
+#notessection .note-card{
+  margin: 0 auto;
+}
 
 #notesCarousel {
   overflow: hidden;
   width: 100%;
   max-width: 1200px;
+  align-content: center;
 }
 
 #notesSlider {
@@ -366,25 +468,37 @@ table {
   display: flex;
   flex-direction: column;
   min-height: 320px;
+  margin-right:0px !important;
+
 }
 
 .note-header {
-  background-color: #D9D9D9;
+  background-color: var(--light-purple) !important;
   padding: 20px 12px 12px;
+  padding-bottom: 0px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
 .note-outer {
-  background-color: #DACCE6;
+  background-color: white !important;
   padding: 12px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   flex-grow: 1;
 }
 
+#subject {
+  margin-bottom: 0px;
+}
+
+h6.fw-bold.mb-1.text-purple{
+  padding: 0px;
+}
+
+
 .note-inner {
-  background-color: white;
+  background-color: var(--lightest-gray) !important;
   border-radius: 12px;
   padding: 20px;
   height: 100%;
@@ -400,6 +514,7 @@ table {
   font-size: 14px;
 }
 
+
 .btn.sm-btn:hover {
   background-color: #DACCE6;
   color: #450084;
@@ -409,6 +524,7 @@ table {
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
+  margin-right: 1 rem;
 }
 
 
@@ -505,10 +621,6 @@ table {
 
 
 
-
-
-
-
 /* Interaction Detail View - Custom Styles */
 
 /* General Typography */
@@ -602,6 +714,95 @@ body,
   color: white;
 }
 
+/* Add Action Item + Add Note Overlays */
+
+.add-btn {
+  position: absolute;
+  top: 1px;
+  right: 8px;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: normal;
+  padding: 0px 6px;
+  background-color: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+}
+
+.btn-arrow {
+  font-size: 20px;
+  background-color: #5a1fa1;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.note-scroll-container {
+  white-space: nowrap;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  max-width: 100%;
+}
+
+.note-card-wrapper {
+  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+/* Overlay style */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+
+/* Bottom Buttons */
+
+/*Add Documents button */
+.btn-purple {
+  background-color: #5a1fa1;
+  color: white;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-purple:hover {
+  background-color: #4a1888;
+}
+
+/*Save Changes Button */
+.btn-green {
+  background-color: #1ABA1A;
+  color: white;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-green:hover {
+  background-color: #218838;
+}
+
 /* Carousel */
 #notesCarousel {
   overflow: hidden;
@@ -614,15 +815,6 @@ body,
   transition: transform 0.4s ease;
 }
 
-/* Action Items */
-.bg-danger-subtle {
-  background-color: #f8d7da !important;
-}
-
-.bg-warning-subtle {
-  background-color: #fff3cd !important;
-}
-
 /* Modal Container */
 .custom-modal {
   background-color: #f5f5f5;
@@ -630,3 +822,4 @@ body,
   padding: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+

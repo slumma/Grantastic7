@@ -21,10 +21,20 @@
 
 <body>
 
-  <!-- Main Content -->
+ <!-- Main Content -->
+  <div class="container-fluid py-5 main-bg">
+    <div class="container main-container">
+      <div class="scrollable-container">
 
- <!-- form-layout.html -->
-<div class="container py-5">
+        <!-- Back Button -->
+        <div class="d-flex justify-content-start mb-3">
+          <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+        </div>
+
+        <h2 class="text-center mb-4">INTERACTION DETAILED VIEW</h2>
+
+        <!-- Interaction Form Grid -->
+ <div class="container py-5" id="firstcontainer">
   <form>
     <div class="row mb-4">
       <div class="col-md-3">
@@ -70,30 +80,85 @@
       </div>
     </div>
   </form>
+
+
+    <!-- Action Items Section -->
+
+      <div class="container py-5" id="secondcontainer">
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Action Items:</label>
+            <div class="bg-light p-3 rounded">
+              <div class="bg-danger-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
+                Action Item #1 <input type="checkbox" />
+              </div>
+              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
+                Action Item #2 <input type="checkbox" />
+              </div>
+              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
+                Action Item #3 <input type="checkbox" />
+              </div>
+               <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
+                Action Item #4 <input type="checkbox" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes Section (Slideshow) -->
+          <div class="col-md-6" id="notessection">
+            <label class="form-label fw-bold">Additional Note(s):</label>
+            <div class="bg-light p-3 rounded">
+            <div class="position-relative d-flex align-items-center">
+              <button class="btn sm-btn me-2" onclick="slideNotes(-1)">&lt;</button>
+              <div id="notesCarousel" style="overflow: hidden; width: 100%;">
+                <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
+
+                  <!-- Single Note Card (repeatable) -->
+                  <div class="note-card">
+                    <div class="note-header text-center">
+                      <h6 class="fw-bold mb-1 text-purple">2/13/25 - Note</h6>
+                      <p id="subject"><strong>Subject:</strong> Meeting Attendees</p>
+                    </div>
+                    <div class="note-outer">
+                      <div class="note-inner">
+                        <p><strong>Note Author:</strong> Sarah Bennett</p>
+                        <p class="text-muted">
+                          Meeting Attendees:<br />
+                          • Sarah Bennett (JMU CARE)<br />
+                          • Nick Clement (JMU CARE)<br />
+                          • Josh White (JMU CARE)<br />
+                          • Katie Murden (TechCorp)<br />
+                          • Cameron McKinney (TechCorp)<br />
+                          • Will Drezzon (TechCorp)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Add more .note-card blocks here -->
+                </div>
+              </div>
+              <button class="btn sm-btn ms-2" onclick="slideNotes(1)">&gt;</button>
+            </div>
+          </div>
+          </div>
+          
+      </div>
+    </div>
+    
+
 </div>
 
-
-  <div class="container py-5">
-  <form>
-    <div class="row mb-4">
-           <div class="col-md-6">
-        <label class="form-label">Action Items:</label>
-        <div class="note-box">
-          <span class="text-muted">Add Item</span>
-          <button type="button" class="btn btn-light btn-sm plus-btn">+</button>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label">Additional Note(s):</label>
-        <div class="note-box">
-          <span class="text-muted">Add Note</span>
-          <button type="button" class="btn btn-light btn-sm plus-btn">+</button>
-        </div>
-      </div>
-      </div>
-  </form>
-  </div>
+  <script>
+    let currentNoteSlide = 0;
+    function slideNotes(direction) {
+      const slider = document.getElementById("notesSlider");
+      const cards = slider.querySelectorAll(".note-card");
+      const cardWidth = cards[0].offsetWidth + 32;
+      currentNoteSlide = Math.max(0, Math.min(currentNoteSlide + direction, cards.length - 1));
+      slider.style.transform = `translateX(-${currentNoteSlide * cardWidth}px)`;
+    }
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

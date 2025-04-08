@@ -39,7 +39,7 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
+   <!-- Main Content -->
   <div class="container-fluid py-5 main-bg">
     <div class="container main-container">
       <div class="scrollable-container">
@@ -52,73 +52,106 @@
         <h2 class="text-center mb-4">INTERACTION DETAILED VIEW</h2>
 
         <!-- Interaction Form Grid -->
-        <div class="row g-3 mb-4">
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Partner Name:</label>
-            <select class="form-control"> <option>TechCorp</option> </select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Logged By:</label>
-            <select class="form-control"> <option>Sarah Bennett</option> </select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Date:</label>
-            <input type="text" class="form-control" value="2/13/25" />
-          </div>
+ <div class="container py-5" id="firstcontainer">
+  <form>
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Partner Name:</label>
+        <select class="custom-input form-select">
+          <option selected>Select Partner</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Logged By:</label>
+        <select class="custom-input form-select">
+          <option selected>Select Faculty</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Date:</label>
+        <input type="date" class="custom-input form-control" placeholder="Add Date">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Interaction Type:</label>
+        <input type="text" class="custom-input form-control" placeholder="Add Type">
+      </div>
+    </div>
 
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Interaction Type:</label>
-            <input type="text" class="form-control" value="Meeting - In Person" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Subject:</label>
-            <input type="text" class="form-control" value="Establish KPIs" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Meeting Minutes:</label>
-            <input type="text" class="form-control" value="105" />
-          </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Subject:</label>
+        <input type="text" class="custom-input form-control" placeholder="Add Subject">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Meeting Minutes:</label>
+        <input type="text" class="custom-input form-control" placeholder="Add Minutes">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Meeting Link:</label>
+        <input type="text" class="custom-input form-control" placeholder="Add Link">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">View Documents:</label>
+        <select class="custom-input form-select">
+          <option selected>Documents</option>
+        </select>
+      </div>
+    </div>
+  </form>
 
-          <div class="col-md-4">
-            <label class="form-label fw-bold">Meeting Link:</label>
-            <input type="text" class="form-control" value="zoom.us/join" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label fw-bold">View Documents:</label>
-            <select class="form-control"> <option>Documents</option> </select>
-          </div>
-        </div>
 
-        <!-- Action Items Section -->
-        <div class="row g-3 mb-4">
-          <div class="col-md-6">
-            <label class="form-label fw-bold">Action Items:</label>
-            <div class="bg-light p-3 rounded">
-              <div class="bg-danger-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
-                Action Item #1 <input type="checkbox" />
+    <!-- Second Row -->
+
+      <div class="container py-5" id="secondcontainer">
+        <div class="row justify-content-center align-items-start gx-4 gy-4">
+
+          <!--Left: Action Items Column -->
+
+       <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold">Action Items:</label>
+          <button class="btn add-btn" onclick="openModal('actionModal')">+</button>
+            <div class="bg-light p-3 rounded d-flex flex-column gap-2">
+              <div class="action-item-box bg-danger-subtle shadow-custom">
+                <span>Action Item #1 </span> <input type="checkbox" class="action-checkbox" />
               </div>
-              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center mb-2">
-                Action Item #2 <input type="checkbox" />
+              <div class="action-item-box bg-warning-subtle shadow-custom">
+                <span>Action Item #2 </span> <input type="checkbox" class="action-checkbox"/>
               </div>
-              <div class="bg-warning-subtle p-2 rounded d-flex justify-content-between align-items-center">
-                Action Item #3 <input type="checkbox" />
+              <div class="action-item-box bg-warning-subtle shadow-custom">
+                <span> Action Item #3 </span> <input type="checkbox" class="action-checkbox"/>
               </div>
+              <div class="action-item-box bg-success-subtle shadow-custom">
+                <span> Action Item #4 </span> <input type="checkbox" class="action-checkbox"/>
+              </div>
+              <!-- Add more items here if needed -->
             </div>
           </div>
 
-          <!-- Notes Section (Slideshow) -->
-          <div class="col-md-6">
+          <!-- Right: Notes Section Column (Slideshow) -->
+          <div class="col-md-6 position-relative" id="notessection">
             <label class="form-label fw-bold">Additional Note(s):</label>
-            <div class="position-relative d-flex align-items-center">
-              <button class="btn sm-btn me-2" onclick="slideNotes(-1)">&lt;</button>
-              <div id="notesCarousel" style="overflow: hidden; width: 100%;">
-                <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
 
-                  <!-- Single Note Card (repeatable) -->
-                  <div class="note-card">
+
+            <!-- add note button -->
+            <button class="btn add-btn" onclick="openModal('noteModal')">+</button>
+
+          <!-- Note coarousel wrapper -->
+          <div class="bg-light p-3 rounded position-relative" style="min-height: 360px;">
+          <div class="d-flex justify-content-center align-items-center h-100">
+
+
+            <!--left arrow -->
+            <button class="btn sm-btn me-3 shadow-custom" onclick="slideNotes(-1)">&lt;</button>
+            <div id="notesCarousel" style="overflow: hidden; width: 100%;">
+              <div id="notesSlider" style="display: flex; transition: transform 0.3s ease;">
+
+          
+                <!-- Single Note Card (repeatable) -->
+                <div class="d-flex justify-content-center w-100" style="max-width: 440px;">
+                  <div class="note-card w-100">
                     <div class="note-header text-center">
                       <h6 class="fw-bold mb-1 text-purple">2/13/25 - Note</h6>
-                      <p><strong>Subject:</strong> Meeting Attendees</p>
+                      <p id="subject"><strong>Subject:</strong> Meeting Attendees</p>
                     </div>
                     <div class="note-outer">
                       <div class="note-inner">
@@ -134,19 +167,42 @@
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </div> <!-- div with drop shadow -->
+                </div>
+            
+
 
                   <!-- Add more .note-card blocks here -->
                 </div>
               </div>
-              <button class="btn sm-btn ms-2" onclick="slideNotes(1)">&gt;</button>
+
+
+              <!-- right arrow -->
+              <button class="btn sm-btn ms-3 shadow-custom" onclick="slideNotes(1)">&gt;</button>
             </div>
           </div>
-        </div>
-
+          </div>
+          
       </div>
-    </div>
+
+
+       <!-- Overlay for add action item and add note -->
+          <div id="actionModal" class="overlay" onclick="closeModal('actionModal')">
+              <div class="overlay-content">New Action Item (modal content here)</div>
+          </div>
+
+           <div id="noteModal" class="overlay" onclick="closeModal('noteModal')">
+                <div class="overlay-content">New Note (modal content here)</div>
+             </div>
+    </div> <!-- end of container for row 2 -->
+    
+    <!-- Bottom Buttons -->
+  <div class="d-flex justify-content-end mt-4 gap-3" id="buttonrow">
+    <button class="btn btn-purple shadow-custom">ATTACH DOCUMENTS</button>
+    <button class="btn btn-green shadow-custom">SAVE CHANGES</button>
   </div>
+
+</div> <!-- end of overall page container div -->
 
   <script>
     let currentNoteSlide = 0;
@@ -158,5 +214,30 @@
       slider.style.transform = `translateX(-${currentNoteSlide * cardWidth}px)`;
     }
   </script>
+
+
+  <!-- changes checkbox color and crosses out text when action item is completed -->
+   <script>
+    document.querySelectorAll('.action-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const container = checkbox.closest('.action-item-box');
+      container.classList.toggle('completed', checkbox.checked);
+     });
+   });
+  </script>
+
+  <!-- Open and closes overlays --> 
+    <script>
+      function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+      }
+
+      function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+      }
+    </script>
+
+
+
 </body>
 </html>
