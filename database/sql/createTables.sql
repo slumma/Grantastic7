@@ -195,3 +195,22 @@ CREATE TABLE userMessage(
     SentTime datetime DEFAULT GETDATE(),
     FOREIGN KEY (SenderID) REFERENCES users(UserID));
 
+CREATE TABLE files(
+	FileID int Identity(1,1) PRIMARY KEY,
+	FilePath nvarchar(200),
+	FileType nvarchar(200),
+	NameFile nvarchar(200));
+
+CREATE TABLE grantFile(
+	GrantFileID int Identity(1,1) PRIMARY KEY,
+	GrantID int,
+	FileID int,
+	FOREIGN KEY (FileID) REFERENCES files(FileID),
+	FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
+	
+CREATE TABLE projectFile(
+	ProjectFileID int Identity(1,1) PRIMARY KEY,
+	ProjectID int,
+	FileID int,
+	FOREIGN KEY (FileID) REFERENCES files(FileID),
+	FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
