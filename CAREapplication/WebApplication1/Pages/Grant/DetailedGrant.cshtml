@@ -11,42 +11,27 @@
     <meta name="author" content="" />
     <title>Scrolling Nav - Start Bootstrap Template 5.3.3</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="styles.css" rel="stylesheet">
-    <!-- END LOADING BOOTSTRAP CSS -->
-    <!-- Custom styles -->
     <link href="/css/detailed.grant.custom.css" rel="stylesheet">
-
-
 </head>
-
 <body>
-
     <div class="container-fluid py-5 main-bg">
         <div class="container main-container">
             <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
-
                 <div class="d-flex justify-content-start mb-3">
                     <a class="btn back-btn px-0 fw-bold" asp-page="GrantDashboard">&lt; PREVIOUS</a>
                 </div>
-
                 <h2 class="text-center mb-4">GRANT: @Model.grant.GrantName</h2>
-
                 <div class="d-flex align-items-center justify-content-between mb-4 px-3">
                     <div class="flex-grow-1">
                         <div class="progress" style="height: 16px; border-radius: 30px;">
-                            <div id="taskProgressBar" class="progress-bar" role="progressbar"
-                                 style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10">
-                            </div>
+                            <div id="taskProgressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10"></div>
                         </div>
                         <small id="taskProgressText" class="text-end d-block mt-1 fw-bold">0/10 TASKS COMPLETED</small>
                     </div>
                 </div>
-
-
-                <!-- Grant Overview Section in Purple Box -->
                 <h6 class="section-label">GRANT OVERVIEW</h6>
                 <div class="overview-box p-4 mb-4">
                     <div class="row">
@@ -54,7 +39,6 @@
                             <strong>Grant Description:</strong>
                             <div class="text-muted">@Model.grant.Description</div>
                         </div>
-
                         <div class="col-md-4 mb-3 pe-md-4">
                             <div class="d-flex justify-content-end gap-5">
                                 <div>
@@ -69,15 +53,9 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="text-center mb-4">
                     <button class="btn sm-btn">EDIT OVERVIEW</button>
                 </div>
-
-
-                <!-- Grant Staff Table -->
                 <h6 class="section-label">GRANT STAFF</h6>
                 <div class="mb-4">
                     <table class="table text-center align-middle table-bordered header-table">
@@ -91,21 +69,18 @@
                             </tr>
                         </thead>
                     </table>
-
                     <div class="table-scroll">
                         <table class="table text-center align-middle table-bordered table-body mt-0">
                             <tbody>
-                                @{
-                                    foreach (var staff in Model.staffList) 
-                                    {
-                                        <tr class="project-row">
-                                            <td class="fw-bold">@staff.FirstName @staff.LastName</td>
-                                            <td>@staff.UserRole</td>
-                                            <td>@staff.Email</td>
-                                            <td>@staff.Phone</td>
-                                            <td><button class="btn sm-btn">Edit</button></td>
-                                        </tr>
-                                    }
+                                @foreach (var staff in Model.staffList)
+                                {
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@staff.FirstName @staff.LastName</td>
+                                        <td>@staff.UserRole</td>
+                                        <td>@staff.Email</td>
+                                        <td>@staff.Phone</td>
+                                        <td><button class="btn sm-btn">Edit</button></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -114,12 +89,8 @@
                         <button class="btn sm-btn">EDIT/ADD STAFF</button>
                     </div>
                 </div>
-
-                <!-- Tasks Table -->
                 <h6 class="section-label">GRANT TASKS</h6>
-
                 <div class="table-container">
-                    <!-- Header Table -->
                     <table class="table text-center align-middle table-bordered header-table">
                         <thead>
                             <tr>
@@ -130,79 +101,98 @@
                             </tr>
                         </thead>
                     </table>
-
-                    <!-- Body Table -->
                     <div class="table-scroll">
                         <table class="table text-center align-middle table-bordered table-body mt-0">
                             <tbody>
-                                @{
-                                    foreach (var task in Model.TaskList) {
-                                        <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable1">
-                                            <td class="fw-bold">@task.Objective</td>
-                                            <td>@task.DueDate</td>
-                                            <td>
-                                                <button class="btn btn-light w-100 text-start dropdown-toggle" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#staffTable1" aria-expanded="false">
-                                                    View Staff
-                                                </button>
-                                            </td>
-                                            <td><button class="btn sm-btn">Detailed View</button></td>
-                                        </tr>
-                                        <tr class="collapse" id="staffTable1">
-                                            <td colspan="4" class="position-relative">
-                                                <div class="dropdown-popup mx-auto">
-                                                    <div class="staff-scroll">
-                                                        <table class="table table-sm mb-0">
-                                                            <tbody>
-                                                            @{
-                                                                foreach (var user in Model.TaskStaffList) {
-                                                                    
-                                                                        <tr><td class="text-center"><a href="#" class="staff-link">@user.FirstName @user.LastName</a></td></tr>
-                                                                    
-                                                                }
+                                @foreach (var task in Model.TaskList)
+                                {
+                                    <tr class="task-row clickable-row">
+                                        <td class="fw-bold">@task.Objective</td>
+                                        <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                                        <td>
+                                            <button class="btn btn-light w-100 text-start dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#staffTable-@task.TaskID" aria-expanded="false">
+                                                View Staff
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID">Detailed View</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="staffTable-@task.TaskID">
+                                        <td colspan="4">
+                                            <div class="dropdown-popup mx-auto">
+                                                <div class="staff-scroll">
+                                                    <table class="table table-sm mb-0">
+                                                        <tbody>
+                                                            @foreach (var user in Model.TaskStaffList.Where(u => u.TaskID == task.TaskID))
+                                                            {
+                                                                <tr><td class="text-center"><a href="#" class="staff-link">@user.FirstName @user.LastName</a></td></tr>
                                                             }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    }
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Task Detail Modal -->
+                                    <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content p-4">
+                                                <form method="post" asp-page-handler="UpdateTaskStatus">
+                                                    <div class="modal-header border-0">
+                                                        <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p><strong>Objective:</strong> @task.Objective</p>
+                                                        <p><strong>Due Date:</strong> @task.DueDate.ToString("MM/dd/yyyy")</p>
+                                                        <div class="mb-3">
+                                                            <label for="statusSelect-@task.TaskID" class="form-label"><strong>Status:</strong></label>
+                                                            <select name="completeFlag" class="form-select">
+                                                                <option value="0" selected="@(task.Completed == 0)">Incomplete</option>
+                                                                <option value="1" selected="@(task.Completed == 1)">Complete</option>
+                                                            </select>
+                                                            <input type="hidden" name="taskID" value="@task.TaskID" />
+                                                            <input type="hidden" name="Grant" value="@Model.grant" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn save-btn">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-
-                <!-- Grant Notes / Updates Table -->
-                    <h6 class="section-label">GRANT UPDATES</h6>
-                    <table class="table text-center align-middle table-bordered">
-                        <thead>
+                <h6 class="section-label">GRANT UPDATES</h6>
+                <table class="table text-center align-middle table-bordered">
+                    <thead>
+                        <tr>
+                            <th>NOTE</th>
+                            <th>AUTHOR</th>
+                            <th>DATE ADDED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var note in Model.noteList)
+                        {
                             <tr>
-                                <th>NOTE</th>
-                                <th>AUTHOR</th>
-                                <th>DATE ADDED</th>
+                                <td>@note.Content</td>
+                                <td>@note.AuthorFirst @note.AuthorLast</td>
+                                <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var note in Model.noteList)
-                            {
-                                <tr>
-                                    <td>@note.Content</td>
-                                    <td>@note.AuthorFirst @note.AuthorLast</td>
-                                    <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
+                        }
+                    </tbody>
+                </table>
                 <div class="text-center mt-2">
-                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
-                        ADD NOTE
-                    </button>
+                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">ADD NOTE</button>
                 </div>
-
                 <form method="post" asp-page-handler="AddNote">
                     <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -216,7 +206,6 @@
                                         <label for="noteContent">Note</label>
                                         <textarea class="form-control" id="noteContent" name="NoteContent" rows="3" required></textarea>
                                     </div>
-                                    
                                     <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
                                 </div>
                                 <div class="modal-footer">
@@ -230,27 +219,17 @@
             </div>
         </div>
     </div>
-
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            function updateTaskProgress(completed, total) {
-                const progressBar = document.getElementById("taskProgressBar");
-                const progressText = document.getElementById("taskProgressText");
-
-                const percentage = total > 0 ? (completed / total) * 100 : 0;
-
-                // Update visual progress bar
-                progressBar.style.width = `${percentage}%`;
-                progressBar.setAttribute("aria-valuenow", completed);
-
-                // Update text
-                progressText.textContent = `${completed}/${total} TASKS COMPLETED`;
-            }
-
-            // Ensure Razor values are properly inserted
-            updateTaskProgress(@(@Model.completed), @(@Model.total));
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function updateTaskProgress(completed, total) {
+            const progressBar = document.getElementById("taskProgressBar");
+            const progressText = document.getElementById("taskProgressText");
+            const percentage = total > 0 ? (completed / total) * 100 : 0;
+            progressBar.style.width = `${percentage}%`;
+            progressBar.setAttribute("aria-valuenow", completed);
+            progressText.textContent = `${completed}/${total} TASKS COMPLETED`;
+        }
+        updateTaskProgress(@(@Model.completed), @(@Model.total));
+    </script>
 </body>
 </html>
