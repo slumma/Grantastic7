@@ -55,12 +55,12 @@ public class IndexModel : PageModel
                 DBClass.DBConnection.Close();
 
                 // Check user permissions
-                int adminStatus = DBClass.adminCheck(userID);
+                int director = DBClass.directorCheck(userID);
                 DBClass.DBConnection.Close();
 
-                if (adminStatus == 1)
+                if (director == 1)
                 {
-                    HttpContext.Session.SetInt32("adminStatus", 1);
+                    HttpContext.Session.SetInt32("director", 1);
                     return RedirectToPage("/UserDashboard");
                 }
                 else { return RedirectToPage("/UserDashboard"); }

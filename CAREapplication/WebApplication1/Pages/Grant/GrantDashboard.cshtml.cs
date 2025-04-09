@@ -35,58 +35,25 @@ namespace CAREapplication.Pages.Grant
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index"); // Redirect to login page
             }
-            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
+            SqlDataReader grantReader = DBGrant.allGrantReader();
+            while (grantReader.Read())
             {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
-            }
-            HttpContext.Session.SetInt32("DisplayAll", 0);
-
-            if (HttpContext.Session.GetInt32("adminStatus") == 1)
-            {
-                SqlDataReader grantReader = DBGrant.adminGrantReader();
-                while (grantReader.Read())
+                grantList.Add(new GrantSimple
                 {
-                    grantList.Add(new GrantSimple
-                    {
-                        GrantID = Convert.ToInt32(grantReader["GrantID"]),
-                        GrantName = grantReader["GrantName"].ToString(),
-                        ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
-                        Project = grantReader["Project"].ToString(), // Handle NULL Project
-                        Amount = Convert.ToSingle(grantReader["Amount"]),
-                        Category = grantReader["Category"].ToString(),
-                        Status = grantReader["GrantStatus"].ToString(),
-                        Description = grantReader["descriptions"].ToString(),
-                        SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
-                        AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
-                    });
-                }
+                    GrantID = Convert.ToInt32(grantReader["GrantID"]),
+                    GrantName = grantReader["GrantName"].ToString(),
+                    ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
+                    Supplier = grantReader["Supplier"].ToString(),
+                    Project = grantReader["Project"].ToString(), // Handle NULL Project
+                    Amount = Convert.ToSingle(grantReader["Amount"]),
+                    Category = grantReader["Category"].ToString(),
+                    Status = grantReader["GrantStatus"].ToString(),
+                    Description = grantReader["descriptions"].ToString(),
+                    SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
+                    AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
+                });
             }
-            else
-            {
-                // reads the db for grants for specific user
-                int currentUserID = Convert.ToInt32(HttpContext.Session.GetInt32("userID"));
-                SqlDataReader grantReader = DBGrant.facGrantReader(currentUserID);
-                while (grantReader.Read())
-                {
-                    grantList.Add(new GrantSimple
-                    {
-                        GrantID = Convert.ToInt32(grantReader["GrantID"]),
-                        GrantName = grantReader["GrantName"].ToString(),
-                        ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
-                        Project = grantReader["Project"].ToString(), // Handle NULL Project
-                        Amount = Convert.ToSingle(grantReader["Amount"]),
-                        Category = grantReader["Category"].ToString(),
-                        Status = grantReader["GrantStatus"].ToString(),
-                        Description = grantReader["descriptions"].ToString(),
-                        SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
-                        AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
-                    });
-                }
-            }
-
+            
 
             // Close your connection in DBClass
             DBGrant.DBConnection.Close();
@@ -151,7 +118,7 @@ namespace CAREapplication.Pages.Grant
 
                 // Load all grants to keep them visible
                 grantList.Clear(); // Prevent duplicates
-                SqlDataReader grantReader = DBGrant.adminGrantReader();
+                SqlDataReader grantReader = DBGrant.allGrantReader();
 
                 while (grantReader.Read())
                 {
