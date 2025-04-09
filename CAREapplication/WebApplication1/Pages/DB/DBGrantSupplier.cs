@@ -56,10 +56,11 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
             cmdTaskStaffRead.CommandText = @"SELECT * 
-                                            FROM grantSupplier 
-                                            JOIN BPrep b ON grantSupplier.SupplierID = b.SupplierID 
-                                            JOIN users u on b.UserID = u.UserID
-                                            WHERE grantSupplier.SupplierID = @SupplierID;";
+                                            FROM funder 
+                                            JOIN funderPOC fr ON funder.funderID = fr.funderID 
+                                            JOIN person p on fr.personID = p.personID
+                                            JOIN contact c on p.personID = c.personID
+                                            WHERE funder.funderID = @funderID";
             cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
