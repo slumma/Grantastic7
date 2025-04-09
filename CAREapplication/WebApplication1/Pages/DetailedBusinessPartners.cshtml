@@ -54,6 +54,9 @@
                                 <p class="mb-1"><strong>Address:</strong> @Model.BP.BusinessAddress</p>
                             </div>
                         </div>
+                        <div class="text-center mt-2">
+                            <button class="btn sm-btn mt-2" onclick="openOverviewModal()">Edit Overview</button>
+                        </div>
                     </div>
 
                     <!-- Right Box: Status Tracking -->
@@ -160,6 +163,211 @@
         </div> <!-- End main-bg -->
     </div>
     <!-- Scripts -->
+    <script>
+            function slideNotes(direction) {
+              const slider = document.getElementById("notesSlider");
+              const cards = slider.querySelectorAll(".note-card");
+              const visibleCount = 3;
+              const cardWidth = cards[0]?.offsetWidth + 32 || 0;
+              const totalSlides = Math.ceil(cards.length / visibleCount);
+              let currentTransform = getTranslateX(slider);
+              let newTransform = currentTransform + direction * -cardWidth * visibleCount;
+              const maxScroll = slider.scrollWidth - (cardWidth * visibleCount);
+              newTransform = Math.max(Math.min(newTransform, 0), -maxScroll);
+              slider.style.transform = `translateX(${newTransform}px)`;
+            }
+            function getTranslateX(el) {
+              const style = window.getComputedStyle(el);
+              const matrix = new WebKitCSSMatrix(style.transform);
+              return matrix.m41;
+            }
+            function openNoteModal() {
+              alert("Note Modal Open - Implement functionality if needed.");
+            }
+            function updateStatusProgress(percent) {
+              const arc = document.getElementById("statusArc");
+              const circumference = 314;
+              const offset = circumference - (percent / 100) * circumference;
+              arc.style.strokeDashoffset = offset;
+            }
+            updateStatusProgress(75);
+
+            function openNoteModal() {
+          document.getElementById("noteModal").classList.remove("d-none");
+        }
+
+        function closeNoteModal() {
+          document.getElementById("noteModal").classList.add("d-none");
+        }
+
+        function saveNote() {
+          const date = document.getElementById("noteDate").value;
+          const author = document.getElementById("noteAuthor").value;
+          const subject = document.getElementById("noteSubject").value;
+          const content = document.getElementById("noteContent").value;
+
+          if (!date || !author || !subject || !content) {
+            alert("Please fill out all fields.");
+            return;
+          }
+
+          const newNoteHTML = `
+            <div class="note-card">
+              <div class="note-header text-center">
+                <h6 class="fw-bold mb-1 text-purple">${date} - Note</h6>
+                <p><strong>Note Author:</strong> ${author}</p>
+              </div>
+              <div class="note-outer">
+                <div class="note-inner">
+                  <p><strong>Subject:</strong> ${subject}</p>
+                  <p class="text-muted">${content}</p>
+                </div>
+              </div>
+            </div>
+          `;
+
+          const slider = document.getElementById("notesSlider");
+          slider.insertAdjacentHTML("beforeend", newNoteHTML);
+          closeNoteModal();
+        }
+
+        function openOverviewModal() {
+          document.getElementById("overviewModal").classList.remove("d-none");
+        }
+
+        function closeOverviewModal() {
+          document.getElementById("overviewModal").classList.add("d-none");
+        }
+
+        function saveOverview() {
+          const details = document.getElementById("editDetails").value;
+          const sector = document.getElementById("editSector").value;
+          const affiliation = document.getElementById("editAffiliation").value;
+          const type = document.getElementById("editType").value;
+
+          // You can update the DOM here if you want real-time content updates
+
+          closeOverviewModal();
+        }
+
+        function openProgressModal() {
+          document.getElementById("progressModal").classList.remove("d-none");
+        }
+
+        function closeProgressModal() {
+          document.getElementById("progressModal").classList.add("d-none");
+        }
+
+        function saveProgress() {
+          const selectedStatus = document.getElementById("statusSelect").value;
+          const statusDisplay = document.querySelector(".text-purple");
+          if (statusDisplay) {
+            statusDisplay.textContent = selectedStatus;
+          }
+
+          // Optional: Update progress meter visually based on status
+          const statusMap = {
+            "Prospect": 10,
+            "Initial Contact": 25,
+            "Negotiation": 40,
+            "MOU": 55,
+            "MOU Signed": 70,
+            "Active": 85,
+            "Completed": 100,
+            "On Hold": 50
+          };
+
+          const percent = statusMap[selectedStatus] || 0;
+          updateStatusProgress(percent);
+
+          closeProgressModal();
+        }
+
+    </script>
+    <!-- Note Modal -->
+    <div id="noteModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 500px; width: 100%;">
+            <h5 class="mb-3 text-center">Add New Note</h5>
+            <div class="mb-2">
+                <label class="form-label">Date:</label>
+                <input type="text" class="form-control" id="noteDate" placeholder="e.g., 4/09/25" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Note Author:</label>
+                <input type="text" class="form-control" id="noteAuthor" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Subject:</label>
+                <input type="text" class="form-control" id="noteSubject" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Note Content:</label>
+                <textarea class="form-control" id="noteContent" rows="4"></textarea>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeNoteModal()">Cancel</button>
+                <button class="save-btn" onclick="saveNote()">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Overview Modal -->
+    <div id="overviewModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 600px; width: 100%;">
+            <h5 class="mb-3 text-center">Edit Partnership Overview</h5>
+
+            <div class="mb-2">
+                <label class="form-label">Partnership Details:</label>
+                <input type="text" class="form-control" id="editDetails" placeholder="e.g., Community education initiative" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Sector:</label>
+                <input type="text" class="form-control" id="editSector" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Affiliation:</label>
+                <input type="text" class="form-control" id="editAffiliation" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Type:</label>
+                <input type="text" class="form-control" id="editType" />
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeOverviewModal()">Cancel</button>
+                <button class="save-btn" onclick="saveOverview()">Save</button>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Progress Modal -->
+    <div id="progressModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 400px; width: 100%;">
+            <h5 class="mb-3 text-center">Edit Current Status</h5>
+
+            <div class="mb-3">
+                <label for="statusSelect" class="form-label">Select Status:</label>
+                <select class="form-select" id="statusSelect">
+                    <option value="Prospect">Prospect</option>
+                    <option value="Initial Contact">Initial Contact</option>
+                    <option value="Negotiation">Negotiation</option>
+                    <option value="MOU">MOU</option>
+                    <option value="MOU Signed">MOU Signed</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
+                </select>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeProgressModal()">Cancel</button>
+                <button class="save-btn" onclick="saveProgress()">Save</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
