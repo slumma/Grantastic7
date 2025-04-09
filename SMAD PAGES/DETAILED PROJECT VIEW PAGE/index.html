@@ -213,7 +213,7 @@
                 </div>
               </div>
             </div>
-            <td><button class="btn sm-btn">Detailed View</button></td>
+            <td><button class="btn sm-btn" onclick="showTaskOverlay()">Detailed View</button></td>
         </div>
         </td>
       </tr>
@@ -258,7 +258,7 @@
               </div>
             </div>
           </div>
-          <td><button class="btn sm-btn">Detailed View</button></td>
+          <td><button class="btn sm-btn" onclick="showTaskOverlay()">Detailed View</button></td>
         </div>
         </td>
       </tr>
@@ -273,6 +273,35 @@
 
       </tbody>
     </table>
+
+
+      <!-- Overlay for Detailed Task View -->
+        <div class="overlay" id="taskDetailOverlay">
+          <div class="overlay-content">
+            <span class="closeOverlay" onclick="hideTaskOverlay()">X</span>
+            <h2 id="notetitle">TASK DETAILS</h2>
+            
+            <label class="fw-semibold mb-1">Objective:</label>
+            <input type="text" class="form-control mb-3" placeholder="-------" />
+
+            <label class="fw-semibold mb-1">Due Date:</label>
+            <input type="text" class="form-control mb-3" placeholder="mm/dd/yyyy"/>
+
+            <label class="fw-semibold mb-1">Associated Staff:</label>
+            <select class="form-select mb-3">
+              <option>---------</option>
+              <option>---------</option>
+              <option>---------</option>
+            </select>
+
+           
+          </div>
+        </div>
+
+
+
+
+
   </div>
 </div>
 
@@ -310,7 +339,13 @@
       <button class="btn sm-btn" onclick="showOverlay()">ADD NOTE</button>
     </div>
 
-   <!--Overlay Structure -->
+
+
+
+
+
+
+<!--Overlay Structure for project note -->
 
     <div class="overlay" id="overlay">
         <div class="overlay-content">
@@ -324,13 +359,15 @@
 
       <!-- Large Buttons -->
             <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3 style=">
+              <button class="btn doc-btn">ADD DOCUMENT</button>
               <button class="btn save-btn">SAVE CHANGES</button>
             </div>
             </div>
 
 
 
-            <!--Overlay script -->
+
+ <!--Overlay script -->
 
     <script>
      function showOverlay() {
@@ -350,8 +387,25 @@
     </script>
 
 
+<!-- Overlay Script for Detialed View -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+function showTaskOverlay() {
+  document.getElementById('taskDetailOverlay').style.display = 'flex';
+}
+
+function hideTaskOverlay() {
+  document.getElementById('taskDetailOverlay').style.display = 'none';
+}
+
+// Close overlay on ESC key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    hideTaskOverlay();
+  }
+});
+</script>
+  
 
   <script>
   function updateTaskProgress(completed, total) {
