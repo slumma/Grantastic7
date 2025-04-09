@@ -31,11 +31,6 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index");
             }
-            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index");
-            }
             DBProject.DBConnection.Close();
             LoadProjects();
             Trace.WriteLine(projectList.Count);
@@ -47,11 +42,6 @@ namespace CAREapplication.Pages.Project
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
-                return RedirectToPage("../Index");
-            }
-            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
                 return RedirectToPage("../Index");
             }
 

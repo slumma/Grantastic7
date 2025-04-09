@@ -12,7 +12,7 @@ namespace CAREapplication.Pages.DB
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
             "Server=Localhost;Database=CARE;Trusted_Connection=True";
-        public static SqlDataReader adminGrantReader()
+        public static SqlDataReader allGrantReader()
         {
             SqlCommand cmdGrantReader = new SqlCommand();
             cmdGrantReader.Connection = DBConnection;

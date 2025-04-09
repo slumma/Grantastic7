@@ -125,7 +125,7 @@ namespace CAREapplication.Pages.DB
             return status;
 
         }
-        public static int adminCheck(int userID)
+        public static int directorCheck(int userID)
         {
             SqlCommand cmdCheck = new SqlCommand();
             cmdCheck.Connection = DBConnection;
