@@ -192,7 +192,7 @@ namespace CAREapplication.Pages.DB
                                             users u ON ps.UserID = u.UserID
                                         JOIN 
                                             project p ON ps.ProjectID = p.ProjectID
-                                        WHERE ps.ProjectID = @ProjectID AND FacultyStatus = 1;";
+                                        WHERE ps.ProjectID = @ProjectID AND FacultyStatus = 1 AND Active = 1;";
 
             cmdProjectStaffReader.Parameters.AddWithValue("@ProjectID", ProjectID);
 
@@ -396,6 +396,26 @@ namespace CAREapplication.Pages.DB
             DBConnection.Close();
 
         }
+
+        public static void inactiveProjectStaff(int userID, int projectID)
+        {
+
+            string query = @"UPDATE projectStaff
+                            SET
+                                Active = 0
+                            WHERE UserID = @userID AND ProjectID = @projectID;";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@projectID", projectID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
+        }
+
+
     }
 }
 

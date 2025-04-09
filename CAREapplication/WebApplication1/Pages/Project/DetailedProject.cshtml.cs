@@ -85,6 +85,7 @@ namespace CAREapplication.Pages.Project
                     {
                         UserProjectList.Add(new User
                         {
+                            UserID = Convert.ToInt32(reader["UserID"]),
                             FirstName = reader["FirstName"].ToString(),
                             LastName = reader["LastName"].ToString(),
                             Phone = reader["Phone"].ToString(),
@@ -191,7 +192,14 @@ namespace CAREapplication.Pages.Project
             completed = progressList[0];
             total = progressList[1];
 
-            progress = Convert.ToInt32(completed / total);
+            if (total > 0)
+            {
+                progress = Convert.ToInt32((float)completed / total * 100); // gives percentage if needed
+            }
+            else
+            {
+                progress = 0;
+            }
 
             return Page();
         }
@@ -269,6 +277,26 @@ namespace CAREapplication.Pages.Project
                 ModelState.AddModelError("", "Error updating task: " + ex.Message);
             }
             
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostInactiveStaff(int userID, int ProjectID)
+        {
+            Trace.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAA");
+            Trace.WriteLine(userID);
+            Trace.WriteLine(ProjectID);
+            
+            try
+            {
+                DBProject.inactiveProjectStaff(userID, ProjectID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
 
             return RedirectToPage(new { projectID = ProjectID });
         }
