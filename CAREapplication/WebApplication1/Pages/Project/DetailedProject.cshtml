@@ -114,7 +114,7 @@
                             <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content p-4">
-                                        <form method="post" asp-page-handler="UpdateTaskStatus" asp-route-projectID="@Model.ProjectID">
+                                        <form method="post" asp-page-handler="UpdateTaskStatus">
                                             <div class="modal-header border-0">
                                                 <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -136,7 +136,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="submit" class="btn save-btn">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -214,12 +214,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mb-3">
-                            <label for="Objective">Objective</label>
-                            <input class="form-control" id="Objective" name="Objective" required />
+                            <label for="objective">Objective</label>
+                            <input class="form-control" id="objective" name="objective" required />
                         </div>
                         <div class="form-group mb-3">
-                            <label for="DueDate">Due Date</label>
-                            <input type="date" class="form-control" id="DueDate" name="DueDate" required />
+                            <label for="duedate">Due Date</label>
+                            <input type="date" class="form-control" id="duedate" name="duedate" required />
                         </div>
                         <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
                     </div>

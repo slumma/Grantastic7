@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.Identity.Client;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Threading.Tasks;
 
 
 namespace CAREapplication.Pages.Project
@@ -223,21 +224,26 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnPostUpdateTaskStatus(int? taskID, int? completeFlag, int? ProjectID)
         {
-            Trace.WriteLine("=== Task Update Handler Called ===");
-            Trace.WriteLine($"TaskID: {taskID}");
-            Trace.WriteLine($"CompleteFlag: {completeFlag}");
-            Trace.WriteLine($"ProjectID: {ProjectID}");
-
-            if (!taskID.HasValue || !completeFlag.HasValue || !ProjectID.HasValue)
-            {
-                Trace.WriteLine("❌ Missing parameter.");
-                return BadRequest("Missing required data.");
-            }
-
             try
             {
                 int userID = (int)HttpContext.Session.GetInt32("userID");
                 DBProject.UpdateProjectTask(taskID.Value, completeFlag.Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostAddTask(int ProjectID, DateOnly duedate, string objective)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.InsertProjectTask(ProjectID, objective, duedate);
             }
             catch (SqlException ex)
             {

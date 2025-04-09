@@ -1,8 +1,11 @@
 ﻿using CAREapplication.Pages.DataClasses;
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -328,6 +331,25 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
+
+
+
+        public static void InsertProjectTask(int projectID, string content, DateOnly duedate)
+        {
+            string query = @" INSERT INTO projectTask(ProjectID, DueDate, Objective)
+                                VALUES(@ProjectID, @DueDate, @Objective);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@Objective", content);
+            cmd.Parameters.AddWithValue("@DueDate", duedate.ToDateTime(TimeOnly.MinValue));
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+
 
         public static void UpdateProjectTask(int taskID, int completedFlag)
         {
