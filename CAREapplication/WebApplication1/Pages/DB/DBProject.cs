@@ -328,5 +328,24 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
-    }
+
+        public static void UpdateProjectTask(int taskID, int completedFlag)
+        {
+            string query = @"
+                    UPDATE projectTask
+                    SET 
+                        Completed = @Completed
+                    WHERE TaskID = @TaskID;
+                ";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@Completed", completedFlag); 
+            cmd.Parameters.AddWithValue("@TaskID", taskID);
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+                
+            }
+        }
 }
+

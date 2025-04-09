@@ -110,22 +110,35 @@
                                 </td>
                             </tr>
 
+                            <!-- Task Detail Modal -->
                             <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content p-4">
-                                        <div class="modal-header border-0">
-                                            <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p><strong>Objective:</strong> @task.Objective</p>
-                                            <p><strong>Due Date:</strong> @task.DueDate.ToString("MM/dd/yyyy")</p>
-                                            <p><strong>Status:</strong> @(task.Completed == 1 ? "Complete" : "Incomplete")</p>
-                                            <!-- Optionally add associated staff here -->
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
+                                        <form method="post" asp-page-handler="UpdateTaskStatus" asp-route-projectID="@Model.ProjectID">
+                                            <div class="modal-header border-0">
+                                                <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Objective:</strong> @task.Objective</p>
+                                                <p><strong>Due Date:</strong> @task.DueDate.ToString("MM/dd/yyyy")</p>
+                                                <div class="mb-3">
+                                                    <label for="statusSelect-@task.TaskID" class="form-label"><strong>Status:</strong></label>
+                                                    <select name="completeFlag" class="form-select">
+                                                        <option value="0" selected="@(task.Completed == 0)">Incomplete</option>
+                                                        <option value="1" selected="@(task.Completed == 1)">Complete</option>
+                                                    </select>
+
+                                                    <input type="hidden" name="taskID" value="@task.TaskID" />
+                                                    <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
