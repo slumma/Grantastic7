@@ -1,10 +1,12 @@
-using CAREapplication.Pages.DB;
+﻿using CAREapplication.Pages.DB;
 using CAREapplication.Pages.DataClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Threading.Tasks;
 
 
 namespace CAREapplication.Pages.Project
@@ -105,13 +107,31 @@ namespace CAREapplication.Pages.Project
                             AssignerID = Convert.ToInt32(reader["AssignerID"]),
                             DueDate = Convert.ToDateTime(reader["DueDate"])
                         });
-                        UserTaskList.Add(new User
+
+                        string firstName = reader["FirstName"].ToString();
+                        string lastName = reader["LastName"].ToString();
+
+                        bool exists = false;
+                        foreach (var user in UserTaskList)
                         {
-                            FirstName = reader["FirstName"].ToString(),
-                            LastName = reader["LastName"].ToString()
-                        });
+                            if (user.FirstName == firstName && user.LastName == lastName)
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+
+                        if (!exists)
+                        {
+                            UserTaskList.Add(new User
+                            {
+                                FirstName = firstName,
+                                LastName = lastName
+                            });
+                        }
                     }
                 }
+
                 Trace.WriteLine("taskStaffReader query completed successfully.");
 
                 DBProject.DBConnection.Close();
@@ -191,6 +211,7 @@ namespace CAREapplication.Pages.Project
                 int userID = (int)HttpContext.Session.GetInt32("userID");
 
                 DBProject.InsertProjectNote(ProjectID, NoteContent, userID);
+                
             }
             catch (SqlException ex)
             {
@@ -200,5 +221,38 @@ namespace CAREapplication.Pages.Project
 
             return RedirectToPage(new { projectID = ProjectID });
         }
+
+        public IActionResult OnPostUpdateTaskStatus(int? taskID, int? completeFlag, int? ProjectID)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.UpdateProjectTask(taskID.Value, completeFlag.Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostAddTask(int ProjectID, DateOnly duedate, string objective)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.InsertProjectTask(ProjectID, objective, duedate);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
     }
 }
