@@ -13,6 +13,5 @@
         public String? Phone { get; set; }
         public String? HomeAddress { get; set; }
         public String? SupplierStatus { get; set; }
-        public String? BusinessAddress { get; set; }
     }
 }

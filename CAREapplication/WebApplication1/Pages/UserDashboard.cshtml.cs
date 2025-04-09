@@ -35,7 +35,7 @@ namespace CAREapplication.Pages
             {
                 while (reader.Read())
                 {
-                    if (reader["TaskType"].ToString() == "Project Task")
+                    if (reader["TaskType"].ToString() == "Grant Task")
                     {
                         ProjectTaskList.Add(new ProjectTask
                         {
@@ -45,7 +45,7 @@ namespace CAREapplication.Pages
                             DueDate = Convert.ToDateTime(reader["DueDate"])
                         });
                     }
-                    else if (reader["TaskType"].ToString() == "Grant Task")
+                    else if (reader["TaskType"].ToString() == "Project Task")
                     {
                         GrantTaskList.Add(new GrantTask
                         {

@@ -55,27 +55,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection = DBConnection;
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
-            //cmdTaskStaffRead.CommandText = "SELECT * from grantSupplier WHERE SupplierID = @SupplierID";
-            cmdTaskStaffRead.CommandText = "SELECT gs.*, bp.*, u.* " +
-                "FROM grantSupplier gs " +
-                "JOIN BPrep bp ON gs.SupplierID = bp.SupplierID " +
-                "JOIN users u ON bp.userID = u.userID " +
-                "WHERE gs.SupplierID = @SupplierID;";
-
-            cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
-            cmdTaskStaffRead.Connection.Open();
-                SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
-            return tempReader;
-        }
-        public static SqlDataReader GrantNoteReader(int SupplierID)
-        {
-            SqlCommand cmdTaskStaffRead = new SqlCommand();
-            cmdTaskStaffRead.Connection = DBConnection;
-            cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
-
-            cmdTaskStaffRead.CommandText = ""+
-                "WHERE gs.SupplierID = @SupplierID;";
-
+            cmdTaskStaffRead.CommandText = "SELECT * from grantSupplier WHERE SupplierID = @SupplierID";
             cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();

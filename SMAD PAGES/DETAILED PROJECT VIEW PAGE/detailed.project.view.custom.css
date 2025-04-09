@@ -9,6 +9,48 @@
   --dark-gray: #1E1E1E;
 }
 
+/* NAV BAR */
+
+.navbar {
+  min-height: 100px;
+  background-color: var(--dark-purple) !important;
+}
+
+.navbar-nav .nav-link {
+  color: var(--lightest-gray) !important;
+  margin: 0 1rem;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  border-bottom: none;
+  font-weight: normal;
+}
+
+.navbar-nav .nav-link:hover {
+  font-weight: bold;
+  color: white !important;
+  text-decoration: underline !important;
+}
+
+.navbar-nav .nav-link.active-link {
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+.logout-btn {
+  background-color: var(--lightest-gray) !important;
+  color: var(--dark-purple) !important;
+  font-weight: 700;
+  font-size: 0.95rem; /* ~14px */
+  padding: 10px 30px;
+  margin: 15px;
+  border-radius: 8px;
+}
+
+.logout-btn:hover {
+  background-color: var(--light-purple) !important;
+  color: black;
+}
+
 /* DROPDOWN MENU DESIGN */
 
 .custom-dropdown {
@@ -327,7 +369,7 @@ table {
 }
 
 .save-btn {
-  background-color: #1ABA1A;
+  background-color: #1ABA1A !important;
   color: white;
   font-weight: bold;
   border-radius: 6px;
@@ -336,13 +378,27 @@ table {
   font-size: 14px;
 }
 
+.doc-btn{
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.save{
+  background-color: #1ABA1A !important ;
+}
+
 .save-btn:hover {
-  background-color: var(--dark-purple);
+  background-color: darkgreen;
   color: white;
 }
 
 
-/*ADD PROJEC NOTE title */
+/*ADD PROJECT NOTE title */
 #notetitle {
   text-align: center;
 }
@@ -407,6 +463,12 @@ table {
   color: black;
 }
 
-.staff-tag {
-  font-size: 0.9rem;
+
+select.form-select, select.form-select.mb-3,{
+  color: var(--medium-gray) !important;
 }
+
+
+
+
+

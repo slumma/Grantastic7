@@ -1,188 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Project Alpha Detail View</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Scrolling Nav - Start Bootstrap Template 5.3.3</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- LOAD BOOTSTRAP CSS - DO NOT DELETE -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <!-- END LOADING BOOTSTRAP CSS -->
+
+      
+    <!-- Custom styles -->
     <link href="detailed.project.view.custom.css" rel="stylesheet">
-</head>
+
+
+    </head>
+
 <body>
 
+  <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark-purple px-4">
+          <a class="navbar-brand me-5" href="#">
+            <img src="jmu_care.png" alt="Logo" height="80" />
+          </a>
+
+          <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
+            
+            <a class="nav-link text-white" href="#home">MESSAGES</a>
+
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white active-link" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
+                PROJECTS
+              </a>
+              <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
+                <li><a class="dropdown-item" href="#">ADD PROJECT</a></li>
+              </ul>
+            </div>
+
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
+                GRANTS
+              </a>
+              <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
+                <li><a class="dropdown-item" href="#">ADD GRANT</a></li>
+              </ul>
+            </div>
+
+            <a class="nav-link text-white" href="#">SEARCH</a>
+          </div>
+
+          <div class="d-flex align-items-center gap-3">
+            <span class="nav-link text-white">samogden</span>
+            <button class="btn logout-btn">LOGOUT</button>
+          </div>
+        </nav>
+
+<!-- PROJECT ALPHA DETAIL PAGE -->
 <div class="container-fluid py-5 main-bg">
-  <div class="container main-container">
+<div class="container main-container">
     <div class="scrollable-container" style="max-height: 600px; overflow-y: auto; padding-left: 20px; padding-right: 0;">
-      <div class="d-flex justify-content-start mb-3">
-        <a class="btn back-btn px-0 fw-bold" href="/BusinessPartners">&lt; PREVIOUS</a>
+  
+  <div class="d-flex justify-content-start mb-3">
+    <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+  </div>
+
+  <h2 class="text-center mb-4">PROJECT ALPHA</h2>
+
+  <div class="d-flex align-items-center justify-content-between mb-4 px-3">
+  <div class="flex-grow-1">
+    <div class="progress" style="height: 16px; border-radius: 30px;">
+      <div id="taskProgressBar" class="progress-bar" role="progressbar"
+           style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10">
       </div>
+    </div>
+    <small id="taskProgressText" class="text-end d-block mt-1 fw-bold">0/10 TASKS COMPLETED</small>
+  </div>
+</div>
 
-      <h2 class="text-center mb-4">PROJECT ALPHA</h2>
 
-      <div class="d-flex align-items-center justify-content-between mb-4 px-3">
-        <div class="flex-grow-1">
-          <div class="progress" style="height: 16px; border-radius: 30px;">
-            <div id="taskProgressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10"></div>
-          </div>
-          <small id="taskProgressText" class="text-end d-block mt-1 fw-bold">0/10 TASKS COMPLETED</small>
-        </div>
+  <!-- Project Overview Section in Purple Box -->
+<h6 class="section-label">PROJECT OVERVIEW</h6>
+<div class="overview-box p-4 mb-4">
+  <div class="row">
+  <div class="col-md-8 mb-3 ps-md-4">
+    <strong>Project Description:</strong>
+    <div class="text-muted">Project Alpha is focused on developing a sustainable urban forestry initiative that leverages data analytics and community partnerships to increase green canopy coverage in underserved neighborhoods. The project aims to plant 5,000 trees by the end of 2025 while tracking environmental impact metrics such as air quality improvement, stormwater runoff reduction, and temperature moderation.</div>
+  </div>
+
+  <div class="col-md-4 mb-3 pe-md-4">
+    <div class="d-flex justify-content-end gap-5">
+      <div>
+        <strong>Current Funding</strong>
+        <div class="text-muted">$450,000.00</div>
       </div>
+      <div>
+        <strong>Associated Grant</strong>
+        <div class="text-muted">Tree Fund</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
-      <h6 class="section-label">PROJECT OVERVIEW</h6>
-      <div class="overview-box p-4 mb-4">
-        <div class="row">
-          <div class="col-md-8 mb-3 ps-md-4">
-            <strong>Project Description:</strong>
-            <div class="text-muted">Project Alpha is focused on developing a sustainable urban forestry initiative...</div>
-          </div>
-          <div class="col-md-4 mb-3 pe-md-4">
-            <div class="d-flex justify-content-end gap-5">
-              <div><strong>Current Funding</strong><div class="text-muted">$450,000.00</div></div>
-              <div><strong>Associated Grant</strong><div class="text-muted">Tree Fund</div></div>
+
+
+  <div class="text-center mb-4">
+  <button class="btn sm-btn">EDIT OVERVIEW</button>
+</div>
+
+
+  <!-- Project Staff Table -->
+<h6 class="section-label">PROJECT STAFF</h6>
+  <div class="mb-4">
+    <table class="table text-center align-middle table-bordered header-table">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>ROLE</th>
+          <th>EMAIL</th>
+          <th>PHONE</th>
+          <th>EDIT USER/ PERMISSIONS</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="table-scroll">
+      <table class="table text-center align-middle table-bordered table-body mt-0">
+        <tbody>
+          <tr class="project-row">
+            <td class="fw-bold">Sarah Bennett</td>
+            <td>Admin/Lead PI</td>
+            <td>sarahbennett@example.com</td>
+            <td>(540) 555-5555</td>
+            <td><button class="btn sm-btn">Edit</button></td>
+          </tr>
+          <tr class="project-row">
+            <td class="fw-bold">Kayla Olden</td>
+            <td>Co-PI</td>
+            <td>kaylaolden8@example.com</td>
+            <td>(540) 555-5555</td>
+            <td><button class="btn sm-btn">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn sm-btn">EDIT/ADD STAFF</button>
+    </div>
+  </div>
+
+ <!-- Tasks Table -->
+<h6 class="section-label">PROJECT TASKS</h6>
+
+<div class="table-container">
+  <!-- Header Table -->
+  <table class="table text-center align-middle table-bordered header-table">
+    <thead>
+      <tr>
+        <th>OBJECTIVE</th>
+        <th>DUE DATE</th>
+        <th>ASSOCIATED STAFF</th>
+        <th>DETAILED VIEW</th>
+      </tr>
+    </thead>
+  </table>
+
+  <!-- Body Table -->
+  <div class="table-scroll">
+    <table class="table text-center align-middle table-bordered table-body mt-0">
+      <tbody>
+
+        <!-- Task Row 1 -->
+        <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable1">
+          <td class="fw-bold">Edit for first review</td>
+          <td>08 / 30 / 2025</td>
+          <td>
+            <div class="result-row d-flex justify-content-between align-items-center"
+               data-bs-toggle="modal"
+               data-bs-target="#addStaffModal"
+               onclick="setSelectedStaff('Staff Member')">
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn dropdown-button text-start dropdown-toggle" type="button">
+              <i class="fas fa-user staff-icon"></i>
+              <span class="fw-bold">View Staff</span>
+              </button>
             </div>
           </div>
+
+
+          <!-- MODAL: Add Staff -->
+        <div class="modal fade" id="addStaffModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal text-center">
+              <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 class="fw-bold">Select a Staff Member</h4>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <select class="form-select modal-role-select w-50">
+                    <option selected>Staff Member 1</option>
+                    <option>Staff Member 2</option>
+                    <option>Staff Member 3</option>
+                    <option>Staff Member 4</option>
+                    <option>Staff Member 5</option>
+                    <option>Staff Member 6</option>
+                  </select>
+                  <button class="btn btn-dark-purple">Add Staff</button>
+                </div>
+              </div>
+            </div>
+            <td><button class="btn sm-btn" onclick="showTaskOverlay()">Detailed View</button></td>
         </div>
-      </div>
+        </td>
+      </tr>
 
-      <div class="text-center mb-4">
-        <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editOverviewModal">EDIT OVERVIEW</button>
-      </div>
+        <!-- Task Row 1 -->
+        <tr class="task-row clickable-row" data-bs-toggle="collapse" data-bs-target="#staffTable2">
+          <td class="fw-bold">Finish Section 2</td>
+          <td>09 / 15 / 2025</td>
+          <td>
+            <div class="result-row d-flex justify-content-between align-items-center"
+               data-bs-toggle="modal"
+               data-bs-target="#addStaffModal"
+               onclick="setSelectedStaff('Staff Member')">
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn dropdown-button text-start dropdown-toggle" type="button">
+              <i class="fas fa-user staff-icon"></i>
+              <span class="fw-bold">View Staff</span>
+            </div>
+          </div>
+        </button>
 
-      <h6 class="section-label">PROJECT STAFF</h6>
-      <div class="mb-4">
-        <table class="table text-center align-middle table-bordered header-table">
-          <thead>
-            <tr><th>NAME</th><th>ROLE</th><th>EMAIL</th><th>PHONE</th><th>EDIT USER/ PERMISSIONS</th></tr>
-          </thead>
-        </table>
-        <div class="table-scroll">
-          <table class="table text-center align-middle table-bordered table-body mt-0">
-            <tbody>
-              <tr class="project-row">
-                <td class="fw-bold">Sarah Bennett</td>
-                <td>Admin/Lead PI</td>
-                <td>sarahbennett@example.com</td>
-                <td>(540) 555-5555</td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addEditStaffModal">Edit</button></td>
-              </tr>
-              <tr class="project-row">
-                <td class="fw-bold">Kayla Olden</td>
-                <td>Co-PI</td>
-                <td>kaylaolden8@example.com</td>
-                <td>(540) 555-5555</td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addEditStaffModal">Edit</button></td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- MODAL: Add Staff -->
+        <div class="modal fade" id="addStaffModal2" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal text-center">
+              <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 class="fw-bold">Select a Staff Member</h4>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <select class="form-select modal-role-select w-50">
+                    <option selected>Staff Member 1</option>
+                    <option>Staff Member 2</option>
+                    <option>Staff Member 3</option>
+                    <option>Staff Member 4</option>
+                    <option>Staff Member 5</option>
+                    <option>Staff Member 6</option>
+                  </select>
+                  <button class="btn btn-dark-purple">Add Staff</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <td><button class="btn sm-btn" onclick="showTaskOverlay()">Detailed View</button></td>
         </div>
-        <div class="text-center mt-2">
-          <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addEditStaffModal">EDIT/ADD STAFF</button>
-        </div>
-      </div>
+        </td>
+      </tr>
 
-      <h6 class="section-label">PROJECT TASKS</h6>
-      <div class="table-container">
-        <table class="table text-center align-middle table-bordered header-table">
-          <thead><tr><th>OBJECTIVE</th><th>DUE DATE</th><th>ASSOCIATED STAFF</th><th>DETAILED VIEW</th></tr></thead>
-        </table>
-        <div class="table-scroll">
-          <table class="table text-center align-middle table-bordered table-body mt-0">
-            <tbody>
-              <tr class="task-row">
-                <td class="fw-bold">Edit for first review</td>
-                <td>08 / 30 / 2025</td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#viewStaffModal">View Staff</button></td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#detailedViewModal">Detailed View</button></td>
-              </tr>
-              <tr class="task-row">
-                <td class="fw-bold">Finish Section 2</td>
-                <td>09 / 15 / 2025</td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#viewStaffModal">View Staff</button></td>
-                <td><button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#detailedViewModal">Detailed View</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Staff Modal -->
-<div class="modal fade" id="addEditStaffModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4">
-      <div class="modal-header border-0 justify-content-end">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <h4 class="fw-bold mb-3">Add/Edit Staff</h4>
-      <input type="text" placeholder="Search..." class="form-control mb-3" />
-      <button class="btn save-btn">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Edit Overview Modal -->
-<div class="modal fade" id="editOverviewModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4">
-      <div class="modal-header border-0 justify-content-end">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <h4 class="fw-bold mb-3">Edit Project Overview</h4>
-      <textarea class="form-control mb-3" rows="4" placeholder="Update project description..."></textarea>
-      <input type="text" class="form-control mb-3" placeholder="Update funding amount..." />
-      <input type="text" class="form-control mb-3" placeholder="Update associated grant..." />
-      <button class="btn save-btn">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- View Staff Modal -->
-<div class="modal fade" id="viewStaffModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4">
-      <div class="modal-header border-0 justify-content-end">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <h4 class="fw-bold mb-3">Associated Staff</h4>
-      <p>This would list associated staff for the selected task.</p>
-    </div>
-  </div>
-</div>
-
-<!-- Task Detail Modal -->
-<div class="modal fade" id="detailedViewModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4">
-      <div class="modal-header border-0 justify-content-end">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <h4 class="fw-bold mb-3">Task Details</h4>
-      <textarea class="form-control mb-3" rows="3" placeholder="Task objective..."></textarea>
-      <input type="date" class="form-control mb-3" />
-      <select class="form-select mb-3">
-        <option value="Active">Active</option>
-        <option value="Pending">Pending</option>
-        <option value="Denied">Denied</option>
-      </select>
-      <button class="btn save-btn">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  function setSelectedStaff(name) {
+    document.getElementById('staffName').textContent = `"${name}"`;
+  }
+</script>
+
+
+      </tbody>
+    </table>
+
+
+      <!-- Overlay for Detailed Task View -->
+        <div class="overlay" id="taskDetailOverlay">
+          <div class="overlay-content">
+            <span class="closeOverlay" onclick="hideTaskOverlay()">X</span>
+            <h2 id="notetitle">TASK DETAILS</h2>
+            
+            <label class="fw-semibold mb-1">Objective:</label>
+            <input type="text" class="form-control mb-3" placeholder="-------" />
+
+            <label class="fw-semibold mb-1">Due Date:</label>
+            <input type="text" class="form-control mb-3" placeholder="mm/dd/yyyy"/>
+
+            <label class="fw-semibold mb-1">Associated Staff:</label>
+            <select class="form-select mb-3">
+              <option>---------</option>
+              <option>---------</option>
+              <option>---------</option>
+            </select>
+
+           
+          </div>
+        </div>
+
+
+
+
+
+  </div>
+</div>
+
+
+ <!-- Project Notes / Updates Table -->
+<h6 class="section-label mt-5">PROJECT UPDATES</h6>
+  <div class="mb-4">
+    <table class="table text-center align-middle table-bordered header-table">
+      <thead>
+        <tr>
+          <th>NOTE</th>
+          <th>AUTHOR</th>
+          <th>DATE ADDED</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="table-scroll">
+      <table class="table text-center align-middle table-bordered table-body mt-0">
+        <tbody>
+          <tr class="project-row">
+            <td class="fw-bold align-items-center">"Review recent edits ASAP"</td>
+            <td>Nadeem Hudson</td>
+            <td>08 / 12 / 2025 - 1:47:06 PM</td>
+          </tr>
+          <tr class="project-row">
+            <td class="fw-bold align-items-center">"Need confirmation on section 2."</td>
+            <td>Nick Clement</td>
+            <td>08 / 13 / 2025 - 11:30:26 AM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn sm-btn" onclick="showOverlay()">ADD NOTE</button>
+    </div>
+
+
+
+
+
+
+
+<!--Overlay Structure for project note -->
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <span class="closeOverlay" onclick="hideOverlay()">X</span>
+            <h2 id="notetitle">ADD PROJECT NOTE</h2>
+            <textarea placeholder="Enter note..."></textarea>
+            <button class="save">Save</button>
+        </div>
+    </div>
+
+
+      <!-- Large Buttons -->
+            <div class="d-flex justify-content-end align-items-center gap-2 pe-3 mt-3 style=">
+              <button class="btn doc-btn">ADD DOCUMENT</button>
+              <button class="btn save-btn">SAVE CHANGES</button>
+            </div>
+            </div>
+
+
+
+
+ <!--Overlay script -->
+
+    <script>
+     function showOverlay() {
+    document.getElementById('overlay').style.display = 'flex';
+  }
+
+  function hideOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  // Allow pressing ESC to close overlay
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      hideOverlay();
+    }
+  });
+    </script>
+
+
+<!-- Overlay Script for Detialed View -->
+
+     <script>
+function showTaskOverlay() {
+  document.getElementById('taskDetailOverlay').style.display = 'flex';
+}
+
+function hideTaskOverlay() {
+  document.getElementById('taskDetailOverlay').style.display = 'none';
+}
+
+// Close overlay on ESC key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    hideTaskOverlay();
+  }
+});
+</script>
+  
+
+  <script>
   function updateTaskProgress(completed, total) {
     const progressBar = document.getElementById("taskProgressBar");
     const progressText = document.getElementById("taskProgressText");
+
     const percentage = (completed / total) * 100;
+    
+    // Update visual progress bar
     progressBar.style.width = `${percentage}%`;
     progressBar.setAttribute("aria-valuenow", completed);
+
+    // Update text
     progressText.textContent = `${completed}/${total} TASKS COMPLETED`;
   }
+
+  // Example usage: 3 tasks out of 10 complete
   updateTaskProgress(3, 10);
 </script>
 </body>

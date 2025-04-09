@@ -197,19 +197,20 @@ namespace CAREapplication.Pages.DB
 
             connection.Close();
         }
-        public static void InsertGrantNote(int grantID, string content, int userID)
-        { 
+        public static void InsertGrantNote(GrantNote newNote)
+        {
+            SqlConnection connection = new SqlConnection(DBConnString);
 
-            String query = "INSERT INTO grantNotes(GrantID, Content, AuthorID, NoteDate) VALUES (@GrantID, @Content, @AuthorID, GETDATE());";
-            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            String sqlQuery = "INSERT INTO grantNotes(GrantID, Content, AuthorID) VALUES (@GrantID, @Content, @AuthorID);";
+            SqlCommand cmdInsertGrantNote = new SqlCommand(sqlQuery, connection);
 
-            cmd.Parameters.AddWithValue("@GrantID", grantID);
-            cmd.Parameters.AddWithValue("@Content", content);
-            cmd.Parameters.AddWithValue("@AuthorID", userID);
+            cmdInsertGrantNote.Parameters.AddWithValue("@GrantID", newNote.GrantID);
+            cmdInsertGrantNote.Parameters.AddWithValue("@Content", newNote.Content);
+            cmdInsertGrantNote.Parameters.AddWithValue("@AuthorID", newNote.AuthorID);
 
-            DBConnection.Open();
-            cmd.ExecuteNonQuery();
-            DBConnection.Close();
+            connection.Open();
+            cmdInsertGrantNote.ExecuteNonQuery();
+            connection.Close();
         }
 
         public static SqlDataReader SingleGrantReader(int GrantID)
@@ -364,6 +365,16 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdUserGrantRead.ExecuteReader();
             return tempReader;
         }
-        
+        public static void InsertGrantNote(int grantID, string content, int userID)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO GrantNotes (GrantID, Content, UserID, NoteDate) VALUES (@GrantID, @Content, @UserID, GETDATE())", DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@Content", content);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
     }
 }

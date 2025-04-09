@@ -32,16 +32,6 @@ namespace CAREapplication.Pages
                 if (reader.Read())
                 {
                     BP.OrgType = reader["OrgType"].ToString();
-                    BP.SupplierName = reader["SupplierName"].ToString();
-                    BP.SupplierStatus = reader["SupplierStatus"].ToString();
-                    BP.CommunicationStatus = reader["CommunicationStatus"].ToString();
-                    BP.FirstName = reader["FirstName"].ToString();
-                    BP.LastName = reader["LastName"].ToString();
-                    BP.Email = reader["Email"].ToString();
-                    BP.Phone = reader["Phone"].ToString();
-                    BP.HomeAddress = reader["HomeAddress"].ToString();
-                    BP.SupplierStatus = reader["SupplierStatus"].ToString();
-                    BP.BusinessAddress = reader["BusinessAddress"].ToString();
                 }
 
                 reader.Close();
