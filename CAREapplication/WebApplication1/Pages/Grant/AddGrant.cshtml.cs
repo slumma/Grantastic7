@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.Grant
     {
         [BindProperty]
         public GrantSimple newGrant { get; set; }
-        public List<GrantSupplier> SupplierList { get; set; } = new List<GrantSupplier>();
+        public List<GrantFunder> FunderList { get; set; } = new List<GrantFunder>();
 
         public List<ProjectSimple> ProjectList { get; set; } = new List<ProjectSimple>();
 
@@ -24,13 +24,8 @@ namespace CAREapplication.Pages.Grant
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index"); // Redirect to login page
             }
-            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
-            }
             // made a method at the bottom of the file so i dont have to copy and paste it a bunch of times 
-            SupplierList = LoadSuppliers();
+            FunderList = LoadFunders();
             ProjectList = LoadProjects();
 
             return Page();
@@ -39,7 +34,7 @@ namespace CAREapplication.Pages.Grant
         // executes when AddGrant is added, iinserts it into the db
         public IActionResult OnPostAddGrant()
         {
-            SupplierList = LoadSuppliers();
+            FunderList = LoadFunders();
             ProjectList = LoadProjects();
 
             // debugging from AI
@@ -52,18 +47,18 @@ namespace CAREapplication.Pages.Grant
             }
 
 
-            // if everything is valid in the form, add to db with the supplierID selected 
+            // if everything is valid in the form, add to db with the FunderID selected 
             if (ModelState.IsValid)
             {
                 Trace.WriteLine("valid");
 
-                // used AI for help with this, it associates the SupplierName in the list with the SupplierID
-                GrantSupplier selectedSupplier = SupplierList.FirstOrDefault(s => s.SupplierName == newGrant.Supplier);
+                // used AI for help with this, it associates the FunderName in the list with the FunderID
+                GrantFunder selectedFunder = FunderList.FirstOrDefault(s => s.FunderName == newGrant.Funder);
                 ProjectSimple selectedProject = ProjectList.FirstOrDefault(p => p.ProjectName == newGrant.Project);
-                int supplierID = selectedSupplier.SupplierID;
+                int FunderID = selectedFunder.FunderID;
                 int projectID = selectedProject.ProjectID;
 
-                DBGrant.InsertGrant(newGrant, supplierID, projectID, Convert.ToInt32(HttpContext.Session.GetInt32("userID")));
+                DBGrant.InsertGrant(newGrant, FunderID, projectID, Convert.ToInt32(HttpContext.Session.GetInt32("userID")));
                 return RedirectToPage("FacultyLanding");
             }
 
@@ -79,7 +74,7 @@ namespace CAREapplication.Pages.Grant
             newGrant = new GrantSimple
             {
                 GrantID = newGrant.GrantID, // Keep the GrantID the same
-                Supplier = string.Empty,
+                Funder = string.Empty,
                 Project = string.Empty,
                 Amount = 0,
                 Category = string.Empty,
@@ -89,8 +84,8 @@ namespace CAREapplication.Pages.Grant
                 AwardDate = DateTime.Now
             };
 
-            // if i wasnt reloading the supplier list it would throw an error, this was an easy fix 
-            OnGet(); // just to reload the supplier list
+            // if i wasnt reloading the Funder list it would throw an error, this was an easy fix 
+            OnGet(); // just to reload the Funder list
 
             // Return the page with the cleared model
             return Page();
@@ -104,7 +99,7 @@ namespace CAREapplication.Pages.Grant
             newGrant = new GrantSimple
             {
                 GrantName = "Hello My Name is Carmen Winstead",
-                Supplier = "TechCorp",
+                Funder = "TechCorp",
                 Project = "Project Alpha",
                 Amount = 1000000,
                 Category = "Federal",
@@ -114,7 +109,7 @@ namespace CAREapplication.Pages.Grant
                 AwardDate = DateTime.Now
             };
 
-            SupplierList = LoadSuppliers();// Reload supplier list
+            FunderList = LoadFunders();// Reload Funder list
             ProjectList = LoadProjects();
 
             return Page();
@@ -122,27 +117,27 @@ namespace CAREapplication.Pages.Grant
 
 
         // make a method so i dont have to copy and paste it each time 
-        // loads all of the suppliers in the db into the supplierlist so it can be shown in the dropdown menu 
-        private List<GrantSupplier> LoadSuppliers()
+        // loads all of the Funders in the db into the Funderlist so it can be shown in the dropdown menu 
+        private List<GrantFunder> LoadFunders()
         {
-            var suppliers = new List<GrantSupplier>();
-            using (SqlDataReader reader = DBGrantSupplier.GrantSupplierReader())
+            var Funders = new List<GrantFunder>();
+            using (SqlDataReader reader = DBFunder.GrantFunderReader())
             {
                 while (reader.Read())
                 {
-                    suppliers.Add(new GrantSupplier
+                    Funders.Add(new GrantFunder
                     {
-                        SupplierID = int.Parse(reader["SupplierID"].ToString()),
-                        SupplierName = reader["SupplierName"].ToString(),
+                        FunderID = int.Parse(reader["FunderID"].ToString()),
+                        FunderName = reader["FunderName"].ToString(),
                         OrgType = reader["OrgType"].ToString(),
                         BusinessAddress = reader["BusinessAddress"].ToString()
                     });
                 }
             }
 
-            DBGrantSupplier.DBConnection.Close();
+            DBFunder.DBConnection.Close();
 
-            return suppliers;
+            return Funders;
         }
 
         // make the same method for projects:

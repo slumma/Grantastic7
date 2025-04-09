@@ -56,11 +56,11 @@
                                 foreach (var bp in Model.searchedBPList)
                                 {
                                     <tr class="project-row">
-                                        <td class="fw-bold">@bp.SupplierName</td>
+                                        <td class="fw-bold">@bp.FunderName</td>
                                         <td>@bp.OrgType</td>
-                                        <td>@bp.SupplierStatus</td>
+                                        <td>@bp.FunderStatus</td>
                                         <td>@bp.FirstName @bp.LastName</td>
-                                        <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
+                                        <td><a class="btn sm-btn" asp-route-FunderID="@bp.FunderID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
                                     </tr>
                                 }
                             }
@@ -75,11 +75,11 @@
                                 foreach (var bp in Model.bpList)
                                 {
                                     <tr class="project-row">
-                                        <td class="fw-bold">@bp.SupplierName</td>
+                                        <td class="fw-bold">@bp.FunderName</td>
                                         <td>@bp.OrgType</td>
-                                        <td>@bp.SupplierStatus</td>
+                                        <td>@bp.FunderStatus</td>
                                         <td>@bp.FirstName @bp.LastName</td>
-                                        <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
+                                        <td><a class="btn sm-btn" asp-route-FunderID="@bp.FunderID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
                                     </tr>
                                 }
                             }
