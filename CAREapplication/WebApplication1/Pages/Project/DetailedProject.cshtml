@@ -277,6 +277,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
     <script>
         function updateTaskProgress(completed, total) {
             const progressBar = document.getElementById("taskProgressBar");
@@ -289,6 +291,14 @@
         }
 
         updateTaskProgress(@Model.completed, @Model.total);
+
+        if (@Model.completed == @Model.total && @Model.total > 0) {
+            confetti({
+                particleCount: 100,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
     </script>
 </body>
 </html>
