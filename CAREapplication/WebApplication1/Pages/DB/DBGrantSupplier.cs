@@ -66,26 +66,9 @@ namespace CAREapplication.Pages.DB
             return tempReader;
         }
 
-        public static SqlDataReader BPSearch(string searchTerm)
-        {
-            SqlCommand cmdProjectSearch = new SqlCommand();
-            cmdProjectSearch.Connection = DBConnection;
-            cmdProjectSearch.Connection.ConnectionString = DBConnString;
-
-            cmdProjectSearch.CommandText = @"SELECT * 
-                                                FROM BPrep 
-                                                JOIN users ON users.UserID = BPrep.UserID 
-                                                join grantSupplier on grantSupplier.SupplierID = BPrep.SupplierID
-                                                WHERE users.FirstName LIKE '%' + @SearchTerm + '%' 
-                                                   OR users.LastName LIKE '%' + @SearchTerm + '%';";
-
-            cmdProjectSearch.Parameters.AddWithValue("@SearchTerm", searchTerm);
-            cmdProjectSearch.Connection.Open();
-            SqlDataReader tempReader = cmdProjectSearch.ExecuteReader();
-
-            return tempReader;
-
-        }
+        
+        
+        
 
     }
 }
