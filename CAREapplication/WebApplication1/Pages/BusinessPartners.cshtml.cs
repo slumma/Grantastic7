@@ -34,7 +34,7 @@ namespace CAREapplication.Pages
             }
 
             // Populate BusinessPartners to be shown in the view
-            SqlDataReader BPReader = DBGrantSupplier.BPReader();
+            SqlDataReader BPReader = DBFunder.BPReader();
             while (BPReader.Read())
             {
                 bpList.Add(new BusinessPartner
@@ -46,13 +46,13 @@ namespace CAREapplication.Pages
                     Phone = BPReader["Phone"].ToString(),
                     HomeAddress = BPReader["HomeAddress"].ToString(),
                     CommunicationStatus = BPReader["CommunicationStatus"].ToString(),
-                    SupplierID = Int32.Parse(BPReader["SupplierID"].ToString()),
-                    SupplierName = BPReader["SupplierName"].ToString(),
+                    FunderID = Int32.Parse(BPReader["FunderID"].ToString()),
+                    FunderName = BPReader["FunderName"].ToString(),
                     OrgType = BPReader["OrgType"].ToString(),
-                    SupplierStatus = BPReader["SupplierStatus"].ToString()
+                    FunderStatus = BPReader["FunderStatus"].ToString()
                 });
             }
-            DBGrantSupplier.DBConnection.Close();
+            DBFunder.DBConnection.Close();
             return Page();
         }
 
@@ -64,7 +64,7 @@ namespace CAREapplication.Pages
             {
                 Trace.WriteLine("AAAAAAAAAAAAHHHHHHHHHHHH");
                 ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
-                SqlDataReader BPsearch = DBGrantSupplier.BPSearch(searchTerm);
+                SqlDataReader BPsearch = DBFunder.BPSearch(searchTerm);
                 while (BPsearch.Read())
                 {
                     searchedBPList.Add(new BusinessPartner
@@ -76,13 +76,13 @@ namespace CAREapplication.Pages
                         Phone = BPsearch["Phone"].ToString(),
                         HomeAddress = BPsearch["HomeAddress"].ToString(),
                         CommunicationStatus = BPsearch["CommunicationStatus"].ToString(),
-                        SupplierID = Int32.Parse(BPsearch["SupplierID"].ToString()),
-                        SupplierName = BPsearch["SupplierName"].ToString(),
+                        FunderID = Int32.Parse(BPsearch["FunderID"].ToString()),
+                        FunderName = BPsearch["FunderName"].ToString(),
                         OrgType = BPsearch["OrgType"].ToString(),
-                        SupplierStatus = BPsearch["SupplierStatus"].ToString()
+                        FunderStatus = BPsearch["FunderStatus"].ToString()
                     });
                 }
-                DBGrantSupplier.DBConnection.Close(); // Load all projects so they still display
+                DBFunder.DBConnection.Close(); // Load all projects so they still display
                 return Page();
             }
 

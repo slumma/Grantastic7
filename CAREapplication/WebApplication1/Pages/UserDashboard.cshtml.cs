@@ -82,7 +82,7 @@ namespace CAREapplication.Pages
                     {
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
-                        Supplier = grantReader["SupplierName"].ToString(),
+                        Funder = grantReader["FunderName"].ToString(),
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
                         Status = grantReader["GrantStatus"].ToString(),

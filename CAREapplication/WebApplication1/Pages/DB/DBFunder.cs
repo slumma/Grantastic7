@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace CAREapplication.Pages.DB
 {
-    public class DBGrantSupplier
+    public class DBFunder
     {
         public static SqlConnection DBConnection = new SqlConnection();
 
@@ -19,11 +19,11 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdProductRead = new SqlCommand();
             cmdProductRead.Connection = DBConnection;
             cmdProductRead.Connection.ConnectionString = DBConnString;
-            cmdProductRead.CommandText = "SELECT grantSupplier.SupplierID, grantSupplier.SupplierName, grantSupplier.SupplierStatus, " +
-            "OrgType, grantSupplier.BusinessAddress, bprep.UserID, CommunicationStatus, users.FirstName, " +
+            cmdProductRead.CommandText = "SELECT grantFunder.FunderID, grantFunder.FunderName, grantFunder.FunderStatus, " +
+            "OrgType, grantFunder.BusinessAddress, bprep.UserID, CommunicationStatus, users.FirstName, " +
             "users.LastName, users.Email, users.Phone, users.HomeAddress " +
-            "FROM grantSupplier " +
-            "JOIN bprep ON grantSupplier.SupplierID = bprep.SupplierID " +
+            "FROM grantFunder " +
+            "JOIN bprep ON grantFunder.FunderID = bprep.FunderID " +
             "JOIN users ON users.UserID = bprep.UserID;";
             cmdProductRead.Connection.Open();
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
@@ -39,28 +39,28 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;
         }
-        public static SqlDataReader GrantSupplierReader()
+        public static SqlDataReader GrantFunderReader()
         {
             SqlCommand cmdProductRead = new SqlCommand();
             cmdProductRead.Connection = DBConnection;
             cmdProductRead.Connection.ConnectionString = DBConnString;
-            cmdProductRead.CommandText = "SELECT * FROM grantSupplier;";
+            cmdProductRead.CommandText = "SELECT * FROM grantFunder;";
             cmdProductRead.Connection.Open();
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;
         }
-        public static SqlDataReader SingleSupplierReader(int SupplierID)
+        public static SqlDataReader SingleFunderReader(int FunderID)
         {
             SqlCommand cmdTaskStaffRead = new SqlCommand();
             cmdTaskStaffRead.Connection = DBConnection;
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
             cmdTaskStaffRead.CommandText = @"SELECT * 
-                                            FROM grantSupplier 
-                                            JOIN BPrep b ON grantSupplier.SupplierID = b.SupplierID 
+                                            FROM grantFunder 
+                                            JOIN BPrep b ON grantFunder.FunderID = b.FunderID 
                                             JOIN users u on b.UserID = u.UserID
-                                            WHERE grantSupplier.SupplierID = @SupplierID;";
-            cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
+                                            WHERE grantFunder.FunderID = @FunderID;";
+            cmdTaskStaffRead.Parameters.AddWithValue("@FunderID", FunderID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
             return tempReader;
@@ -76,7 +76,7 @@ namespace CAREapplication.Pages.DB
             cmdProjectSearch.CommandText = @"SELECT * 
                                                 FROM BPrep 
                                                 JOIN users ON users.UserID = BPrep.UserID 
-                                                join grantSupplier on grantSupplier.SupplierID = BPrep.SupplierID
+                                                join grantFunder on grantFunder.FunderID = BPrep.FunderID
                                                 WHERE users.FirstName LIKE '%' + @SearchTerm + '%' 
                                                    OR users.LastName LIKE '%' + @SearchTerm + '%';";
 

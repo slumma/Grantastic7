@@ -45,7 +45,7 @@ namespace CAREapplication.Pages.Grant
                 grant.GrantID = Int32.Parse(grantReader["GrantID"].ToString());
                 grant.GrantName = grantReader["GrantName"].ToString();
                 grant.ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null; // Handle NULL ProjectID
-                grant.Supplier = grantReader["Supplier"].ToString();
+                grant.Funder = grantReader["Funder"].ToString();
                 grant.Project = grantReader["Project"].ToString();
                 grant.Amount = float.Parse(grantReader["Amount"].ToString());
                 grant.Category = grantReader["Category"].ToString();

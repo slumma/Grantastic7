@@ -52,7 +52,7 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(), // Handle NULL Project
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
@@ -75,7 +75,7 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(), // Handle NULL Project
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
@@ -120,10 +120,10 @@ namespace CAREapplication.Pages.Grant
                     grantList = grantList.OrderByDescending(g => g.Project).ToList();
                     break;
                 case "supp_asc":
-                    grantList = grantList.OrderBy(g => g.Supplier).ToList();
+                    grantList = grantList.OrderBy(g => g.Funder).ToList();
                     break;
                 case "supp_desc":
-                    grantList = grantList.OrderByDescending(g => g.Supplier).ToList();
+                    grantList = grantList.OrderByDescending(g => g.Funder).ToList();
                     break;
                 default:
                     grantList = grantList.OrderBy(g => g.GrantName).ToList();
@@ -160,7 +160,7 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null,
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(),
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
@@ -191,7 +191,7 @@ namespace CAREapplication.Pages.Grant
                     GrantID = Convert.ToInt32(projectSearch["GrantID"]),
                     GrantName = projectSearch["GrantName"].ToString(),
                     ProjectID = projectSearch["ProjectID"] != DBNull.Value ? Convert.ToInt32(projectSearch["ProjectID"]) : (int?)null,
-                    Supplier = projectSearch["Supplier"].ToString(),
+                    Funder = projectSearch["Funder"].ToString(),
                     Project = projectSearch["Project"].ToString(),
                     Amount = Convert.ToSingle(projectSearch["Amount"]),
                     Category = projectSearch["Category"].ToString(),

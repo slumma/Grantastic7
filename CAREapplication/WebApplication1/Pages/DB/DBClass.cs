@@ -40,7 +40,7 @@ namespace CAREapplication.Pages.DB
         public static User GetUserByID(int? userID)
         {
             User user = null;
-            String sqlQuery = "SELECT * FROM users join person p on p.UserID = users.UserID where users.UserID = @UserID;";
+            String sqlQuery = "SELECT * FROM users join person p on p.UserID = users.UserID join contact c on c.PersonID = p.PersonID where users.UserID = @UserID;";
 
             SqlConnection connection = new SqlConnection(DBConnString);
             SqlCommand cmdGetUser = new SqlCommand(sqlQuery, connection);
@@ -325,9 +325,9 @@ namespace CAREapplication.Pages.DB
         FROM projectNotes 
         WHERE Content LIKE @searchWord
         UNION
-        SELECT 'GrantSupplier' AS TableName, 'SupplierName' AS ColumnName, SupplierName AS FoundValue 
-        FROM grantSupplier 
-        WHERE SupplierName LIKE @searchWord
+        SELECT 'Funder' AS TableName, 'FunderName' AS ColumnName, FunderName AS FoundValue 
+        FROM Funder 
+        WHERE FunderName LIKE @searchWord
         UNION
         SELECT 'Grants' AS TableName, 'GrantName' AS ColumnName, GrantName AS FoundValue 
         FROM grants 

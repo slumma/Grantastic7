@@ -33,15 +33,15 @@
                                 <span asp-validation-for="newGrant.GrantName" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="newGrant.Supplier">Supplier</label>
-                                <select asp-for="newGrant.Supplier" class="form-select custom-input">
-                                    <option disabled selected>Select Supplier</option>
-                                    @foreach (var supplier in Model.SupplierList)
+                                <label asp-for="newGrant.Funder">Funder</label>
+                                <select asp-for="newGrant.Funder" class="form-select custom-input">
+                                    <option disabled selected>Select Funder</option>
+                                    @foreach (var Funder in Model.FunderList)
                                     {
-                                        <option value="@supplier.SupplierName">@supplier.SupplierName</option>
+                                        <option value="@Funder.FunderName">@Funder.FunderName</option>
                                     }
                                 </select>
-                                <span asp-validation-for="newGrant.Supplier" class="text-danger"></span>
+                                <span asp-validation-for="newGrant.Funder" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="newGrant.Project">Project</label>
