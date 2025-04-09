@@ -60,35 +60,40 @@
                 <div class="col-md-6">
                     <div class=" scrollable-container content-box">
                         <h4 class="box-title">MY TASKS</h4>
-                        <ul class="list-unstyled">
-                            @foreach (var task in Model.ProjectTaskList)
-                            {
-                                <li class="task-item">
-                                    <span class="task-icon">
-                                        <!-- Corner Down Right icon (Lucide style) -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M15 10l5 5-5 5" />
-                                            <path d="M4 4v7a4 4 0 0 0 4 4h12" />
-                                        </svg>
-                                    </span>
-                                    <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">@task.Objective</a>
-                                </li>
-                            }
+                        @if (!Model.ProjectTaskList.Any() && !Model.GrantTaskList.Any())
+                        {
+                            <div class="text-muted">You have no incomplete tasks assigned.</div>
+                        }
+                        else
+                        {
+                            <ul class="list-unstyled">
+                                @foreach (var task in Model.ProjectTaskList)
+                                {
+                                    <li class="task-item">
+                                        <span class="task-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M15 10l5 5-5 5" />
+                                                <path d="M4 4v7a4 4 0 0 0 4 4h12" />
+                                            </svg>
+                                        </span>
+                                        <a class="task-item text-decoration-none" asp-page="/Project/DetailedProject" asp-route-projectID="@task.ProjectID">@task.Objective</a>
+                                    </li>
+                                }
 
-                            @foreach (var task in Model.GrantTaskList)
-                            {
-                                <li class="task-item">
-                                    <span class="task-icon">
-                                        <!-- Corner Down Right icon (Lucide style) -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M15 10l5 5-5 5" />
-                                            <path d="M4 4v7a4 4 0 0 0 4 4h12" />
-                                        </svg>
-                                    </span>
-                                    <a class="task-item text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@task.GrantID">@task.Objective</a>
-                                </li>
-                            }
-                        </ul>
+                                @foreach (var task in Model.GrantTaskList)
+                                {
+                                    <li class="task-item">
+                                        <span class="task-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#767676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M15 10l5 5-5 5" />
+                                                <path d="M4 4v7a4 4 0 0 0 4 4h12" />
+                                            </svg>
+                                        </span>
+                                        <a class="task-item text-decoration-none" asp-page="/Grant/DetailedGrant" asp-route-grantID="@task.GrantID">@task.Objective</a>
+                                    </li>
+                                }
+                            </ul>
+                        }
                     </div>
                 </div>
             </div>

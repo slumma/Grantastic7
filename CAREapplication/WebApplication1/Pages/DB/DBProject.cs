@@ -255,7 +255,7 @@ namespace CAREapplication.Pages.DB
                                         FROM grantTaskStaff gts
                                         JOIN grantTask gt ON gts.TaskID = gt.TaskID
                                         JOIN grants g ON gt.GrantID = g.GrantID
-                                        WHERE gts.AssigneeID = @UserID
+                                        WHERE gts.AssigneeID = @UserID  AND gt.Completed = 0
 
                                         UNION ALL
 
@@ -269,7 +269,7 @@ namespace CAREapplication.Pages.DB
                                         FROM projectTaskStaff pts
                                         JOIN projectTask pt ON pts.TaskID = pt.TaskID
                                         JOIN project p ON pt.ProjectID = p.ProjectID
-                                        WHERE pts.AssigneeID = @UserID;";
+                                        WHERE pts.AssigneeID = @UserID AND pt.Completed = 0;";
             cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
