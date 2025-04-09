@@ -8,6 +8,7 @@ using System.IO;
 using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CAREapplication.Pages.DB
 {
@@ -16,7 +17,7 @@ namespace CAREapplication.Pages.DB
         public static SqlConnection DBConnection = new SqlConnection();
 
         // Connection String - How to find and connect to DB
-        private static readonly String? DBConnString =
+        private static readonly System.String? DBConnString =
             "Server=Localhost;Database=Lab4;Trusted_Connection=True";
 
         //Methods
@@ -57,7 +58,7 @@ namespace CAREapplication.Pages.DB
         {
             SqlConnection connection = new SqlConnection(DBConnString);
 
-            String sqlQuery = "INSERT INTO projectNotes(ProjectID, Content, AuthorID) VALUES (@GrantID, @Content, @AuthorID);";
+            System.String sqlQuery = "INSERT INTO projectNotes(ProjectID, Content, AuthorID) VALUES (@GrantID, @Content, @AuthorID);";
             SqlCommand cmdInsertGrantNote = new SqlCommand(sqlQuery, connection);
 
             cmdInsertGrantNote.Parameters.AddWithValue("@GrantID", newNote.ProjectID);
@@ -73,7 +74,7 @@ namespace CAREapplication.Pages.DB
 
             SqlConnection connection = new SqlConnection(DBConnString);
 
-            String sqlQuery = "INSERT INTO projectStaff (UserID, ProjectID, Leader, Active) VALUES(@UserID, @ProjectID, 0, 1);";
+            System.String sqlQuery = "INSERT INTO projectStaff (UserID, ProjectID, Leader, Active) VALUES(@UserID, @ProjectID, 0, 1);";
             SqlCommand cmdInsertProjectStaff = new SqlCommand(sqlQuery, connection);
 
             // Add parameters to the command
@@ -203,6 +204,11 @@ namespace CAREapplication.Pages.DB
         }
         public static SqlDataReader singleProjectReader(int ProjectID)
         {
+            if (DBConnection.State != ConnectionState.Closed)
+            {
+                DBConnection.Close();
+            }
+
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
@@ -368,6 +374,28 @@ namespace CAREapplication.Pages.DB
             DBConnection.Close();
                 
             }
+
+        public static void UpdateProject(int ProjectID, string description, DateOnly duedate)
+        {
+            Trace.WriteLine(description);
+
+            string query = @"
+                        UPDATE project
+                        SET
+                            ProjectDescription = @description,
+                            DueDate = @duedate
+                        WHERE ProjectID = @projectID;";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@description", description);
+            cmd.Parameters.AddWithValue("@duedate", duedate.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@projectID", ProjectID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
         }
+    }
 }
 

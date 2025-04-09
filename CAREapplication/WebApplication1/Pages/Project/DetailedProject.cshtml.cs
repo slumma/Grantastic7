@@ -7,6 +7,8 @@ using System.Diagnostics;
 using Microsoft.Identity.Client;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
+using System.Security.AccessControl;
 
 
 namespace CAREapplication.Pages.Project
@@ -254,5 +256,21 @@ namespace CAREapplication.Pages.Project
             return RedirectToPage(new { projectID = ProjectID });
         }
 
+        public IActionResult OnPostEditOverview(int ProjectID, string description, DateOnly duedate)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.UpdateProject(ProjectID, description, duedate);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+            
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
     }
 }
