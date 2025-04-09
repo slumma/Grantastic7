@@ -37,26 +37,22 @@
 
                     <!-- Left Box: Partnership Info + Contact -->
                     <div class="col-md-8">
-                        <div class="gray-box position-relative d-flex flex-row justify-content-between align-items-stretch p-4" style="min-height: 280px;">
+                        <div class="gray-box d-flex flex-row justify-content-between align-items-start p-4" style="gap: 2rem;">
 
-                            <!-- Left: Info Headers -->
-                            <div class="d-flex flex-column justify-content-start ps-4 pt-4 pb-4" style="gap: 1.5rem;">
-                                <!--<p><strong>Partnership Details:</strong> ----------------------</p>-->
-
-                                <p><strong>Organization Type</strong> @Model.BP.OrgType</p>
+                            <!-- Left Column: Org Info -->
+                            <div class="d-flex flex-column justify-content-start" style="gap: 1rem;">
+                                <p><strong>Organization Type:</strong> @Model.BP.OrgType</p>
                                 <p><strong>Funder Status:</strong> @Model.BP.SupplierStatus</p>
-                                <!--<p><strong>Type:</strong> ----------------------</p>-->
                             </div>
 
-                            <!-- Right: Primary Contact -->
-                            <div class="mb-3">
-                                <img src="/images/user.png" alt="Primary Contact" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                            <!-- Right Column: Contact Info -->
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="/images/user.png" alt="Primary Contact" class="rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover;" />
+                                <p class="fw-bold mb-1 fs-5">@Model.BP.FirstName @Model.BP.LastName</p>
+                                <p class="mb-1"><strong>Phone:</strong> @Model.BP.Phone</p>
+                                <p class="mb-1"><strong>Email:</strong> @Model.BP.Email</p>
+                                <p class="mb-1"><strong>Address:</strong> @Model.BP.BusinessAddress</p>
                             </div>
-
-                            <p class="fw-bold mb-1 fs-5">@Model.BP.FirstName @Model.BP.LastName</p>
-                            <p class="mb-1"><strong>Phone:</strong> @Model.BP.Phone</p>
-                            <p class="mb-1"><strong>Email:</strong> @Model.BP.Email</p>
-                            <p class="mb-1"><strong>Address:</strong> @Model.BP.BusinessAddress</p>
                         </div>
                     </div>
 

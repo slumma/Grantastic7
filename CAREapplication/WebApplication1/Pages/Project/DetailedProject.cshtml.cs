@@ -318,9 +318,6 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnPostEditStaff(int ProjectID, int UserID)
         {
-            Trace.WriteLine("SUBYYDUSBDUBUDSUDUU");
-            Trace.WriteLine(UserID);
-            Trace.WriteLine(ProjectID);
 
             try
             {
