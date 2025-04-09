@@ -27,6 +27,7 @@ namespace CAREapplication.Pages.Project
         public int progress { get; set; }
         public int total { get; set; }
         public int completed { get; set; }
+        public List<User> AllUsers { get; set; } = new List<User>();
 
         public IActionResult OnGet(int projectID)
         {
@@ -77,6 +78,23 @@ namespace CAREapplication.Pages.Project
 
                 DBProject.DBConnection.Close();
 
+                using (SqlDataReader reader = DBClass.UserReader())
+                {
+                    while (reader.Read())
+                    {
+                        AllUsers.Add(new User
+                        {
+                            UserID = Convert.ToInt32(reader["UserID"]),
+                            UserName = reader["Username"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            Email = reader["Email"].ToString()
+                        });
+                    }
+                }
+
+                DBClass.DBConnection.Close();
 
                 Trace.WriteLine("Executing projectStaffReader query...");
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
@@ -282,10 +300,7 @@ namespace CAREapplication.Pages.Project
         }
 
         public IActionResult OnPostInactiveStaff(int userID, int ProjectID)
-        {
-            Trace.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAA");
-            Trace.WriteLine(userID);
-            Trace.WriteLine(ProjectID);
+        { 
             
             try
             {
@@ -300,5 +315,23 @@ namespace CAREapplication.Pages.Project
 
             return RedirectToPage(new { projectID = ProjectID });
         }
+
+        public IActionResult OnPostEditStaff(int ProjectID, int UserID)
+        {
+
+            try
+            {
+                DBProject.InsertProjectStaff(ProjectID, UserID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
     }
 }
