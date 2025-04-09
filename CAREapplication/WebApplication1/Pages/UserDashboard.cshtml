@@ -167,7 +167,7 @@
                 const dataset = chart.data.datasets[0];
                 const meta = chart.getDatasetMeta(0);
 
-                // ✅ Correct visibility check for Chart.js 4.x
+                
                 const visibleTotal = dataset.data.reduce((sum, val, i) => {
                     return meta._hiddenIndices && meta._hiddenIndices.has(i) ? sum : sum + val;
                 }, 0);

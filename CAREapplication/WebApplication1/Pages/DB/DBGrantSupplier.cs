@@ -67,6 +67,20 @@ namespace CAREapplication.Pages.DB
                 SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
             return tempReader;
         }
+        public static SqlDataReader GrantNoteReader(int SupplierID)
+        {
+            SqlCommand cmdTaskStaffRead = new SqlCommand();
+            cmdTaskStaffRead.Connection = DBConnection;
+            cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
+
+            cmdTaskStaffRead.CommandText = ""+
+                "WHERE gs.SupplierID = @SupplierID;";
+
+            cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
+            cmdTaskStaffRead.Connection.Open();
+            SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
+            return tempReader;
+        }
 
     }
 }
