@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
         public static SqlDataReader facReader()

@@ -167,7 +167,7 @@ CREATE TABLE grantNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     GrantID int, 
 	AuthorID int,
-    Content text, 
+    Content nvarchar(max), 
 	DateAdded datetime default getdate(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));

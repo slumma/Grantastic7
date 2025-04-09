@@ -63,21 +63,7 @@ public class IndexModel : PageModel
                     HttpContext.Session.SetInt32("adminStatus", 1);
                     return RedirectToPage("/UserDashboard");
                 }
-                else
-                {
-                    int facultyStatus = DBClass.facultyCheck(userID);
-                    DBClass.DBConnection.Close();
-
-                    if (facultyStatus == 1)
-                    {
-                        HttpContext.Session.SetInt32("facultyStatus", 1);
-                        return RedirectToPage("/UserDashboard");
-                    }
-                    else
-                    {
-                        return RedirectToPage("/NoPermissions");
-                    }
-                }
+                else { return RedirectToPage("/UserDashboard"); }
             }
             else
             {

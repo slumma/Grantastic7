@@ -1,4 +1,4 @@
-INSERT INTO users (Username, Director, AdminAsst)
+INSERT INTO users (Username, Director, AdminAssistant)
 VALUES
 ('sarahbennett', 1, 1),
 ('nickclement', 1, 1),
@@ -222,7 +222,10 @@ VALUES
 (2, '2025-05-15', 'Progress Update'),
 (3, '2025-09-01', 'Final Review'),
 (4, '2025-04-01', 'Team Meeting'),
-(5, '2025-06-15', 'Strategy Session'),
+(5, '2025-06-15', 'Strategy Session');
+
+INSERT INTO meeting (GrantID, MeetingDate, Purpose)
+VALUES
 (1, '2025-03-01', 'Kick-off Meeting'),
 (2, '2025-05-15', 'Progress Update'),
 (3, '2025-09-01', 'Final Review'),
@@ -239,8 +242,8 @@ VALUES
 (3, 6),
 (4, 7),
 (4, 8),
-(5, 9),
-(5, 10),
+(5, 2),
+(5, 1),
 (1, 1),
 (1, 2),
 (2, 3),
@@ -249,10 +252,10 @@ VALUES
 (3, 6),
 (4, 7),
 (4, 8),
-(5, 9),
-(5, 10);
+(5, 2),
+(5, 1);
 
-INSERT INTO meetingMinutes (MeetingID, PersonID, MinutesDate)
+INSERT INTO meetingMinutes (MeetingID, AuthorID, MinutesDate)
 VALUES
 (1, 1, '2025-03-02'),
 (2, 2, '2025-05-16'),
@@ -260,23 +263,23 @@ VALUES
 (4, 4, '2025-04-02'),
 (5, 5, '2025-06-16'),
 (6, 6, '2025-08-02'),
-(7, 7, '2025-10-02'),
-(8, 8, '2025-12-02'),
-(9, 9, '2025-03-16'),
-(10, 10, '2025-09-16');
+(7, 4, '2025-10-02'),
+(8, 3, '2025-12-02'),
+(9, 2, '2025-03-16'),
+(10, 1, '2025-09-16');
 
-INSERT INTO projectNotes (ProjectID, AuthorID, Content, noteDate)
+INSERT INTO projectNotes (ProjectID, AuthorID, Content)
 VALUES
-(1, 1, 'Initial notes for Project Alpha', '2025-02-20'),
-(2, 2, 'Development notes for Project Beta', '2025-04-15'),
-(3, 3, 'Review notes for Project Gamma', '2025-08-01'),
-(4, 4, 'Concept notes for Project Delta', '2025-03-20'),
-(5, 5, 'Planning notes for Project Epsilon', '2025-05-15'),
-(6, 6, 'Design notes for Project Zeta', '2025-07-01'),
-(7, 7, 'Prototype notes for Project Eta', '2025-09-01'),
-(8, 8, 'Launch notes for Project Theta', '2025-11-01'),
-(9, 9, 'Requirement notes for Project Iota', '2025-02-15'),
-(10, 10, 'Assessment notes for Project Kappa', '2025-10-01');
+(1, 1, 'Initial notes for Project Alpha'),
+(2, 2, 'Development notes for Project Beta'),
+(3, 3, 'Review notes for Project Gamma'),
+(4, 4, 'Concept notes for Project Delta'),
+(5, 5, 'Planning notes for Project Epsilon'),
+(6, 6, 'Design notes for Project Zeta'),
+(7, 4, 'Prototype notes for Project Eta'),
+(8, 3, 'Launch notes for Project Theta'),
+(9, 2, 'Requirement notes for Project Iota'),
+(10, 1, 'Assessment notes for Project Kappa');
 
 INSERT INTO grants (FunderID, GrantName, ProjectID, Category, SubmissionDate, descriptions, AwardDate, Amount)
 VALUES
@@ -429,18 +432,18 @@ VALUES
 (30, 1, 1, '2025-08-01'),
 (31, 2, 1, '2025-09-01');
 
-INSERT INTO grantNotes (GrantID, AuthorID, Content, noteDate)
+INSERT INTO grantNotes (GrantID, AuthorID, Content)
 VALUES
-(1, 1, 'Took out trash', '2025-02-20'),
-(2, 3, 'Emptied Dishwasher', '2025-04-15'),
-(3, 5, 'Eggs are my favorite food', '2025-08-01'),
-(4, 2, 'Dogs > Cats', '2025-03-20'),
-(5, 4, 'Money money money money!', '2025-05-15'),
-(6, 6, 'Elephant Ellipses', '2025-07-01'),
-(7, 1, 'Eta more like beta', '2025-09-01'),
-(8, 3, 'icloud.com/checkthispage', '2025-11-01'),
-(9, 5, 'im running out of notes to write', '2025-02-15'),
-(10, 2, 'thank god this is the last one', '2025-10-01');
+(1, 1, 'Took out trash'),
+(2, 3, 'Emptied Dishwasher'),
+(3, 5, 'Eggs are my favorite food'),
+(4, 2, 'Dogs > Cats'),
+(5, 4, 'Money money money money!'),
+(6, 6, 'Elephant Ellipses'),
+(7, 1, 'Eta more like beta'),
+(8, 3, 'icloud.com/checkthispage'),
+(9, 5, 'im running out of notes to write'),
+(10, 2, 'thank god this is the last one');
 
 INSERT INTO grantStatus (GrantID, StatusName, ChangeDate)
 VALUES
@@ -476,9 +479,9 @@ VALUES
 (4, 5, 'Meeting Update', 'The meeting has been rescheduled', '2025-02-23 08:00:00'),
 (5, 6, 'Project Update', 'Here is the latest update on the project', '2025-02-24 07:00:00'),
 (6, 4, 'Task Reminder', 'Dont forget to complete your tasks', '2025-02-25 06:00:00'),
-(7, 7, 'Client Meeting', 'We have a meeting with the client tomorrow', '2025-02-26 05:00:00'),
-(8, 7, 'Weekly Report', 'Please submit your weekly report', '2025-02-27 04:00:00'),
-(1, 1, 'feedback request', 'Can you provide feedback', '2025-02-28 03:00:00'),
+(1, 7, 'Client Meeting', 'We have a meeting with the client tomorrow', '2025-02-26 05:00:00'),
+(3, 7, 'Weekly Report', 'Please submit your weekly report', '2025-02-27 04:00:00'),
+(1, 3, 'feedback request', 'Can you provide feedback', '2025-02-28 03:00:00'),
 (2, 2, 'Team Lunch', 'We are having a team lunch on Friday', '2025-03-01 02:00:00');
 
 
