@@ -26,7 +26,10 @@
         <div class="container main-container">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>BUSINESS PARTNERS DASHBOARD</h2>
-                <input type="search" class="form-control w-25" placeholder="Search" />
+                <form method="post" class="d-flex align-items-center gap-2">
+                    <input type="search" asp-for="searchTerm" class="form-control w-auto" placeholder="Search" />
+                    <button asp-page-handler="Search" class="btn search-btn">Search</button>
+                </form>
             </div>
 
             <!-- Table Header (no spacing) -->
@@ -48,16 +51,37 @@
                 <div class="table-scroll">
                     <table class="table text-center align-middle table-bordered table-body mt-0">
                         <tbody>
-                            @foreach (var bp in Model.bpList)
+                            @if (Model.searchedBPList != null && Model.searchedBPList.Count > 0)
                             {
-                                <tr class="project-row">
-                                    <td class="fw-bold">@bp.SupplierName</td>
-                                    <td>@bp.OrgType</td>
-                                    <td>@bp.SupplierStatus</td>
-                                    <td>@bp.FirstName @bp.LastName</td>
-                                    
-                                    <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
+                                foreach (var bp in Model.searchedBPList)
+                                {
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@bp.SupplierName</td>
+                                        <td>@bp.OrgType</td>
+                                        <td>@bp.SupplierStatus</td>
+                                        <td>@bp.FirstName @bp.LastName</td>
+                                        <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
+                                    </tr>
+                                }
+                            }
+                            else if (!string.IsNullOrWhiteSpace(Model.searchTerm))
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center fw-bold text-danger">No results found.</td>
                                 </tr>
+                            }
+                            else
+                            {
+                                foreach (var bp in Model.bpList)
+                                {
+                                    <tr class="project-row">
+                                        <td class="fw-bold">@bp.SupplierName</td>
+                                        <td>@bp.OrgType</td>
+                                        <td>@bp.SupplierStatus</td>
+                                        <td>@bp.FirstName @bp.LastName</td>
+                                        <td><a class="btn sm-btn" asp-route-SupplierID="@bp.SupplierID" asp-page="DetailedBusinessPartners">DETAILED VIEW</a></td>
+                                    </tr>
+                                }
                             }
                         </tbody>
                     </table>

@@ -12,7 +12,7 @@ namespace CAREapplication.Pages.Grant
     public class DetailedGrantModel : PageModel
     {
         // empty grant object to populate it
-    
+
         public GrantSimple grant { get; set; }
         public List<GrantNote> noteList { get; set; } = new List<GrantNote>();
         public List<GrantStaff> staffList { get; set; } = new List<GrantStaff>();
@@ -130,7 +130,7 @@ namespace CAREapplication.Pages.Grant
 
             SqlDataReader staffReader = DBFaculty.singleFacultyReader(grantID);
 
-            while(staffReader.Read())
+            while (staffReader.Read())
             {
                 staffList.Add(new GrantStaff
                 {
@@ -174,5 +174,20 @@ namespace CAREapplication.Pages.Grant
             return RedirectToPage(new { grantID = grantID });
         }
 
+        public IActionResult OnPostUpdateTaskStatus(int? taskID, int? completeFlag, int? GrantID)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBGrant.UpdateGrantTask(taskID.Value, completeFlag.Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
     }
 }

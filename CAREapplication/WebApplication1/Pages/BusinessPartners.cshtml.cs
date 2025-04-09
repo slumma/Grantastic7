@@ -4,12 +4,20 @@ using System.Data.SqlClient;
 using CAREapplication.Pages.DB;
 
 using CAREapplication.Pages.DataClasses;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace CAREapplication.Pages
 {
     public class BusinessPartnersModel : PageModel
     {
         public required List<BusinessPartner> bpList { get; set; } = new List<BusinessPartner>();
+
+        [BindProperty]
+        [Required(ErrorMessage = "You must have a search term.")]
+        public String searchTerm { get; set; }
+
+        public required List<BusinessPartner> searchedBPList { get; set; } = new List<BusinessPartner>();
 
         public IActionResult OnGet()
         {
@@ -45,6 +53,39 @@ namespace CAREapplication.Pages
                 });
             }
             DBGrantSupplier.DBConnection.Close();
+            return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            ModelState.Clear();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                Trace.WriteLine("AAAAAAAAAAAAHHHHHHHHHHHH");
+                ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
+                SqlDataReader BPsearch = DBGrantSupplier.BPSearch(searchTerm);
+                while (BPsearch.Read())
+                {
+                    searchedBPList.Add(new BusinessPartner
+                    {
+                        UserID = Int32.Parse(BPsearch["UserID"].ToString()),
+                        FirstName = BPsearch["FirstName"].ToString(),
+                        LastName = BPsearch["LastName"].ToString(),
+                        Email = BPsearch["Email"].ToString(),
+                        Phone = BPsearch["Phone"].ToString(),
+                        HomeAddress = BPsearch["HomeAddress"].ToString(),
+                        CommunicationStatus = BPsearch["CommunicationStatus"].ToString(),
+                        SupplierID = Int32.Parse(BPsearch["SupplierID"].ToString()),
+                        SupplierName = BPsearch["SupplierName"].ToString(),
+                        OrgType = BPsearch["OrgType"].ToString(),
+                        SupplierStatus = BPsearch["SupplierStatus"].ToString()
+                    });
+                }
+                DBGrantSupplier.DBConnection.Close(); // Load all projects so they still display
+                return Page();
+            }
+
             return Page();
         }
     }

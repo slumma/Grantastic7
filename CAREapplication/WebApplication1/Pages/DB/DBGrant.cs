@@ -70,6 +70,24 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+        public static void UpdateGrantTask(int taskID, int completedFlag)
+        {
+            string query = @"
+                    UPDATE grantTask
+                    SET 
+                        Completed = @Completed
+                    WHERE TaskID = @TaskID;
+                ";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@Completed", completedFlag);
+            cmd.Parameters.AddWithValue("@TaskID", taskID);
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
+        }
+
         public static SqlDataReader GrantNoteReader(int GrantID)
         {
             SqlCommand cmdViewNotes = new SqlCommand(DBConnString);
