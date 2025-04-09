@@ -40,7 +40,7 @@ namespace CAREapplication.Pages.DB
         public static User GetUserByID(int? userID)
         {
             User user = null;
-            String sqlQuery = "SELECT * FROM users WHERE UserID = @UserID";
+            String sqlQuery = "SELECT * FROM users join person p on p.UserID = users.UserID where users.UserID = @UserID;";
 
             SqlConnection connection = new SqlConnection(DBConnString);
             SqlCommand cmdGetUser = new SqlCommand(sqlQuery, connection);
@@ -130,7 +130,7 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdCheck = new SqlCommand();
             cmdCheck.Connection = DBConnection;
             cmdCheck.Connection.ConnectionString = DBConnString;
-            cmdCheck.CommandText = "SELECT AdminStatus FROM users WHERE UserID = @UserID;";
+            cmdCheck.CommandText = "SELECT Director FROM users WHERE UserID = @UserID;";
             cmdCheck.Parameters.AddWithValue("@UserID", userID);
             cmdCheck.Connection.Open();
             int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
