@@ -1,36 +1,62 @@
 CREATE TABLE users(
     UserID int Identity(1,1) PRIMARY KEY,
     Username nvarchar(200),
-	Password nvarchar(200),
-    FirstName nvarchar(200),
-    LastName nvarchar(200),
-    Email nvarchar(200),
-    Phone nvarchar(200),
-    HomeAddress nvarchar(200),
-	AdminStatus bit default 0,
-	EmployeeStatus bit default 0,
-	FacultyStatus bit default 0,
-	NonFacultyStatus bit default 0);
+	Director bit default 0,
+	AdminAssistant bit default 0);
 
-CREATE TABLE grantSupplier(
-    SupplierID int Identity(1,1) PRIMARY KEY,
-    SupplierName nvarchar(200),
+CREATE TABLE funder(
+    FunderID int Identity(1,1) PRIMARY KEY,
+    FunderName nvarchar(200),
     OrgType nvarchar(200),
-	SupplierStatus nvarchar(200), --temporary
     BusinessAddress nvarchar(200));
 
-CREATE TABLE BPrep (
+CREATE TABLE person(
+	PersonID int Identity(1,1) PRIMARY KEY,
+	UserID int,
+	Pronouns nvarchar(200),
+	FirstName nvarchar(200),
+	LastName nvarchar(200),
+	FOREIGN KEY (UserID) REFERENCES users(UserID));
+
+CREATE TABLE contact(
+	ContactID int Identity(1,1) PRIMARY KEY,
+	Email nvarchar(200),
+    Phone nvarchar(200),
+    HomeAddress nvarchar(200),
+	City nvarchar(200),
+	HomeState nvarchar(200),
+	Zip nvarchar(200),
+	PersonID int,
+	FOREIGN KEY (PersonID) REFERENCES person(PersonID));
+
+CREATE TABLE funderPOC(
+	FunderPOCID int Identity(1,1) PRIMARY KEY,
+	PersonID int,
+	FunderID int,
+	CommunicationStatus nvarchar(200),
+	FOREIGN KEY (PersonID) REFERENCES person(PersonID),
+	FOREIGN KEY (FunderID) REFERENCES funder(FunderID));
+
+CREATE TABLE funderRep (
     UserID INT PRIMARY KEY,
     CommunicationStatus nvarchar(200),
-    SupplierID int,
-    FOREIGN KEY (SupplierID) REFERENCES grantSupplier(SupplierID),
+    FunderID int,
+    FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
     FOREIGN KEY (UserID) REFERENCES users(UserID));
 
 CREATE TABLE project(
     ProjectID int Identity(1,1) PRIMARY KEY,
     ProjectName nvarchar(200), 
 	ProjectDescription nvarchar(200),
-    DueDate datetime);
+    DueDate datetime,
+	DateAdded datetime default getdate());
+
+CREATE TABLE projectStatus(
+	ProjectStatusID int Identity (1,1) PRIMARY KEY,
+	ProjectID int,
+	StatusName varchar(200),
+	ChangeDate datetime default getdate(),
+	FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
 
 CREATE TABLE projectStaff(
     ProjectStaffID int Identity(1,1) PRIMARY KEY, 
@@ -47,6 +73,7 @@ CREATE TABLE projectTask(
     DueDate date,
     Objective nvarchar(200),
 	Completed bit default 0,
+	DateAdded datetime default getdate(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
 
 CREATE TABLE projectTaskStaff(
@@ -55,6 +82,7 @@ CREATE TABLE projectTaskStaff(
     AssigneeID int,
 	AssignerID int,
     DueDate date,
+	DateAdded datetime default getdate(),
     FOREIGN KEY (TaskID) REFERENCES projectTask(TaskID),
     FOREIGN KEY (AssigneeID) REFERENCES users(UserID),
 	FOREIGN KEY (AssignerID) REFERENCES users(UserID));
@@ -62,47 +90,49 @@ CREATE TABLE projectTaskStaff(
 CREATE TABLE meeting(
     MeetingID int Identity(1,1) PRIMARY KEY,
     ProjectID int, 
+	GrantID int,
     MeetingDate date,
     Purpose nvarchar(200),
+	DateAdded datetime default getdate(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
 
 CREATE TABLE attendance(
     AttendanceID int Identity(1,1) PRIMARY KEY,
     MeetingID int,
-    UserID int,
+    PersonID int,
     FOREIGN KEY (MeetingID) REFERENCES meeting(MeetingID),
-    FOREIGN KEY (UserID) REFERENCES users(UserID));
-	--test
+    FOREIGN KEY (PersonID) REFERENCES person(PersonID));
+
 CREATE TABLE meetingMinutes(
     MinutesID int Identity(1,1) PRIMARY KEY,
     MeetingID int,
-    UserID int, 
+    AuthorID int, 
     MinutesDate date,
+	DateAdded datetime default getdate(),
     FOREIGN KEY (MeetingID) REFERENCES meeting(MeetingID),
-    FOREIGN KEY (UserID) REFERENCES users(UserID));
+    FOREIGN KEY (AuthorID) REFERENCES users(UserID));
 
 CREATE TABLE projectNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     ProjectID int, 
 	AuthorID int,
-    Content nvarchar(max), 
-    NoteDate datetime DEFAULT GETDATE(),
+    Content text,
+	DateAdded datetime default getdate(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
 
 CREATE TABLE grants(
     GrantID int Identity(1,1) PRIMARY KEY,
 	GrantName nvarchar(200),
-    SupplierID int, 
+    FunderID int, 
     ProjectID int,
-    StatusName nvarchar(200),
     Category nvarchar(200),
     SubmissionDate date, 
-    descriptions nvarchar(max),
+    descriptions text,
     AwardDate date,
     Amount float,
-	GrantStatus nvarchar(200), --temporary
-    FOREIGN KEY (SupplierID) REFERENCES grantSupplier(SupplierID),
+	DateAdded datetime default getdate(),
+    FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID));
 	
 CREATE TABLE grantTask(
@@ -111,6 +141,7 @@ CREATE TABLE grantTask(
     DueDate date,
     Objective nvarchar(200),
 	Completed bit default 0,
+	DateAdded datetime default getdate(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
 
 CREATE TABLE grantTaskStaff(
@@ -129,31 +160,31 @@ CREATE TABLE grantStaff(
 	UserID int,
 	UserRole varchar(200)
 	FOREIGN KEY (UserID) REFERENCES users(UserID),
+	DateAdded datetime default getdate(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
 
 CREATE TABLE grantNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     GrantID int, 
 	AuthorID int,
-    Content nvarchar(max), 
-    NoteDate datetime DEFAULT GETDATE(),
+    Content text, 
+	DateAdded datetime default getdate(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
 
-
-/* CREATE TABLE grantStatus(
+CREATE TABLE grantStatus(
     StatusID int Identity(1,1) PRIMARY KEY,
     GrantID int,
     StatusName nvarchar(200),
     ChangeDate datetime DEFAULT GETDATE(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
 
-CREATE TABLE supplierStatus(
+CREATE TABLE funderStatus(
     StatusID int Identity(1,1) PRIMARY KEY,
-    SupplierID int, 
+    FunderID int, 
     StatusName nvarchar(200),
     ChangeDate datetime DEFAULT GETDATE(),
-    FOREIGN KEY (SupplierID) REFERENCES grantSupplier(SupplierID)); */
+    FOREIGN KEY (FunderID) REFERENCES funder(FunderID));
 
 CREATE TABLE userMessage(
     MessageID int Identity(1,1) PRIMARY KEY,
