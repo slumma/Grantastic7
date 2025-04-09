@@ -415,6 +415,19 @@ namespace CAREapplication.Pages.DB
 
         }
 
+        public static void InsertProjectStaff(int projectID, int userID)
+        {
+            string query = @" INSERT INTO projectStaff(ProjectID, UserID, Leader, Active)
+                                VALUES(@ProjectID, @UserID, 0, 1);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
 
     }
 }
