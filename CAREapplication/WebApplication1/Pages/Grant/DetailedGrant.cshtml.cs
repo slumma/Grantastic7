@@ -44,7 +44,7 @@ namespace CAREapplication.Pages.Grant
                 grant.Project = grantReader["Project"].ToString();
                 grant.Amount = float.Parse(grantReader["Amount"].ToString());
                 grant.Category = grantReader["Category"].ToString();
-                grant.Status = grantReader["GrantStatus"].ToString();
+                grant.Status = grantReader["StatusName"].ToString();
                 grant.Description = grantReader["descriptions"].ToString();
                 grant.SubmissionDate = DateTime.Parse(grantReader["SubmissionDate"].ToString());
                 grant.AwardDate = DateTime.Parse(grantReader["AwardDate"].ToString());
@@ -60,7 +60,7 @@ namespace CAREapplication.Pages.Grant
                     Content = noteReader["Content"].ToString(),
                     AuthorFirst = noteReader["FirstName"].ToString(),
                     AuthorLast = noteReader["LastName"].ToString(),
-                    TimeAdded = Convert.ToDateTime(noteReader["NoteDate"].ToString())
+                    TimeAdded = Convert.ToDateTime(noteReader["DateAdded"].ToString())
                 });
             }
             DBGrant.DBConnection.Close();

@@ -181,7 +181,7 @@ namespace CAREapplication.Pages.Project
                             Content = reader["Content"].ToString(),
                             AuthorFirst = reader["FirstName"].ToString(),
                             AuthorLast = reader["LastName"].ToString(),
-                            TimeAdded = Convert.ToDateTime(reader["NoteDate"])
+                            TimeAdded = Convert.ToDateTime(reader["DateAdded"])
                         });
                     }
                 }

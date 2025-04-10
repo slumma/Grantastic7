@@ -11,7 +11,7 @@ namespace CAREapplication.Pages
 {
     public class BusinessPartnersModel : PageModel
     {
-        public required List<BusinessPartner> bpList { get; set; } = new List<BusinessPartner>();
+        public required List<BusinessPartner> funderList { get; set; } = new List<BusinessPartner>();
 
         [BindProperty]
         [Required(ErrorMessage = "You must have a search term.")]
@@ -34,22 +34,25 @@ namespace CAREapplication.Pages
             }
 
             // Populate BusinessPartners to be shown in the view
-            SqlDataReader BPReader = DBFunder.BPReader();
-            while (BPReader.Read())
+            SqlDataReader FunderReader = DBFunder.FunderReader();
+            while (FunderReader.Read())
             {
-                bpList.Add(new BusinessPartner
+                funderList.Add(new BusinessPartner
                 {
-                    UserID = Int32.Parse(BPReader["UserID"].ToString()),
-                    FirstName = BPReader["FirstName"].ToString(),
-                    LastName = BPReader["LastName"].ToString(),
-                    Email = BPReader["Email"].ToString(),
-                    Phone = BPReader["Phone"].ToString(),
-                    HomeAddress = BPReader["HomeAddress"].ToString(),
-                    CommunicationStatus = BPReader["CommunicationStatus"].ToString(),
-                    FunderID = Int32.Parse(BPReader["FunderID"].ToString()),
-                    FunderName = BPReader["FunderName"].ToString(),
-                    OrgType = BPReader["OrgType"].ToString(),
-                    FunderStatus = BPReader["FunderStatus"].ToString()
+                    FunderID = int.Parse(FunderReader["FunderID"].ToString()),
+                    FunderName = FunderReader["FunderName"].ToString(),
+                    FunderStatus = FunderReader["StatusName"].ToString(), 
+                    OrgType = FunderReader["OrgType"].ToString(),
+                    BusinessAddress = FunderReader["BusinessAddress"].ToString(),
+
+                    UserID = int.Parse(FunderReader["UserID"].ToString()),
+                    CommunicationStatus = FunderReader["CommunicationStatus"].ToString(),
+
+                    FirstName = FunderReader["FirstName"].ToString(),
+                    LastName = FunderReader["LastName"].ToString(),
+                    Email = FunderReader["Email"].ToString(),
+                    Phone = FunderReader["Phone"].ToString(),
+                    HomeAddress = FunderReader["HomeAddress"].ToString()
                 });
             }
             DBFunder.DBConnection.Close();

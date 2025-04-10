@@ -38,11 +38,13 @@ CREATE TABLE funderPOC(
 	FOREIGN KEY (FunderID) REFERENCES funder(FunderID));
 
 CREATE TABLE funderRep (
-    UserID INT PRIMARY KEY,
-    CommunicationStatus nvarchar(200),
-    FunderID int,
+    FunderRepID INT IDENTITY(1,1) PRIMARY KEY, -- Unique identifier
+    UserID INT,
+    FunderID INT,
+    CommunicationStatus NVARCHAR(200),
     FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
-    FOREIGN KEY (UserID) REFERENCES users(UserID));
+    FOREIGN KEY (UserID) REFERENCES users(UserID)
+);
 
 CREATE TABLE project(
     ProjectID int Identity(1,1) PRIMARY KEY,
@@ -116,7 +118,7 @@ CREATE TABLE projectNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     ProjectID int, 
 	AuthorID int,
-    Content text,
+    Content nvarchar(max),
 	DateAdded datetime default getdate(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
@@ -128,7 +130,7 @@ CREATE TABLE grants(
     ProjectID int,
     Category nvarchar(200),
     SubmissionDate date, 
-    descriptions text,
+    descriptions nvarchar(max),
     AwardDate date,
     Amount float,
 	DateAdded datetime default getdate(),

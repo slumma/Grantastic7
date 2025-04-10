@@ -17,7 +17,7 @@
 
 .custom-dropdown {
   border-radius: 0 0 5px 5px;
-  background-color: var(--dark-purple);
+  background-color: var(--lightest-gray);
   padding: 0.5rem 0;
   border: none;
   min-width: 180px;
@@ -25,7 +25,7 @@
 
 /* Dropdown items */
 .custom-dropdown .dropdown-item {
-  color: var(--lightest-gray);
+  color: var(--dark-purple);
   font-weight: 500;
   font-size: 0.95rem;
   padding: 12px 16px;

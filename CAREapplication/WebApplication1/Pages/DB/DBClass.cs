@@ -29,7 +29,10 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdUserReader = new SqlCommand();
             cmdUserReader.Connection = DBConnection;
             cmdUserReader.Connection.ConnectionString = DBConnString;
-            cmdUserReader.CommandText = "SELECT * FROM users ORDER BY Username";
+            cmdUserReader.CommandText = @"SELECT * FROM users 
+                                        JOIN person p on users.UserId = p.UserID 
+                                        JOIN contact c on p.PersonID = c.PersonID
+                                        Order BY Username";
             cmdUserReader.Connection.Open(); // Open connection here, close in Model!
 
             SqlDataReader tempReader = cmdUserReader.ExecuteReader();
@@ -73,7 +76,11 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdsingleSenderReader = new SqlCommand();
             cmdsingleSenderReader.Connection = DBConnection;
             cmdsingleSenderReader.Connection.ConnectionString = DBConnString;
-            cmdsingleSenderReader.CommandText = @"select * from users where username = @username;";
+            cmdsingleSenderReader.CommandText = @"SELECT * 
+                                      FROM users 
+                                      JOIN person p ON users.UserID = p.UserID 
+                                      JOIN contact c ON p.PersonID = c.PersonID
+                                      WHERE username = @username;";
 
             cmdsingleSenderReader.Parameters.AddWithValue("@username", username);
 
@@ -276,83 +283,110 @@ namespace CAREapplication.Pages.DB
 
         public static SqlDataReader SearchFunction(string searchWord)
         {
-            string SearchQuery = @"
-        SELECT 'Users' AS TableName, 'Username' AS ColumnName, Username AS FoundValue 
-        FROM users 
-        WHERE Username LIKE @searchWord
-        UNION
-        SELECT 'Users' AS TableName, 'FirstName' AS ColumnName, FirstName AS FoundValue 
-        FROM users 
-        WHERE FirstName LIKE @searchWord
-        UNION
-        SELECT 'Users' AS TableName, 'LastName' AS ColumnName, LastName AS FoundValue 
-        FROM users 
-        WHERE LastName LIKE @searchWord
-        UNION
-        SELECT 'Users' AS TableName, 'Email' AS ColumnName, Email AS FoundValue 
-        FROM users 
-        WHERE Email LIKE @searchWord
-        UNION
-        SELECT 'Users' AS TableName, 'Phone' AS ColumnName, Phone AS FoundValue 
-        FROM users 
-        WHERE Phone LIKE @searchWord
-        UNION
-        SELECT 'Users' AS TableName, 'HomeAddress' AS ColumnName, HomeAddress AS FoundValue 
-        FROM users 
-        WHERE HomeAddress LIKE @searchWord
-        UNION
-        SELECT 'Project' AS TableName, 'ProjectName' AS ColumnName, ProjectName AS FoundValue 
-        FROM project 
-        WHERE ProjectName LIKE @searchWord
-        UNION
-        SELECT 'Project' AS TableName, 'ProjectDescription' AS ColumnName, ProjectDescription AS FoundValue 
-        FROM project 
-        WHERE ProjectDescription LIKE @searchWord
-        UNION
-        SELECT 'ProjectTask' AS TableName, 'Objective' AS ColumnName, Objective AS FoundValue 
-        FROM projectTask 
-        WHERE Objective LIKE @searchWord
-        UNION
-        SELECT 'Meeting' AS TableName, 'Purpose' AS ColumnName, Purpose AS FoundValue 
-        FROM meeting 
-        WHERE Purpose LIKE @searchWord
-        UNION
-        SELECT 'MeetingMinutes' AS TableName, 'UserID' AS ColumnName, CAST(UserID AS NVARCHAR) AS FoundValue 
-        FROM meetingMinutes 
-        WHERE CAST(UserID AS NVARCHAR) LIKE @searchWord
-        UNION
-        SELECT 'ProjectNotes' AS TableName, 'Content' AS ColumnName, Content AS FoundValue 
-        FROM projectNotes 
-        WHERE Content LIKE @searchWord
-        UNION
-        SELECT 'Funder' AS TableName, 'FunderName' AS ColumnName, FunderName AS FoundValue 
-        FROM Funder 
-        WHERE FunderName LIKE @searchWord
-        UNION
-        SELECT 'Grants' AS TableName, 'GrantName' AS ColumnName, GrantName AS FoundValue 
-        FROM grants 
-        WHERE GrantName LIKE @searchWord
-        UNION
-        SELECT 'Grants' AS TableName, 'Descriptions' AS ColumnName, Descriptions AS FoundValue 
-        FROM grants 
-        WHERE Descriptions LIKE @searchWord
-        UNION
-        SELECT 'GrantTask' AS TableName, 'Objective' AS ColumnName, Objective AS FoundValue 
-        FROM grantTask 
-        WHERE Objective LIKE @searchWord
-        UNION
-        SELECT 'GrantNotes' AS TableName, 'Content' AS ColumnName, Content AS FoundValue 
-        FROM grantNotes 
-        WHERE Content LIKE @searchWord
-        UNION
-        SELECT 'UserMessage' AS TableName, 'SubjectTitle' AS ColumnName, SubjectTitle AS FoundValue 
-        FROM userMessage 
-        WHERE SubjectTitle LIKE @searchWord
-        UNION
-        SELECT 'UserMessage' AS TableName, 'Contents' AS ColumnName, Contents AS FoundValue 
-        FROM userMessage 
-        WHERE Contents LIKE @searchWord
-        ORDER BY TableName;
+            string SearchQuery = @"SELECT 'Users' AS TableName, 'Username' AS ColumnName, Username AS FoundValue 
+FROM users 
+WHERE Username LIKE @searchWord
+
+UNION
+SELECT 'Users' AS TableName, 'FirstName' AS ColumnName, p.FirstName AS FoundValue 
+FROM users u
+JOIN person p ON u.UserID = p.UserID
+WHERE p.FirstName LIKE @searchWord
+
+UNION
+SELECT 'Users' AS TableName, 'LastName' AS ColumnName, p.LastName AS FoundValue 
+FROM users u
+JOIN person p ON u.UserID = p.UserID
+WHERE p.LastName LIKE @searchWord
+
+UNION
+SELECT 'Users' AS TableName, 'Email' AS ColumnName, c.Email AS FoundValue 
+FROM users u
+JOIN person p ON u.UserID = p.UserID
+JOIN contact c ON c.PersonID = p.PersonID
+WHERE c.Email LIKE @searchWord
+
+UNION
+SELECT 'Users' AS TableName, 'Phone' AS ColumnName, c.Phone AS FoundValue 
+FROM users u
+JOIN person p ON u.UserID = p.UserID
+JOIN contact c ON c.PersonID = p.PersonID
+WHERE c.Phone LIKE @searchWord
+
+UNION
+SELECT 'Users' AS TableName, 'HomeAddress' AS ColumnName, c.HomeAddress AS FoundValue 
+FROM users u
+JOIN person p ON u.UserID = p.UserID
+JOIN contact c ON c.PersonID = p.PersonID
+WHERE c.HomeAddress LIKE @searchWord
+
+UNION
+SELECT 'Project' AS TableName, 'ProjectName' AS ColumnName, ProjectName AS FoundValue 
+FROM project 
+WHERE ProjectName LIKE @searchWord
+
+UNION
+SELECT 'Project' AS TableName, 'ProjectDescription' AS ColumnName, ProjectDescription AS FoundValue 
+FROM project 
+WHERE ProjectDescription LIKE @searchWord
+
+UNION
+SELECT 'ProjectTask' AS TableName, 'Objective' AS ColumnName, Objective AS FoundValue 
+FROM projectTask 
+WHERE Objective LIKE @searchWord
+
+UNION
+SELECT 'Meeting' AS TableName, 'Purpose' AS ColumnName, Purpose AS FoundValue 
+FROM meeting 
+WHERE Purpose LIKE @searchWord
+
+UNION
+SELECT 'MeetingMinutes' AS TableName, 'AuthorID' AS ColumnName, CAST(AuthorID AS NVARCHAR) AS FoundValue 
+FROM meetingMinutes 
+WHERE CAST(AuthorID AS NVARCHAR) LIKE @searchWord
+
+UNION
+SELECT 'ProjectNotes' AS TableName, 'Content' AS ColumnName, Content AS FoundValue 
+FROM projectNotes 
+WHERE Content LIKE @searchWord
+
+UNION
+SELECT 'Funder' AS TableName, 'FunderName' AS ColumnName, FunderName AS FoundValue 
+FROM funder 
+WHERE FunderName LIKE @searchWord
+
+UNION
+SELECT 'Grants' AS TableName, 'GrantName' AS ColumnName, GrantName AS FoundValue 
+FROM grants 
+WHERE GrantName LIKE @searchWord
+
+UNION
+SELECT 'Grants' AS TableName, 'Descriptions' AS ColumnName, Descriptions AS FoundValue 
+FROM grants 
+WHERE Descriptions LIKE @searchWord
+
+UNION
+SELECT 'GrantTask' AS TableName, 'Objective' AS ColumnName, Objective AS FoundValue 
+FROM grantTask 
+WHERE Objective LIKE @searchWord
+
+UNION
+SELECT 'GrantNotes' AS TableName, 'Content' AS ColumnName, Content AS FoundValue 
+FROM grantNotes 
+WHERE Content LIKE @searchWord
+
+UNION
+SELECT 'UserMessage' AS TableName, 'SubjectTitle' AS ColumnName, SubjectTitle AS FoundValue 
+FROM userMessage 
+WHERE SubjectTitle LIKE @searchWord
+
+UNION
+SELECT 'UserMessage' AS TableName, 'Contents' AS ColumnName, Contents AS FoundValue 
+FROM userMessage 
+WHERE Contents LIKE @searchWord
+
+ORDER BY TableName;
+
     ";
 
             SqlCommand cmdSearch = new SqlCommand(SearchQuery);
