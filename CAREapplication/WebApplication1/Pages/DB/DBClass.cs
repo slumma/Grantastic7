@@ -1,8 +1,11 @@
 ﻿using CAREapplication.Pages.DataClasses;
+using Microsoft.VisualBasic;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Formats.Asn1;
+using System.Security.AccessControl;
 
 namespace CAREapplication.Pages.DB
 {
@@ -411,7 +414,6 @@ ORDER BY TableName;
             cmdSearch.Connection = DBConnection;
             cmdSearch.Connection.ConnectionString = DBConnString;
 
-            // ✅ Concatenate % on the C# side instead of in SQL
             string wildcardSearch = "%" + searchWord + "%";
             cmdSearch.Parameters.AddWithValue("@searchWord", wildcardSearch);
 
@@ -424,7 +426,75 @@ ORDER BY TableName;
             return tempReader;
         }
 
+        public static SqlDataReader UserEventReader(int userID)
+        {
+            SqlCommand cmdsingleSenderReader = new SqlCommand();
+            cmdsingleSenderReader.Connection = DBConnection;
+            cmdsingleSenderReader.Connection.ConnectionString = DBConnString;
+            cmdsingleSenderReader.CommandText = @"-- Project Tasks
+SELECT 
+    'Project Task' AS EventType,
+    pt.Objective AS Title,
+    pt.DueDate AS StartDate
+FROM projectTask pt
+JOIN projectTaskStaff pts ON pt.TaskID = pts.TaskID
+WHERE pts.AssigneeID = @UserID
 
+UNION ALL
+
+-- Grant Tasks
+SELECT 
+    'Grant Task' AS EventType,
+    gt.Objective AS Title,
+    gt.DueDate AS StartDate
+FROM grantTask gt
+JOIN grantTaskStaff gts ON gt.TaskID = gts.TaskID
+WHERE gts.AssigneeID = @UserID
+
+UNION ALL
+
+-- Project Due Dates(if user is on project team)
+SELECT 
+    'Project Due Date' AS EventType,
+    p.ProjectName + ' Due' AS Title,
+    p.DueDate AS StartDate
+FROM project p
+JOIN projectStaff ps ON p.ProjectID = ps.ProjectID
+WHERE ps.UserID = @UserID
+
+UNION ALL
+
+-- Grant Submission Deadlines(if user is assigned to grant)
+SELECT 
+    'Grant Submission' AS EventType,
+    g.GrantName + ' Submission' AS Title,
+    g.SubmissionDate AS StartDate
+FROM grants g
+JOIN grantStaff gs ON g.GrantID = gs.GrantID
+WHERE gs.UserID = @UserID
+
+UNION ALL
+
+-- Meetings(if user is a person with a meeting attendance)
+SELECT 
+    'Meeting' AS EventType,
+    m.Purpose AS Title,
+    m.MeetingDate AS StartDate
+FROM meeting m
+JOIN attendance a ON m.MeetingID = a.MeetingID
+JOIN person p ON a.PersonID = p.PersonID
+WHERE p.UserID = @UserID
+
+ORDER BY StartDate;";
+
+            cmdsingleSenderReader.Parameters.AddWithValue("@UserID", userID);
+
+            cmdsingleSenderReader.Connection.Open();
+
+            SqlDataReader tempReader = cmdsingleSenderReader.ExecuteReader();
+
+            return tempReader;
+        }
     }
 }
 
