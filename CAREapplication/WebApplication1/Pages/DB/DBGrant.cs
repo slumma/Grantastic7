@@ -12,6 +12,17 @@ namespace CAREapplication.Pages.DB
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
             "Server=Localhost;Database=CARE;Trusted_Connection=True";
+
+        /*
+         * GrantID = Convert.ToInt32(grantReader["GrantID"]),
+                        GrantName = grantReader["GrantName"].ToString(),
+                        Funder = grantReader["FunderName"].ToString(),
+                        Amount = Convert.ToSingle(grantReader["Amount"]),
+                        Category = grantReader["Category"].ToString(),
+                        Status = grantReader["StatusName"].ToString(),
+                        SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
+                        AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
+         */
         public static SqlDataReader allGrantReader()
         {
             SqlCommand cmdGrantReader = new SqlCommand();
@@ -21,7 +32,7 @@ namespace CAREapplication.Pages.DB
                                             g.GrantID, 
                                             g.GrantName,
                                             p.ProjectID,
-                                            s.FunderName AS Funder, 
+                                            s.FunderName, 
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
