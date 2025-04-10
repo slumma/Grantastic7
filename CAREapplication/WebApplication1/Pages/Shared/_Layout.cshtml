@@ -19,7 +19,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg fixed-top px-4">
-            <a class="navbar-brand me-5" asp-page="/userdashboard">
+            <a class="navbar-brand me-5" asp-page="/Users/userdashboard">
                 <img src="/images/jmu_care.png" alt="Logo" height="80" />
             </a>
             @if (loggedIn == 1)
@@ -74,7 +74,9 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-3">
-                    <span class="nav-link text-white">@username</span>
+                    <a asp-page="/Users/Profile" class="nav-link text-white text-decoration-none fw-bold">
+                        @username
+                    </a>
                     <form asp-page="/Index" asp-page-handler="LogoutHandler" class="d-flex ms-3">
                         <button type="submit" class="btn logout-btn">LOGOUT</button>
                     </form>
@@ -88,7 +90,7 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-3">
-                    <span class="nav-link text-white">@username</span>
+                    <span class="nav-link text-white"><a asp-page="/Users/Profile">@username</a></span>
                     <form asp-page="/Index" asp-page-handler="LogoutHandler" class="d-flex ms-3">
                         <button type="submit" class="btn logout-btn">LOGOUT</button>
                     </form>

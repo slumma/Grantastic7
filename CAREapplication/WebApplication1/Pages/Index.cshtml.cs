@@ -61,9 +61,9 @@ public class IndexModel : PageModel
                 if (director == 1)
                 {
                     HttpContext.Session.SetInt32("director", 1);
-                    return RedirectToPage("/UserDashboard");
+                    return RedirectToPage("/Users/UserDashboard");
                 }
-                else { return RedirectToPage("/UserDashboard"); }
+                else { return RedirectToPage("/Users/UserDashboard"); }
             }
             else
             {

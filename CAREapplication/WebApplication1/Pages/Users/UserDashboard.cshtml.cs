@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
-namespace CAREapplication.Pages
+namespace CAREapplication.Pages.Users
 {
     public class UserDashboardModel : PageModel
     {
