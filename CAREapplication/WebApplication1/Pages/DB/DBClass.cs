@@ -62,7 +62,12 @@ namespace CAREapplication.Pages.DB
                     LastName = reader["LastName"].ToString(),
                     Email = reader["Email"].ToString(),
                     Phone = reader["Phone"].ToString(),
-                    HomeAddress = reader["HomeAddress"].ToString()
+                    HomeAddress = reader["HomeAddress"].ToString(),
+                    pronouns = reader["Pronouns"].ToString(),
+                    HomeCity = reader["City"].ToString(),
+                    HomeState = reader["HomeState"].ToString(),
+                    ZipCode = reader["Zip"].ToString()
+
                 };
             }
 

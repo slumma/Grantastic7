@@ -35,9 +35,9 @@
                                 </div>
                             </div>
                             <p class="profile-label">User Profile</p>
-                            <h4 class="fw-bold user-name">Sarah Bennett</h4>
-                            <p class="text-muted pronouns">She/Her</p>
-                            <a class="btn btn-dark-purple mt-3" asp-page="EditProfile">Edit Profile</a>
+                            <h4 class="fw-bold user-name">@Model.activeUser.UserName</h4>
+                            <p class="text-muted pronouns">@Model.activeUser.pronouns</p>
+                            <a class="btn btn-dark-purple mt-3" asp-page="EditProfile" asp-route-userID="@Model.activeUserID">Edit Profile</a>
                         </div>
                     </div>
 
@@ -45,9 +45,10 @@
                     <div class="col-lg-8 col-12">
                         <div class="gray-box right-box">
                             <h5>Profile Information</h5>
-                            <p><strong>Username:</strong> sarahbennett</p>
-                            <p><strong>Email:</strong> sarabennett@gmail.com</p>
-                            <p><strong>Address:</strong> 100 University Dr, Harrisonburg, VA 22807</p>
+                            <p><strong>Username:</strong> @Model.activeUser.UserName</p>
+                            <p><strong>Email:</strong> @Model.activeUser.Email</p>
+                            <p><strong>Address:</strong> @Model.activeUser.HomeAddress, @Model.activeUser.HomeCity</p>
+                            <p>@Model.activeUser.HomeState @Model.activeUser.ZipCode</p>
                         </div>
                     </div>
 

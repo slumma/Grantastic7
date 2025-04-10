@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{userID:int?}"
 @model CAREapplication.Pages.Users.EditProfileModel
 @{
 }
@@ -21,7 +21,7 @@
         <div class="container main-container">
             <div class="row px-5">
                 <div class="text-start mb-3">
-                    <a href="#" class="text-decoration-none" style="color: grey">&lt; PREVIOUS</a>
+                    <a asp-page="Profile" class="text-decoration-none" style="color: grey">&lt; PREVIOUS</a>
                 </div>
                 <div class="col-12 text-center mb-4">
                     <div class="profile-pic-wrapper">
@@ -29,30 +29,33 @@
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
-                    <h2 class="fw-bold">Sarah Bennett</h2>
+                    <h2 class="fw-bold">@Model.activeUser.FirstName @Model.activeUser.LastName</h2>
                 </div>
                 <div class="col-md-6">
                     <form>
                         <div class="mb-3">
                             <label>First Name</label>
-                            <input type="text" class="form-control custom-input" value="Sarah">
+                            <input type="text" class="form-control custom-input" value="@Model.activeUser.FirstName">
                         </div>
                         <div class="mb-3">
                             <label>Last Name</label>
-                            <input type="text" class="form-control custom-input" value="Bennett">
+                            <input type="text" class="form-control custom-input" value="@Model.activeUser.LastName">
                         </div>
                         <div class="mb-3">
                             <label>Pronouns</label>
                             <select class="form-select custom-input">
-                                <option>She/Her</option>
-                                <option>He/Him</option>
-                                <option selected>Other</option>
-                                <option>They/Them</option>
+                                @{
+                                    var pronouns = Model.activeUser.pronouns;
+                                }
+                                <option value="She/Her" selected="@(pronouns == "She/Her")">She/Her</option>
+                                <option value="He/Him" selected="@(pronouns == "He/Him")">He/Him</option>
+                                <option value="They/Them" selected="@(pronouns == "They/Them")">They/Them</option>
+                                <option value="Other" selected="@(pronouns == "Other")">Other</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label>Address</label>
-                            <input type="text" class="form-control custom-input" value="100 University Dr, Harrisonburg, VA 22807">
+                            <input type="text" class="form-control custom-input" value="@Model.activeUser.HomeAddress, @Model.activeUser.HomeCity, @Model.activeUser.HomeState @Model.activeUser.ZipCode">
                         </div>
                     </form>
                 </div>
@@ -61,22 +64,22 @@
                     <form>
                         <div class="mb-3">
                             <label>Username</label>
-                            <input type="text" class="form-control custom-input" value="sarahbennett">
+                            <input type="text" class="form-control custom-input" value="@Model.activeUser.UserName">
                         </div>
                         <div class="mb-3">
                             <label class="d-flex justify-content-between">
                                 <span>Password</span>
                                 <a class="change-password-link" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</a>
                             </label>
-                            <input type="password" class="form-control custom-input" value="********">
+                            <input type="password" class="form-control custom-input" value="********" readonly>
                         </div>
                         <div class="mb-3">
                             <label>Email</label>
-                            <input type="email" class="form-control custom-input" value="sarahbennett@gmail.com">
+                            <input type="email" class="form-control custom-input" value="@Model.activeUser.Email">
                         </div>
                         <div class="mb-3">
                             <label>Phone</label>
-                            <input type="tel" class="form-control custom-input" value="(555) 555-5555">
+                            <input type="tel" class="form-control custom-input" value="@Model.activeUser.Phone">
                         </div>
                     </form>
                 </div>
