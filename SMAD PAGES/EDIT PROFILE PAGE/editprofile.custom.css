@@ -109,3 +109,8 @@ body {
   text-decoration: underline;
   color: #333;
 }
+
+/* Modal header lock icon bigger */
+.modal-title i {
+  font-size: 24px;
+}
