@@ -5,7 +5,7 @@ VALUES
 ('nadeemhudson', 1, 1),
 ('joshwhite', 0, 1),
 ('sharons', 0, 1),
-('jezell', 0, 1),
+('jezell', 0, 0),
 ('benfrench', 0, 0),
 ('samO', 0, 0);
 

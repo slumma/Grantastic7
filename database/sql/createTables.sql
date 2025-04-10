@@ -118,7 +118,7 @@ CREATE TABLE projectNotes(
     NotesID int Identity(1,1) PRIMARY KEY,
     ProjectID int, 
 	AuthorID int,
-    Content text,
+    Content nvarchar(max),
 	DateAdded datetime default getdate(),
     FOREIGN KEY (ProjectID) REFERENCES project(ProjectID),
 	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
@@ -130,7 +130,7 @@ CREATE TABLE grants(
     ProjectID int,
     Category nvarchar(200),
     SubmissionDate date, 
-    descriptions text,
+    descriptions nvarchar(max),
     AwardDate date,
     Amount float,
 	DateAdded datetime default getdate(),

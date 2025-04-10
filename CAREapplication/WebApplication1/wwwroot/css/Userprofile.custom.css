@@ -1,0 +1,155 @@
+/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+/* COLOR PALETTE */
+:root {
+      --dark-purple: #450084;
+      --light-purple: #DACCE6;
+      --lightest-gray: #F5F5F5;
+      --medium-gray: #D9D9D9;
+      --dark-gray: #1E1E1E;
+    }
+
+.custom-dropdown {
+    border-radius: 0 0 5px 5px;
+    background-color: var(--dark-purple);
+    padding: 0.5rem 0;
+    border: none;
+    min-width: 180px;
+}
+
+    /* Dropdown items */
+    .custom-dropdown .dropdown-item {
+        color: var(--lightest-gray);
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+
+        /* Hover state */
+        .custom-dropdown .dropdown-item:hover {
+            text-decoration: underline;
+            border-radius: 0;
+            font-weight: bold;
+        }
+
+body {
+      font-family: Arial, sans-serif;
+      background-color: var(--light-purple);
+      padding-bottom: 20px;
+    }
+
+    h5 {
+      font-size: 1.5rem !important;
+    }
+
+    .main-bg {
+      background-color: var(--light-purple);
+    }
+
+    .main-container {
+      background-color: #F5F5F5;
+      border-radius: 12px !important;
+      padding: 25px 8px;
+      overflow: hidden;
+    }
+
+    .scrollable-container {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 600px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .gray-box {
+      background-color: var(--medium-gray);
+      border-radius: 12px;
+      margin-bottom: 30px;
+      padding: 25px 20px;
+      height: 100%;
+    }
+
+    .gray-box.with-profile {
+      padding-top: 20px;
+      position: relative;
+    }
+
+    .profile-pic-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .profile-icon {
+      background-color: var(--dark-purple);
+      color: white;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-label {
+      font-weight: 600;
+      color: #5a5a5a;
+      margin-top: 15px;
+    }
+
+    .user-name {
+      margin-bottom: 4px;
+    }
+
+    .pronouns {
+      margin-bottom: 10px;
+    }
+
+    .right-box {
+      padding: 30px 40px !important;
+    }
+
+    .right-box h5 {
+      font-size: 22px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .right-box p {
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .btn-dark-purple {
+      background-color: var(--dark-purple);
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 10px 20px;
+      border: none;
+    }
+
+    .btn-dark-purple:hover {
+      background-color: #3a006b;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .gray-box {
+        padding: 25px 20px;
+        margin-bottom: 30px;
+      }
+
+      .scrollable-container {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .right-box h5 {
+        font-size: 20px;
+      }
+    }

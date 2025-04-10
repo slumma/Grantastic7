@@ -39,6 +39,7 @@
     min-width: 180px;
 }
 
+
     /* Dropdown items */
     .custom-dropdown .dropdown-item {
         color: var(--lightest-gray);
@@ -117,8 +118,36 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin: 8px;
-    max-height: 800px;
+    height: calc(100vh - 30px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
 
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.header-section {
+    margin-bottom: 5px;
+}
+
+.search-bar {
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.message-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.list-group-item {
+    margin-bottom: 6px;
+    background-color: var(--light-purple);
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .list-group-item {
