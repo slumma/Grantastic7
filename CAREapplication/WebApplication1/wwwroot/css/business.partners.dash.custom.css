@@ -210,3 +210,24 @@ table {
   background-color: var(--light-purple) !important;
   color: black;
 }
+
+search {
+	text-align: right !important;
+	float: right !important;
+	padding-left: 75%;
+}
+
+
+.search-btn {
+	background-color: var(--dark-purple);
+	color: white;
+	font-weight: bold;
+	border-radius: 6px;
+	border: none;
+	font-size: 12px;
+}
+
+	.search-btn:hover {
+		background-color: var(--light-purple);
+		color: black;
+	}

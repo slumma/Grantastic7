@@ -123,15 +123,32 @@ h2 {
 
 .task-item {
     background: var(--lightest-gray);
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 7px;
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     font-weight: bold;
     color: #767676;
-
+    width: 95%;
 }
+
+
+.task-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    margin-top: 2px; /* <-- adjust this to visually center if needed */
+}
+
+    .task-icon svg {
+        width: 16px;
+        height: 16px;
+        stroke: #000;
+    }
 
 /* Ensure the .row is using flexbox for the layout */
 .row {
@@ -159,16 +176,6 @@ h2 {
 }
 
 /* Ensure task items are aligned correctly */
-.task-item {
-    background: var(--lightest-gray);
-    padding: 10px;
-    border-radius: 7px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    color: #767676;
-}
 
 /*Phone Screen Sizing*/
 @media (max-width: 768px) {
@@ -241,3 +248,24 @@ table {
 
 }
 
+
+
+.scrollable-container {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-left: 20px;
+    padding-right: 0px;
+}
+
+    .scrollable-container::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+        background-color: #8A8A8A !important;
+        border-radius: 8px;
+    }
+
+.scrollable-container {
+    scrollbar-color: var(--medium-gray)
+}

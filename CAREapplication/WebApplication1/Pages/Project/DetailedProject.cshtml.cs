@@ -1,10 +1,14 @@
-using CAREapplication.Pages.DB;
+﻿using CAREapplication.Pages.DB;
 using CAREapplication.Pages.DataClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic;
+using System.Security.AccessControl;
 
 
 namespace CAREapplication.Pages.Project
@@ -23,6 +27,7 @@ namespace CAREapplication.Pages.Project
         public int progress { get; set; }
         public int total { get; set; }
         public int completed { get; set; }
+        public List<User> AllUsers { get; set; } = new List<User>();
 
         public IActionResult OnGet(int projectID)
         {
@@ -31,11 +36,6 @@ namespace CAREapplication.Pages.Project
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
-                return RedirectToPage("../Index");
-            }
-            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
                 return RedirectToPage("../Index");
             }
 
@@ -73,6 +73,23 @@ namespace CAREapplication.Pages.Project
 
                 DBProject.DBConnection.Close();
 
+                using (SqlDataReader reader = DBClass.UserReader())
+                {
+                    while (reader.Read())
+                    {
+                        AllUsers.Add(new User
+                        {
+                            UserID = Convert.ToInt32(reader["UserID"]),
+                            UserName = reader["Username"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            Email = reader["Email"].ToString()
+                        });
+                    }
+                }
+
+                DBClass.DBConnection.Close();
 
                 Trace.WriteLine("Executing projectStaffReader query...");
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
@@ -81,6 +98,7 @@ namespace CAREapplication.Pages.Project
                     {
                         UserProjectList.Add(new User
                         {
+                            UserID = Convert.ToInt32(reader["UserID"]),
                             FirstName = reader["FirstName"].ToString(),
                             LastName = reader["LastName"].ToString(),
                             Phone = reader["Phone"].ToString(),
@@ -105,13 +123,31 @@ namespace CAREapplication.Pages.Project
                             AssignerID = Convert.ToInt32(reader["AssignerID"]),
                             DueDate = Convert.ToDateTime(reader["DueDate"])
                         });
-                        UserTaskList.Add(new User
+
+                        string firstName = reader["FirstName"].ToString();
+                        string lastName = reader["LastName"].ToString();
+
+                        bool exists = false;
+                        foreach (var user in UserTaskList)
                         {
-                            FirstName = reader["FirstName"].ToString(),
-                            LastName = reader["LastName"].ToString()
-                        });
+                            if (user.FirstName == firstName && user.LastName == lastName)
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+
+                        if (!exists)
+                        {
+                            UserTaskList.Add(new User
+                            {
+                                FirstName = firstName,
+                                LastName = lastName
+                            });
+                        }
                     }
                 }
+
                 Trace.WriteLine("taskStaffReader query completed successfully.");
 
                 DBProject.DBConnection.Close();
@@ -145,7 +181,7 @@ namespace CAREapplication.Pages.Project
                             Content = reader["Content"].ToString(),
                             AuthorFirst = reader["FirstName"].ToString(),
                             AuthorLast = reader["LastName"].ToString(),
-                            TimeAdded = Convert.ToDateTime(reader["NoteDate"])
+                            TimeAdded = Convert.ToDateTime(reader["DateAdded"])
                         });
                     }
                 }
@@ -169,7 +205,14 @@ namespace CAREapplication.Pages.Project
             completed = progressList[0];
             total = progressList[1];
 
-            progress = Convert.ToInt32(completed / total);
+            if (total > 0)
+            {
+                progress = Convert.ToInt32((float)completed / total * 100); // gives percentage if needed
+            }
+            else
+            {
+                progress = 0;
+            }
 
             return Page();
         }
@@ -180,17 +223,13 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index");
             }
-            else if (HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index");
-            }
 
             try
             {
                 int userID = (int)HttpContext.Session.GetInt32("userID");
 
                 DBProject.InsertProjectNote(ProjectID, NoteContent, userID);
+                
             }
             catch (SqlException ex)
             {
@@ -200,5 +239,89 @@ namespace CAREapplication.Pages.Project
 
             return RedirectToPage(new { projectID = ProjectID });
         }
+
+        public IActionResult OnPostUpdateTaskStatus(int? taskID, int? completeFlag, int? ProjectID)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.UpdateProjectTask(taskID.Value, completeFlag.Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostAddTask(int ProjectID, DateOnly duedate, string objective)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.InsertProjectTask(ProjectID, objective, duedate);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostEditOverview(int ProjectID, string description, DateOnly duedate)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBProject.UpdateProject(ProjectID, description, duedate);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+            
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostInactiveStaff(int userID, int ProjectID)
+        { 
+            
+            try
+            {
+                DBProject.inactiveProjectStaff(userID, ProjectID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public IActionResult OnPostEditStaff(int ProjectID, int UserID)
+        {
+
+            try
+            {
+                DBProject.InsertProjectStaff(ProjectID, UserID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
     }
 }

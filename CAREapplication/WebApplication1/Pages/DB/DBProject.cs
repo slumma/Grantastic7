@@ -1,10 +1,14 @@
 ﻿using CAREapplication.Pages.DataClasses;
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CAREapplication.Pages.DB
 {
@@ -13,8 +17,8 @@ namespace CAREapplication.Pages.DB
         public static SqlConnection DBConnection = new SqlConnection();
 
         // Connection String - How to find and connect to DB
-        private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+        private static readonly System.String? DBConnString =
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
         public static void AddProject(ProjectSimple project, List<int> assignedFacultyList)
@@ -50,27 +54,12 @@ namespace CAREapplication.Pages.DB
                 }
             }
         }
-        public static void InsertProjectNote(ProjectNote newNote)
-        {
-            SqlConnection connection = new SqlConnection(DBConnString);
-
-            String sqlQuery = "INSERT INTO projectNotes(ProjectID, Content, AuthorID) VALUES (@GrantID, @Content, @AuthorID);";
-            SqlCommand cmdInsertGrantNote = new SqlCommand(sqlQuery, connection);
-
-            cmdInsertGrantNote.Parameters.AddWithValue("@GrantID", newNote.ProjectID);
-            cmdInsertGrantNote.Parameters.AddWithValue("@Content", newNote.Content);
-            cmdInsertGrantNote.Parameters.AddWithValue("@AuthorID", newNote.AuthorID);
-
-            connection.Open();
-            cmdInsertGrantNote.ExecuteNonQuery();
-            connection.Close();
-        }
         public static void InsertProjectStaff(User u, int projectID)
         {
 
             SqlConnection connection = new SqlConnection(DBConnString);
 
-            String sqlQuery = "INSERT INTO projectStaff (UserID, ProjectID, Leader, Active) VALUES(@UserID, @ProjectID, 0, 1);";
+            System.String sqlQuery = "INSERT INTO projectStaff (UserID, ProjectID, Leader, Active) VALUES(@UserID, @ProjectID, 0, 1);";
             SqlCommand cmdInsertProjectStaff = new SqlCommand(sqlQuery, connection);
 
             // Add parameters to the command
@@ -87,7 +76,11 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdViewNotes = new SqlCommand(DBConnString);
             cmdViewNotes.Connection = DBConnection;
             cmdViewNotes.Connection.ConnectionString = DBConnString;
-            cmdViewNotes.CommandText = @"SELECT * FROM projectNotes JOIN users ON projectNotes.AuthorID = users.UserID WHERE projectID = @ProjectID;";
+            cmdViewNotes.CommandText = @"SELECT *
+                                        FROM projectNotes pn
+                                        JOIN users u ON pn.AuthorID = u.UserID
+                                        JOIN person p ON u.UserID = p.UserID
+                                        WHERE pn.ProjectID = @ProjectID;";
 
             cmdViewNotes.Parameters.AddWithValue("@ProjectID", ProjectID);
 
@@ -141,26 +134,27 @@ namespace CAREapplication.Pages.DB
         {
             List<int> progressList = new List<int>();
 
-            SqlCommand cmdProgressRead = new SqlCommand();
-            cmdProgressRead.Connection = DBConnection;
-            cmdProgressRead.Connection.ConnectionString = DBConnString;
-            cmdProgressRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID AND Completed = 1;";
-            cmdProgressRead.Connection.Open();
-            cmdProgressRead.Parameters.AddWithValue("@ProjectID", ProjectID);
-            int progress = Convert.ToInt32(cmdProgressRead.ExecuteScalar());
-            DBProject.DBConnection.Close();
+            string queryCompleted = "SELECT COUNT(*) FROM projectTask WHERE ProjectID = @ProjectID AND Completed = 1;";
+            string queryTotal = "SELECT COUNT(*) FROM projectTask WHERE ProjectID = @ProjectID;";
 
-            SqlCommand cmdTotalRead = new SqlCommand();
-            cmdTotalRead.Connection = DBConnection;
-            cmdTotalRead.Connection.ConnectionString = DBConnString;
-            cmdTotalRead.CommandText = "SELECT count(*) FROM projectTask WHERE ProjectID = @ProjectID;";
-            cmdTotalRead.Connection.Open();
-            cmdTotalRead.Parameters.AddWithValue("@ProjectID", ProjectID);
-            int total = Convert.ToInt32(cmdTotalRead.ExecuteScalar());
-            DBProject.DBConnection.Close();
+            using (SqlConnection connection = new SqlConnection(DBConnString))
+            {
+                connection.Open();
 
-            progressList.Add(progress);
-            progressList.Add(total);
+                using (SqlCommand cmdProgressRead = new SqlCommand(queryCompleted, connection))
+                {
+                    cmdProgressRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+                    int progress = Convert.ToInt32(cmdProgressRead.ExecuteScalar());
+                    progressList.Add(progress);
+                }
+
+                using (SqlCommand cmdTotalRead = new SqlCommand(queryTotal, connection))
+                {
+                    cmdTotalRead.Parameters.AddWithValue("@ProjectID", ProjectID);
+                    int total = Convert.ToInt32(cmdTotalRead.ExecuteScalar());
+                    progressList.Add(total);
+                }
+            }
 
             return progressList;
         }
@@ -171,24 +165,30 @@ namespace CAREapplication.Pages.DB
             cmdProjectStaffReader.Connection = DBConnection;
             cmdProjectStaffReader.Connection.ConnectionString = DBConnString;
             cmdProjectStaffReader.CommandText = @"SELECT DISTINCT
-                                            u.UserID,
-                                            u.Username,
-                                            u.FirstName,
-                                            u.LastName,
-                                            u.Email,
-                                            u.Phone,
-                                            u.HomeAddress,
-                                            ps.ProjectID,
-                                            p.ProjectName,
-                                            ps.Leader,
-                                            ps.Active
-                                        FROM 
-                                            projectStaff ps
-                                        JOIN 
-                                            users u ON ps.UserID = u.UserID
-                                        JOIN 
-                                            project p ON ps.ProjectID = p.ProjectID
-                                        WHERE ps.ProjectID = @ProjectID AND FacultyStatus = 1;";
+                                                    u.UserID,
+                                                    u.Username,
+                                                    p.FirstName,
+                                                    p.LastName,
+                                                    c.Email,
+                                                    c.Phone,
+                                                    c.HomeAddress,
+                                                    ps.ProjectID,
+                                                    pr.ProjectName,
+                                                    ps.Leader,
+                                                    ps.Active
+                                                FROM 
+                                                    projectStaff ps
+                                                JOIN 
+                                                    users u ON ps.UserID = u.UserID
+                                                JOIN 
+                                                    person p ON u.UserID = p.UserID
+                                                JOIN 
+                                                    contact c ON p.PersonID = c.PersonID
+                                                JOIN 
+                                                    project pr ON ps.ProjectID = pr.ProjectID
+                                                WHERE 
+                                                    ps.ProjectID = @ProjectID AND 
+                                                    ps.Active = 1;";
 
             cmdProjectStaffReader.Parameters.AddWithValue("@ProjectID", ProjectID);
 
@@ -200,6 +200,11 @@ namespace CAREapplication.Pages.DB
         }
         public static SqlDataReader singleProjectReader(int ProjectID)
         {
+            if (DBConnection.State != ConnectionState.Closed)
+            {
+                DBConnection.Close();
+            }
+
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;
             cmdProjectRead.Connection.ConnectionString = DBConnString;
@@ -252,7 +257,7 @@ namespace CAREapplication.Pages.DB
                                         FROM grantTaskStaff gts
                                         JOIN grantTask gt ON gts.TaskID = gt.TaskID
                                         JOIN grants g ON gt.GrantID = g.GrantID
-                                        WHERE gts.AssigneeID = @UserID
+                                        WHERE gts.AssigneeID = @UserID  AND gt.Completed = 0
 
                                         UNION ALL
 
@@ -266,7 +271,7 @@ namespace CAREapplication.Pages.DB
                                         FROM projectTaskStaff pts
                                         JOIN projectTask pt ON pts.TaskID = pt.TaskID
                                         JOIN project p ON pt.ProjectID = p.ProjectID
-                                        WHERE pts.AssigneeID = @UserID;";
+                                        WHERE pts.AssigneeID = @UserID AND pt.Completed = 0;";
             cmdTaskRead.Parameters.AddWithValue("@UserID", UserID);
             cmdTaskRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskRead.ExecuteReader();
@@ -282,8 +287,12 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection = DBConnection;
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskStaffRead.CommandText = "SELECT * from projectTaskStaff\r\njoin projectTask on projectTask.taskid = projecttaskstaff.taskid\r\n" +
-                "join users on projecttaskstaff.assigneeID = users.UserID\r\nWHERE ProjectID = @ProjectID";
+            cmdTaskStaffRead.CommandText = @"SELECT *
+                                            FROM projectTaskStaff pts
+                                            JOIN projectTask pt ON pt.TaskID = pts.TaskID
+                                            JOIN users u ON pts.AssigneeID = u.UserID
+                                            JOIN person p ON u.UserID = p.UserID
+                                            WHERE pt.ProjectID = @ProjectID;";
             cmdTaskStaffRead.Parameters.AddWithValue("@ProjectID", projectID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
@@ -316,7 +325,7 @@ namespace CAREapplication.Pages.DB
         }
         public static void InsertProjectNote(int projectID, string content, int userID)
         {
-            string query = @"INSERT INTO ProjectNotes (ProjectID, Content, AuthorID, NoteDate)
+            string query = @"INSERT INTO ProjectNotes (ProjectID, Content, AuthorID, DateAdded)
                      VALUES (@ProjectID, @Content, @AuthorID, GETDATE())";
 
             SqlCommand cmd = new SqlCommand(query, DBConnection);
@@ -328,5 +337,100 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
+
+
+
+        public static void InsertProjectTask(int projectID, string content, DateOnly duedate)
+        {
+            string query = @" INSERT INTO projectTask(ProjectID, DueDate, Objective)
+                                VALUES(@ProjectID, @DueDate, @Objective);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@Objective", content);
+            cmd.Parameters.AddWithValue("@DueDate", duedate.ToDateTime(TimeOnly.MinValue));
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+
+
+        public static void UpdateProjectTask(int taskID, int completedFlag)
+        {
+            string query = @"
+                    UPDATE projectTask
+                    SET 
+                        Completed = @Completed
+                    WHERE TaskID = @TaskID;
+                ";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@Completed", completedFlag); 
+            cmd.Parameters.AddWithValue("@TaskID", taskID);
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+                
+            }
+
+        public static void UpdateProject(int ProjectID, string description, DateOnly duedate)
+        {
+            Trace.WriteLine(description);
+
+            string query = @"
+                        UPDATE project
+                        SET
+                            ProjectDescription = @description,
+                            DueDate = @duedate
+                        WHERE ProjectID = @projectID;";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@description", description);
+            cmd.Parameters.AddWithValue("@duedate", duedate.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@projectID", ProjectID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
+        }
+
+        public static void inactiveProjectStaff(int userID, int projectID)
+        {
+
+            string query = @"UPDATE projectStaff
+                            SET
+                                Active = 0
+                            WHERE UserID = @userID AND ProjectID = @projectID;";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@projectID", projectID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
+        }
+
+        public static void InsertProjectStaff(int projectID, int userID)
+        {
+            string query = @" INSERT INTO projectStaff(ProjectID, UserID, Leader, Active)
+                                VALUES(@ProjectID, @UserID, 0, 1);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+        
+
     }
 }
+

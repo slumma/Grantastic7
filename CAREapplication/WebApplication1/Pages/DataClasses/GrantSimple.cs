@@ -12,10 +12,10 @@ namespace CAREapplication.Pages.DataClasses
 
         public int? ProjectID { get; set; }
 
-        [Required(ErrorMessage = "Supplier is required")]
-        public string Supplier { get; set; }
+        [Required(ErrorMessage = "Funder is required")]
+        public string Funder { get; set; }
 
-        public int SupplierID { get; set; }
+        public int FunderID { get; set; }
 
         [Required(ErrorMessage = "Project is required")]
         public string Project { get; set; }  // Changed from string? to string

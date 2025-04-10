@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
         public static SqlDataReader adminGrantReader()
@@ -23,7 +23,7 @@ namespace CAREapplication.Pages.DB
                                             g.GrantID, 
                                             g.GrantName,
                                             p.ProjectID,
-                                            s.SupplierName AS Supplier, 
+                                            s.FunderName AS Funder, 
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
@@ -32,7 +32,7 @@ namespace CAREapplication.Pages.DB
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
-                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
+                                        JOIN grantFunder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                         ORDER BY g.AwardDate";
 

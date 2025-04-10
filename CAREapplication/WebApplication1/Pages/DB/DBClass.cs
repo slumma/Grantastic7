@@ -15,8 +15,8 @@ namespace CAREapplication.Pages.DB
         public static SqlConnection DBConnection = new SqlConnection();
 
         // Connection String - How to find and connect to DB
-        private static readonly String? DBConnString = 
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+        private static readonly String? DBConnString =
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         private static readonly String? AUTHConnString =
             "Server=Localhost;Database=AUTH;Trusted_Connection=True";
@@ -29,7 +29,10 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdUserReader = new SqlCommand();
             cmdUserReader.Connection = DBConnection;
             cmdUserReader.Connection.ConnectionString = DBConnString;
-            cmdUserReader.CommandText = "SELECT * FROM users ORDER BY Username";
+            cmdUserReader.CommandText = @"SELECT * FROM users 
+                                        JOIN person p on users.UserId = p.UserID 
+                                        JOIN contact c on p.PersonID = c.PersonID
+                                        Order BY Username";
             cmdUserReader.Connection.Open(); // Open connection here, close in Model!
 
             SqlDataReader tempReader = cmdUserReader.ExecuteReader();
@@ -40,7 +43,7 @@ namespace CAREapplication.Pages.DB
         public static User GetUserByID(int? userID)
         {
             User user = null;
-            String sqlQuery = "SELECT * FROM users WHERE UserID = @UserID";
+            String sqlQuery = "SELECT * FROM users join person p on p.UserID = users.UserID join contact c on c.PersonID = p.PersonID where users.UserID = @UserID;";
 
             SqlConnection connection = new SqlConnection(DBConnString);
             SqlCommand cmdGetUser = new SqlCommand(sqlQuery, connection);
@@ -125,23 +128,12 @@ namespace CAREapplication.Pages.DB
             return status;
 
         }
-        public static int adminCheck(int userID)
+        public static int directorCheck(int userID)
         {
             SqlCommand cmdCheck = new SqlCommand();
             cmdCheck.Connection = DBConnection;
             cmdCheck.Connection.ConnectionString = DBConnString;
-            cmdCheck.CommandText = "SELECT AdminStatus FROM users WHERE UserID = @UserID;";
-            cmdCheck.Parameters.AddWithValue("@UserID", userID);
-            cmdCheck.Connection.Open();
-            int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
-            return status;
-        }
-        public static int facultyCheck(int userID)
-        {
-            SqlCommand cmdCheck = new SqlCommand();
-            cmdCheck.Connection = DBConnection;
-            cmdCheck.Connection.ConnectionString = DBConnString;
-            cmdCheck.CommandText = "SELECT FacultyStatus FROM users WHERE UserID = @UserID;";
+            cmdCheck.CommandText = "SELECT Director FROM users WHERE UserID = @UserID;";
             cmdCheck.Parameters.AddWithValue("@UserID", userID);
             cmdCheck.Connection.Open();
             int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
@@ -336,9 +328,9 @@ namespace CAREapplication.Pages.DB
         FROM projectNotes 
         WHERE Content LIKE @searchWord
         UNION
-        SELECT 'GrantSupplier' AS TableName, 'SupplierName' AS ColumnName, SupplierName AS FoundValue 
-        FROM grantSupplier 
-        WHERE SupplierName LIKE @searchWord
+        SELECT 'Funder' AS TableName, 'FunderName' AS ColumnName, FunderName AS FoundValue 
+        FROM Funder 
+        WHERE FunderName LIKE @searchWord
         UNION
         SELECT 'Grants' AS TableName, 'GrantName' AS ColumnName, GrantName AS FoundValue 
         FROM grants 

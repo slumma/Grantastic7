@@ -369,7 +369,7 @@ table {
 }
 
 .save-btn {
-  background-color: #1ABA1A;
+  background-color: #1ABA1A !important;
   color: white;
   font-weight: bold;
   border-radius: 6px;
@@ -378,13 +378,27 @@ table {
   font-size: 14px;
 }
 
+.doc-btn{
+  background-color: #450084;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.save{
+  background-color: #1ABA1A !important ;
+}
+
 .save-btn:hover {
-  background-color: var(--dark-purple);
+  background-color: darkgreen;
   color: white;
 }
 
 
-/*ADD PROJEC NOTE title */
+/*ADD PROJECT NOTE title */
 #notetitle {
   text-align: center;
 }
@@ -448,3 +462,13 @@ table {
   background-color: var(--light-purple);
   color: black;
 }
+
+
+select.form-select, select.form-select.mb-3,{
+  color: var(--medium-gray) !important;
+}
+
+
+
+
+

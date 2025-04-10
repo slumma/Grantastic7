@@ -11,71 +11,144 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
+        public static SqlDataReader allGrantReader()
+        {
+            SqlCommand cmdGrantReader = new SqlCommand();
+            cmdGrantReader.Connection = DBConnection;
+            cmdGrantReader.Connection.ConnectionString = DBConnString;
+            cmdGrantReader.CommandText = @"SELECT 
+                                            g.GrantID, 
+                                            g.GrantName,
+                                            p.ProjectID,
+                                            s.FunderName AS Funder, 
+                                            p.ProjectName AS Project, 
+                                            g.Amount,
+                                            g.Category,
+                                            gs.StatusName, 
+                                            g.descriptions,
+                                            g.SubmissionDate, 
+                                            g.AwardDate
+                                        FROM grants g
+                                        JOIN grantStatus gs ON g.GrantID = gs.GrantID
+                                        JOIN Funder s ON g.FunderID = s.FunderID
+                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+                                        ORDER BY g.AwardDate";
+
+
+            cmdGrantReader.Connection.Open();
+            SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
+            return tempReader;
+        }
         public static SqlDataReader adminGrantReader()
         {
             SqlCommand cmdGrantReader = new SqlCommand();
             cmdGrantReader.Connection = DBConnection;
             cmdGrantReader.Connection.ConnectionString = DBConnString;
-            cmdGrantReader.CommandText = @"SELECT 
-                                            g.GrantID, 
-                                            g.GrantName,
-                                            p.ProjectID,
-                                            s.SupplierName AS Supplier, 
-                                            p.ProjectName AS Project, 
-                                            g.Amount,
-                                            g.Category,
-                                            g.GrantStatus, 
-                                            g.descriptions,
-                                            g.SubmissionDate, 
-                                            g.AwardDate
-                                        FROM grants g
-                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
-                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
-                                        ORDER BY g.AwardDate";
 
+            cmdGrantReader.CommandText = @"
+        SELECT 
+            g.GrantID, 
+            g.GrantName,
+            p.ProjectID,
+            s.FunderName AS Funder, 
+            p.ProjectName AS Project, 
+            g.Amount,
+            g.Category,
+            gs.StatusName, 
+            g.descriptions,
+            g.SubmissionDate, 
+            g.AwardDate
+        FROM grants g
+        JOIN Funder s ON g.FunderID = s.FunderID
+        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+        LEFT JOIN (
+            SELECT GrantID, StatusName
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (PARTITION BY GrantID ORDER BY ChangeDate DESC) AS rn
+                FROM grantStatus
+            ) latest
+            WHERE rn = 1
+        ) gs ON g.GrantID = gs.GrantID
+        ORDER BY g.AwardDate;
+    ";
 
             cmdGrantReader.Connection.Open();
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+
+
         public static SqlDataReader facGrantReader(int currentUserID)
         {
             SqlCommand cmdGrantReader = new SqlCommand();
             cmdGrantReader.Connection = DBConnection;
             cmdGrantReader.Connection.ConnectionString = DBConnString;
-            cmdGrantReader.CommandText = @"SELECT 
-                                            g.GrantID, 
-                                            g.GrantName,
-                                            p.ProjectID,
-                                            s.SupplierName AS Supplier, 
-                                            p.ProjectName AS Project, 
-                                            g.Amount,
-                                            g.Category,
-                                            g.GrantStatus, 
-                                            g.descriptions,
-                                            g.SubmissionDate, 
-                                            g.AwardDate
-                                        FROM grants g
-                                        JOIN grantStaff ON g.grantID = grantstaff.grantID
-                                        JOIN users ON grantstaff.userID = users.userID
-                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
-                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
-                                        WHERE users.userID = @UserID
-                                        ORDER BY g.AwardDate";
 
+            cmdGrantReader.CommandText = @"
+        SELECT 
+            g.GrantID, 
+            g.GrantName,
+            p.ProjectID,
+            s.FunderName AS Funder, 
+            p.ProjectName AS Project, 
+            g.Amount,
+            g.Category,
+            gs.StatusName AS GrantStatus, 
+            g.descriptions,
+            g.SubmissionDate, 
+            g.AwardDate
+        FROM grants g
+        JOIN grantStaff gs2 ON g.GrantID = gs2.GrantID
+        JOIN users u ON gs2.UserID = u.UserID
+        JOIN Funder s ON g.FunderID = s.FunderID
+        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+        LEFT JOIN (
+            SELECT GrantID, StatusName
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (PARTITION BY GrantID ORDER BY ChangeDate DESC) AS rn
+                FROM grantStatus
+            ) latest
+            WHERE rn = 1
+        ) gs ON g.GrantID = gs.GrantID
+        WHERE u.UserID = @UserID
+        ORDER BY g.AwardDate;
+    ";
 
-            cmdGrantReader.Connection.Open();
             cmdGrantReader.Parameters.AddWithValue("@UserID", currentUserID);
+            cmdGrantReader.Connection.Open();
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+
+
+        public static void UpdateGrantTask(int taskID, int completedFlag)
+        {
+            string query = @"
+                    UPDATE grantTask
+                    SET 
+                        Completed = @Completed
+                    WHERE TaskID = @TaskID;
+                ";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@Completed", completedFlag);
+            cmd.Parameters.AddWithValue("@TaskID", taskID);
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+
+        }
+
         public static SqlDataReader GrantNoteReader(int GrantID)
         {
             SqlCommand cmdViewNotes = new SqlCommand(DBConnString);
             cmdViewNotes.Connection = DBConnection;
             cmdViewNotes.Connection.ConnectionString = DBConnString;
-            cmdViewNotes.CommandText = @"SELECT * FROM grantNotes JOIN users ON grantNotes.AuthorID = users.UserID WHERE GrantID = @GrantID;";
+            cmdViewNotes.CommandText = @"SELECT * FROM grantNotes JOIN users ON grantNotes.AuthorID = users.UserID JOIN 
+                                        person p on users.UserID = p.UserID WHERE GrantID = @GrantID;";
 
             cmdViewNotes.Parameters.AddWithValue("@GrantID", GrantID);
 
@@ -105,7 +178,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
             cmdTaskStaffRead.CommandText = "SELECT * from grantTaskStaff\r\njoin grantTask on grantTask.taskid = granttaskstaff.taskid\r\n" +
-                "join users on granttaskstaff.assigneeID = users.UserID\r\nWHERE GrantID = @GrantID";
+                "join users on granttaskstaff.assigneeID = users.UserID  JOIN person p ON users.UserID = p.UserID   \r\nWHERE GrantID = @GrantID";
             cmdTaskStaffRead.Parameters.AddWithValue("@GrantID", grantID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
@@ -140,10 +213,10 @@ namespace CAREapplication.Pages.DB
             return progressList;
         }
 
-        public static void InsertGrant(GrantSimple g, int supplierID, int projectID, int userID)
+        public static void InsertGrant(GrantSimple g, int FunderID, int projectID, int userID)
         {
-            String insertGrantQuery = "INSERT INTO grants (SupplierID, GrantName, ProjectID, GrantStatus, Category, SubmissionDate, descriptions, AwardDate, Amount) " +
-                              "VALUES (@SupplierID, @GrantName, @ProjectID, @StatusName, @Category, @SubmissionDate, @Descriptions, @AwardDate, @Amount); SELECT SCOPE_IDENTITY();";
+            String insertGrantQuery = "INSERT INTO grants (FunderID, GrantName, ProjectID, GrantStatus, Category, SubmissionDate, descriptions, AwardDate, Amount) " +
+                              "VALUES (@FunderID, @GrantName, @ProjectID, @StatusName, @Category, @SubmissionDate, @Descriptions, @AwardDate, @Amount); SELECT SCOPE_IDENTITY();";
             String insertGrantStaffQuery = "INSERT INTO grantStaff (GrantID, UserID) VALUES (@GrantID, @UserID);";
 
             int GrantID;
@@ -154,7 +227,7 @@ namespace CAREapplication.Pages.DB
             {
                 cmdInsertGrant.Connection.ConnectionString = DBConnString;
 
-                cmdInsertGrant.Parameters.AddWithValue("@SupplierID", supplierID);
+                cmdInsertGrant.Parameters.AddWithValue("@FunderID", FunderID);
                 cmdInsertGrant.Parameters.AddWithValue("@GrantName", g.GrantName);
                 cmdInsertGrant.Parameters.AddWithValue("@ProjectID", projectID);
                 cmdInsertGrant.Parameters.AddWithValue("@GrantStatus", g.Status);
@@ -223,16 +296,17 @@ namespace CAREapplication.Pages.DB
                                             g.GrantID,
                                             g.GrantName,
                                             p.ProjectID,
-                                            s.SupplierName AS Supplier, 
+                                            s.FunderName AS Funder, 
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
-                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
+										JOIN grantStatus gs ON g.GrantID = gs.GrantID
+                                        JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                             WHERE g.GrantID = @GrantID;";
 
@@ -249,12 +323,12 @@ namespace CAREapplication.Pages.DB
         {
 
             // queries *parameterized*
-            // checks relative information such as supplier to ensure its there 
-            // query to insert a supplier if it is not already in db
-            string checkSupplierQuery = "SELECT SupplierID FROM grantSupplier WHERE SupplierName = @Supplier";
-            string insertSupplierQuery = "INSERT INTO grantSupplier (SupplierName) OUTPUT INSERTED.SupplierID VALUES (@Supplier)";
+            // checks relative information such as Funder to ensure its there 
+            // query to insert a Funder if it is not already in db
+            string checkFunderQuery = "SELECT FunderID FROM Funder WHERE FunderName = @Funder";
+            string insertFunderQuery = "INSERT INTO Funder (FunderName) OUTPUT INSERTED.FunderID VALUES (@Funder)";
             string updateGrantQuery = "UPDATE grants SET " +
-                                      "SupplierID = @SupplierID, " +
+                                      "FunderID = @FunderID, " +
                                       "GrantName = @GrantName," +
                                       "Amount = @Amount, " +
                                       "Category = @Category, " +
@@ -269,26 +343,26 @@ namespace CAREapplication.Pages.DB
             {
                 connection.Open();
 
-                // check if supplier already exists 
-                var supplierId = new SqlCommand(checkSupplierQuery, connection)
+                // check if Funder already exists 
+                var FunderID = new SqlCommand(checkFunderQuery, connection)
                 {
-                    Parameters = { new SqlParameter("@Supplier", grant.Supplier) }
+                    Parameters = { new SqlParameter("@Funder", grant.Funder) }
                 }.ExecuteScalar();
 
 
-                // if supplier does NOT exist, insert it 
-                if (supplierId == null)
+                // if Funder does NOT exist, insert it 
+                if (FunderID == null)
                 {
-                    supplierId = new SqlCommand(insertSupplierQuery, connection)
+                    FunderID = new SqlCommand(insertFunderQuery, connection)
                     {
-                        Parameters = { new SqlParameter("@Supplier", grant.Supplier) }
+                        Parameters = { new SqlParameter("@Funder", grant.Funder) }
                     }.ExecuteScalar();
                 }
 
                 // insert parameters into the query 
                 using (SqlCommand cmdGrantUpdate = new SqlCommand(updateGrantQuery, connection))
                 {
-                    cmdGrantUpdate.Parameters.AddWithValue("@SupplierID", supplierId);
+                    cmdGrantUpdate.Parameters.AddWithValue("@FunderID", FunderID);
                     cmdGrantUpdate.Parameters.AddWithValue("@GrantName", grant.GrantName);
                     cmdGrantUpdate.Parameters.AddWithValue("@Amount", grant.Amount);
                     cmdGrantUpdate.Parameters.AddWithValue("@Category", grant.Category);
@@ -313,16 +387,17 @@ namespace CAREapplication.Pages.DB
                                             g.GrantID, 
                                             g.GrantName,
                                             p.ProjectID,
-                                            s.SupplierName AS Supplier, 
+                                            s.FunderName AS Funder, 
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
-                                        JOIN grantSupplier s ON g.SupplierID = s.SupplierID
+										JOIN grantStatus gs ON g.GrantID = gs.GrantID
+                                        JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                         WHERE g.GrantName LIKE '%' + @SearchTerm + '%'
                                         ORDER BY g.AwardDate";
@@ -342,20 +417,21 @@ namespace CAREapplication.Pages.DB
             cmdUserGrantRead.CommandText = @"SELECT 
                                                 g.GrantID,
                                                 g.GrantName,
-                                                g.StatusName,
+                                                gs.UserRole,
                                                 g.Category,
                                                 g.SubmissionDate,
                                                 g.AwardDate,
                                                 g.Amount,
-                                                g.GrantStatus,
-                                                gs.UserRole,
-                                                s.SupplierName
+                                                s.FunderName,
+                                                gst.StatusName AS GrantStatus -- From grantStatus table
                                             FROM 
                                                 grants g
                                             JOIN 
                                                 grantStaff gs ON g.GrantID = gs.GrantID
                                             LEFT JOIN 
-                                                grantSupplier s ON g.SupplierID = s.SupplierID
+                                                funder s ON g.FunderID = s.FunderID
+                                            LEFT JOIN 
+                                                grantStatus gst ON g.GrantID = gst.GrantID
                                             WHERE 
                                                 gs.UserID = @UserID;";
 
@@ -364,6 +440,17 @@ namespace CAREapplication.Pages.DB
             cmdUserGrantRead.Connection.Open();
             SqlDataReader tempReader = cmdUserGrantRead.ExecuteReader();
             return tempReader;
+        }
+        public static void InsertGrantNote(int grantID, string content, int userID)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO GrantNotes (GrantID, Content, AuthorID, DateAdded) VALUES (@GrantID, @Content, @UserID, GETDATE())", DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@Content", content);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
         }
     }
 }

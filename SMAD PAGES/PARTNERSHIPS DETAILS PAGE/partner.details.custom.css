@@ -370,14 +370,22 @@ table {
 }
 
 .note-header {
-  background-color: #D9D9D9;
+  background-color: var(--light-purple);
   padding: 20px 12px 12px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
+#noteheader {
+  font-size: 20px;
+  padding-bottom: 5px;
+}
+
+#notetext{
+  margin-bottom: 3px;
+}
 .note-outer {
-  background-color: #DACCE6;
+  background-color: white;
   padding: 12px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -385,7 +393,7 @@ table {
 }
 
 .note-inner {
-  background-color: white;
+  background-color: var(--lightest-gray);
   border-radius: 12px;
   padding: 20px;
   height: 100%;
