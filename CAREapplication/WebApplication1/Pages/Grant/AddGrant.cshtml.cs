@@ -121,7 +121,7 @@ namespace CAREapplication.Pages.Grant
         private List<GrantFunder> LoadFunders()
         {
             var Funders = new List<GrantFunder>();
-            using (SqlDataReader reader = DBFunder.GrantFunderReader())
+            using (SqlDataReader reader = DBFunder.FunderReader())
             {
                 while (reader.Read())
                 {

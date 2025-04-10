@@ -30,7 +30,7 @@
                     <a class="btn back-btn px-0 fw-bold" asp-page="BusinessPartners">&lt; PREVIOUS</a>
                 </div>
 
-                <h2 class="text-center mb-4">@Model.BP.FunderName</h2>
+                <h2 class="text-center mb-4">@Model.funder.FunderName</h2>
                 <!-- Partnership Overview Section -->
                 <h6 class="section-label">PARTNERSHIP OVERVIEW</h6>
                 <div class="row gx-4 mb-4">
@@ -41,17 +41,17 @@
 
                             <!-- Left Column: Org Info -->
                             <div class="d-flex flex-column justify-content-start" style="gap: 1rem;">
-                                <p><strong>Organization Type:</strong> @Model.BP.OrgType</p>
-                                <p><strong>Funder Status:</strong> @Model.BP.FunderStatus</p>
+                                <p><strong>Organization Type:</strong> @Model.funder.OrgType</p>
+                                <p><strong>Funder Status:</strong> @Model.funder.FunderStatus</p>
                             </div>
 
                             <!-- Right Column: Contact Info -->
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="/images/user.png" alt="Primary Contact" class="rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover;" />
-                                <p class="fw-bold mb-1 fs-5">@Model.BP.FirstName @Model.BP.LastName</p>
-                                <p class="mb-1"><strong>Phone:</strong> @Model.BP.Phone</p>
-                                <p class="mb-1"><strong>Email:</strong> @Model.BP.Email</p>
-                                <p class="mb-1"><strong>Address:</strong> @Model.BP.BusinessAddress</p>
+                                <p class="fw-bold mb-1 fs-5">@Model.funder.FirstName @Model.funder.LastName</p>
+                                <p class="mb-1"><strong>Phone:</strong> @Model.funder.Phone</p>
+                                <p class="mb-1"><strong>Email:</strong> @Model.funder.Email</p>
+                                <p class="mb-1"><strong>Address:</strong> @Model.funder.BusinessAddress</p>
                             </div>
                         </div>
                         <div class="text-center mt-2">
@@ -65,17 +65,17 @@
                             string statusColor = "#808080";
                             int statusOffset = 314;
 
-                            if (Model.BP.CommunicationStatus == "Active")
+                            if (Model.funder.CommunicationStatus == "Active")
                             {
                                 statusColor = "#4CAF50"; // Muted green
                                 statusOffset = 0; // Full circle
                             }
-                            if (Model.BP.CommunicationStatus == "Pending")
+                            if (Model.funder.CommunicationStatus == "Pending")
                             {
                                 statusColor = "#FF9800"; // Muted orange
                                 statusOffset = 157; // Half circle
                             }
-                            if (Model.BP.CommunicationStatus == "Inactive")
+                            if (Model.funder.CommunicationStatus == "Inactive")
                             {
                                 statusColor = "#F44336"; // Muted red
                                 statusOffset = 314; // Empty circle
@@ -97,7 +97,7 @@
                                             transform="rotate(-90 60 60)" />
                                 </svg>
                             </div>
-                            <p><strong>Communication Status:</strong> <span class="text-purple">@Model.BP.CommunicationStatus</span></p>
+                            <p><strong>Communication Status:</strong> <span class="text-purple">@Model.funder.CommunicationStatus</span></p>
                         </div>
 
 

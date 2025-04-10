@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace CAREapplication.Pages.DB
 {
-    public class DBGrantSupplier
+    public class DBFunder
     {
         public static SqlConnection DBConnection = new SqlConnection();
 
@@ -14,17 +14,30 @@ namespace CAREapplication.Pages.DB
             "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
-        public static SqlDataReader BPReader()
+        public static SqlDataReader FunderReader()
         {
             SqlCommand cmdProductRead = new SqlCommand();
             cmdProductRead.Connection = DBConnection;
             cmdProductRead.Connection.ConnectionString = DBConnString;
-            cmdProductRead.CommandText = "SELECT grantSupplier.SupplierID, grantSupplier.SupplierName, grantSupplier.SupplierStatus, " +
-            "OrgType, grantSupplier.BusinessAddress, bprep.UserID, CommunicationStatus, users.FirstName, " +
-            "users.LastName, users.Email, users.Phone, users.HomeAddress " +
-            "FROM grantSupplier " +
-            "JOIN bprep ON grantSupplier.SupplierID = bprep.SupplierID " +
-            "JOIN users ON users.UserID = bprep.UserID;";
+            cmdProductRead.CommandText = @"SELECT 
+                                                f.FunderID, 
+                                                f.FunderName, 
+                                                fs.StatusName, 
+                                                f.OrgType, 
+                                                f.BusinessAddress,
+                                                fr.UserID, 
+                                                fr.CommunicationStatus, 
+                                                p.FirstName, 
+                                                p.LastName, 
+                                                c.Email, 
+                                                c.Phone, 
+                                                c.HomeAddress
+                                            FROM funder f
+                                            JOIN funderStatus fs ON f.FunderID = fs.FunderID
+                                            JOIN funderRep fr ON f.FunderID = fr.FunderID
+                                            JOIN users u ON u.UserID = fr.UserID
+                                            JOIN person p ON p.UserID = u.UserID
+                                            JOIN contact c ON p.PersonID = c.PersonID;";
             cmdProductRead.Connection.Open();
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;
@@ -39,29 +52,52 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;
         }
-        public static SqlDataReader GrantSupplierReader()
+        public static SqlDataReader AllFunderReader()
         {
             SqlCommand cmdProductRead = new SqlCommand();
             cmdProductRead.Connection = DBConnection;
             cmdProductRead.Connection.ConnectionString = DBConnString;
-            cmdProductRead.CommandText = "SELECT * FROM grantSupplier;";
+            cmdProductRead.CommandText = "SELECT * FROM Funder;";
             cmdProductRead.Connection.Open();
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;
         }
-        public static SqlDataReader SingleSupplierReader(int SupplierID)
+        public static SqlDataReader SingleFunderReader(int FunderID)
         {
             SqlCommand cmdTaskStaffRead = new SqlCommand();
             cmdTaskStaffRead.Connection = DBConnection;
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
-            cmdTaskStaffRead.CommandText = @"SELECT * 
-                                            FROM funder 
-                                            JOIN funderPOC fr ON funder.funderID = fr.funderID 
-                                            JOIN person p on fr.personID = p.personID
-                                            JOIN contact c on p.personID = c.personID
-                                            WHERE funder.funderID = @funderID";
-            cmdTaskStaffRead.Parameters.AddWithValue("@SupplierID", SupplierID);
+            cmdTaskStaffRead.CommandText = @"SELECT 
+                                                f.FunderID,
+                                                f.FunderName,
+                                                f.OrgType,
+                                                f.BusinessAddress,
+                                                fpo.CommunicationStatus,
+                                                fs.StatusName AS FunderStatus,
+                                                p.FirstName,
+                                                p.LastName,
+                                                c.Email,
+                                                c.Phone,
+                                                c.HomeAddress,
+	                                            c.City,
+	                                            c.HomeState,
+	                                            c.Zip
+                                            FROM funder f
+                                            JOIN funderPOC fpo ON f.FunderID = fpo.FunderID
+                                            JOIN person p ON fpo.PersonID = p.PersonID
+                                            JOIN contact c ON p.PersonID = c.PersonID
+                                            LEFT JOIN (
+                                                SELECT FunderID, StatusName
+                                                FROM (
+                                                    SELECT *,
+                                                        ROW_NUMBER() OVER (PARTITION BY FunderID ORDER BY ChangeDate DESC) AS rn
+                                                    FROM funderStatus
+                                                ) fs
+                                                WHERE fs.rn = 1
+                                            ) fs ON f.FunderID = fs.FunderID
+                                            WHERE f.FunderID = @FunderID;";
+            cmdTaskStaffRead.Parameters.AddWithValue("@FunderID", FunderID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
             return tempReader;

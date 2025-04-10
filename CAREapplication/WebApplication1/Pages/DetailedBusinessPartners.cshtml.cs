@@ -3,6 +3,7 @@ using CAREapplication.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using System.Reflection;
 
 
 namespace CAREapplication.Pages
@@ -11,7 +12,7 @@ namespace CAREapplication.Pages
 
     public class DetailedBusinessPartnersModel : PageModel
     {
-        public BusinessPartner BP { get; set; }
+        public BusinessPartner funder { get; set; }
         public IActionResult OnGet(int FunderID)
         {
             // Validate if the user is an admin trying to access the page
@@ -21,25 +22,30 @@ namespace CAREapplication.Pages
                 return RedirectToPage("/Index"); // Redirect to login page
             }
 
-            BP = new BusinessPartner();
+            funder = new BusinessPartner();
             using (SqlDataReader reader = DBFunder.SingleFunderReader(FunderID))
             {
                 if (reader.Read())
                 {
-                    BP.OrgType = reader["OrgType"].ToString();
-                    BP.FunderName = reader["FunderName"].ToString();
-                    BP.FunderStatus = reader["FunderStatus"].ToString();
-                    BP.CommunicationStatus = reader["CommunicationStatus"].ToString();
-                    BP.FirstName = reader["FirstName"].ToString();
-                    BP.LastName = reader["LastName"].ToString();
-                    BP.Email = reader["Email"].ToString();
-                    BP.Phone = reader["Phone"].ToString();
-                    BP.HomeAddress = reader["HomeAddress"].ToString();
-                    BP.FunderStatus = reader["FunderStatus"].ToString();
-                    BP.BusinessAddress = reader["BusinessAddress"].ToString();
+                    funder.FunderID = Convert.ToInt32(reader["FunderID"]);
+                    funder.FunderName = reader["FunderName"].ToString();
+                    funder.OrgType = reader["OrgType"].ToString();
+                    funder.BusinessAddress = reader["BusinessAddress"].ToString();
+                    funder.CommunicationStatus = reader["CommunicationStatus"] != DBNull.Value
+                        ? reader["CommunicationStatus"].ToString()
+                        : "N/A";
+                    funder.FunderStatus = reader["FunderStatus"]?.ToString() ?? "Unknown";
+                    funder.FirstName = reader["FirstName"].ToString();
+                    funder.LastName = reader["LastName"].ToString();
+                    funder.Email = reader["Email"].ToString();
+                    funder.Phone = reader["Phone"].ToString();
+                    funder.HomeAddress = reader["HomeAddress"].ToString();
+                    funder.City = reader["City"].ToString();
+                    funder.HomeState = reader["HomeState"].ToString();
+                    funder.Zip = reader["Zip"].ToString();
                 }
-
                 reader.Close();
+
             }
             DBFunder.DBConnection.Close();
 

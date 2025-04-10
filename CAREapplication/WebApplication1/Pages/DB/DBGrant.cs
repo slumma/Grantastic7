@@ -25,11 +25,12 @@ namespace CAREapplication.Pages.DB
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
+                                        JOIN grantStatus gs ON g.GrantID = gs.GrantID
                                         JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                         ORDER BY g.AwardDate";
@@ -39,6 +40,38 @@ namespace CAREapplication.Pages.DB
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+        public static SqlDataReader adminGrantReader()
+        {
+            SqlCommand cmdGrantReader = new SqlCommand();
+            cmdGrantReader.Connection = DBConnection;
+            cmdGrantReader.Connection.ConnectionString = DBConnString;
+            cmdGrantReader.CommandText = @"SELECT 
+                                            g.GrantID, 
+                                            g.GrantName,
+                                            p.ProjectID,
+                                            s.FunderName AS Funder, 
+                                            p.ProjectName AS Project, 
+                                            g.Amount,
+                                            g.Category,
+                                            gs.StatusName, 
+                                            g.descriptions,
+                                            g.SubmissionDate, 
+                                            g.AwardDate
+                                        FROM grants g
+										JOIN grantStatus gs ON g.GrantID = gs.GrantID
+                                        JOIN grantStaff ON g.grantID = grantstaff.grantID
+                                        JOIN users ON grantstaff.userID = users.userID
+                                        JOIN Funder s ON g.FunderID = s.FunderID
+                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+                                        ORDER BY g.AwardDate";
+
+
+            cmdGrantReader.Connection.Open();
+            
+            SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
+            return tempReader;
+        }
+
         public static SqlDataReader facGrantReader(int currentUserID)
         {
             SqlCommand cmdGrantReader = new SqlCommand();
@@ -52,11 +85,12 @@ namespace CAREapplication.Pages.DB
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
+                                        JOIN grantStatus gs ON g.GrantID = gs.GrantID
                                         JOIN grantStaff ON g.grantID = grantstaff.grantID
                                         JOIN users ON grantstaff.userID = users.userID
                                         JOIN Funder s ON g.FunderID = s.FunderID

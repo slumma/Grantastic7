@@ -14,5 +14,8 @@
         public String? HomeAddress { get; set; }
         public String? FunderStatus { get; set; }
         public String? BusinessAddress { get; set; }
+        public string? City { get; set; }            
+        public string? HomeState { get; set; }        
+        public string? Zip { get; set; }
     }
 }
