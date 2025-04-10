@@ -28,6 +28,10 @@ namespace CAREapplication.Pages.DataClasses
 
         [Required(ErrorMessage = "Home Address is required")]
         public string? HomeAddress { get; set; }
+        public string? HomeCity { get; set; }
+        public string? HomeState { get; set; }
+        public string? ZipCode { get; set; }
+        public string? pronouns { get; set; }
     }
 
     public class Employee : User
