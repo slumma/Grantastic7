@@ -76,7 +76,11 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdsingleSenderReader = new SqlCommand();
             cmdsingleSenderReader.Connection = DBConnection;
             cmdsingleSenderReader.Connection.ConnectionString = DBConnString;
-            cmdsingleSenderReader.CommandText = @"select * from users where username = @username;";
+            cmdsingleSenderReader.CommandText = @"SELECT * 
+                                      FROM users 
+                                      JOIN person p ON users.UserID = p.UserID 
+                                      JOIN contact c ON p.PersonID = c.PersonID
+                                      WHERE username = @username;";
 
             cmdsingleSenderReader.Parameters.AddWithValue("@username", username);
 
