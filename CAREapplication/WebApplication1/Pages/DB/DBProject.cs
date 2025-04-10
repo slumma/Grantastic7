@@ -103,7 +103,7 @@ namespace CAREapplication.Pages.DB
         }
 
 
-        public static SqlDataReader UserProjectReader(int? userID)
+        public static SqlDataReader UserProjectReader(int userID)
         {
             SqlCommand cmdProjectRead = new SqlCommand();
             cmdProjectRead.Connection = DBConnection;

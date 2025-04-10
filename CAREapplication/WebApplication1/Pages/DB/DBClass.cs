@@ -143,6 +143,19 @@ namespace CAREapplication.Pages.DB
             int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
             return status;
         }
+
+        public static int adminAsstCheck(int userID)
+        {
+            SqlCommand cmdCheck = new SqlCommand();
+            cmdCheck.Connection = DBConnection;
+            cmdCheck.Connection.ConnectionString = DBConnString;
+            cmdCheck.CommandText = "SELECT AdminAssistant FROM users WHERE UserID = @UserID;";
+            cmdCheck.Parameters.AddWithValue("@UserID", userID);
+            cmdCheck.Connection.Open();
+            int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
+            return status;
+        }
+
         public static int nonFacultyCheck(int userID)
         {
             SqlCommand cmdCheck = new SqlCommand();

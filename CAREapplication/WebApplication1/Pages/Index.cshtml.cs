@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using CAREapplication.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -58,9 +59,18 @@ public class IndexModel : PageModel
                 int director = DBClass.directorCheck(userID);
                 DBClass.DBConnection.Close();
 
+                int adminAssistant = DBClass.adminAsstCheck(userID);
+                DBClass.DBConnection.Close();
+
                 if (director == 1)
                 {
                     HttpContext.Session.SetInt32("director", 1);
+                    return RedirectToPage("/UserDashboard");
+                }
+                else if (adminAssistant == 1)
+                {
+                    HttpContext.Session.SetInt32("adminAsst", 1);
+                    Trace.WriteLine(HttpContext.Session.GetInt32("adminAsst"));
                     return RedirectToPage("/UserDashboard");
                 }
                 else { return RedirectToPage("/UserDashboard"); }
