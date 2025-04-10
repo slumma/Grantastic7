@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 
 
@@ -77,6 +78,7 @@ namespace CAREapplication.Pages.Grant
                 }
             }
 
+            Trace.WriteLine(grantList.Count);
 
             // Close your connection in DBClass
             DBGrant.DBConnection.Close();
@@ -154,7 +156,7 @@ namespace CAREapplication.Pages.Grant
                         Project = grantReader["Project"].ToString(),
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
-                        Status = grantReader["GrantStatus"].ToString(),
+                        Status = grantReader["StatusName"].ToString(),
                         Description = grantReader["descriptions"].ToString(),
                         SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
                         AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
