@@ -768,42 +768,6 @@ body,
 }
 
 
-
-/* Modal overlay background */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1055;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-/* Modal card layout */
-.modal-card {
-  background-color: #cfcfcf;
-  border-radius: 6px;
-  padding: 24px;
-  max-width: 700px;
-  width: 90%;
-  position: relative;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Modal close (X) button */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: #333;
-  cursor: pointer;
-}
-
 #selectimportance {
   color: #595959;
 }
@@ -851,11 +815,74 @@ body,
   transition: transform 0.4s ease;
 }
 
-/* Modal Container */
-.custom-modal {
-  background-color: #f5f5f5;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}/* ADD YOUR CUSTOM CSS TO THIS FILE BELOW */
+/* MODAL CSS */
+
+/* Modal Container CSS */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1055;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Dropdown menu text color (if applicable) */
+#selectimportance {
+  color: #595959;
+}
+
+/* Modal card layout */
+.modal-card {
+  background-color: var(--light-purple);
+  border-radius: 6px;
+  padding: 24px;
+  max-width: 700px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal button layout */
+.btn-modal {
+  background-color: #1ABA1A;
+  color: white;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-modal:hover {
+  background-color: var(--dark-purple) !important;
+  color: white;
+}
+
+/* Modal close (X) button */
+.close-btn {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: #757575;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: var(--dark-gray);
+  cursor: pointer;
+}
+
+
 
