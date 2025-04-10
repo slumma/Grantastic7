@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 
 
@@ -30,19 +31,9 @@ namespace CAREapplication.Pages.Grant
 
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetInt32("loggedIn") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
-            }
-            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
-            }
-            HttpContext.Session.SetInt32("DisplayAll", 0);
 
-            if (HttpContext.Session.GetInt32("adminStatus") == 1)
+
+            if (HttpContext.Session.GetInt32("director") == 1)
             {
                 SqlDataReader grantReader = DBGrant.adminGrantReader();
                 while (grantReader.Read())
@@ -52,11 +43,11 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(), // Handle NULL Project
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
-                        Status = grantReader["GrantStatus"].ToString(),
+                        Status = grantReader["StatusName"].ToString(),
                         Description = grantReader["descriptions"].ToString(),
                         SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
                         AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
@@ -75,7 +66,7 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null, // Handle NULL ProjectID
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(), // Handle NULL Project
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
@@ -87,6 +78,7 @@ namespace CAREapplication.Pages.Grant
                 }
             }
 
+            Trace.WriteLine(grantList.Count);
 
             // Close your connection in DBClass
             DBGrant.DBConnection.Close();
@@ -120,10 +112,10 @@ namespace CAREapplication.Pages.Grant
                     grantList = grantList.OrderByDescending(g => g.Project).ToList();
                     break;
                 case "supp_asc":
-                    grantList = grantList.OrderBy(g => g.Supplier).ToList();
+                    grantList = grantList.OrderBy(g => g.Funder).ToList();
                     break;
                 case "supp_desc":
-                    grantList = grantList.OrderByDescending(g => g.Supplier).ToList();
+                    grantList = grantList.OrderByDescending(g => g.Funder).ToList();
                     break;
                 default:
                     grantList = grantList.OrderBy(g => g.GrantName).ToList();
@@ -160,11 +152,11 @@ namespace CAREapplication.Pages.Grant
                         GrantID = Convert.ToInt32(grantReader["GrantID"]),
                         GrantName = grantReader["GrantName"].ToString(),
                         ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null,
-                        Supplier = grantReader["Supplier"].ToString(),
+                        Funder = grantReader["Funder"].ToString(),
                         Project = grantReader["Project"].ToString(),
                         Amount = Convert.ToSingle(grantReader["Amount"]),
                         Category = grantReader["Category"].ToString(),
-                        Status = grantReader["GrantStatus"].ToString(),
+                        Status = grantReader["StatusName"].ToString(),
                         Description = grantReader["descriptions"].ToString(),
                         SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
                         AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
@@ -191,11 +183,11 @@ namespace CAREapplication.Pages.Grant
                     GrantID = Convert.ToInt32(projectSearch["GrantID"]),
                     GrantName = projectSearch["GrantName"].ToString(),
                     ProjectID = projectSearch["ProjectID"] != DBNull.Value ? Convert.ToInt32(projectSearch["ProjectID"]) : (int?)null,
-                    Supplier = projectSearch["Supplier"].ToString(),
+                    Funder = projectSearch["Funder"].ToString(),
                     Project = projectSearch["Project"].ToString(),
                     Amount = Convert.ToSingle(projectSearch["Amount"]),
                     Category = projectSearch["Category"].ToString(),
-                    Status = projectSearch["GrantStatus"].ToString(),
+                    Status = projectSearch["StatusName"].ToString(),
                     Description = projectSearch["descriptions"].ToString(),
                     SubmissionDate = Convert.ToDateTime(projectSearch["SubmissionDate"]),
                     AwardDate = Convert.ToDateTime(projectSearch["AwardDate"])

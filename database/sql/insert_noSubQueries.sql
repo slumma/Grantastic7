@@ -1,31 +1,64 @@
-INSERT INTO users (Username, Password, FirstName, LastName, Email, Phone, HomeAddress, AdminStatus, EmployeeStatus, FacultyStatus, NonFacultyStatus)
+INSERT INTO users (Username, Director, AdminAssistant)
 VALUES
-('sarahbennett', 'password123', 'Sarah', 'Bennett', 'sbennett@example.com', '555-1234', '123 Elm St', 1, 1, 1, 1),
-('nickclement', 'password456', 'nick', 'clement', 'nickclement@example.com', '555-5678', '456 Oak St', 1, 1, 1, 1),
-('nadeemhudson', 'password789', 'nadeem', 'hudson', 'nadeemhudson@example.com', '555-9876', '789 Pine St', 0, 1, 1, 1),
-('joshwhite', 'password234', 'josh', 'White', 'joshwhite@example.com', '555-2234', '321 Birch St', 0, 1, 0, 1),
-('sharons', 'password567', 'sharon', 'sanchez', 'shrnsnchz@example.com', '555-6789', '654 Cedar St', 0, 0, 0, 1),
-('jezell', 'password890', 'jeremy', 'ezell', 'jezell@example.com', '555-7890', '987 Spruce St', 1, 1, 1, 1),
-('benfrench', 'password101', 'hailey', 'welch', 'benfrench@example.com', '555-1010', '109 Maple St', 1, 1, 1, 1),
-('royrinehart', 'password112', 'roy', 'rinehart', 'royr838@example.com', '555-1212', '210 Oak St', 0, 0, 0, 0),
-('ryanbucciero', 'password213', 'ryan', 'bucciero', 'rbucc87392@example.com', '555-1414', '312 Pine St', 1, 1, 1, 1),
-('BabikDmx', 'password314', 'dmytro', 'babik', 'dmytrobabik43@example.com', '555-1515', '413 Elm St', 1, 1, 1, 1),
-('samO', 'password314', 'sam', 'o', 'samoGden@example.com', '555-1515', '413 Elm St', 1, 1, 1, 1);
+('sarahbennett', 1, 1),
+('nickclement', 1, 1),
+('nadeemhudson', 1, 1),
+('joshwhite', 0, 1),
+('sharons', 0, 1),
+('jezell', 0, 1),
+('benfrench', 0, 0),
+('samO', 0, 0);
 
-INSERT INTO grantSupplier (SupplierName, OrgType, SupplierStatus, BusinessAddress)
+INSERT INTO funder (FunderName, OrgType, BusinessAddress)
 VALUES
-('TechCorp', 'Private', 'Active', '101 Tech Rd'),
-('EduFunds', 'Non-Profit', 'Inactive', '202 Education Blvd'),
-('HealthGrant', 'Government', 'Pending', '303 Health Ave'),
-('ScienceTrust', 'Non-Profit', 'Active', '404 Research Blvd'),
-('MedFunds', 'Private', 'Inactive', '505 Healthcare St'),
-('EduTech', 'Government', 'Pending', '606 Innovation Way'),
-('GreenGrants', 'Non-Profit', 'Active', '707 Sustainability Ave'),
-('ArtFunds', 'Private', 'Inactive', '808 Creative St'),
-('SocialAid', 'Government', 'Pending', '909 Welfare Blvd'),
-('TechInnovators', 'Private', 'Active', '1010 Future Rd');
+('TechCorp', 'Institution', '101 Tech Rd'),
+('EduFunds', 'University', '202 Education Blvd'),
+('HealthGrant', 'Federal', '303 Health Ave'),
+('ScienceTrust', 'University', '404 Research Blvd'),
+('MedFunds', 'Institution', '505 Healthcare St'),
+('EduTech', 'State', '606 Innovation Way'),
+('GreenGrants', 'University', '707 Sustainability Ave'),
+('ArtFunds', 'Institution', '808 Creative St'),
+('SocialAid', 'State', '909 Welfare Blvd'),
+('TechInnovators', 'Institution', '1010 Future Rd');
 
+INSERT INTO person (UserID, Pronouns, Firstname, LastName)
+VALUES
+(1, 'She/Her', 'Sarah', 'Bennett'), --personID 1
+(2, 'He/Him', 'nick', 'clement'), --personID 2
+(3, 'He/Him', 'nadeem', 'hudson'), --personID 3
+(4, 'They/Them', 'josh', 'White'), --personID 4
+(5, 'She/Her', 'sharon', 'sanchez'), --personID 5
+(6, 'He/Him', 'jeremy', 'ezell'), --personID 6
+(7, 'He/Him', 'ben', 'french'), --personID 7
 
+(8, 'He/Him', 'sam', 'o'), --personID 8 FUNDER POC (USER)
+(null, 'He/Him', 'roy', 'rinehart'); --personID 9 FUNDER POC (NON-USER)
+
+INSERT INTO funderPOC (PersonID, FunderID)
+VALUES
+(8, 1),
+(8, 2),
+(8, 3),
+(8, 4),
+(8, 5),
+(8, 6),
+(9, 7),
+(9, 8),
+(9, 9),
+(9, 10);
+
+INSERT INTO contact (PersonID, Email, Phone, HomeAddress, City, HomeState, Zip)
+VALUES
+(1, 'sbennett@example.com', '555-1234', '123 Elm St', 'Harrisonburg', 'VA', '22801'),
+(2, 'nickclement@example.com', '555-5678', '456 Oak St', 'Harrisonburg', 'VA', '22801'),
+(3, 'nadeemhudson@example.com', '555-9876', '789 Pine St', 'Harrisonburg', 'VA', '22801'),
+(4, 'joshwhite@example.com', '555-2234', '321 Birch St', 'Harrisonburg', 'VA', '22801'),
+(5, 'shrnsnchz@example.com', '555-6789', '654 Cedar St', 'Harrisonburg', 'VA', '22801'),
+(6, 'jezell@example.com', '555-7890', '987 Spruce St', 'Harrisonburg', 'VA', '22801'),
+(7, 'benfrench@example.com', '555-1010', '109 Maple St', 'Harrisonburg', 'VA', '22801'),
+(8, 'samoGden@example.com', '555-1515', '413 Elm St', 'Harrisonburg', 'VA', '22801'),
+(9, 'royr838@example.com', '555-1212', '210 Oak St', 'Harrisonburg', 'VA', '22801');
 
 INSERT INTO project (ProjectName, DueDate, ProjectDescription)
 VALUES
@@ -40,21 +73,6 @@ VALUES
 ('Project Iota', '2025-10-20', 'Security audit and compliance assessment for regulatory standards'),
 ('Project Kappa', '2025-05-25', 'Integration of AI-driven automation into business processes');
 
-
-
-INSERT INTO BPrep (UserID, CommunicationStatus, SupplierID)
-VALUES
-(1, 'Active', 1),
-(2, 'Inactive', 2),
-(3, 'Pending', 3),
-(4, 'Active', 4),
-(5, 'Inactive', 5),
-(6, 'Pending', 6),
-(7, 'Active', 7),
-(8, 'Inactive', 8),
-(9, 'Pending', 9),
-(10, 'Active', 10);
-
 INSERT INTO projectStaff (ProjectID, UserID, Leader, Active)
 VALUES
 (1, 1, 1, 1),
@@ -63,10 +81,20 @@ VALUES
 (2, 4, 0, 1),
 (3, 5, 1, 1),
 (3, 6, 0, 1),
-(4, 7, 1, 1),
-(4, 8, 0, 1),
-(5, 9, 1, 1),
-(5, 10, 0, 1);
+(4, 1, 1, 1),
+(4, 2, 0, 1),
+(5, 3, 1, 1),
+(5, 4, 0, 1),
+(6, 5, 1, 1),
+(6, 6, 0, 1),
+(7, 1, 1, 1),
+(7, 2, 0, 1),
+(8, 3, 1, 1),
+(8, 4, 0, 1),
+(9, 5, 1, 1),
+(9, 6, 0, 1),
+(10, 1, 1, 1),
+(10, 2, 0, 1);
 
 
 INSERT INTO projectTask (ProjectID, DueDate, Objective, Completed)
@@ -132,60 +160,60 @@ INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
 (1, 1, 1, '2025-04-15'),  -- Project 1
 (2, 2, 1, '2025-05-01'),
-(3, 1, 2, '2025-05-15'),
+(3, 1, 1, '2025-05-15'),
 (4, 2, 1, '2025-06-01'),
-(5, 1, 2, '2025-06-15'),
+(5, 1, 1, '2025-06-15'),
 
 (6, 3, 3, '2025-06-01'),  -- Project 2
 (7, 4, 3, '2025-06-15'),
-(8, 3, 4, '2025-07-01'),
+(8, 3, 3, '2025-07-01'),
 (9, 4, 3, '2025-07-15'),
-(10, 3, 4, '2025-08-01'),
+(10, 3, 3, '2025-08-01'),
 
 (11, 5, 5, '2025-09-01'),  -- Project 3
 (12, 6, 5, '2025-09-15'),
-(13, 5, 6, '2025-10-01'),
+(13, 5, 5, '2025-10-01'),
 (14, 6, 5, '2025-10-15'),
-(15, 5, 6, '2025-11-01'),
+(15, 5, 5, '2025-11-01'),
 
-(16, 7, 7, '2025-03-15'),  -- Project 4
-(17, 8, 7, '2025-04-01'),
-(18, 7, 8, '2025-04-15'),
-(19, 8, 7, '2025-05-01'),
+(16, 1, 1, '2025-03-15'),  -- Project 4
+(17, 2, 1, '2025-04-01'),
+(18, 1, 1, '2025-04-15'),
+(19, 2, 1, '2025-05-01'),
 
-(20, 9, 9, '2025-05-15'),  -- Project 5
-(21, 10, 9, '2025-06-01'),
-(22, 9, 10, '2025-06-15'),
-(23, 10, 9, '2025-07-01'),
-(24, 9, 10, '2025-07-15'),
+(20, 3, 3, '2025-05-15'),  -- Project 5
+(21, 3, 3, '2025-06-01'),
+(22, 4, 3, '2025-06-15'),
+(23, 4, 3, '2025-07-01'),
+(24, 4, 3, '2025-07-15'),
 
-(25, 9, 9, '2025-07-01'),  -- Project 6
-(26, 10, 9, '2025-07-15'),
-(27, 9, 10, '2025-08-01'),
-(28, 10, 9, '2025-08-15'),
+(25, 5, 5, '2025-07-01'),  -- Project 6
+(26, 5, 5, '2025-07-15'),
+(27, 6, 5, '2025-08-01'),
+(28, 6, 5, '2025-08-15'),
 
-(29, 7, 7, '2025-09-01'),  -- Project 7
-(30, 8, 7, '2025-09-15'),
-(31, 7, 8, '2025-10-01'),
-(32, 8, 7, '2025-10-15'),
-(33, 7, 8, '2025-11-01'),
+(29, 1, 1, '2025-09-01'),  -- Project 7
+(30, 1, 1, '2025-09-15'),
+(31, 2, 1, '2025-10-01'),
+(32, 2, 1, '2025-10-15'),
+(33, 2, 1, '2025-11-01'),
 
-(34, 5, 5, '2025-11-15'),  -- Project 8
-(35, 6, 5, '2025-12-01'),
-(36, 5, 6, '2025-12-15'),
-(37, 6, 5, '2026-01-01'),
+(34, 3, 3, '2025-11-15'),  -- Project 8
+(35, 3, 3, '2025-12-01'),
+(36, 4, 3, '2025-12-15'),
+(37, 4, 3, '2026-01-01'),
 
-(38, 3, 3, '2025-02-15'),  -- Project 9
-(39, 4, 3, '2025-03-01'),
-(40, 3, 4, '2025-03-15'),
-(41, 4, 3, '2025-04-01'),
-(42, 3, 4, '2025-04-15'),
+(38, 5, 5, '2025-02-15'),  -- Project 9
+(39, 5, 5, '2025-03-01'),
+(40, 6, 5, '2025-03-15'),
+(41, 6, 5, '2025-04-01'),
+(42, 6, 5, '2025-04-15'),
 
 (43, 1, 1, '2025-08-15'),  -- Project 10
 (44, 2, 1, '2025-09-01'),
-(45, 1, 2, '2025-09-15'),
+(45, 1, 1, '2025-09-15'),
 (46, 2, 1, '2025-10-01'),
-(47, 1, 2, '2025-10-15');
+(47, 1, 1, '2025-10-15');
 
 
 INSERT INTO meeting (ProjectID, MeetingDate, Purpose)
@@ -194,15 +222,17 @@ VALUES
 (2, '2025-05-15', 'Progress Update'),
 (3, '2025-09-01', 'Final Review'),
 (4, '2025-04-01', 'Team Meeting'),
-(5, '2025-06-15', 'Strategy Session'),
-(6, '2025-08-01', 'Budget Review'),
-(7, '2025-10-01', 'Planning Session'),
-(8, '2025-12-01', 'Status Update'),
-(9, '2025-03-15', 'Client Meeting'),
-(10, '2025-09-15', 'Project Wrap-Up');
+(5, '2025-06-15', 'Strategy Session');
 
+INSERT INTO meeting (GrantID, MeetingDate, Purpose)
+VALUES
+(1, '2025-03-01', 'Kick-off Meeting'),
+(2, '2025-05-15', 'Progress Update'),
+(3, '2025-09-01', 'Final Review'),
+(4, '2025-04-01', 'Team Meeting'),
+(5, '2025-06-15', 'Strategy Session');
 
-INSERT INTO attendance (MeetingID, UserID)
+INSERT INTO attendance (MeetingID, PersonID)
 VALUES
 (1, 1),
 (1, 2),
@@ -212,10 +242,20 @@ VALUES
 (3, 6),
 (4, 7),
 (4, 8),
-(5, 9),
-(5, 10);
+(5, 2),
+(5, 1),
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(4, 8),
+(5, 2),
+(5, 1);
 
-INSERT INTO meetingMinutes (MeetingID, UserID, MinutesDate)
+INSERT INTO meetingMinutes (MeetingID, AuthorID, MinutesDate)
 VALUES
 (1, 1, '2025-03-02'),
 (2, 2, '2025-05-16'),
@@ -223,69 +263,68 @@ VALUES
 (4, 4, '2025-04-02'),
 (5, 5, '2025-06-16'),
 (6, 6, '2025-08-02'),
-(7, 7, '2025-10-02'),
-(8, 8, '2025-12-02'),
-(9, 9, '2025-03-16'),
-(10, 10, '2025-09-16');
+(7, 4, '2025-10-02'),
+(8, 3, '2025-12-02'),
+(9, 2, '2025-03-16'),
+(10, 1, '2025-09-16');
 
-INSERT INTO projectNotes (ProjectID, AuthorID, Content, noteDate)
+INSERT INTO projectNotes (ProjectID, AuthorID, Content)
 VALUES
-(1, 1, 'Initial notes for Project Alpha', '2025-02-20'),
-(2, 2, 'Development notes for Project Beta', '2025-04-15'),
-(3, 3, 'Review notes for Project Gamma', '2025-08-01'),
-(4, 4, 'Concept notes for Project Delta', '2025-03-20'),
-(5, 5, 'Planning notes for Project Epsilon', '2025-05-15'),
-(6, 6, 'Design notes for Project Zeta', '2025-07-01'),
-(7, 7, 'Prototype notes for Project Eta', '2025-09-01'),
-(8, 8, 'Launch notes for Project Theta', '2025-11-01'),
-(9, 9, 'Requirement notes for Project Iota', '2025-02-15'),
-(10, 10, 'Assessment notes for Project Kappa', '2025-10-01');
+(1, 1, 'Initial notes for Project Alpha'),
+(2, 2, 'Development notes for Project Beta'),
+(3, 3, 'Review notes for Project Gamma'),
+(4, 4, 'Concept notes for Project Delta'),
+(5, 5, 'Planning notes for Project Epsilon'),
+(6, 6, 'Design notes for Project Zeta'),
+(7, 4, 'Prototype notes for Project Eta'),
+(8, 3, 'Launch notes for Project Theta'),
+(9, 2, 'Requirement notes for Project Iota'),
+(10, 1, 'Assessment notes for Project Kappa');
 
-INSERT INTO grants (SupplierID, GrantName, ProjectID, StatusName, Category, SubmissionDate, descriptions, AwardDate, Amount, GrantStatus)
+INSERT INTO grants (FunderID, GrantName, ProjectID, Category, SubmissionDate, descriptions, AwardDate, Amount)
 VALUES
-(1, 'AI Innovation Grant', 1, 'Submitted', 'Federal', '2025-01-01', 'This grant is focused on advancing the development and application of artificial intelligence technologies. The goal is to create cutting-edge solutions that can be integrated into existing systems, improving efficiency and capability in various industries, from healthcare to business automation. The funds will support research and development teams, along with necessary infrastructure.', '2025-05-01', 100000, 'Active'),
-(2, 'State Education Initiative', 2, 'Under Review', 'State', '2025-03-01', 'The State Education Initiative aims to enhance the quality of education in underfunded regions. This grant will support the creation and implementation of educational programs designed to bridge gaps in accessibility and quality. Funds will be allocated to developing curricula, training teachers, and providing educational resources to underserved communities.', '2025-07-01', 50000, 'Pending'),
-(3, 'Healthcare Impact Grant', 3, 'Awarded', 'Business', '2025-06-01', 'This grant is dedicated to funding projects that aim to improve healthcare delivery systems, focusing on technological advancements, patient care innovation, and improving access to services in rural and underserved areas. The grant will fund new research, pilot programs, and solutions for improving healthcare infrastructure.', '2025-11-01', 200000, 'Inactive'),
-(4, 'NextGen Research Fund', 1, 'Submitted', 'University', '2025-02-01', 'The NextGen Research Fund is designed to support cutting-edge academic research in the field of artificial intelligence. Researchers will focus on pushing the boundaries of AI theory and practical applications, exploring new techniques and algorithms that could revolutionize industries like healthcare, education, and autonomous systems.', '2025-06-01', 150000, 'Active'),
-(5, 'Infrastructure Enhancement Grant', 2, 'Under Review', 'Federal', '2025-04-01', 'This federal grant is aimed at enhancing technological infrastructure in regions that are currently lacking in high-speed internet and modern tech resources. The funding will help to build the necessary backbone for digital transformation, focusing on rural broadband projects and other critical infrastructure improvements to support technological growth.', '2025-08-01', 80000, 'Pending'),
-(6, 'Educational Tools Development', 3, 'Awarded', 'State', '2025-05-01', 'This grant supports the development and deployment of innovative educational tools that leverage technology to enhance learning experiences. It will fund the creation of new digital platforms, software, and tools that can be used by educators to improve engagement and the effectiveness of teaching in classrooms across the state.', '2025-09-01', 120000, 'Inactive'),
-(8, 'University Research Support', 2, 'Under Review', 'University', '2025-03-15', 'The University Research Support grant will fund academic research across a variety of disciplines, with a focus on interdisciplinary projects that have the potential to yield real-world applications. This includes funding for pilot studies, data collection, and collaboration between different academic departments within the university.', '2025-07-15', 50000, 'Pending'),
-(9, 'Medical Research Advancement', 3, 'Awarded', 'Federal', '2025-06-15', 'The Medical Research Advancement grant is designed to support groundbreaking medical research initiatives. This funding will support new clinical trials, drug development, and public health initiatives aimed at improving patient outcomes and advancing scientific knowledge in fields such as oncology, neuroscience, and infectious diseases.', '2025-11-15', 220000, 'Inactive'),
-(4, 'Business Innovation Fund', 2, 'Under Review', 'Business', '2025-04-15', 'The Business Innovation Fund supports businesses working on innovative projects that aim to create new market opportunities and solve pressing global challenges. The fund will focus on startups and small businesses that are developing breakthrough technologies, services, or processes with the potential for significant industry disruption.', '2025-08-15', 85000, 'Pending'),
-(9, 'STEM Education Grant', 3, 'Awarded', 'University', '2025-05-15', 'The STEM Education Grant is focused on increasing participation in science, technology, engineering, and math education, particularly among underrepresented groups. This grant will support the development of STEM curricula, teacher training programs, and student engagement initiatives to encourage more students to pursue STEM careers.', '2025-09-15', 140000, 'Inactive');
+(1, 'AI Innovation Grant', 1, 'Federal', '2025-01-01', 'This grant is focused on advancing the development and application of artificial intelligence technologies. The goal is to create cutting-edge solutions that can be integrated into existing systems, improving efficiency and capability in various industries, from healthcare to business automation. The funds will support research and development teams, along with necessary infrastructure.', '2025-05-01', 100000),
+(2, 'State Education Initiative', 2, 'State', '2025-03-01', 'The State Education Initiative aims to enhance the quality of education in underfunded regions. This grant will support the creation and implementation of educational programs designed to bridge gaps in accessibility and quality. Funds will be allocated to developing curricula, training teachers, and providing educational resources to underserved communities.', '2025-07-01', 50000),
+(3, 'Healthcare Impact Grant', 3, 'Institution', '2025-06-01', 'This grant is dedicated to funding projects that aim to improve healthcare delivery systems, focusing on technological advancements, patient care innovation, and improving access to services in rural and underserved areas. The grant will fund new research, pilot programs, and solutions for improving healthcare infrastructure.', '2025-11-01', 200000),
+(4, 'NextGen Research Fund', 4, 'University', '2025-02-01', 'The NextGen Research Fund is designed to support cutting-edge academic research in the field of artificial intelligence. Researchers will focus on pushing the boundaries of AI theory and practical applications, exploring new techniques and algorithms that could revolutionize industries like healthcare, education, and autonomous systems.', '2025-06-01', 150000),
+(5, 'Infrastructure Enhancement Grant', 5, 'Federal', '2025-04-01', 'This federal grant is aimed at enhancing technological infrastructure in regions that are currently lacking in high-speed internet and modern tech resources. The funding will help to build the necessary backbone for digital transformation, focusing on rural broadband projects and other critical infrastructure improvements to support technological growth.', '2025-08-01', 80000),
+(6, 'Educational Tools Development', 6, 'State', '2025-05-01', 'This grant supports the development and deployment of innovative educational tools that leverage technology to enhance learning experiences. It will fund the creation of new digital platforms, software, and tools that can be used by educators to improve engagement and the effectiveness of teaching in classrooms across the state.', '2025-09-01', 120000),
+(8, 'University Research Support', 7, 'University', '2025-03-15', 'The University Research Support grant will fund academic research across a variety of disciplines, with a focus on interdisciplinary projects that have the potential to yield real-world applications. This includes funding for pilot studies, data collection, and collaboration between different academic departments within the university.', '2025-07-15', 50000),
+(9, 'Medical Research Advancement', 8, 'Federal', '2025-06-15', 'The Medical Research Advancement grant is designed to support groundbreaking medical research initiatives. This funding will support new clinical trials, drug development, and public health initiatives aimed at improving patient outcomes and advancing scientific knowledge in fields such as oncology, neuroscience, and infectious diseases.', '2025-11-15', 220000),
+(4, 'Business Innovation Fund', 9, 'Institution', '2025-04-15', 'The Business Innovation Fund supports businesses working on innovative projects that aim to create new market opportunities and solve pressing global challenges. The fund will focus on startups and small businesses that are developing breakthrough technologies, services, or processes with the potential for significant industry disruption.', '2025-08-15', 85000),
+(9, 'STEM Education Grant', 10, 'University', '2025-05-15', 'The STEM Education Grant is focused on increasing participation in science, technology, engineering, and math education, particularly among underrepresented groups. This grant will support the development of STEM curricula, teacher training programs, and student engagement initiatives to encourage more students to pursue STEM careers.', '2025-09-15', 140000);
 
 INSERT INTO grantStaff(GrantID, UserID, UserRole)
 VALUES
 (1, 1, 'Principal Investigator'),
 (1, 2, 'Co-PI'),
-(1, 3, 'Researcher'),
 
-(2, 4, 'Principal Investigator'),
-(2, 5, 'Researcher'),
+(2, 3, 'Principal Investigator'),
+(2, 4, 'Researcher'),
 
-(3, 6, 'Principal Investigator'),
-(3, 7, 'Researcher'),
+(3, 5, 'Principal Investigator'),
+(3, 6, 'Researcher'),
 
-(4, 8, 'Principal Investigator'),
-(4, 9, 'Research Assistant'),
+(4, 1, 'Principal Investigator'),
+(4, 2, 'Research Assistant'),
 
-(5, 10, 'Principal Investigator'),
-(5, 1, 'Data Scientist'),
+(5, 3, 'Principal Investigator'),
+(5, 4, 'Data Scientist'),
 
-(6, 2, 'Principal Investigator'),
-(6, 3, 'Developer'),
+(6, 5, 'Principal Investigator'),
+(6, 6, 'Developer'),
 
-(7, 4, 'Principal Investigator'),
-(7, 5, 'QA Engineer'),
+(7, 1, 'Principal Investigator'),
+(7, 2, 'QA Engineer'),
 
-(8, 6, 'Principal Investigator'),
-(8, 7, 'Marketing Analyst'),
+(8, 3, 'Principal Investigator'),
+(8, 4, 'Marketing Analyst'),
 
-(9, 8, 'Principal Investigator'),
-(9, 9, 'Clinical Researcher'),
+(9, 5, 'Principal Investigator'),
+(9, 6, 'Clinical Researcher'),
 
-(10, 10, 'Principal Investigator'),
-(10, 1, 'Cybersecurity Specialist');
+(10, 1, 'Principal Investigator'),
+(10, 2, 'Cybersecurity Specialist');
 
 INSERT INTO grantTask (GrantID, DueDate, Objective, Completed)
 VALUES
@@ -343,70 +382,70 @@ VALUES
 INSERT INTO grantTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
 VALUES
 -- Grant 1 (Users: 1, 2, 3)
-(1, 1, 2, '2025-02-15'),
+(1, 1, 1, '2025-02-15'),
 (2, 2, 1, '2025-03-15'),
-(3, 3, 1, '2025-04-15'),
-(4, 1, 2, '2025-05-01'),
+(3, 2, 1, '2025-04-15'),
+(4, 1, 1, '2025-05-01'),
 
 -- Grant 2 (Users: 4, 5)
-(5, 4, 1, '2025-04-01'),
-(6, 5, 2, '2025-05-01'),
-(7, 4, 1, '2025-07-01'),
+(5, 4, 3, '2025-04-01'),
+(6, 3, 3, '2025-05-01'),
+(7, 4, 3, '2025-07-01'),
 
 -- Grant 3 (Users: 6, 7)
-(8, 6, 2, '2025-07-15'),
-(9, 7, 1, '2025-09-01'),
-(10, 6, 1, '2025-11-01'),
+(8, 6, 5, '2025-07-15'),
+(9, 5, 5, '2025-09-01'),
+(10, 6, 5, '2025-11-01'),
 
 -- Grant 4 (Users: 8, 9)
-(11, 8, 1, '2025-03-15'),
-(12, 9, 2, '2025-04-01'),
-(13, 8, 1, '2025-06-01'),
+(11, 1, 1, '2025-03-15'),
+(12, 2, 1, '2025-04-01'),
+(13, 2, 1, '2025-06-01'),
 
 -- Grant 5 (Users: 10, 1)
-(14, 10, 1, '2025-05-01'),
-(15, 1, 2, '2025-06-01'),
-(16, 10, 2, '2025-07-01'),
+(14, 3, 3, '2025-05-01'),
+(15, 3, 3, '2025-06-01'),
+(16, 4, 3, '2025-07-01'),
 
 -- Grant 6 (Users: 2, 3)
-(17, 2, 1, '2025-06-15'),
-(18, 3, 2, '2025-07-15'),
-(19, 2, 1, '2025-08-01'),
+(17, 5, 5, '2025-06-15'),
+(18, 6, 5, '2025-07-15'),
+(19, 6, 5, '2025-08-01'),
 
 -- Grant 7 (Users: 4, 5)
-(20, 4, 2, '2025-08-01'),
-(21, 5, 1, '2025-09-01'),
-(22, 4, 2, '2025-10-01'),
+(20, 1, 1, '2025-08-01'),
+(21, 2, 1, '2025-09-01'),
+(22, 2, 1, '2025-10-01'),
 
 -- Grant 8 (Users: 6, 7)
-(23, 6, 1, '2025-10-01'),
-(24, 7, 2, '2025-11-01'),
-(25, 6, 1, '2025-12-01'),
+(23, 3, 3, '2025-10-01'),
+(24, 4, 3, '2025-11-01'),
+(25, 3, 3, '2025-12-01'),
 
 -- Grant 9 (Users: 8, 9)
-(26, 8, 2, '2025-02-01'),
-(27, 9, 1, '2025-03-01'),
-(28, 8, 2, '2025-04-01'),
+(26, 5, 5, '2025-02-01'),
+(27, 5, 5, '2025-03-01'),
+(28, 6, 5, '2025-04-01'),
 
 -- Grant 10 (Users: 10, 1)
-(29, 10, 2, '2025-07-01'),
+(29, 2, 1, '2025-07-01'),
 (30, 1, 1, '2025-08-01'),
-(31, 10, 2, '2025-09-01');
+(31, 2, 1, '2025-09-01');
 
-INSERT INTO grantNotes (GrantID, AuthorID, Content, noteDate)
+INSERT INTO grantNotes (GrantID, AuthorID, Content)
 VALUES
-(1, 1, 'Took out trash', '2025-02-20'),
-(2, 2, 'Emptied Dishwasher', '2025-04-15'),
-(3, 3, 'Eggs are my favorite food', '2025-08-01'),
-(4, 4, 'Dogs > Cats', '2025-03-20'),
-(5, 5, 'Money money money money!', '2025-05-15'),
-(6, 6, 'Elephant Ellipses', '2025-07-01'),
-(7, 7, 'Eta more like beta', '2025-09-01'),
-(8, 8, 'icloud.com/checkthispage', '2025-11-01'),
-(9, 9, 'im running out of notes to write', '2025-02-15'),
-(10, 10, 'thank god this is the last one', '2025-10-01');
+(1, 1, 'Took out trash'),
+(2, 3, 'Emptied Dishwasher'),
+(3, 5, 'Eggs are my favorite food'),
+(4, 2, 'Dogs > Cats'),
+(5, 4, 'Money money money money!'),
+(6, 6, 'Elephant Ellipses'),
+(7, 1, 'Eta more like beta'),
+(8, 3, 'icloud.com/checkthispage'),
+(9, 5, 'im running out of notes to write'),
+(10, 2, 'thank god this is the last one');
 
-/*INSERT INTO grantStatus (GrantID, StatusName, ChangeDate)
+INSERT INTO grantStatus (GrantID, StatusName, ChangeDate)
 VALUES
 (1, 'Approved', '2025-02-01'),
 (2, 'Pending', '2025-04-01'),
@@ -419,7 +458,7 @@ VALUES
 (9, 'Denied', '2025-11-01'),
 (10, 'Approved', '2025-05-01');
 
-INSERT INTO supplierStatus (SupplierID, StatusName, ChangeDate)
+INSERT INTO funderStatus (FunderID, StatusName, ChangeDate)
 VALUES
 (1, 'Active', '2025-01-01'),
 (2, 'Inactive', '2025-03-01'),
@@ -430,7 +469,7 @@ VALUES
 (7, 'Active', '2025-01-15'),
 (8, 'Inactive', '2025-03-15'),
 (9, 'Pending', '2025-06-15'),
-(10, 'Active', '2025-02-15');*/
+(10, 'Active', '2025-02-15');
 
 INSERT INTO userMessage (SenderID, RecipientID, SubjectTitle, Contents, SentTime)
 VALUES
@@ -440,10 +479,10 @@ VALUES
 (4, 5, 'Meeting Update', 'The meeting has been rescheduled', '2025-02-23 08:00:00'),
 (5, 6, 'Project Update', 'Here is the latest update on the project', '2025-02-24 07:00:00'),
 (6, 4, 'Task Reminder', 'Dont forget to complete your tasks', '2025-02-25 06:00:00'),
-(7, 8, 'Client Meeting', 'We have a meeting with the client tomorrow', '2025-02-26 05:00:00'),
-(8, 9, 'Weekly Report', 'Please submit your weekly report', '2025-02-27 04:00:00'),
-(9, 10, 'feedback request', 'Can you provide feedback', '2025-02-28 03:00:00'),
-(10, 7, 'Team Lunch', 'We are having a team lunch on Friday', '2025-03-01 02:00:00');
+(1, 7, 'Client Meeting', 'We have a meeting with the client tomorrow', '2025-02-26 05:00:00'),
+(3, 7, 'Weekly Report', 'Please submit your weekly report', '2025-02-27 04:00:00'),
+(1, 3, 'feedback request', 'Can you provide feedback', '2025-02-28 03:00:00'),
+(2, 2, 'Team Lunch', 'We are having a team lunch on Friday', '2025-03-01 02:00:00');
 
 
 

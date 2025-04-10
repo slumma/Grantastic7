@@ -27,63 +27,80 @@
         <div class="container main-container">
             <div class="scrollable-container">
                 <div class="d-flex justify-content-start mb-3">
-                    <button class="btn back-btn px-0 fw-bold">&lt; PREVIOUS</button>
+                    <a class="btn back-btn px-0 fw-bold" asp-page="BusinessPartners">&lt; PREVIOUS</a>
                 </div>
 
-                <h2 class="text-center mb-4">TechCorp</h2>
-
+                <h2 class="text-center mb-4">@Model.funder.FunderName</h2>
                 <!-- Partnership Overview Section -->
                 <h6 class="section-label">PARTNERSHIP OVERVIEW</h6>
                 <div class="row gx-4 mb-4">
 
                     <!-- Left Box: Partnership Info + Contact -->
                     <div class="col-md-8">
-                        <div class="gray-box position-relative d-flex flex-row justify-content-between align-items-stretch p-4" style="min-height: 280px;">
+                        <div class="gray-box d-flex flex-row justify-content-between align-items-start p-4" style="gap: 2rem;">
 
-                            <!-- Left: Info Headers -->
-                            <div class="d-flex flex-column justify-content-between ps-4 pt-4 pb-4" style="gap: 1.5rem;">
-                                <!--<p><strong>Partnership Details:</strong> ----------------------</p>-->
-                                <p><strong>Sector:</strong> @Model.BP.OrgType</p>
-                                <p><strong>Affiliation:</strong> ----------------------</p>
-                                <p><strong>Type:</strong> ----------------------</p>
+                            <!-- Left Column: Org Info -->
+                            <div class="d-flex flex-column justify-content-start" style="gap: 1rem;">
+                                <p><strong>Organization Type:</strong> @Model.funder.OrgType</p>
+                                <p><strong>Funder Status:</strong> @Model.funder.FunderStatus</p>
                             </div>
 
-                            <!-- Right: Primary Contact -->
-                            <div class="text-center d-flex flex-column align-items-center justify-content-center position-relative pe-4 pb-4" style="width: 350px;">
-                                <div class="mb-3">
-                                    <img src="/images/user.png" alt="Primary Contact" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
-                                </div>
-                                <p class="fw-bold mb-1 fs-5">Alysun Sanders</p>
-                                <p class="mb-1"><strong>Phone:</strong> +1 (555) 555-555</p>
-                                <p class="mb-1"><strong>Email:</strong> alysunsanders@example.com</p>
+                            <!-- Right Column: Contact Info -->
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="/images/user.png" alt="Primary Contact" class="rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover;" />
+                                <p class="fw-bold mb-1 fs-5">@Model.funder.FirstName @Model.funder.LastName</p>
+                                <p class="mb-1"><strong>Phone:</strong> @Model.funder.Phone</p>
+                                <p class="mb-1"><strong>Email:</strong> @Model.funder.Email</p>
+                                <p class="mb-1"><strong>Address:</strong> @Model.funder.BusinessAddress</p>
                             </div>
                         </div>
-
-                        <!-- Centered Edit Overview Button -->
                         <div class="text-center mt-2">
-                            <button class="btn sm-btn mt-2">Edit Overview</button>
+                            <button class="btn sm-btn mt-2" onclick="openOverviewModal()">Edit Overview</button>
                         </div>
                     </div>
 
                     <!-- Right Box: Status Tracking -->
                     <div class="col-md-4 pe-md-4">
+                        @{
+                            string statusColor = "#808080";
+                            int statusOffset = 314;
+
+                            if (Model.funder.CommunicationStatus == "Active")
+                            {
+                                statusColor = "#4CAF50"; // Muted green
+                                statusOffset = 0; // Full circle
+                            }
+                            if (Model.funder.CommunicationStatus == "Pending")
+                            {
+                                statusColor = "#FF9800"; // Muted orange
+                                statusOffset = 157; // Half circle
+                            }
+                            if (Model.funder.CommunicationStatus == "Inactive")
+                            {
+                                statusColor = "#F44336"; // Muted red
+                                statusOffset = 314; // Empty circle
+                            }
+                        }
+
                         <div class="gray-box text-center p-4" style="min-height: 280px;">
                             <h4 class="pt-4 fw-bold">Status Tracking:</h4>
-                                <div class="status-meter my-3 position-relative">
-                                    <svg width="160" height="160" viewBox="0 0 120 120">
-                                        <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
-                                        <circle id="statusArc" cx="60" cy="60" r="50"
-                                                stroke="#450084"
-                                                stroke-width="17"
-                                                fill="none"
-                                                stroke-dasharray="314"
-                                                stroke-dashoffset="314"
-                                                stroke-linecap="round"
-                                                transform="rotate(-90 60 60)" />
-                                    </svg>
-                                </div>
-                                <p><strong>Current Status:</strong> <span class="text-purple">Negotiation</span></p>
+                            <div class="status-meter my-3 position-relative">
+                                <svg width="160" height="160" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
+                                    <circle id="statusArc" cx="60" cy="60" r="50"
+                                            stroke="@statusColor"
+                                            stroke-width="17"
+                                            fill="none"
+                                            stroke-dasharray="314"
+                                            stroke-dashoffset="@statusOffset"
+                                            stroke-linecap="round"
+                                            transform="rotate(-90 60 60)" />
+                                </svg>
+                            </div>
+                            <p><strong>Communication Status:</strong> <span class="text-purple">@Model.funder.CommunicationStatus</span></p>
                         </div>
+
+
 
                         <!-- Centered Edit Progress Button -->
                         <div class="text-center mt-2">
@@ -145,20 +162,225 @@
             </div> <!-- End main-container -->
         </div> <!-- End main-bg -->
     </div>
-        <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
+    <!-- Scripts -->
+    <script>
+            function slideNotes(direction) {
+              const slider = document.getElementById("notesSlider");
+              const cards = slider.querySelectorAll(".note-card");
+              const visibleCount = 3;
+              const cardWidth = cards[0]?.offsetWidth + 32 || 0;
+              const totalSlides = Math.ceil(cards.length / visibleCount);
+              let currentTransform = getTranslateX(slider);
+              let newTransform = currentTransform + direction * -cardWidth * visibleCount;
+              const maxScroll = slider.scrollWidth - (cardWidth * visibleCount);
+              newTransform = Math.max(Math.min(newTransform, 0), -maxScroll);
+              slider.style.transform = `translateX(${newTransform}px)`;
+            }
+            function getTranslateX(el) {
+              const style = window.getComputedStyle(el);
+              const matrix = new WebKitCSSMatrix(style.transform);
+              return matrix.m41;
+            }
+            function openNoteModal() {
+              alert("Note Modal Open - Implement functionality if needed.");
+            }
             function updateStatusProgress(percent) {
               const arc = document.getElementById("statusArc");
               const circumference = 314;
               const offset = circumference - (percent / 100) * circumference;
               arc.style.strokeDashoffset = offset;
             }
-
-            // Example: Set progress to 75%
             updateStatusProgress(75);
-        </script>
+
+            function openNoteModal() {
+          document.getElementById("noteModal").classList.remove("d-none");
+        }
+
+        function closeNoteModal() {
+          document.getElementById("noteModal").classList.add("d-none");
+        }
+
+        function saveNote() {
+          const date = document.getElementById("noteDate").value;
+          const author = document.getElementById("noteAuthor").value;
+          const subject = document.getElementById("noteSubject").value;
+          const content = document.getElementById("noteContent").value;
+
+          if (!date || !author || !subject || !content) {
+            alert("Please fill out all fields.");
+            return;
+          }
+
+          const newNoteHTML = `
+            <div class="note-card">
+              <div class="note-header text-center">
+                <h6 class="fw-bold mb-1 text-purple">${date} - Note</h6>
+                <p><strong>Note Author:</strong> ${author}</p>
+              </div>
+              <div class="note-outer">
+                <div class="note-inner">
+                  <p><strong>Subject:</strong> ${subject}</p>
+                  <p class="text-muted">${content}</p>
+                </div>
+              </div>
+            </div>
+          `;
+
+          const slider = document.getElementById("notesSlider");
+          slider.insertAdjacentHTML("beforeend", newNoteHTML);
+          closeNoteModal();
+        }
+
+        function openOverviewModal() {
+          document.getElementById("overviewModal").classList.remove("d-none");
+        }
+
+        function closeOverviewModal() {
+          document.getElementById("overviewModal").classList.add("d-none");
+        }
+
+        function saveOverview() {
+          const details = document.getElementById("editDetails").value;
+          const sector = document.getElementById("editSector").value;
+          const affiliation = document.getElementById("editAffiliation").value;
+          const type = document.getElementById("editType").value;
+
+          // You can update the DOM here if you want real-time content updates
+
+          closeOverviewModal();
+        }
+
+        function openProgressModal() {
+          document.getElementById("progressModal").classList.remove("d-none");
+        }
+
+        function closeProgressModal() {
+          document.getElementById("progressModal").classList.add("d-none");
+        }
+
+        function saveProgress() {
+          const selectedStatus = document.getElementById("statusSelect").value;
+          const statusDisplay = document.querySelector(".text-purple");
+          if (statusDisplay) {
+            statusDisplay.textContent = selectedStatus;
+          }
+
+          // Optional: Update progress meter visually based on status
+          const statusMap = {
+            "Prospect": 10,
+            "Initial Contact": 25,
+            "Negotiation": 40,
+            "MOU": 55,
+            "MOU Signed": 70,
+            "Active": 85,
+            "Completed": 100,
+            "On Hold": 50
+          };
+
+          const percent = statusMap[selectedStatus] || 0;
+          updateStatusProgress(percent);
+
+          closeProgressModal();
+        }
+
+    </script>
+    <!-- Note Modal -->
+    <div id="noteModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 500px; width: 100%;">
+            <h5 class="mb-3 text-center">Add New Note</h5>
+            <div class="mb-2">
+                <label class="form-label">Date:</label>
+                <input type="text" class="form-control" id="noteDate" placeholder="e.g., 4/09/25" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Note Author:</label>
+                <input type="text" class="form-control" id="noteAuthor" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Subject:</label>
+                <input type="text" class="form-control" id="noteSubject" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Note Content:</label>
+                <textarea class="form-control" id="noteContent" rows="4"></textarea>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeNoteModal()">Cancel</button>
+                <button class="save-btn" onclick="saveNote()">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Overview Modal -->
+    <div id="overviewModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 600px; width: 100%;">
+            <h5 class="mb-3 text-center">Edit Partnership Overview</h5>
+
+            <div class="mb-2">
+                <label class="form-label">Partnership Details:</label>
+                <input type="text" class="form-control" id="editDetails" placeholder="e.g., Community education initiative" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Sector:</label>
+                <input type="text" class="form-control" id="editSector" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Affiliation:</label>
+                <input type="text" class="form-control" id="editAffiliation" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Type:</label>
+                <input type="text" class="form-control" id="editType" />
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeOverviewModal()">Cancel</button>
+                <button class="save-btn" onclick="saveOverview()">Save</button>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Progress Modal -->
+    <div id="progressModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none align-items-center justify-content-center" style="z-index: 9999;">
+        <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 400px; width: 100%;">
+            <h5 class="mb-3 text-center">Edit Current Status</h5>
+
+            <div class="mb-3">
+                <label for="statusSelect" class="form-label">Select Status:</label>
+                <select class="form-select" id="statusSelect">
+                    <option value="Prospect">Prospect</option>
+                    <option value="Initial Contact">Initial Contact</option>
+                    <option value="Negotiation">Negotiation</option>
+                    <option value="MOU">MOU</option>
+                    <option value="MOU Signed">MOU Signed</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
+                </select>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-cancel me-2" onclick="closeProgressModal()">Cancel</button>
+                <button class="save-btn" onclick="saveProgress()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function updateStatusProgress(percent) {
+          const arc = document.getElementById("statusArc");
+          const circumference = 314;
+          const offset = circumference - (percent / 100) * circumference;
+          arc.style.strokeDashoffset = offset;
+        }
+
+        // Example: Set progress to 75%
+        updateStatusProgress(75);
+    </script>
 </body>
 </html>
 

@@ -11,7 +11,7 @@ namespace CAREapplication.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly String? DBConnString =
-            "Server=Localhost;Database=Lab4;Trusted_Connection=True";
+            "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
         public static SqlDataReader facReader()
@@ -33,21 +33,25 @@ namespace CAREapplication.Pages.DB
             cmdFacultyReader.Connection = DBConnection;
             cmdFacultyReader.Connection.ConnectionString = DBConnString;
             cmdFacultyReader.CommandText = @"SELECT DISTINCT
-                                            u.UserID,
-                                            u.Username,
-                                            u.FirstName,
-                                            u.LastName,
-                                            u.Email,
-                                            u.Phone,
-                                            u.HomeAddress,
-                                            g.GrantName,
-                                            gs.UserRole
-                                        FROM 
-                                            grantStaff gs
-                                        JOIN 
-                                            users u ON gs.UserID = u.UserID
-                                        JOIN 
-                                            grants g ON gs.GrantID = g.GrantID
+                                                u.UserID,
+                                                u.Username,
+                                                p.FirstName,
+                                                p.LastName,
+                                                c.Email,
+                                                c.Phone,
+                                                c.HomeAddress,
+                                                g.GrantName,
+                                                gs.UserRole
+                                            FROM 
+                                                grantStaff gs
+                                            JOIN 
+                                                users u ON gs.UserID = u.UserID
+                                            JOIN 
+                                                person p ON u.UserID = p.UserID
+                                            JOIN 
+                                                contact c ON p.PersonID = c.PersonID
+                                            JOIN 
+                                                grants g ON gs.GrantID = g.GrantID
                                         WHERE gs.GrantID = @GrantID;";
 
             cmdFacultyReader.Parameters.AddWithValue("@GrantID", GrantID);

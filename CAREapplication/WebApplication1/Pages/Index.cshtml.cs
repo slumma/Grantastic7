@@ -55,29 +55,15 @@ public class IndexModel : PageModel
                 DBClass.DBConnection.Close();
 
                 // Check user permissions
-                int adminStatus = DBClass.adminCheck(userID);
+                int director = DBClass.directorCheck(userID);
                 DBClass.DBConnection.Close();
 
-                if (adminStatus == 1)
+                if (director == 1)
                 {
-                    HttpContext.Session.SetInt32("adminStatus", 1);
+                    HttpContext.Session.SetInt32("director", 1);
                     return RedirectToPage("/UserDashboard");
                 }
-                else
-                {
-                    int facultyStatus = DBClass.facultyCheck(userID);
-                    DBClass.DBConnection.Close();
-
-                    if (facultyStatus == 1)
-                    {
-                        HttpContext.Session.SetInt32("facultyStatus", 1);
-                        return RedirectToPage("/UserDashboard");
-                    }
-                    else
-                    {
-                        return RedirectToPage("/NoPermissions");
-                    }
-                }
+                else { return RedirectToPage("/UserDashboard"); }
             }
             else
             {

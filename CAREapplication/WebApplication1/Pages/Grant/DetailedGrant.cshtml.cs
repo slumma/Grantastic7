@@ -12,7 +12,7 @@ namespace CAREapplication.Pages.Grant
     public class DetailedGrantModel : PageModel
     {
         // empty grant object to populate it
-    
+
         public GrantSimple grant { get; set; }
         public List<GrantNote> noteList { get; set; } = new List<GrantNote>();
         public List<GrantStaff> staffList { get; set; } = new List<GrantStaff>();
@@ -30,11 +30,6 @@ namespace CAREapplication.Pages.Grant
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index"); // Redirect to login page
             }
-            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
-            }
             // fills the grant object with the info in the db so the user can see and edit it 
             grant = new GrantSimple(); // Initialize the grant object
             DBGrant.DBConnection.Close();
@@ -45,11 +40,11 @@ namespace CAREapplication.Pages.Grant
                 grant.GrantID = Int32.Parse(grantReader["GrantID"].ToString());
                 grant.GrantName = grantReader["GrantName"].ToString();
                 grant.ProjectID = grantReader["ProjectID"] != DBNull.Value ? Convert.ToInt32(grantReader["ProjectID"]) : (int?)null; // Handle NULL ProjectID
-                grant.Supplier = grantReader["Supplier"].ToString();
+                grant.Funder = grantReader["Funder"].ToString();
                 grant.Project = grantReader["Project"].ToString();
                 grant.Amount = float.Parse(grantReader["Amount"].ToString());
                 grant.Category = grantReader["Category"].ToString();
-                grant.Status = grantReader["GrantStatus"].ToString();
+                grant.Status = grantReader["StatusName"].ToString();
                 grant.Description = grantReader["descriptions"].ToString();
                 grant.SubmissionDate = DateTime.Parse(grantReader["SubmissionDate"].ToString());
                 grant.AwardDate = DateTime.Parse(grantReader["AwardDate"].ToString());
@@ -65,7 +60,7 @@ namespace CAREapplication.Pages.Grant
                     Content = noteReader["Content"].ToString(),
                     AuthorFirst = noteReader["FirstName"].ToString(),
                     AuthorLast = noteReader["LastName"].ToString(),
-                    TimeAdded = Convert.ToDateTime(noteReader["NoteDate"].ToString())
+                    TimeAdded = Convert.ToDateTime(noteReader["DateAdded"].ToString())
                 });
             }
             DBGrant.DBConnection.Close();
@@ -130,7 +125,7 @@ namespace CAREapplication.Pages.Grant
 
             SqlDataReader staffReader = DBFaculty.singleFacultyReader(grantID);
 
-            while(staffReader.Read())
+            while (staffReader.Read())
             {
                 staffList.Add(new GrantStaff
                 {
@@ -152,11 +147,6 @@ namespace CAREapplication.Pages.Grant
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index");
             }
-            else if (HttpContext.Session.GetInt32("facultyStatus") != 1 && HttpContext.Session.GetInt32("adminStatus") != 1)
-            {
-                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index");
-            }
 
             try
             {
@@ -174,5 +164,20 @@ namespace CAREapplication.Pages.Grant
             return RedirectToPage(new { grantID = grantID });
         }
 
+        public IActionResult OnPostUpdateTaskStatus(int? taskID, int? completeFlag, int? GrantID)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBGrant.UpdateGrantTask(taskID.Value, completeFlag.Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
     }
 }
