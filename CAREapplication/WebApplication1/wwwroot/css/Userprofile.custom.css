@@ -8,6 +8,31 @@
       --dark-gray: #1E1E1E;
     }
 
+.custom-dropdown {
+    border-radius: 0 0 5px 5px;
+    background-color: var(--dark-purple);
+    padding: 0.5rem 0;
+    border: none;
+    min-width: 180px;
+}
+
+    /* Dropdown items */
+    .custom-dropdown .dropdown-item {
+        color: var(--lightest-gray);
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+
+        /* Hover state */
+        .custom-dropdown .dropdown-item:hover {
+            text-decoration: underline;
+            border-radius: 0;
+            font-weight: bold;
+        }
+
 body {
       font-family: Arial, sans-serif;
       background-color: var(--light-purple);
