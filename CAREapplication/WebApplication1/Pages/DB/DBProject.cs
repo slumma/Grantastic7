@@ -353,19 +353,22 @@ namespace CAREapplication.Pages.DB
 
 
 
-        public static void InsertProjectTask(int projectID, string content, DateOnly duedate)
+        public static int InsertProjectTask(int projectID, string objective, DateOnly dueDate)
         {
-            string query = @" INSERT INTO projectTask(ProjectID, DueDate, Objective)
-                                VALUES(@ProjectID, @DueDate, @Objective);";
+            string query = @"INSERT INTO projectTask (ProjectID, Objective, DueDate) 
+                      VALUES (@ProjectID, @Objective, @DueDate);
+                      SELECT CAST(scope_identity() AS int);";
 
             SqlCommand cmd = new SqlCommand(query, DBConnection);
             cmd.Parameters.AddWithValue("@ProjectID", projectID);
-            cmd.Parameters.AddWithValue("@Objective", content);
-            cmd.Parameters.AddWithValue("@DueDate", duedate.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@Objective", objective);
+            cmd.Parameters.AddWithValue("@DueDate", dueDate);
 
             DBConnection.Open();
-            cmd.ExecuteNonQuery();
+            int newTaskID = (int)cmd.ExecuteScalar();
             DBConnection.Close();
+
+            return newTaskID;
         }
 
 
@@ -442,7 +445,57 @@ namespace CAREapplication.Pages.DB
             DBConnection.Close();
         }
 
-        
+        public static void InsertProjectTaskAndAssignToAllStaff(int projectID, string objective, DateOnly dueDate, int assignerID)
+        {
+            string insertTaskQuery = @"
+        INSERT INTO projectTask (ProjectID, Objective, DueDate)
+        VALUES (@ProjectID, @Objective, @DueDate);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);
+    ";
+
+            SqlCommand cmd = new SqlCommand(insertTaskQuery, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+            cmd.Parameters.AddWithValue("@Objective", objective);
+            cmd.Parameters.AddWithValue("@DueDate", dueDate.ToDateTime(TimeOnly.MinValue));
+
+            DBConnection.Open();
+            int newTaskID = (int)cmd.ExecuteScalar();
+            DBConnection.Close();
+
+            // Get active project staff
+            string getStaffQuery = "SELECT UserID FROM projectStaff WHERE ProjectID = @ProjectID AND Active = 1";
+            SqlCommand getStaffCmd = new SqlCommand(getStaffQuery, DBConnection);
+            getStaffCmd.Parameters.AddWithValue("@ProjectID", projectID);
+
+            List<int> userIDs = new List<int>();
+            DBConnection.Open();
+            SqlDataReader reader = getStaffCmd.ExecuteReader();
+            while (reader.Read())
+            {
+                userIDs.Add(Convert.ToInt32(reader["UserID"]));
+            }
+            reader.Close();
+            DBConnection.Close();
+
+            // Insert into projectTaskStaff for each user
+            foreach (int userID in userIDs)
+            {
+                SqlCommand insertStaffCmd = new SqlCommand(@"
+            INSERT INTO projectTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
+            VALUES (@TaskID, @AssigneeID, @AssignerID, @DueDate)
+        ", DBConnection);
+
+                insertStaffCmd.Parameters.AddWithValue("@TaskID", newTaskID);
+                insertStaffCmd.Parameters.AddWithValue("@AssigneeID", userID);
+                insertStaffCmd.Parameters.AddWithValue("@AssignerID", assignerID);
+                insertStaffCmd.Parameters.AddWithValue("@DueDate", dueDate.ToDateTime(TimeOnly.MinValue));
+
+                DBConnection.Open();
+                insertStaffCmd.ExecuteNonQuery();
+                DBConnection.Close();
+            }
+        }
+
 
     }
 }

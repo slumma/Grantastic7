@@ -253,7 +253,7 @@ namespace CAREapplication.Pages.Project
             try
             {
                 int userID = (int)HttpContext.Session.GetInt32("userID");
-                DBProject.InsertProjectTask(ProjectID, objective, duedate);
+                DBProject.InsertProjectTaskAndAssignToAllStaff(ProjectID, objective, duedate, userID);
             }
             catch (SqlException ex)
             {
