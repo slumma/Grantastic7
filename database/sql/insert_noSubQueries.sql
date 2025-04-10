@@ -447,16 +447,16 @@ VALUES
 
 INSERT INTO grantStatus (GrantID, StatusName, ChangeDate)
 VALUES
-(1, 'Approved', '2025-02-01'),
+(1, 'Active', '2025-02-01'),
 (2, 'Pending', '2025-04-01'),
-(3, 'Denied', '2025-08-01'),
-(4, 'Approved', '2025-06-01'),
+(3, 'Inactive', '2025-08-01'),
+(4, 'Active', '2025-06-01'),
 (5, 'Pending', '2025-08-01'),
-(6, 'Denied', '2025-09-01'),
-(7, 'Approved', '2025-07-01'),
-(8, 'Pending', '2025-09-01'),
-(9, 'Denied', '2025-11-01'),
-(10, 'Approved', '2025-05-01');
+(6, 'Inactive', '2025-09-01'),
+(7, 'Active', '2025-07-01'),
+(8, 'Inactive', '2025-09-01'),
+(9, 'Inactive', '2025-11-01'),
+(10, 'Active', '2025-05-01');
 
 INSERT INTO funderStatus (FunderID, StatusName, ChangeDate)
 VALUES
@@ -485,4 +485,26 @@ VALUES
 (2, 2, 'Team Lunch', 'We are having a team lunch on Friday', '2025-03-01 02:00:00');
 
 
+INSERT INTO funderRep (UserID, CommunicationStatus, FunderID) VALUES
+(1, 'Active', 1),
+(2, 'Pending', 2),
+(3, 'Active', 3),
+(4, 'Inactive', 4),
+(5, 'Active', 5),
+(6, 'Pending', 6),
+(7, 'Active', 7),
+(8, 'Inactive', 8),
+(2, 'Active', 9),  
+(1, 'Pending', 10); 
 
+INSERT INTO projectStatus (ProjectID, StatusName, ChangeDate) VALUES
+(1, 'Planning', '2025-01-01'),
+(1, 'In Progress', '2025-03-01'),
+(2, 'Planning', '2025-02-15'),
+(2, 'In Progress', '2025-04-01'),
+(3, 'In Progress', '2025-06-10'),
+(4, 'Completed', '2025-04-20'),
+(5, 'Pending', '2025-03-01'),
+(6, 'In Progress', '2025-07-01'),
+(7, 'Completed', '2025-10-01'),
+(8, 'In Review', '2025-12-01');
