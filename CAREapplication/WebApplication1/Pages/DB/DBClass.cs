@@ -29,7 +29,10 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdUserReader = new SqlCommand();
             cmdUserReader.Connection = DBConnection;
             cmdUserReader.Connection.ConnectionString = DBConnString;
-            cmdUserReader.CommandText = "SELECT * FROM users ORDER BY Username";
+            cmdUserReader.CommandText = @"SELECT * FROM users 
+                                        JOIN person p on users.UserId = p.UserID 
+                                        JOIN contact c on p.PersonID = c.PersonID
+                                        Order BY Username";
             cmdUserReader.Connection.Open(); // Open connection here, close in Model!
 
             SqlDataReader tempReader = cmdUserReader.ExecuteReader();
