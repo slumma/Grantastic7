@@ -28,6 +28,9 @@ namespace CAREapplication.Pages.Project
         public int total { get; set; }
         public int completed { get; set; }
         public List<User> AllUsers { get; set; } = new List<User>();
+        public int director { get; set; }
+        public int adminAssistant { get; set; }
+        public int manager { get; set; }
 
         public IActionResult OnGet(int projectID)
         {
@@ -38,6 +41,11 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index");
             }
+
+            int activeUserID = Convert.ToInt32(HttpContext.Session.GetInt32("userID"));
+            director = Convert.ToInt32(HttpContext.Session.GetInt32("director"));
+            adminAssistant = Convert.ToInt32(HttpContext.Session.GetInt32("adminAssistant"));
+            manager = DBProject.managerCheck(activeUserID, projectID);
 
             ProjectID = projectID;
             Project = new ProjectSimple();
@@ -73,23 +81,7 @@ namespace CAREapplication.Pages.Project
 
                 DBProject.DBConnection.Close();
 
-                using (SqlDataReader reader = DBClass.UserReader())
-                {
-                    while (reader.Read())
-                    {
-                        AllUsers.Add(new User
-                        {
-                            UserID = Convert.ToInt32(reader["UserID"]),
-                            UserName = reader["Username"].ToString(),
-                            FirstName = reader["FirstName"].ToString(),
-                            LastName = reader["LastName"].ToString(),
-                            Phone = reader["Phone"].ToString(),
-                            Email = reader["Email"].ToString()
-                        });
-                    }
-                }
-
-                DBClass.DBConnection.Close();
+                
 
                 Trace.WriteLine("Executing projectStaffReader query...");
                 using (SqlDataReader reader = DBProject.projectStaffReader(projectID))
@@ -321,6 +313,27 @@ namespace CAREapplication.Pages.Project
 
 
             return RedirectToPage(new { projectID = ProjectID });
+        }
+
+        public void UserReader(int userID)
+        {
+            using (SqlDataReader reader = DBClass.UserReader())
+            {
+                while (reader.Read())
+                {
+                    AllUsers.Add(new User
+                    {
+                        UserID = Convert.ToInt32(reader["UserID"]),
+                        UserName = reader["Username"].ToString(),
+                        FirstName = reader["FirstName"].ToString(),
+                        LastName = reader["LastName"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        Email = reader["Email"].ToString()
+                    });
+                }
+            }
+
+            DBClass.DBConnection.Close();
         }
 
     }

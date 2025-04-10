@@ -63,7 +63,16 @@ public class IndexModel : PageModel
                     HttpContext.Session.SetInt32("director", 1);
                     return RedirectToPage("/Users/UserDashboard");
                 }
+<<<<<<< Updated upstream
                 else { return RedirectToPage("/Users/UserDashboard"); }
+=======
+                else if (adminAssistant == 1)
+                {
+                    HttpContext.Session.SetInt32("adminAsst", 1);
+                    return RedirectToPage("/UserDashboard");
+                }
+                else { return RedirectToPage("/UserDashboard"); }
+>>>>>>> Stashed changes
             }
             else
             {

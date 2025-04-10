@@ -21,6 +21,19 @@ namespace CAREapplication.Pages.DB
             "Server=Localhost;Database=CARE;Trusted_Connection=True";
 
         //Methods
+        public static int managerCheck(int userID, int projectID)
+        {
+            SqlCommand cmdCheck = new SqlCommand();
+            cmdCheck.Connection = DBConnection;
+            cmdCheck.Connection.ConnectionString = DBConnString;
+            cmdCheck.CommandText = "SELECT Leader FROM projectStaff WHERE UserID = @UserID AND ProjectID = @ProjectID;";
+            cmdCheck.Parameters.AddWithValue("@UserID", userID);
+            cmdCheck.Parameters.AddWithValue("@ProjectID", projectID);
+            cmdCheck.Connection.Open();
+            int status = Convert.ToInt32(cmdCheck.ExecuteScalar());
+            return status;
+        }
+
         public static void AddProject(ProjectSimple project, List<int> assignedFacultyList)
         {
             string insertProjectQuery = "INSERT INTO dbo.project (ProjectName, DueDate) VALUES (@ProjectName, @DueDate); SELECT SCOPE_IDENTITY();";
