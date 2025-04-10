@@ -54,6 +54,7 @@ namespace CAREapplication.Pages.Grant
                     });
                 }
             }
+            
             else
             {
                 // reads the db for grants for specific user
@@ -79,6 +80,7 @@ namespace CAREapplication.Pages.Grant
             }
 
             Trace.WriteLine(grantList.Count);
+
 
             // Close your connection in DBClass
             DBGrant.DBConnection.Close();

@@ -45,65 +45,85 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdGrantReader = new SqlCommand();
             cmdGrantReader.Connection = DBConnection;
             cmdGrantReader.Connection.ConnectionString = DBConnString;
-            cmdGrantReader.CommandText = @"SELECT 
-                                            g.GrantID, 
-                                            g.GrantName,
-                                            p.ProjectID,
-                                            s.FunderName AS Funder, 
-                                            p.ProjectName AS Project, 
-                                            g.Amount,
-                                            g.Category,
-                                            gs.StatusName, 
-                                            g.descriptions,
-                                            g.SubmissionDate, 
-                                            g.AwardDate
-                                        FROM grants g
-										JOIN grantStatus gs ON g.GrantID = gs.GrantID
-                                        JOIN grantStaff ON g.grantID = grantstaff.grantID
-                                        JOIN users ON grantstaff.userID = users.userID
-                                        JOIN Funder s ON g.FunderID = s.FunderID
-                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
-                                        ORDER BY g.AwardDate";
 
+            cmdGrantReader.CommandText = @"
+        SELECT 
+            g.GrantID, 
+            g.GrantName,
+            p.ProjectID,
+            s.FunderName AS Funder, 
+            p.ProjectName AS Project, 
+            g.Amount,
+            g.Category,
+            gs.StatusName, 
+            g.descriptions,
+            g.SubmissionDate, 
+            g.AwardDate
+        FROM grants g
+        JOIN Funder s ON g.FunderID = s.FunderID
+        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+        LEFT JOIN (
+            SELECT GrantID, StatusName
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (PARTITION BY GrantID ORDER BY ChangeDate DESC) AS rn
+                FROM grantStatus
+            ) latest
+            WHERE rn = 1
+        ) gs ON g.GrantID = gs.GrantID
+        ORDER BY g.AwardDate;
+    ";
 
             cmdGrantReader.Connection.Open();
-            
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+
 
         public static SqlDataReader facGrantReader(int currentUserID)
         {
             SqlCommand cmdGrantReader = new SqlCommand();
             cmdGrantReader.Connection = DBConnection;
             cmdGrantReader.Connection.ConnectionString = DBConnString;
-            cmdGrantReader.CommandText = @"SELECT 
-                                            g.GrantID, 
-                                            g.GrantName,
-                                            p.ProjectID,
-                                            s.FunderName AS Funder, 
-                                            p.ProjectName AS Project, 
-                                            g.Amount,
-                                            g.Category,
-                                            gs.StatusName, 
-                                            g.descriptions,
-                                            g.SubmissionDate, 
-                                            g.AwardDate
-                                        FROM grants g
-                                        JOIN grantStatus gs ON g.GrantID = gs.GrantID
-                                        JOIN grantStaff ON g.grantID = grantstaff.grantID
-                                        JOIN users ON grantstaff.userID = users.userID
-                                        JOIN Funder s ON g.FunderID = s.FunderID
-                                        LEFT JOIN project p ON g.ProjectID = p.ProjectID
-                                        WHERE users.userID = @UserID
-                                        ORDER BY g.AwardDate";
 
+            cmdGrantReader.CommandText = @"
+        SELECT 
+            g.GrantID, 
+            g.GrantName,
+            p.ProjectID,
+            s.FunderName AS Funder, 
+            p.ProjectName AS Project, 
+            g.Amount,
+            g.Category,
+            gs.StatusName AS GrantStatus, 
+            g.descriptions,
+            g.SubmissionDate, 
+            g.AwardDate
+        FROM grants g
+        JOIN grantStaff gs2 ON g.GrantID = gs2.GrantID
+        JOIN users u ON gs2.UserID = u.UserID
+        JOIN Funder s ON g.FunderID = s.FunderID
+        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+        LEFT JOIN (
+            SELECT GrantID, StatusName
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (PARTITION BY GrantID ORDER BY ChangeDate DESC) AS rn
+                FROM grantStatus
+            ) latest
+            WHERE rn = 1
+        ) gs ON g.GrantID = gs.GrantID
+        WHERE u.UserID = @UserID
+        ORDER BY g.AwardDate;
+    ";
 
-            cmdGrantReader.Connection.Open();
             cmdGrantReader.Parameters.AddWithValue("@UserID", currentUserID);
+            cmdGrantReader.Connection.Open();
             SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
             return tempReader;
         }
+
+
         public static void UpdateGrantTask(int taskID, int completedFlag)
         {
             string query = @"
