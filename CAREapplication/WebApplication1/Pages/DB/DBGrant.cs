@@ -127,7 +127,8 @@ namespace CAREapplication.Pages.DB
             SqlCommand cmdViewNotes = new SqlCommand(DBConnString);
             cmdViewNotes.Connection = DBConnection;
             cmdViewNotes.Connection.ConnectionString = DBConnString;
-            cmdViewNotes.CommandText = @"SELECT * FROM grantNotes JOIN users ON grantNotes.AuthorID = users.UserID WHERE GrantID = @GrantID;";
+            cmdViewNotes.CommandText = @"SELECT * FROM grantNotes JOIN users ON grantNotes.AuthorID = users.UserID JOIN 
+                                        person p on users.UserID = p.UserID WHERE GrantID = @GrantID;";
 
             cmdViewNotes.Parameters.AddWithValue("@GrantID", GrantID);
 
@@ -157,7 +158,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
             cmdTaskStaffRead.CommandText = "SELECT * from grantTaskStaff\r\njoin grantTask on grantTask.taskid = granttaskstaff.taskid\r\n" +
-                "join users on granttaskstaff.assigneeID = users.UserID\r\nWHERE GrantID = @GrantID";
+                "join users on granttaskstaff.assigneeID = users.UserID  JOIN person p ON users.UserID = p.UserID   \r\nWHERE GrantID = @GrantID";
             cmdTaskStaffRead.Parameters.AddWithValue("@GrantID", grantID);
             cmdTaskStaffRead.Connection.Open();
             SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
@@ -279,11 +280,12 @@ namespace CAREapplication.Pages.DB
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
+										JOIN grantStatus gs ON g.GrantID = gs.GrantID
                                         JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                             WHERE g.GrantID = @GrantID;";
@@ -369,11 +371,12 @@ namespace CAREapplication.Pages.DB
                                             p.ProjectName AS Project, 
                                             g.Amount,
                                             g.Category,
-                                            g.GrantStatus, 
+                                            gs.StatusName, 
                                             g.descriptions,
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
+										JOIN grantStatus gs ON g.GrantID = gs.GrantID
                                         JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                         WHERE g.GrantName LIKE '%' + @SearchTerm + '%'
