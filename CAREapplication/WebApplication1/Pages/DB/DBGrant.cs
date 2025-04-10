@@ -443,7 +443,7 @@ namespace CAREapplication.Pages.DB
         }
         public static void InsertGrantNote(int grantID, string content, int userID)
         {
-            SqlCommand cmd = new SqlCommand("INSERT INTO GrantNotes (GrantID, Content, UserID, NoteDate) VALUES (@GrantID, @Content, @UserID, GETDATE())", DBConnection);
+            SqlCommand cmd = new SqlCommand("INSERT INTO GrantNotes (GrantID, Content, AuthorID, DateAdded) VALUES (@GrantID, @Content, @UserID, GETDATE())", DBConnection);
             cmd.Parameters.AddWithValue("@GrantID", grantID);
             cmd.Parameters.AddWithValue("@Content", content);
             cmd.Parameters.AddWithValue("@UserID", userID);
