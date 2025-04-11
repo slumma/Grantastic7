@@ -82,7 +82,7 @@ namespace CAREapplication.Pages
                         FunderID = Int32.Parse(BPsearch["FunderID"].ToString()),
                         FunderName = BPsearch["FunderName"].ToString(),
                         OrgType = BPsearch["OrgType"].ToString(),
-                        FunderStatus = BPsearch["FunderStatus"].ToString()
+                        FunderStatus = BPsearch["StatusName"].ToString()
                     });
                 }
                 DBFunder.DBConnection.Close(); // Load all projects so they still display
