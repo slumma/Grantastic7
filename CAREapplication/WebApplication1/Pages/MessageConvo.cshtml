@@ -25,13 +25,11 @@
     <div class="container-fluid main-container">
         <div class="row g-2">
             <!-- Add a small gap between columns using Bootstrap's grid gap utilities -->
-            <div class="col-12 col-md-3 sidebar p-3">
-                <!-- Sidebar with 3 columns on medium screens -->
-                <h5 class="mb-3">RECENT MESSAGES</h5>
+            <div class="col-12 col-md-3 sidebar mt-5">
+                <div class="sidebar-scroll p-3">
+                    <h5 class="mb-3">RECENT MESSAGES</h5>
+                    <input type="text" class="form-control mb-3" placeholder="Search">
 
-                <input type="text" class="form-control mb-3" placeholder="Search">
-
-                <div class="flex-grow-1 overflow-auto">
                     <ul class="list-group message-list">
                         @foreach (var username in Model.Usernames)
                         {
@@ -43,13 +41,13 @@
                             }
                         }
                     </ul>
-                </div>
 
-                <div class="mt-auto">
-                    <button class="btn btn-primary w-100">NEW MESSAGE</button>
+                    <div class="mt-3">
+                        <button class="btn btn-primary w-100">NEW MESSAGE</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 col-md-7 sidebar p-3">
+            <div class="col-12 col-md-7 chat-sidebar p-3 mt-5">
                 <!-- Chat container with 9 columns on medium screens -->
                 @if (Model.receivedList.Count > 0)
                 {

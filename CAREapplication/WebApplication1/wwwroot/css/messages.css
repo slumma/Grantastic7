@@ -114,15 +114,23 @@ body {
 }
 
 .sidebar {
+    height: 50vh;
+    overflow: hidden;
     background: white;
     border-radius: 10px;
-    padding: 10px;
     margin: 8px;
-    height: calc(100vh - 30px);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
+
+.sidebar-scroll {
+    overflow-y: auto;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .flex-grow-1 {
     flex-grow: 1;
@@ -141,6 +149,11 @@ body {
 .message-scroll {
     flex-grow: 1;
     overflow-y: auto;
+}
+
+.message-list {
+  max-height: 250px; /* adjust as needed */
+  overflow-y: auto;
 }
 
 .list-group-item {
@@ -282,3 +295,21 @@ input {
     background: #f8d7da; /* Light red */
     align-self: flex-start;
 }
+
+.empty-message-box {
+    height: 459.5px !important; /* adjust this to make it shorter */
+    background-color: white;
+    border-radius: 10px;
+    margin: 8px;
+}
+
+.chat-sidebar {
+    height: 459.5px; /* match the left sidebar or whatever height you want */
+    background: white;
+    border-radius: 10px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
