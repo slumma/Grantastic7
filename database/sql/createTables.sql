@@ -174,6 +174,8 @@ CREATE TABLE grantTaskStaff(
 CREATE TABLE grantStaff(
 	grantStaffID int Identity(1,1) PRIMARY KEY,
 	GrantID int,
+	PrincipalInvestigator bit default 0,
+	CoPI bit default 0,
 	UserID int,
 	UserRole varchar(200),
 	FOREIGN KEY (UserID) REFERENCES users(UserID),
