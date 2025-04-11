@@ -283,5 +283,30 @@ namespace CAREapplication.Pages.Grant
 
             return RedirectToPage(new { grantID = GrantID });
         }
+
+        public IActionResult OnPostEditOverview(int GrantID, string description, string category, string amount)
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            try
+            {
+                float parsedAmount = 0;
+                float.TryParse(amount, out parsedAmount);
+
+                DBGrant.UpdateGrantOverview(GrantID, description, category, parsedAmount);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Edit Overview): {ex.Message}");
+                ModelState.AddModelError("", "Error updating grant overview: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
+
     }
 }

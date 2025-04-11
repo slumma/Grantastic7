@@ -578,6 +578,26 @@ namespace CAREapplication.Pages.DB
             DBClass.DBConnection.Close();
         }
 
+        public static void UpdateGrantOverview(int grantID, string description, string category, float amount)
+        {
+            string query = @"
+        UPDATE grants
+        SET descriptions = @Description,
+            Category = @Category,
+            Amount = @Amount
+        WHERE GrantID = @GrantID;
+    ";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@Description", description ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Category", category ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Amount", amount);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
 
     }
 }

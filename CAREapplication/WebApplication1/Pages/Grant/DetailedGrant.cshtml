@@ -54,8 +54,28 @@
                     </div>
                 </div>
                 <div class="text-center mb-4">
-                    <button class="btn sm-btn">EDIT OVERVIEW</button>
+                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editOverviewModal">EDIT OVERVIEW</button>
                 </div>
+
+                <!-- Edit Overview Modal -->
+                <div class="modal fade" id="editOverviewModal" tabindex="-1" aria-labelledby="editOverviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-center p-4">
+                            <div class="modal-header border-0 justify-content-end">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <h4 class="fw-bold mb-3">Edit Grant Overview</h4>
+                            <form method="post" asp-page-handler="EditOverview">
+                                <textarea class="form-control mb-3" name="description" rows="4">@Model.grant.Description</textarea>
+                                <input type="text" class="form-control mb-3" name="category" value="@Model.grant.Category" />
+                                <input type="text" class="form-control mb-3" name="amount" value="@Model.grant.Amount.ToString("F2")"/>
+                                <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                <button type="submit" class="btn save-btn">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <h6 class="section-label">GRANT STAFF</h6>
                 <div class="mb-4">
                 <table class="table text-center align-middle table-bordered header-table">
