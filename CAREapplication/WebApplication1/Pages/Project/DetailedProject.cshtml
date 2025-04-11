@@ -107,59 +107,72 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var task in Model.TaskList)
-                        {
-                            <tr>
-                                <td>@task.Objective</td>
-                                <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
-                                <td>
-                                    <select class="form-select">
-                                        <option>View Staff</option>
-                                        @foreach (var staffer in Model.UserTaskList)
-                                        {
-                                            <option>@staffer.FirstName @staffer.LastName</option>
-                                        }
-                                    </select>
-                                </td>
-                                <td>@(task.Completed == 1 ? "Complete" : "Incomplete")</td>
-                                <td>
-                                    <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID">Detailed View</button>
-                                </td>
-                            </tr>
+                            @if (Model.TaskList.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-muted text-center">There are no tasks for this project yet.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var task in Model.TaskList)
+                                {
+                                    <tr>
+                                        <td>@task.Objective</td>
+                                        <td>@task.DueDate.ToString("MM/dd/yyyy")</td>
+                                        <td>
+                                            <select class="form-select">
+                                                <option>View Staff</option>
+                                                @foreach (var staffer in Model.UserTaskList)
+                                                {
+                                                    <option>@staffer.FirstName @staffer.LastName</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>@(task.Completed == 1 ? "Complete" : "Incomplete")</td>
+                                        <td>
+                                            <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID">Detailed View</button>
+                                        </td>
+                                    </tr>
 
-                            <!-- Task Detail Modal -->
-                            <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content p-4">
-                                        <form method="post" asp-page-handler="UpdateTaskStatus">
-                                            <div class="modal-header border-0">
-                                                <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>Objective:</strong> @task.Objective</p>
-                                                <p><strong>Due Date:</strong> @task.DueDate.ToString("MM/dd/yyyy")</p>
-                                                <div class="mb-3">
-                                                    <label for="statusSelect-@task.TaskID" class="form-label"><strong>Status:</strong></label>
-                                                    <select name="completeFlag" class="form-select">
-                                                        <option value="0" selected="@(task.Completed == 0)">Incomplete</option>
-                                                        <option value="1" selected="@(task.Completed == 1)">Complete</option>
-                                                    </select>
+                                    <!-- Task Detail Modal -->
+                                    <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content p-4">
+                                                <form method="post" asp-page-handler="UpdateTaskStatus">
+                                                    <div class="modal-header border-0">
+                                                        <h5 class="modal-title fw-bold" id="taskModalLabel-@task.TaskID">Task Detail</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p><strong>Objective:</strong> @task.Objective</p>
+                                                        <p><strong>Due Date:</strong> @task.DueDate.ToString("MM/dd/yyyy")</p>
+                                                        <div class="mb-3">
+                                                            <label for="statusSelect-@task.TaskID" class="form-label"><strong>Status:</strong></label>
+                                                            <select name="completeFlag" class="form-select">
+                                                                <option value="0" selected="@(task.Completed == 0)">Incomplete</option>
+                                                                <option value="1" selected="@(task.Completed == 1)">Complete</option>
+                                                            </select>
 
-                                                    <input type="hidden" name="taskID" value="@task.TaskID" />
-                                                    <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <input type="hidden" name="taskID" value="@task.TaskID" />
+                                                            <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                                                <button type="submit" class="btn save-btn">Save</button>
+                                                        <button type="submit" class="btn save-btn">Save</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        }
+                                }
+                            }
+
+
+
+                        
                     </tbody>
                 </table>
                 <div class="text-center mt-2">
@@ -178,14 +191,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var note in Model.NoteList)
-                        {
-                            <tr>
-                                <td>@note.Content</td>
-                                <td>@note.AuthorFirst @note.AuthorLast</td>
-                                <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
-                            </tr>
-                        }
+
+                            @if (Model.NoteList.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-muted text-center">There are no notes for this project yet.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var note in Model.NoteList)
+                                {
+                                    <tr>
+                                        <td>@note.Content</td>
+                                        <td>@note.AuthorFirst @note.AuthorLast</td>
+                                        <td>@note.TimeAdded.ToString("MM/dd/yyyy - hh:mm tt")</td>
+                                    </tr>
+                                }
+                            }
+
+                        
                     </tbody>
                 </table>
                 <div class="text-center mt-2">

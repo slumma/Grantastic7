@@ -338,7 +338,8 @@
                     </div>
                 </div>
                 <h6 class="section-label">GRANT UPDATES</h6>
-                <table class="table text-center align-middle table-bordered">
+                <div class="table-container">
+                        <table class="table text-center align-middle table-bordered header-table">
                     <thead>
                         <tr>
                             <th>NOTE</th>
@@ -346,6 +347,7 @@
                             <th>DATE ADDED</th>
                         </tr>
                     </thead>
+                        <table class="table text-center align-middle table-bordered table-body mt-0">
                     <tbody>
                         @foreach (var note in Model.noteList)
                         {
@@ -383,9 +385,11 @@
                         </div>
                     </div>
                 </form>
-
+                </table>
+                </div>
                 <h6 class="section-label mt-5">GRANT FILES</h6>
-                <table class="table text-center align-middle table-bordered">
+                <div class="table-container">
+                    <table class="table text-center align-middle table-bordered header-table">
                     <thead>
                         <tr>
                             <th>FILE NAME</th>
@@ -393,6 +397,7 @@
                             <th>DOWNLOAD</th>
                         </tr>
                     </thead>
+                        <table class="table text-center align-middle table-bordered table-body mt-0">
                     <tbody>
                         @if (Model.GrantFiles.Count == 0)
                         {
@@ -446,7 +451,8 @@
                         </div>
                     </div>
                 </div>
-
+                </table>
+            </div>
 
             </div>
         </div>
