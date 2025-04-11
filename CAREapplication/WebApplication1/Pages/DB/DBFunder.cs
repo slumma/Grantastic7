@@ -111,11 +111,16 @@ namespace CAREapplication.Pages.DB
             cmdProjectSearch.Connection.ConnectionString = DBConnString;
 
             cmdProjectSearch.CommandText = @"SELECT * 
-                                                FROM BPrep 
-                                                JOIN users ON users.UserID = BPrep.UserID 
-                                                join grantSupplier on grantSupplier.SupplierID = BPrep.SupplierID
-                                                WHERE users.FirstName LIKE '%' + @SearchTerm + '%' 
-                                                   OR users.LastName LIKE '%' + @SearchTerm + '%';";
+FROM funder f
+JOIN funderRep fr ON f.FunderID = fr.FunderID
+JOIN users u ON fr.UserID = u.UserID
+JOIN person p ON u.UserID = p.UserID
+JOIN contact c ON p.PersonID = c.PersonID
+LEFT JOIN funderStatus fs ON f.FunderID = fs.FunderID
+WHERE p.FirstName LIKE '%' + @SearchTerm + '%'
+   OR p.LastName LIKE '%' + @SearchTerm + '%'
+   OR f.FunderName LIKE '%' + @SearchTerm + '%';
+";
 
             cmdProjectSearch.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmdProjectSearch.Connection.Open();

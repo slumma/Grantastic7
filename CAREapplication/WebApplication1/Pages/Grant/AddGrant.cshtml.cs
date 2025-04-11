@@ -106,7 +106,7 @@ namespace CAREapplication.Pages.Grant
             ModelState.Clear();
             newGrant = new GrantSimple
             {
-                GrantName = "Hello My Name is Carmen Winstead",
+                GrantName = "Super Awesome Grant!",
                 Funder = "TechCorp",
                 Project = "Project Alpha",
                 Amount = 1000000,
