@@ -12,7 +12,7 @@
 @{
     var loggedIn = Context.Session.GetInt32("loggedIn");
     var director = Context.Session.GetInt32("director");
-    var facultyStatus = Context.Session.GetInt32("facultyStatus");
+    var adminAssistant = Context.Session.GetInt32("adminAssistant");
     var username = Context.Session.GetString("username");
 }
 
@@ -27,7 +27,7 @@
                 <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
                     <a class="nav-link text-white" asp-area="" asp-page="/Messages">MESSAGES</a>
 
-                    @if (director == 1)
+                    @if (director == 1 || adminAssistant == 1)
                     {
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
@@ -35,40 +35,32 @@
                             </a>
                             <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" asp-page="/Project/ProjectDashboard">Projects</a></li>
-                                <li><a class="dropdown-item" asp-page="/BusinessPartners">Business Partners</a></li>
+                                <li><a class="dropdown-item" asp-page="/BusinessPartners">Funders</a></li>
                                 <li><a class="dropdown-item" asp-page="/Project/AddProject">Add Project</a></li>
                             </ul>
                         </div>
                     }
-                    else if (facultyStatus == 1)
+                    else 
+                    {
+                        <a class="nav-link text-white" asp-area="" asp-page="/Project/ProjectDashboard">PROJECTS</a>
+                    }
+
+                    @if (director == 1 || adminAssistant == 1) 
                     {
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
-                                PROJECTS
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
+                                GRANTS
                             </a>
-                            <ul class="dropdown-menu custom-dropdown" aria-labelledby="projectsDropdown">
-                                <li><a class="dropdown-item" asp-page="/Faculty/FacultyLanding">Faculty Landing</a></li>
-                                <li><a class="dropdown-item" asp-page="/Faculty/AddProject">Add Project</a></li>
+                            <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
+                                <li><a class="dropdown-item" asp-page="/Grant/GrantDashboard">Grants</a></li>
+                                <li><a class="dropdown-item" asp-page="/Grant/AddGrant">Add Grant</a></li>
                             </ul>
                         </div>
                     }
-
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="grantsDropdown" role="button" data-bs-toggle="dropdown">
-                            GRANTS
-                        </a>
-                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="grantsDropdown">
-                            @if (director == 1)
-                            {
-                                <li><a class="dropdown-item" asp-page="/Grant/GrantDashboard">Grants</a></li>
-                                <li><a class="dropdown-item" asp-page="/Grant/AddGrant">Add Grant</a></li>
-                            }
-                            else if (facultyStatus == 1)
-                            {
-                                <li><a class="dropdown-item" asp-page="/Faculty/AddGrant">Add Grant</a></li>
-                            }
-                        </ul>
-                    </div>
+                    else
+                    {
+                        <a class="nav-link text-white" asp-area="" asp-page="/Grant/GrantDashboard">GRANTS</a>
+                    }
 
                     <a class="nav-link text-white" asp-page="/Search">SEARCH</a>
                 </div>
