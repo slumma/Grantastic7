@@ -60,7 +60,12 @@
                             <th>NAME</th>
                             <th>EMAIL</th>
                             <th>PHONE</th>
-                            <th>REMOVE</th>
+                            @{
+                                if (Model.director == 1 | Model.adminAssistant == 1)
+                                {
+                                    <th>REMOVE</th>
+                                }
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -70,13 +75,18 @@
                                 <td>@staff.FirstName @staff.LastName</td>
                                 <td>@staff.Email</td>
                                 <td>@staff.Phone</td>
-                                <td>
-                                    <form method="post" asp-page-handler="InactiveStaff">
-                                        <input type="hidden" name="userID" value="@staff.UserID" />
-                                        <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
-                                        <button type="submit" class="btn btn-outline-primary">Remove</button>
-                                    </form>
-                                </td>
+                                @{
+                                    if (Model.director == 1 | Model.adminAssistant == 1)
+                                    {
+                                        <td>
+                                            <form method="post" asp-page-handler="InactiveStaff">
+                                                <input type="hidden" name="userID" value="@staff.UserID" />
+                                                <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
+                                                <button type="submit" class="btn btn-outline-primary">Remove</button>
+                                            </form>
+                                        </td>
+                                    }
+                                }
                             </tr>
                         }
                     </tbody>
