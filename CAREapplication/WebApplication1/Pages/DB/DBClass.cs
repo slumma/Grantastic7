@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Formats.Asn1;
+using System.Net;
+using System.Numerics;
 using System.Security.AccessControl;
 
 namespace CAREapplication.Pages.DB
@@ -495,6 +497,51 @@ ORDER BY StartDate;";
 
             return tempReader;
         }
+
+        public static void UpdateUserInfo(int userID, string firstName, string lastName, string pronouns,
+                                  string username, string email, string phone,
+                                  string address, string city, string state, string zip)
+        {
+            string query = @"
+        UPDATE person
+        SET FirstName = @FirstName,
+            LastName = @LastName,
+            Pronouns = @Pronouns
+        WHERE UserID = @UserID;
+
+        UPDATE users
+        SET Username = @Username
+        WHERE UserID = @UserID;
+
+        UPDATE contact
+        SET Email = @Email,
+            Phone = @Phone,
+            HomeAddress = @HomeAddress,
+            City = @HomeCity,
+            HomeState = @HomeState,
+            Zip = @ZipCode
+        WHERE PersonID = (SELECT PersonID FROM person WHERE UserID = @UserID);
+    ";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@FirstName", firstName);
+            cmd.Parameters.AddWithValue("@LastName", lastName);
+            cmd.Parameters.AddWithValue("@Pronouns", pronouns);
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Phone", phone);
+            cmd.Parameters.AddWithValue("@HomeAddress", address);
+            cmd.Parameters.AddWithValue("@HomeCity", city);
+            cmd.Parameters.AddWithValue("@HomeState", state);
+            cmd.Parameters.AddWithValue("@ZipCode", zip);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
     }
 }
 
