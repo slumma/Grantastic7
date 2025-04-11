@@ -50,7 +50,7 @@ VALUES
 
 INSERT INTO externalPartner (UserID)
 VALUES
-(9),
+(7),
 (5);
 
 INSERT INTO funderPOC (PersonID, FunderID)
