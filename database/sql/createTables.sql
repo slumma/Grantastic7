@@ -17,7 +17,7 @@ CREATE TABLE funderNote(
 	DateAdded datetime default getdate(),
 	AuthorID int,
 	FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
-	FOREIGN KEY (AuthorID) REFERENCES users(UserID);
+	FOREIGN KEY (AuthorID) REFERENCES users(UserID));
 
 CREATE TABLE person(
 	PersonID int Identity(1,1) PRIMARY KEY,
