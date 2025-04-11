@@ -30,7 +30,6 @@ namespace CAREapplication.Pages.Users
             int userID = Convert.ToInt32(HttpContext.Session.GetInt32("userID"));
             activeUser = DBClass.GetUserByID(userID);
 
-            // You can now access form values using Request.Form["FieldName"]
             string first = Request.Form["FirstName"];
             string last = Request.Form["LastName"];
             string username = Request.Form["Username"];
