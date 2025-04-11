@@ -183,6 +183,23 @@ namespace CAREapplication.Pages.Grant
             return RedirectToPage(new { grantID = GrantID });
         }
 
+        public IActionResult OnPostAddTask(int GrantID, DateOnly duedate, string objective)
+        {
+            try
+            {
+                int userID = (int)HttpContext.Session.GetInt32("userID");
+                DBGrant.InsertGrantTaskAndAssignToAllStaff(GrantID, objective, duedate, userID);
+                Trace.WriteLine("Executed");
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { projectID = GrantID });
+        }
+
         public async Task<IActionResult> OnPostUploadFileAsync(IFormFile uploadedFile, int GrantID)
         {
             if (uploadedFile == null || uploadedFile.Length == 0)
