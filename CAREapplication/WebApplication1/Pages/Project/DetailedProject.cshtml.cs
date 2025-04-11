@@ -35,8 +35,13 @@ namespace CAREapplication.Pages.Project
 
         public IActionResult OnGet(int projectID)
         {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
 
-            Trace.WriteLine($"Received projectID: {projectID}");
+            //Trace.WriteLine($"Received projectID: {projectID}");
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
