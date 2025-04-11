@@ -183,9 +183,72 @@
                         ADD NOTE
                     </button>
                 </div>
+
+                    <h6 class="section-label mt-5">PROJECT RESOURCES</h6>
+                    <table class="header-table table-body text-center align-middle table-bordered">
+                        <thead>
+                            <tr>
+                                <th>FILE NAME</th>
+                                <th>TYPE</th>
+                                <th>DOWNLOAD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ProjectFiles.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-muted text-center">There are no files uploaded for this project.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var file in Model.ProjectFiles)
+                                {
+                                    <tr>
+                                        <td>@file.NameFile</td>
+                                        <td>@file.FileType</td>
+                                        <td>
+                                            <a href="@Url.Content("~/Resources/" + file.FilePath)" class="btn btn-outline-primary" download>Download</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-2">
+                        <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#uploadFileModal">
+                            ADD FILE
+                        </button>
+                    </div>
             </div>
         </div>
     </div>
+
+        <!-- Upload File Modal -->
+        <div class="modal fade" id="uploadFileModal" tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-4">
+                    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title fw-bold" id="uploadFileModalLabel">Upload Project File</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Choose File</label>
+                                <input class="form-control" type="file" name="uploadedFile" required />
+                            </div>
+                            <input type="hidden" name="ProjectID" value="@Model.ProjectID" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
     <!-- Edit Overview Modal -->
     <div class="modal fade" id="editOverviewModal" tabindex="-1" aria-hidden="true">

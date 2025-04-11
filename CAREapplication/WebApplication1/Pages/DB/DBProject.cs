@@ -496,7 +496,52 @@ namespace CAREapplication.Pages.DB
             }
         }
 
+        public static List<FileRecord> GetProjectFiles(int projectID)
+        {
+            List<FileRecord> files = new List<FileRecord>();
+            string query = @"SELECT f.FileID, f.FilePath, f.FileType, f.NameFile
+                     FROM projectFile pf
+                     INNER JOIN files f ON pf.FileID = f.FileID
+                     WHERE pf.ProjectID = @ProjectID";
 
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+
+            DBConnection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                files.Add(new FileRecord
+                {
+                    FileID = (int)reader["FileID"],
+                    FilePath = reader["FilePath"].ToString(),
+                    FileType = reader["FileType"].ToString(),
+                    NameFile = reader["NameFile"].ToString()
+                });
+            }
+            DBConnection.Close();
+            return files;
+        }
+
+        // ????????
+        public static void InsertProjectFile(int projectID, string filePath, string fileType, string nameFile)
+        {
+            string query = @"INSERT INTO files (FilePath, FileType, NameFile)
+                     VALUES (@FilePath, @FileType, @NameFile);
+                     DECLARE @FileID INT = SCOPE_IDENTITY();
+                     INSERT INTO projectFile (ProjectID, FileID)
+                     VALUES (@ProjectID, @FileID);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@FilePath", filePath);
+            cmd.Parameters.AddWithValue("@FileType", fileType);
+            cmd.Parameters.AddWithValue("@NameFile", nameFile);
+            cmd.Parameters.AddWithValue("@ProjectID", projectID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
     }
 }
 

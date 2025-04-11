@@ -20,6 +20,7 @@ namespace CAREapplication.Pages.Project
         public List<User> UserProjectList { get; set; } = new List<User>();
         public List<User> UserTaskList { get; set; } = new List<User>();
         public List<ProjectTaskStaff> TaskStaffList { get; set; } = new List<ProjectTaskStaff>();
+        public List<FileRecord> ProjectFiles { get; set; } = new List<FileRecord>();
         public List<ProjectTask> TaskList { get; set; } = new List<ProjectTask>();
         public List<ProjectNote> NoteList { get; set; } = new List<ProjectNote>();
         public List<int> progressList { get; set; } = new List<int>();
@@ -101,6 +102,10 @@ namespace CAREapplication.Pages.Project
                 Trace.WriteLine("projectStaffReader query completed successfully.");
 
                 DBProject.DBConnection.Close();
+
+
+                ProjectFiles = DBProject.GetProjectFiles(projectID);
+
 
                 Trace.WriteLine("Executing taskStaffReader query...");
                 using (SqlDataReader reader = DBProject.taskStaffReader(projectID))
@@ -337,6 +342,47 @@ namespace CAREapplication.Pages.Project
 
             DBClass.DBConnection.Close();
         }
+
+        public async Task<IActionResult> OnPostUploadFileAsync(IFormFile uploadedFile, int ProjectID)
+        {
+            if (uploadedFile == null || uploadedFile.Length == 0)
+            {
+                ModelState.AddModelError("", "No file was selected.");
+                return RedirectToPage(new { projectID = ProjectID });
+            }
+
+            try
+            {
+                // Create the physical folder if it doesn't exist
+                string folderPath = Path.Combine("wwwroot", "Resources", "ProjectFiles", ProjectID.ToString());
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                // Save file
+                string fileName = Path.GetFileName(uploadedFile.FileName);
+                string filePath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(stream);
+                }
+
+                // Store a web-safe relative path for use in links
+                string relativePath = $"Resources/ProjectFiles/{ProjectID}/{fileName}";
+
+                // Insert into DB
+                DBProject.InsertProjectFile(ProjectID, relativePath, uploadedFile.ContentType, fileName);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"File upload failed: {ex.Message}");
+            }
+
+            return RedirectToPage(new { projectID = ProjectID });
+        }
+
 
     }
 }
