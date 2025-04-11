@@ -463,5 +463,53 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
+
+        public static void InsertGrantFile(int grantID, string filePath, string fileType, string nameFile)
+        {
+            string query = @"INSERT INTO files (FilePath, FileType, NameFile)
+                     VALUES (@FilePath, @FileType, @NameFile);
+                     DECLARE @FileID INT = SCOPE_IDENTITY();
+                     INSERT INTO grantFile (GrantID, FileID)
+                     VALUES (@GrantID, @FileID);";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@FilePath", filePath);
+            cmd.Parameters.AddWithValue("@FileType", fileType);
+            cmd.Parameters.AddWithValue("@NameFile", nameFile);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+        public static List<FileRecord> GetGrantFiles(int grantID)
+        {
+            List<FileRecord> files = new List<FileRecord>();
+            string query = @"SELECT f.FileID, f.FilePath, f.FileType, f.NameFile
+                     FROM grantFile gf
+                     INNER JOIN files f ON gf.FileID = f.FileID
+                     WHERE gf.GrantID = @GrantID";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+
+            DBConnection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                files.Add(new FileRecord
+                {
+                    FileID = (int)reader["FileID"],
+                    FilePath = reader["FilePath"].ToString(),
+                    FileType = reader["FileType"].ToString(),
+                    NameFile = reader["NameFile"].ToString()
+                });
+            }
+            DBConnection.Close();
+            return files;
+        }
+
+
     }
 }

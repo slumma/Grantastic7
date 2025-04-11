@@ -18,6 +18,7 @@ namespace CAREapplication.Pages.Grant
         public List<GrantStaff> staffList { get; set; } = new List<GrantStaff>();
         public List<GrantTask> TaskList { get; set; } = new List<GrantTask>();
         public List<GrantTaskStaff> TaskStaffList { get; set; } = new List<GrantTaskStaff>();
+        public List<FileRecord> GrantFiles { get; set; } = new List<FileRecord>();
         public List<User> UserTaskList { get; set; } = new List<User>();
         public List<int> progressList { get; set; } = new List<int>();
         public int progress { get; set; }
@@ -80,6 +81,8 @@ namespace CAREapplication.Pages.Grant
             }
             DBGrant.DBConnection.Close();
 
+            GrantFiles = DBGrant.GetGrantFiles(grantID);
+
             using (SqlDataReader reader = DBGrant.taskStaffReader(grantID))
             {
                 while (reader.Read())
@@ -116,7 +119,7 @@ namespace CAREapplication.Pages.Grant
         }
         public IActionResult OnPost()
         {
-            return RedirectToPage("DetailedView");
+            return RedirectToPage("GrantDashboard");
         }
 
         public List<GrantStaff> grantStaffReader(int grantID)
@@ -175,6 +178,42 @@ namespace CAREapplication.Pages.Grant
             {
                 Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
                 ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
+
+        public async Task<IActionResult> OnPostUploadFileAsync(IFormFile uploadedFile, int GrantID)
+        {
+            if (uploadedFile == null || uploadedFile.Length == 0)
+            {
+                ModelState.AddModelError("", "No file was selected.");
+                return RedirectToPage(new { grantID = GrantID });
+            }
+
+            try
+            {
+                string folderPath = Path.Combine("wwwroot", "Resources", "GrantFiles", GrantID.ToString());
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string fileName = Path.GetFileName(uploadedFile.FileName);
+                string filePath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(stream);
+                }
+
+                string relativePath = Path.Combine("GrantFiles", GrantID.ToString(), fileName);
+                DBGrant.InsertGrantFile(GrantID, relativePath, uploadedFile.ContentType, fileName);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"File upload failed: {ex.Message}");
             }
 
             return RedirectToPage(new { grantID = GrantID });
