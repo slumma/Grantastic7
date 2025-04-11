@@ -117,8 +117,6 @@ namespace CAREapplication.Pages.Grant
             completed = progressList[0];
             total = progressList[1];
 
-            progress = Convert.ToInt32(completed / total);
-
             UserReader(activeUserID);
 
             return Page();

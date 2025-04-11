@@ -5,7 +5,7 @@ VALUES
 ('nadeemhudson', 1, 1),
 ('joshwhite', 0, 1),
 ('sharons', 0, 1),
-('jezell', 0, 0),
+('marcusjohnson', 0, 0),
 ('benfrench', 0, 0),
 ('samO', 0, 0);
 
@@ -38,15 +38,15 @@ VALUES
 INSERT INTO person (UserID, Pronouns, Firstname, LastName)
 VALUES
 (1, 'She/Her', 'Sarah', 'Bennett'), --personID 1
-(2, 'He/Him', 'nick', 'clement'), --personID 2
-(3, 'He/Him', 'nadeem', 'hudson'), --personID 3
-(4, 'They/Them', 'josh', 'White'), --personID 4
-(5, 'She/Her', 'sharon', 'sanchez'), --personID 5
-(6, 'He/Him', 'jeremy', 'ezell'), --personID 6
-(7, 'He/Him', 'ben', 'french'), --personID 7
+(2, 'He/Him', 'Nick', 'Clement'), --personID 2
+(3, 'He/Him', 'Nadeem', 'Hudson'), --personID 3
+(4, 'They/Them', 'Josh', 'White'), --personID 4
+(5, 'She/Her', 'Sharon', 'Sanchez'), --personID 5
+(6, 'He/Him', 'Marcus', 'Johnson'), --personID 6
+(7, 'He/Him', 'Ben', 'French'), --personID 7
 
-(8, 'He/Him', 'sam', 'o'), --personID 8 FUNDER POC (USER)
-(null, 'He/Him', 'roy', 'rinehart'); --personID 9 FUNDER POC (NON-USER)
+(8, 'He/Him', 'Sam', 'Ogden'), --personID 8 FUNDER POC (USER)
+(null, 'He/Him', 'Roy', 'Rinehart'); --personID 9 FUNDER POC (NON-USER)
 
 INSERT INTO externalPartner (UserID)
 VALUES
@@ -73,7 +73,7 @@ VALUES
 (3, 'nadeemhudson@example.com', '555-9876', '789 Pine St', 'Harrisonburg', 'VA', '22801'),
 (4, 'joshwhite@example.com', '555-2234', '321 Birch St', 'Harrisonburg', 'VA', '22801'),
 (5, 'shrnsnchz@example.com', '555-6789', '654 Cedar St', 'Harrisonburg', 'VA', '22801'),
-(6, 'jezell@example.com', '555-7890', '987 Spruce St', 'Harrisonburg', 'VA', '22801'),
+(6, 'mjohnson@example.com', '555-7890', '987 Spruce St', 'Harrisonburg', 'VA', '22801'),
 (7, 'benfrench@example.com', '555-1010', '109 Maple St', 'Harrisonburg', 'VA', '22801'),
 (8, 'samoGden@example.com', '555-1515', '413 Elm St', 'Harrisonburg', 'VA', '22801'),
 (9, 'royr838@example.com', '555-1212', '210 Oak St', 'Harrisonburg', 'VA', '22801');

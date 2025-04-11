@@ -228,13 +228,10 @@ namespace CAREapplication.Pages.DB
         {
             String insertGrantQuery = "INSERT INTO grants (FunderID, GrantName, ProjectID, Category, SubmissionDate, descriptions, AwardDate, Amount) " +
                               "VALUES (@FunderID, @GrantName, @ProjectID, @Category, @SubmissionDate, @Descriptions, @AwardDate, @Amount); SELECT SCOPE_IDENTITY();";
-            String insertGrantStaffQuery = "INSERT INTO grantStaff (GrantID, UserID) VALUES (@GrantID, @UserID);";
             String insertGrantStatus = "INSERT INTO grantStatus (StatusName, GrantID) VALUES (@StatusName, @GrantID);";
 
             int GrantID;
 
-
-            // used AI to help implement the grants into the DB without the grantStaff freaking out 
             using (SqlCommand cmdInsertGrant = new SqlCommand(insertGrantQuery, DBConnection))
             {
                 cmdInsertGrant.Connection.ConnectionString = DBConnString;
@@ -256,14 +253,14 @@ namespace CAREapplication.Pages.DB
                 GrantID = Convert.ToInt32(cmdInsertGrant.ExecuteScalar());
                 cmdInsertGrant.Connection.Close();
             }
-            using (SqlCommand cmdInsertGrantStaff = new SqlCommand(insertGrantStaffQuery, DBConnection))
+            using (SqlCommand cmdinsertGrantStatus = new SqlCommand(insertGrantStatus, DBConnection))
             {
-                cmdInsertGrantStaff.Parameters.AddWithValue("@GrantID", GrantID);
-                cmdInsertGrantStaff.Parameters.AddWithValue("@UserID", userID);
+                cmdinsertGrantStatus.Parameters.AddWithValue("@StatusName", GrantID);
+                cmdinsertGrantStatus.Parameters.AddWithValue("@GrantID", userID);
 
-                cmdInsertGrantStaff.Connection.Open();
-                cmdInsertGrantStaff.ExecuteNonQuery();
-                cmdInsertGrantStaff.Connection.Close();
+                cmdinsertGrantStatus.Connection.Open();
+                cmdinsertGrantStatus.ExecuteNonQuery();
+                cmdinsertGrantStatus.Connection.Close();
             }
         }
 
@@ -319,8 +316,8 @@ namespace CAREapplication.Pages.DB
                                             g.SubmissionDate, 
                                             g.AwardDate
                                         FROM grants g
-										JOIN grantStatus gs ON g.GrantID = gs.GrantID
-                                        JOIN Funder s ON g.FunderID = s.FunderID
+										LEFT JOIN grantStatus gs ON g.GrantID = gs.GrantID
+                                        LEFT JOIN Funder s ON g.FunderID = s.FunderID
                                         LEFT JOIN project p ON g.ProjectID = p.ProjectID
                                             WHERE g.GrantID = @GrantID;";
 

@@ -25,10 +25,9 @@
             @if (loggedIn == 1)
             {
                 <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
-                    <a class="nav-link text-white" asp-area="" asp-page="/Messages">MESSAGES</a>
-
                     @if (director == 1 || adminAssistant == 1)
                     {
+                        <a class="nav-link text-white" asp-area="" asp-page="/Messages">MESSAGES</a>
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
                                 PROJECTS
@@ -78,7 +77,6 @@
             {
                 <div class="navbar-nav me-auto d-flex flex-row gap-4 align-items-center text-white">
                     <a class="nav-link text-white" asp-area="" asp-page="/Messages">MESSAGES</a>
-                    <a class="nav-link text-white" asp-area="" asp-page="/Search">SEARCH</a>
                 </div>
 
                 <div class="d-flex align-items-center gap-3">

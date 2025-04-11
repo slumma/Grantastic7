@@ -50,6 +50,7 @@ namespace CAREapplication.Pages.Grant
                 if (ModelState[key].Errors.Count > 0)
                 {
                     Trace.WriteLine($"Key: {key}, Errors: {string.Join(", ", ModelState[key].Errors.Select(e => e.ErrorMessage))}");
+                    Trace.WriteLine("Kill myself");
                 }
             }
 
