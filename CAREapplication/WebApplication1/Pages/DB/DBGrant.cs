@@ -510,6 +510,55 @@ namespace CAREapplication.Pages.DB
             return files;
         }
 
+        public static void InsertGrantTaskAndAssignToAllStaff(int grantID, string objective, DateOnly dueDate, int assignerID)
+        {
+            string insertTaskQuery = @"
+        INSERT INTO grantTask (GrantID, Objective, DueDate)
+        VALUES (@GrantID, @Objective, @DueDate);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);
+    ";
 
+            SqlCommand cmd = new SqlCommand(insertTaskQuery, DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@Objective", objective);
+            cmd.Parameters.AddWithValue("@DueDate", dueDate.ToDateTime(TimeOnly.MinValue));
+
+            DBConnection.Open();
+            int newTaskID = (int)cmd.ExecuteScalar();
+            DBConnection.Close();
+
+            // Get all staff associated with the grant
+            string getStaffQuery = "SELECT UserID FROM grantStaff WHERE GrantID = @GrantID";
+            SqlCommand getStaffCmd = new SqlCommand(getStaffQuery, DBConnection);
+            getStaffCmd.Parameters.AddWithValue("@GrantID", grantID);
+
+            List<int> userIDs = new List<int>();
+            DBConnection.Open();
+            SqlDataReader reader = getStaffCmd.ExecuteReader();
+            while (reader.Read())
+            {
+                userIDs.Add(Convert.ToInt32(reader["UserID"]));
+            }
+            reader.Close();
+            DBConnection.Close();
+
+            // Assign each user to the new task
+            foreach (int userID in userIDs)
+            {
+                SqlCommand insertStaffCmd = new SqlCommand(@"
+            INSERT INTO grantTaskStaff (TaskID, AssigneeID, AssignerID, DueDate)
+            VALUES (@TaskID, @AssigneeID, @AssignerID, @DueDate)
+        ", DBConnection);
+
+                insertStaffCmd.Parameters.AddWithValue("@TaskID", newTaskID);
+                insertStaffCmd.Parameters.AddWithValue("@AssigneeID", userID);
+                insertStaffCmd.Parameters.AddWithValue("@AssignerID", assignerID);
+                insertStaffCmd.Parameters.AddWithValue("@DueDate", dueDate.ToDateTime(TimeOnly.MinValue));
+
+                DBConnection.Open();
+                insertStaffCmd.ExecuteNonQuery();
+                DBConnection.Close();
+            }
+        }
     }
 }

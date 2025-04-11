@@ -97,6 +97,7 @@
                                 <th>OBJECTIVE</th>
                                 <th>DUE DATE</th>
                                 <th>ASSOCIATED STAFF</th>
+                                <th>STATUS</th>
                                 <th>DETAILED VIEW</th>
                             </tr>
                         </thead>
@@ -114,19 +115,24 @@
                                                 View Staff
                                             </button>
                                         </td>
+                                        <td>@(task.Completed == 1 ? "Complete" : "Incomplete")</td>
                                         <td>
                                             <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID">Detailed View</button>
                                         </td>
                                     </tr>
                                     <tr class="collapse" id="staffTable-@task.TaskID">
-                                        <td colspan="4">
+                                        <td colspan="5">
                                             <div class="dropdown-popup mx-auto">
                                                 <div class="staff-scroll">
                                                     <table class="table table-sm mb-0">
                                                         <tbody>
                                                             @foreach (var user in Model.TaskStaffList.Where(u => u.TaskID == task.TaskID))
                                                             {
-                                                                <tr><td class="text-center"><a href="#" class="staff-link">@user.FirstName @user.LastName</a></td></tr>
+                                                                <tr>
+                                                                    <td class="text-center">
+                                                                        <a href="#" class="staff-link">@user.FirstName @user.LastName</a>
+                                                                    </td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
@@ -168,6 +174,44 @@
                                 }
                             </tbody>
                         </table>
+
+                        
+
+
+                        </div>
+
+                    <div class="text-center mt-2">
+                        <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                            ADD TASK
+                        </button>
+
+                        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="AddTask">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Add Grant Task</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group mb-3">
+                                                <label for="objective">Objective</label>
+                                                <input class="form-control" id="objective" name="objective" required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="duedate">Due Date</label>
+                                                <input type="date" class="form-control" id="duedate" name="duedate" required />
+                                            </div>
+                                            <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Add Task</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <h6 class="section-label">GRANT UPDATES</h6>
@@ -295,6 +339,30 @@
             progressText.textContent = `${completed}/${total} TASKS COMPLETED`;
         }
         updateTaskProgress(@(@Model.completed), @(@Model.total));
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        function updateTaskProgress(completed, total) {
+            const progressBar = document.getElementById("taskProgressBar");
+            const progressText = document.getElementById("taskProgressText");
+
+            const percentage = total > 0 ? (completed / total) * 100 : 0;
+            progressBar.style.width = `${percentage}%`;
+            progressBar.setAttribute("aria-valuenow", completed);
+            progressText.textContent = `${completed}/${total} TASKS COMPLETED`;
+        }
+
+        updateTaskProgress(@Model.completed, @Model.total);
+
+        if (@Model.completed == @Model.total && @Model.total > 0) {
+            confetti({
+                particleCount: 100,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
     </script>
 </body>
 </html>
