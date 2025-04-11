@@ -312,37 +312,37 @@ VALUES
 (4, 'Business Innovation Fund', 9, 'Institution', '2025-04-15', 'The Business Innovation Fund supports businesses working on innovative projects that aim to create new market opportunities and solve pressing global challenges. The fund will focus on startups and small businesses that are developing breakthrough technologies, services, or processes with the potential for significant industry disruption.', '2025-08-15', 85000),
 (9, 'STEM Education Grant', 10, 'University', '2025-05-15', 'The STEM Education Grant is focused on increasing participation in science, technology, engineering, and math education, particularly among underrepresented groups. This grant will support the development of STEM curricula, teacher training programs, and student engagement initiatives to encourage more students to pursue STEM careers.', '2025-09-15', 140000);
 
-INSERT INTO grantStaff(GrantID, UserID, UserRole)
+INSERT INTO grantStaff(GrantID, UserID, PrincipalInvestigator, CoPI, UserRole)
 VALUES
-(1, 1, 'Principal Investigator'),
-(1, 2, 'Co-PI'),
+(1, 1, 1, 0, 'Principal Investigator'),
+(1, 2, 0, 1,'Co-PI'),
 
-(2, 3, 'Principal Investigator'),
-(2, 4, 'Researcher'),
+(2, 3, 1, 0, 'Principal Investigator'),
+(2, 4, 0, 0, 'Researcher'),
 
-(3, 5, 'Principal Investigator'),
-(3, 6, 'Researcher'),
+(3, 5, 1, 0, 'Principal Investigator'),
+(3, 6, 0, 0, 'Researcher'),
 
-(4, 1, 'Principal Investigator'),
-(4, 2, 'Research Assistant'),
+(4, 1, 1, 0, 'Principal Investigator'),
+(4, 2, 0, 0, 'Research Assistant'),
 
-(5, 3, 'Principal Investigator'),
-(5, 4, 'Data Scientist'),
+(5, 3, 1, 0, 'Principal Investigator'),
+(5, 4, 0, 0, 'Data Scientist'),
 
-(6, 5, 'Principal Investigator'),
-(6, 6, 'Developer'),
+(6, 5, 1, 0, 'Principal Investigator'),
+(6, 6, 0, 0, 'Developer'),
 
-(7, 1, 'Principal Investigator'),
-(7, 2, 'QA Engineer'),
+(7, 1, 1, 0, 'Principal Investigator'),
+(7, 2, 0, 0, 'QA Engineer'),
 
-(8, 3, 'Principal Investigator'),
-(8, 4, 'Marketing Analyst'),
+(8, 3, 1, 0, 'Principal Investigator'),
+(8, 4, 0, 0, 'Marketing Analyst'),
 
-(9, 5, 'Principal Investigator'),
-(9, 6, 'Clinical Researcher'),
+(9, 5, 1, 0, 'Principal Investigator'),
+(9, 6, 0, 0, 'Clinical Researcher'),
 
-(10, 1, 'Principal Investigator'),
-(10, 2, 'Cybersecurity Specialist');
+(10, 1, 1, 0, 'Principal Investigator'),
+(10, 2, 0, 0, 'Cybersecurity Specialist');
 
 INSERT INTO grantTask (GrantID, DueDate, Objective, Completed)
 VALUES

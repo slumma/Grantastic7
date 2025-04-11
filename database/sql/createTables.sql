@@ -175,7 +175,7 @@ CREATE TABLE grantStaff(
 	grantStaffID int Identity(1,1) PRIMARY KEY,
 	GrantID int,
 	UserID int,
-	UserRole varchar(200)
+	UserRole varchar(200),
 	FOREIGN KEY (UserID) REFERENCES users(UserID),
 	DateAdded datetime default getdate(),
     FOREIGN KEY (GrantID) REFERENCES grants(GrantID));
