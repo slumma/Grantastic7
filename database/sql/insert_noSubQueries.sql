@@ -22,6 +22,19 @@ VALUES
 ('SocialAid', 'State', '909 Welfare Blvd'),
 ('TechInnovators', 'Institution', '1010 Future Rd');
 
+INSERT INTO funderNote (FunderID, Contents, AuthorID)
+VALUES 
+(1, 'Initial outreach email sent.', 1),
+(2, 'Call scheduled for next Tuesday.', 2),
+(3, 'They requested our annual report.', 3),
+(4, 'Follow-up needed on proposal feedback.', 4),
+(5, 'They approved preliminary budget.', 5),
+(6, 'Requested additional info on deliverables.', 6),
+(7, 'Potential to co-fund upcoming initiative.', 2),
+(8, 'Meeting confirmed for next month.', 1),
+(9, 'Sent thank you note after site visit.', 3),
+(10, 'Discussed long-term partnership possibilities.', 4);
+
 INSERT INTO person (UserID, Pronouns, Firstname, LastName)
 VALUES
 (1, 'She/Her', 'Sarah', 'Bennett'), --personID 1
@@ -34,6 +47,11 @@ VALUES
 
 (8, 'He/Him', 'sam', 'o'), --personID 8 FUNDER POC (USER)
 (null, 'He/Him', 'roy', 'rinehart'); --personID 9 FUNDER POC (NON-USER)
+
+INSERT INTO externalPartner (UserID)
+VALUES
+(9),
+(5);
 
 INSERT INTO funderPOC (PersonID, FunderID)
 VALUES
