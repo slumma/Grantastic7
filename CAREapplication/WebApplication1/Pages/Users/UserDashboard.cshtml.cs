@@ -53,7 +53,7 @@ namespace CAREapplication.Pages.Users
                 ProjectReader();
 
                 //Load Grant List
-                GrantReader();
+                GrantReader(activeUserID);
 
                 return Page();
             }
@@ -143,6 +143,28 @@ namespace CAREapplication.Pages.Users
         public void GrantReader()
         {
             using (SqlDataReader grantReader = DBGrant.allGrantReader())
+            {
+                while (grantReader.Read())
+                {
+                    GrantList.Add(new GrantSimple
+                    {
+                        GrantID = Convert.ToInt32(grantReader["GrantID"]),
+                        GrantName = grantReader["GrantName"].ToString(),
+                        Funder = grantReader["FunderName"].ToString(),
+                        Amount = Convert.ToSingle(grantReader["Amount"]),
+                        Category = grantReader["Category"].ToString(),
+                        Status = grantReader["StatusName"].ToString(),
+                        SubmissionDate = Convert.ToDateTime(grantReader["SubmissionDate"]),
+                        AwardDate = Convert.ToDateTime(grantReader["AwardDate"])
+                    });
+                }
+            }
+            DBGrant.DBConnection.Close();
+        }
+
+        public void GrantReader(int UserID)
+        {
+            using (SqlDataReader grantReader = DBGrant.facGrantReader(UserID))
             {
                 while (grantReader.Read())
                 {

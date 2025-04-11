@@ -29,7 +29,6 @@
                 <div class="d-flex justify-content-start mb-3">
                     <a class="btn back-btn px-0 fw-bold" asp-page="BusinessPartners">&lt; PREVIOUS</a>
                 </div>
-
                 <h2 class="text-center mb-4">@Model.funder.FunderName</h2>
                 <!-- Partnership Overview Section -->
                 <h6 class="section-label">PARTNERSHIP OVERVIEW</h6>
@@ -61,6 +60,8 @@
 
                     <!-- Right Box: Status Tracking -->
                     <div class="col-md-4 pe-md-4">
+                        
+                        
                         @{
                             string statusColor = "#808080";
                             int statusOffset = 314;
@@ -81,6 +82,7 @@
                                 statusOffset = 314; // Empty circle
                             }
                         }
+                        
 
                         <div class="gray-box text-center p-4" style="min-height: 280px;">
                             <h4 class="pt-4 fw-bold">Status Tracking:</h4>
@@ -104,7 +106,7 @@
 
                         <!-- Centered Edit Progress Button -->
                         <div class="text-center mt-2">
-                            <button class="btn sm-btn mt-2">Edit Progress</button>
+                            <button class="btn sm-btn mt-2" onclick="openProgressModal()">Edit Progress</buton>
                         </div>
                     </div>
                 </div>
@@ -251,6 +253,7 @@
         }
 
         function openProgressModal() {
+          console.log("Opening progress modal...");
           document.getElementById("progressModal").classList.remove("d-none");
         }
 

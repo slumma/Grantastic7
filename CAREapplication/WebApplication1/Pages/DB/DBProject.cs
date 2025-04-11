@@ -542,6 +542,34 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
+        public static SqlDataReader adminProjectReader()
+        {
+            SqlCommand cmdGrantReader = new SqlCommand();
+            cmdGrantReader.Connection = DBConnection;
+            cmdGrantReader.Connection.ConnectionString = DBConnString;
+
+            cmdGrantReader.CommandText = @"
+        SELECT 
+            *
+        FROM grants g
+        JOIN Funder s ON g.FunderID = s.FunderID
+        LEFT JOIN project p ON g.ProjectID = p.ProjectID
+        LEFT JOIN (
+            SELECT GrantID, StatusName
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (PARTITION BY GrantID ORDER BY ChangeDate DESC) AS rn
+                FROM grantStatus
+            ) latest
+            WHERE rn = 1
+        ) gs ON g.GrantID = gs.GrantID
+        ORDER BY g.AwardDate;
+    ";
+
+            cmdGrantReader.Connection.Open();
+            SqlDataReader tempReader = cmdGrantReader.ExecuteReader();
+            return tempReader;
+        }
     }
 }
 
