@@ -560,5 +560,24 @@ namespace CAREapplication.Pages.DB
                 DBConnection.Close();
             }
         }
+
+        public static void InsertGrantStaff(int grantID, int userID, string userRole)
+        {
+            string query = @"
+        INSERT INTO grantStaff (GrantID, UserID, UserRole)
+        VALUES (@GrantID, @UserID, @UserRole);
+    ";
+
+            SqlCommand cmd = new SqlCommand(query, DBClass.DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+
+            DBClass.DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBClass.DBConnection.Close();
+        }
+
+
     }
 }

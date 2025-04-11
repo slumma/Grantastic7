@@ -86,8 +86,54 @@
                         </table>
                     </div>
                     <div class="text-center mt-2">
-                        <button class="btn sm-btn">EDIT/ADD STAFF</button>
+                        <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editGrantStaffModal">ADD STAFF</button>
                     </div>
+
+
+                    <!-- Add/Edit Grant Staff Modal -->
+                    <div class="modal fade" id="editGrantStaffModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content text-center p-4">
+                                <div class="modal-header border-0 justify-content-end">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <h4 class="fw-bold mb-3">Add or Edit Grant Staff</h4>
+                                <form method="post" asp-page-handler="EditStaff">
+
+                                    <!-- Live search input -->
+                                    <div class="form-group mb-3 position-relative">
+                                        <label for="GrantStaffSearch">Search Staff (by name or username)</label>
+                                        <input class="form-control" id="GrantStaffSearch" name="StaffName" autocomplete="off" required />
+
+                                        <!-- Dropdown for suggestions -->
+                                        <ul id="GrantStaffSearchResults" class="list-group position-absolute w-100 mt-1" style="z-index: 1000;"></ul>
+                                    </div>
+
+                                    <!-- Role selector -->
+                                    <div class="form-group mb-3">
+                                        <label for="UserRole">Assign Role</label>
+                                        <select class="form-select" id="UserRole" name="UserRole" required>
+                                            <option value="Principle Investigator">Principle Investigator</option>
+                                            <option value="Co-Principle Investigator">Co-Principle Investigator</option>
+                                            <option value="Staff">Staff</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Hidden field to submit UserID -->
+                                    <input type="hidden" id="SelectedGrantUserID" name="UserID" />
+
+                                    <!-- GrantID for context -->
+                                    <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+
+                                    <button type="submit" class="btn save-btn">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <h6 class="section-label">GRANT TASKS</h6>
                 <div class="table-container">
@@ -363,6 +409,54 @@
                 origin: { y: 0.6 }
             });
         }
+    </script>
+
+    <script>
+        const grantStaffList = [
+        @foreach (var user in Model.AllUsers)
+        {
+            <text>
+                        {
+                            name: "@user.FirstName @user.LastName",
+                            username: "@user.UserName",
+                            id: @user.UserID
+                        },
+            </text>
+        }
+        ];
+
+        const grantInput = document.getElementById("GrantStaffSearch");
+        const grantResults = document.getElementById("GrantStaffSearchResults");
+        const grantHiddenUserID = document.getElementById("SelectedGrantUserID");
+
+        grantInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            grantResults.innerHTML = "";
+
+            if (query.length === 0) return;
+
+            const matches = grantStaffList.filter(u =>
+                u.name.toLowerCase().includes(query) || u.username.toLowerCase().includes(query)
+            );
+
+            matches.forEach(u => {
+                const li = document.createElement("li");
+                li.className = "list-group-item list-group-item-action";
+                li.textContent = `${u.name} (${u.username})`;
+                li.addEventListener("click", function () {
+                    grantInput.value = u.name;
+                    grantHiddenUserID.value = u.id;
+                    grantResults.innerHTML = "";
+                });
+                grantResults.appendChild(li);
+            });
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!grantInput.contains(e.target)) {
+                grantResults.innerHTML = "";
+            }
+        });
     </script>
 </body>
 </html>

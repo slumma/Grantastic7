@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using global::CAREapplication.Pages.DataClasses;
 using global::CAREapplication.Pages.DB;
 using System.Diagnostics;
+using System.IO;
 
 namespace CAREapplication.Pages.Grant
 {
@@ -21,6 +22,7 @@ namespace CAREapplication.Pages.Grant
         public List<FileRecord> GrantFiles { get; set; } = new List<FileRecord>();
         public List<User> UserTaskList { get; set; } = new List<User>();
         public List<int> progressList { get; set; } = new List<int>();
+        public List<User> AllUsers { get; set; } = new List<User>();
         public int progress { get; set; }
         public int total { get; set; }
         public int completed { get; set; }
@@ -35,6 +37,9 @@ namespace CAREapplication.Pages.Grant
             grant = new GrantSimple(); // Initialize the grant object
             DBGrant.DBConnection.Close();
             SqlDataReader grantReader = DBGrant.SingleGrantReader(grantID);
+
+            int activeUserID = Convert.ToInt32(HttpContext.Session.GetInt32("userID"));
+
 
             while (grantReader.Read())
             {
@@ -114,6 +119,7 @@ namespace CAREapplication.Pages.Grant
 
             progress = Convert.ToInt32(completed / total);
 
+            UserReader(activeUserID);
 
             return Page();
         }
@@ -142,6 +148,27 @@ namespace CAREapplication.Pages.Grant
             DBFaculty.DBConnection.Close();
 
             return staffList;
+        }
+
+        public void UserReader(int userID)
+        {
+            using (SqlDataReader reader = DBClass.UserReader())
+            {
+                while (reader.Read())
+                {
+                    AllUsers.Add(new User
+                    {
+                        UserID = Convert.ToInt32(reader["UserID"]),
+                        UserName = reader["Username"].ToString(),
+                        FirstName = reader["FirstName"].ToString(),
+                        LastName = reader["LastName"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        Email = reader["Email"].ToString()
+                    });
+                }
+            }
+
+            DBClass.DBConnection.Close();
         }
         public IActionResult OnPostAddNote(int grantID, string NoteContent)
         {
@@ -231,6 +258,27 @@ namespace CAREapplication.Pages.Grant
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"File upload failed: {ex.Message}");
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
+
+        public IActionResult OnPostEditStaff(int GrantID, int UserID, string UserRole)
+        {
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index");
+            }
+
+            try
+            {
+                DBGrant.InsertGrantStaff(GrantID, UserID, UserRole);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Insert Grant Staff): {ex.Message}");
+                ModelState.AddModelError("", "Error adding staff: " + ex.Message);
             }
 
             return RedirectToPage(new { grantID = GrantID });
