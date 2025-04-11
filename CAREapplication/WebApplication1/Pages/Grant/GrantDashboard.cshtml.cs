@@ -31,7 +31,11 @@ namespace CAREapplication.Pages.Grant
 
         public IActionResult OnGet()
         {
-
+            if (HttpContext.Session.GetInt32("loggedIn") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You must login to access that page!");
+                return RedirectToPage("../Index"); // Redirect to login page
+            }
 
             if (HttpContext.Session.GetInt32("director") == 1)
             {

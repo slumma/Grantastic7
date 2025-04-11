@@ -17,11 +17,16 @@ namespace CAREapplication.Pages.Users
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index"); // Redirect to login page
             }
+            
+            int? sessionUserID = HttpContext.Session.GetInt32("userID");
+
+            if (userID != sessionUserID)
+            {
+                HttpContext.Session.SetString("LoginError", "You can only edit your own profile.");
+                return RedirectToPage("../Users/EditProfile", new { userID = sessionUserID }); // optionally redirect to their own profile
+            }
 
             activeUser = DBClass.GetUserByID(userID);
-            
-            
-
             return Page();
         }
 

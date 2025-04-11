@@ -24,6 +24,13 @@ namespace CAREapplication.Pages.Grant
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index"); // Redirect to login page
             }
+
+            if (HttpContext.Session.GetInt32("director") != 1 && HttpContext.Session.GetInt32("adminAssistant") != 1)
+            {
+                HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
+                return RedirectToPage("../Users/UserDashboard"); // Redirect to login page
+            }
+
             // made a method at the bottom of the file so i dont have to copy and paste it a bunch of times 
             FunderList = LoadFunders();
             ProjectList = LoadProjects();

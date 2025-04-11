@@ -10,6 +10,15 @@ CREATE TABLE funder(
     OrgType nvarchar(200),
     BusinessAddress nvarchar(200));
 
+CREATE TABLE funderNote(
+	FunderNoteID int Identity(1,1) PRIMARY KEY,
+	FunderID int,
+	Contents nvarchar(max),
+	DateAdded datetime default getdate(),
+	AuthorID int,
+	FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
+	FOREIGN KEY (AuthorID) REFERENCES users(UserID);
+
 CREATE TABLE person(
 	PersonID int Identity(1,1) PRIMARY KEY,
 	UserID int,
@@ -38,11 +47,17 @@ CREATE TABLE funderPOC(
 	FOREIGN KEY (FunderID) REFERENCES funder(FunderID));
 
 CREATE TABLE funderRep (
-    FunderRepID INT IDENTITY(1,1) PRIMARY KEY, -- Unique identifier
+    FunderRepID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT,
     FunderID INT,
     CommunicationStatus NVARCHAR(200),
     FOREIGN KEY (FunderID) REFERENCES funder(FunderID),
+    FOREIGN KEY (UserID) REFERENCES users(UserID)
+);
+
+CREATE TABLE externalPartner (
+    externalPartnerID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT,
     FOREIGN KEY (UserID) REFERENCES users(UserID)
 );
 
