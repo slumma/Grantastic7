@@ -177,9 +177,10 @@ table {
 	color: var (--light-gray) !important;
 }
 .table-body tbody tr {
-	background-color: var(--medium-gray) !important; /* Or whatever default row color */
+	background-color: #f5f5f5 !important; /* Or whatever default row color */
 	border-radius: 12px;
 	overflow: hidden;
+	border-color: #f5f5f5 !important;
 }
 
 .table-body tbody tr:first-child td {
@@ -192,6 +193,7 @@ table {
   padding-left: 12px !important;
   padding-right: 12px !important;
   background-color: #D9D9D9; /* Optional: ensure consistent fill */
+  border-color:#f5f5f5 !important;
 }
 
 .table-body tbody tr:last-child td:first-child {
@@ -323,3 +325,4 @@ table {
   background-color: var(--dark-purple);
   color: black;
 }
+
