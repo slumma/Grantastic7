@@ -206,6 +206,8 @@ namespace CAREapplication.Pages.Project
                 progress = 0;
             }
 
+            UserReader(activeUserID);
+
             return Page();
         }
         public IActionResult OnPostAddNote(int ProjectID, string NoteContent)
