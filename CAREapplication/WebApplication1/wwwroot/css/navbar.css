@@ -54,7 +54,7 @@ header {
 
 .custom-dropdown {
     border-radius: 0 0 5px 5px;
-    background-color: var(--dark-purple);
+    background-color: #CBB677 !important;
     padding: 0.5rem 0;
     border: none;
     min-width: 180px;
