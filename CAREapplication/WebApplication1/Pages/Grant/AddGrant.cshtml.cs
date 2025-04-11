@@ -66,7 +66,7 @@ namespace CAREapplication.Pages.Grant
                 int projectID = selectedProject.ProjectID;
 
                 DBGrant.InsertGrant(newGrant, FunderID, projectID, Convert.ToInt32(HttpContext.Session.GetInt32("userID")));
-                return RedirectToPage("FacultyLanding");
+                return RedirectToPage("/Grant/GrantDashboard");
             }
 
             Trace.WriteLine("invalid");

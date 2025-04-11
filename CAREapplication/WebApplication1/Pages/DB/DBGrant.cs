@@ -226,9 +226,10 @@ namespace CAREapplication.Pages.DB
 
         public static void InsertGrant(GrantSimple g, int FunderID, int projectID, int userID)
         {
-            String insertGrantQuery = "INSERT INTO grants (FunderID, GrantName, ProjectID, GrantStatus, Category, SubmissionDate, descriptions, AwardDate, Amount) " +
-                              "VALUES (@FunderID, @GrantName, @ProjectID, @StatusName, @Category, @SubmissionDate, @Descriptions, @AwardDate, @Amount); SELECT SCOPE_IDENTITY();";
+            String insertGrantQuery = "INSERT INTO grants (FunderID, GrantName, ProjectID, Category, SubmissionDate, descriptions, AwardDate, Amount) " +
+                              "VALUES (@FunderID, @GrantName, @ProjectID, @Category, @SubmissionDate, @Descriptions, @AwardDate, @Amount); SELECT SCOPE_IDENTITY();";
             String insertGrantStaffQuery = "INSERT INTO grantStaff (GrantID, UserID) VALUES (@GrantID, @UserID);";
+            String insertGrantStatus = "INSERT INTO grantStatus (StatusName, GrantID) VALUES (@StatusName, @GrantID);";
 
             int GrantID;
 
@@ -239,7 +240,9 @@ namespace CAREapplication.Pages.DB
                 cmdInsertGrant.Connection.ConnectionString = DBConnString;
 
                 cmdInsertGrant.Parameters.AddWithValue("@FunderID", FunderID);
+                cmdInsertGrant.Parameters.AddWithValue("@GrantID", g.GrantID);
                 cmdInsertGrant.Parameters.AddWithValue("@GrantName", g.GrantName);
+                cmdInsertGrant.Parameters.AddWithValue("@StatusName", g.Status);
                 cmdInsertGrant.Parameters.AddWithValue("@ProjectID", projectID);
                 cmdInsertGrant.Parameters.AddWithValue("@GrantStatus", g.Status);
                 cmdInsertGrant.Parameters.AddWithValue("@Category", g.Category);
