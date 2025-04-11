@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                 </table>
-                    <div class="table-scroll">
+                    <div >
                         <table class="table text-center align-middle table-bordered table-body mt-0">
                             <tbody>
                                 @foreach (var staff in Model.staffList)
@@ -99,7 +99,9 @@
                                         <td>@staff.UserRole</td>
                                         <td>@staff.Email</td>
                                         <td>@staff.Phone</td>
-                                        <td><button class="btn sm-btn">Edit</button></td>
+                                        <td>
+                                            <button class="btn sm-btn" onclick="openEditRoleModal('@staff.UserID', '@staff.UserRole')">Edit</button>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -109,6 +111,31 @@
                         <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editGrantStaffModal">ADD STAFF</button>
                     </div>
 
+                    <!-- Edit Grant Staff Role Modal -->
+                    <div class="modal fade" id="editStaffRoleModal" tabindex="-1" aria-labelledby="editStaffRoleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content text-center p-4">
+                                <div class="modal-header border-0 justify-content-end">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <h4 class="fw-bold mb-3">Edit Staff Permissions</h4>
+                                <form method="post" asp-page-handler="EditStaffRole">
+                                    <div class="form-group mb-3">
+                                        <label for="editUserRole">Assign New Role</label>
+                                        <select class="form-select" id="editUserRole" name="UserRole" required>
+                                            <option value="Principle Investigator">Principle Investigator</option>
+                                            <option value="Co-Principle Investigator">Co-Principle Investigator</option>
+                                            <option value="Staff">Staff</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" id="EditUserID" name="UserID" />
+                                    <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                    <button type="submit" class="btn save-btn">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Add/Edit Grant Staff Modal -->
                     <div class="modal fade" id="editGrantStaffModal" tabindex="-1" aria-hidden="true">
@@ -133,8 +160,8 @@
                                     <div class="form-group mb-3">
                                         <label for="UserRole">Assign Role</label>
                                         <select class="form-select" id="UserRole" name="UserRole" required>
-                                            <option value="Principle Investigator">Principle Investigator</option>
-                                            <option value="Co-Principle Investigator">Co-Principle Investigator</option>
+                                            <option value="Principal Investigator">Principal Investigator</option>
+                                            <option value="Co-Principal Investigator">Co-Principal Investigator</option>
                                             <option value="Staff">Staff</option>
                                             <option value="Other">Other</option>
                                         </select>
@@ -478,5 +505,15 @@
             }
         });
     </script>
+
+    <script>
+        function openEditRoleModal(userID, currentRole) {
+            document.getElementById("EditUserID").value = userID;
+            document.getElementById("editUserRole").value = currentRole;
+            var editModal = new bootstrap.Modal(document.getElementById('editStaffRoleModal'));
+            editModal.show();
+        }
+    </script>
+
 </body>
 </html>
