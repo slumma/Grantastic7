@@ -599,5 +599,44 @@ namespace CAREapplication.Pages.DB
             DBConnection.Close();
         }
 
+        public static void UpdateGrantStaffPermissions(int grantID, int userID, string userRole, bool isPI, bool isCoPI)
+        {
+            string query = @"
+        UPDATE grantStaff
+        SET UserRole = @UserRole,
+            PrincipalInvestigator = @PrincipalInvestigator,
+            CoPI = @CoPI
+        WHERE GrantID = @GrantID AND UserID = @UserID;
+    ";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@UserRole", userRole ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@PrincipalInvestigator", isPI);
+            cmd.Parameters.AddWithValue("@CoPI", isCoPI);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+        public static void RemoveGrantStaff(int grantID, int userID)
+        {
+            string query = @"
+        DELETE FROM grantStaff
+        WHERE GrantID = @GrantID AND UserID = @UserID;
+    ";
+
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+            cmd.Parameters.AddWithValue("@GrantID", grantID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
+        }
+
+
     }
 }

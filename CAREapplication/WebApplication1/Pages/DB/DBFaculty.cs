@@ -33,15 +33,7 @@ namespace CAREapplication.Pages.DB
             cmdFacultyReader.Connection = DBConnection;
             cmdFacultyReader.Connection.ConnectionString = DBConnString;
             cmdFacultyReader.CommandText = @"SELECT DISTINCT
-                                                u.UserID,
-                                                u.Username,
-                                                p.FirstName,
-                                                p.LastName,
-                                                c.Email,
-                                                c.Phone,
-                                                c.HomeAddress,
-                                                g.GrantName,
-                                                gs.UserRole
+                                                *
                                             FROM 
                                                 grantStaff gs
                                             JOIN 

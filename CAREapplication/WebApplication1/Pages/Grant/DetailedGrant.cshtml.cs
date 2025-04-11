@@ -138,12 +138,16 @@ namespace CAREapplication.Pages.Grant
             {
                 staffList.Add(new GrantStaff
                 {
+                    UserID = Convert.ToInt32(staffReader["UserID"]),
                     FirstName = staffReader["FirstName"].ToString(),
                     LastName = staffReader["LastName"].ToString(),
                     Email = staffReader["Email"].ToString(),
                     Phone = staffReader["Phone"].ToString(),
-                    UserRole = staffReader["UserRole"].ToString()
+                    UserRole = staffReader["UserRole"].ToString(),
+                    PrincipalInvestigator = Convert.ToInt32(staffReader["PrincipalInvestigator"]),
+                    CoPI = Convert.ToInt32(staffReader["CoPi"])
                 });
+
             }
             DBFaculty.DBConnection.Close();
 
@@ -307,6 +311,32 @@ namespace CAREapplication.Pages.Grant
 
             return RedirectToPage(new { grantID = GrantID });
         }
+
+        public IActionResult OnPostEditGrantPermissions(int GrantID, int UserID, string UserRole, bool PrincipalInvestigator, bool CoPI)
+        {
+            Trace.WriteLine($"Updating Grant Staff: GrantID={GrantID}, UserID={UserID}, Role={UserRole}, PI={PrincipalInvestigator}, CoPI={CoPI}");
+
+            DBGrant.UpdateGrantStaffPermissions(GrantID, UserID, UserRole, PrincipalInvestigator, CoPI);
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
+
+
+        public IActionResult OnPostRemoveStaff(int GrantID, int UserID)
+        {
+            try
+            {
+                DBGrant.RemoveGrantStaff(GrantID, UserID);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Remove Grant Staff): {ex.Message}");
+                ModelState.AddModelError("", "Error removing grant staff: " + ex.Message);
+            }
+
+            return RedirectToPage(new { grantID = GrantID });
+        }
+
 
     }
 }

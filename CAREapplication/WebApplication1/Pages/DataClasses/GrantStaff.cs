@@ -13,5 +13,7 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public string HomeAddress { get; set; }
+        public int PrincipalInvestigator { get; set; }
+        public int CoPI { get; set; }
     }
 }

@@ -76,20 +76,21 @@
                     </div>
                 </div>
 
+
                 <h6 class="section-label">GRANT STAFF</h6>
                 <div class="mb-4">
-                <table class="table text-center align-middle table-bordered header-table">
-                    <thead>
-                        <tr>
+                    <table class="table text-center align-middle table-bordered header-table">
+                        <thead>
+                            <tr>
                                 <th>NAME</th>
                                 <th>ROLE</th>
                                 <th>EMAIL</th>
                                 <th>PHONE</th>
                                 <th>EDIT USER / PERMISSIONS</th>
-                        </tr>
-                    </thead>
-                </table>
-                    <div >
+                            </tr>
+                        </thead>
+                    </table>
+                    <div>
                         <table class="table text-center align-middle table-bordered table-body mt-0">
                             <tbody>
                                 @foreach (var staff in Model.staffList)
@@ -100,42 +101,71 @@
                                         <td>@staff.Email</td>
                                         <td>@staff.Phone</td>
                                         <td>
-                                            <button class="btn sm-btn" onclick="openEditRoleModal('@staff.UserID', '@staff.UserRole')">Edit</button>
+                                            <!-- Trigger Edit Modal -->
+                                            <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editStaffModal-@staff.UserID">
+                                                Edit
+                                            </button>
+
+                                            <!-- Modal for Editing Staff -->
+                                            <div class="modal fade" id="editStaffModal-@staff.UserID" tabindex="-1" aria-labelledby="editStaffModalLabel-@staff.UserID" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content text-center p-4">
+                                                        <div class="modal-header border-0 justify-content-end">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <h4 class="fw-bold mb-3">Edit Staff Permissions</h4>
+
+                                                        <!-- Edit Form -->
+                                                        <form method="post" asp-page-handler="EditGrantPermissions">
+                                                            <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                                            <input type="hidden" name="UserID" value="@staff.UserID" />
+
+                                                            <div class="form-group mb-3">
+                                                                <label>Custom Role</label>
+                                                                <input type="text" class="form-control" name="UserRole" value="@staff.UserRole" />
+                                                            </div>
+
+                                                            <div class="form-check text-start">
+                                                                <input class="form-check-input" type="checkbox" id="pi-@staff.UserID" name="PrincipalInvestigator" value="true"
+                                                                @(staff.PrincipalInvestigator == 1 ? "checked" : null) />
+                                                                <label class="form-check-label" for="pi-@staff.UserID">Principal Investigator</label>
+                                                            </div>
+
+                                                            <div class="form-check text-start">
+                                                                <input class="form-check-input" type="checkbox" id="copi-@staff.UserID" name="CoPI" value="true"
+                                                                @(staff.CoPI == 1 ? "checked" : null) />
+                                                                <label class="form-check-label" for="copi-@staff.UserID">Co-Principal Investigator</label>
+                                                            </div>
+
+                                                            <div class="modal-footer d-flex flex-column gap-2">
+                                                                <button type="submit" class="btn save-btn w-100">Save Changes</button>
+                                                            </div>
+                                                        </form>
+
+                                                        <!-- Remove Form -->
+                                                        <form method="post" asp-page-handler="RemoveStaff">
+                                                            <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
+                                                            <input type="hidden" name="UserID" value="@staff.UserID" />
+                                                            <button type="submit" class="btn btn-danger w-100">Remove Staff</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
+               
+
                     <div class="text-center mt-2">
                         <button class="btn sm-btn" data-bs-toggle="modal" data-bs-target="#editGrantStaffModal">ADD STAFF</button>
                     </div>
 
-                    <!-- Edit Grant Staff Role Modal -->
-                    <div class="modal fade" id="editStaffRoleModal" tabindex="-1" aria-labelledby="editStaffRoleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content text-center p-4">
-                                <div class="modal-header border-0 justify-content-end">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <h4 class="fw-bold mb-3">Edit Staff Permissions</h4>
-                                <form method="post" asp-page-handler="EditStaffRole">
-                                    <div class="form-group mb-3">
-                                        <label for="editUserRole">Assign New Role</label>
-                                        <select class="form-select" id="editUserRole" name="UserRole" required>
-                                            <option value="Principle Investigator">Principle Investigator</option>
-                                            <option value="Co-Principle Investigator">Co-Principle Investigator</option>
-                                            <option value="Staff">Staff</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <input type="hidden" id="EditUserID" name="UserID" />
-                                    <input type="hidden" name="GrantID" value="@Model.grant.GrantID" />
-                                    <button type="submit" class="btn save-btn">Save Changes</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                  
+
 
                     <!-- Add/Edit Grant Staff Modal -->
                     <div class="modal fade" id="editGrantStaffModal" tabindex="-1" aria-hidden="true">
@@ -506,14 +536,11 @@
         });
     </script>
 
-    <script>
-        function openEditRoleModal(userID, currentRole) {
-            document.getElementById("EditUserID").value = userID;
-            document.getElementById("editUserRole").value = currentRole;
-            var editModal = new bootstrap.Modal(document.getElementById('editStaffRoleModal'));
-            editModal.show();
-        }
-    </script>
+    
+
+   
+
+
 
 </body>
 </html>
