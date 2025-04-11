@@ -23,6 +23,10 @@ namespace CAREapplication.Pages.Project
         [Required(ErrorMessage = "You must have a search term.")]
         public String searchTerm { get; set; }
         public required List<ProjectSimple> searchedProjectList { get; set; } = new List<ProjectSimple>();
+        public int director { get; set; }
+        public int adminAssistant { get; set; }
+        public int manager { get; set; }
+        public int activeUserID { get; set; } = new int();
 
         public IActionResult OnGet()
         {
@@ -31,8 +35,26 @@ namespace CAREapplication.Pages.Project
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("../Index");
             }
+
+            activeUserID = Convert.ToInt32(HttpContext.Session.GetInt32("userID"));
+            director = Convert.ToInt32(HttpContext.Session.GetInt32("director"));
+            adminAssistant = Convert.ToInt32(HttpContext.Session.GetInt32("adminAssistant"));
+
+            if (director == 1)
+            {
+                //Load Project List
+                ProjectReader();
+
+            }
+
+            //GENERAL USER VIEW
+            else
+            {
+                UserProjectReader(activeUserID);
+            }
+
             DBProject.DBConnection.Close();
-            LoadProjects();
+
             Trace.WriteLine(projectList.Count);
             return Page();
         }
@@ -56,7 +78,14 @@ namespace CAREapplication.Pages.Project
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 ModelState.AddModelError("searchTerm", "Search term cannot be empty.");
-                LoadProjects(); // Load all projects so they still display
+                if (director == 1)
+                {
+                    ProjectReader();
+                }
+                else
+                {
+                    UserProjectReader(activeUserID);
+                } 
                 return Page();
             }
 
@@ -88,6 +117,43 @@ namespace CAREapplication.Pages.Project
                     DueDate = DateTime.Parse(projectReader["DueDate"].ToString()),
                     Amount = projectReader["Amount"] != DBNull.Value && projectReader["Amount"].ToString() != "" ? float.Parse(projectReader["Amount"].ToString()) : 0f
                 });
+            }
+            DBProject.DBConnection.Close();
+        }
+
+        public void ProjectReader()
+        {
+            using (SqlDataReader reader = DBProject.ProjectReader())
+            {
+                while (reader.Read())
+                {
+                    projectList.Add(new ProjectSimple
+                    {
+                        ProjectID = Int32.Parse(reader["ProjectID"].ToString()),
+                        ProjectName = reader["ProjectName"].ToString(),
+                        DueDate = DateTime.Parse(reader["DueDate"].ToString()),
+                        Amount = reader["Amount"] != DBNull.Value && reader["Amount"].ToString() != "" ? float.Parse(reader["Amount"].ToString()) : 0f
+                    });
+                }
+            }
+            DBProject.DBConnection.Close();
+        }
+
+
+        public void UserProjectReader(int userID)
+        {
+            using (SqlDataReader reader = DBProject.UserProjectReader(Convert.ToInt32(HttpContext.Session.GetInt32("userID"))))
+            {
+                while (reader.Read())
+                {
+                    projectList.Add(new ProjectSimple
+                    {
+                        ProjectID = Int32.Parse(reader["ProjectID"].ToString()),
+                        ProjectName = reader["ProjectName"].ToString(),
+                        DueDate = DateTime.Parse(reader["DueDate"].ToString()),
+                        Amount = reader["Amount"] != DBNull.Value && reader["Amount"].ToString() != "" ? float.Parse(reader["Amount"].ToString()) : 0f
+                    });
+                }
             }
             DBProject.DBConnection.Close();
         }

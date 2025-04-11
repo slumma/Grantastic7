@@ -80,7 +80,12 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end gap-3 mt-3">
-                <a class="btn lg-btn" asp-page="/BusinessPartners">VIEW BUSINESS PARTNERS</a>
+
+                @if (Model.director == 1 || Model.adminAssistant == 1)
+                {
+                    <a class="btn lg-btn" asp-page="/BusinessPartners">VIEW BUSINESS PARTNERS</a>
+                }
+                
                 <a class="btn lg-btn" asp-page="AddProject">ADD PROJECT</a>
             </div>
         </div>

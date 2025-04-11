@@ -10,7 +10,7 @@ VALUES
 ('nadeemhudson', '1000:tdLYK3BlToGRL6Z9s9xkAdXwMiuHewEP:U0P2vWYdf7nQVlRFIct8E3a8skk='),
 ('joshwhite', '1000:lUpd7evTLNvYJwA4VzVPv8UTbTiqMETA:t8e8kug3nV+5MI3ooy88i21N1SI='),
 ('sharons', '1000:Jz+J7F/LvryFn04MLhC7C3JUpmM3zfXF:kGYht25u+FyGY1BI9wiGUGl/dvM='),
-('jezell', '1000:CmQ5ygpkxooV6EdIj7/qRl5RfMIMh50q:2MioCDWfIvEMX5kNC1sbJ/h+DtE='),
+('marcusjohnson', '1000:CmQ5ygpkxooV6EdIj7/qRl5RfMIMh50q:2MioCDWfIvEMX5kNC1sbJ/h+DtE='),
 ('benfrench', '1000:16V5YyRKSwcz3R9HoDW7RH0NAZI/5q9x:cRIxRzzOiP6MrsapKLbRfkf7k84='),
 ('royrinehart', '1000:36Ju8poOL9YzNnYSBZWEC/XfESfyyaGF:EhYQtt5kZ/Ahd38o9Bi2g1oNTRQ='),
 ('ryanbucciero', '1000:azTtjKC1Bgy+HeXHhTjXxbPk+KlUSOT/:GTdXkKTg+THLmjh+EkAJSYF9Q6k='),

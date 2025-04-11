@@ -20,12 +20,12 @@ namespace CAREapplication.Pages
             if (HttpContext.Session.GetInt32("loggedIn") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
+                return RedirectToPage("/Index"); // Redirect to login page
             }
             if (HttpContext.Session.GetInt32("director") != 1 && HttpContext.Session.GetInt32("adminAssistant") != 1)
             {
                 HttpContext.Session.SetString("LoginError", "You do not have permission to access that page!");
-                return RedirectToPage("../Index"); // Redirect to login page
+                return RedirectToPage("/Index"); // Redirect to login page
             }
 
             return Page();
