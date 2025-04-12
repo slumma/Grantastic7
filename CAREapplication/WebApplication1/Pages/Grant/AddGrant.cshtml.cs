@@ -111,7 +111,7 @@ namespace CAREapplication.Pages.Grant
                 Project = "Project Alpha",
                 Amount = 1000000,
                 Category = "Federal",
-                Status = "Pending",
+                Status = "Active",
                 Description = "It's for the kids!",
                 SubmissionDate = DateTime.Now,
                 AwardDate = DateTime.Now
