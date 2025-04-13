@@ -691,7 +691,7 @@ namespace CAREapplication.Pages.DB
                     Title = reader["Title"].ToString(),
                     Link = reader["Link"].ToString(),
                     GrantDescription = reader["GrantDescription"]?.ToString(),
-                    PostedDate = reader["PostedDate"] as DateTime?,
+                    PostedDate = reader["PostedDate"].ToString(),
                     DueDate = reader["DueDate"]?.ToString(),
                     AwardTypes = reader["AwardTypes"]?.ToString()
                 });
