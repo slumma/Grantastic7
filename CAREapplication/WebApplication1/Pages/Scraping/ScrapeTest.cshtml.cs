@@ -1,25 +1,29 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CAREapplication.Pages.Scraping;
-using CAREapplication.Pages.DB;
 using System.Collections.Generic;
+using CAREapplication.Pages.Scraping;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CAREapplication.Pages.Scraping
 {
     public class ScrapeTestModel : PageModel
     {
+        private readonly IWebHostEnvironment _env;
+
+        public ScrapeTestModel(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
+
         public List<NSFGrant> ScrapedGrants { get; set; } = new List<NSFGrant>();
 
         public void OnGet()
         {
-            ScrapedGrants = NFSGrantScraper.ScrapeGrants();
+            string filePath = Path.Combine(_env.WebRootPath, "Resources", "Prospects", "nsf_funding.csv");
 
-            foreach (var grant in ScrapedGrants)
+            if (System.IO.File.Exists(filePath))
             {
-                if (!DBGrant.NSFGrantExists(grant.Link))
-                {
-                    DBGrant.InsertNSFGrant(grant);
-                }
+                ScrapedGrants = NFSGrantScraper.LoadGrantsFromCsv(filePath);
             }
         }
     }
