@@ -1,0 +1,118 @@
+﻿             /* COLOR PALETTE */
+
+:root {
+    --dark-purple: #450084;
+    --light-purple: #DACCE6;
+    --lightest-gray: #F5F5F5;
+    --medium-gray: #D9D9D9;
+    --dark-gray: #1E1E1E;
+}
+
+/* Page background */
+body {
+    background-color: var(--light-purple);
+}
+
+h2 {
+    text-align: center;
+    padding-bottom: 35px;
+}
+
+.mb-4 {
+    padding-bottom: 35px;
+}
+/* Search bar styles */
+.search-bar {
+    max-width: 400px;
+    margin: 20px auto 30px auto;
+    padding-bottom: 35px;
+}
+
+    .search-bar input {
+        padding: 10px 15px;
+        border: 2px solid var(--dark-purple);
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+.btn-dark-purple {
+    background-color: #4b217c;
+    border-color: #4b217c;
+    color: white;
+}
+
+    .btn-dark-purple:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        background-color: #4b217c;
+        color: white;
+    }
+
+/* Grant card layout */
+.grant-card {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1.5px solid var(--dark-purple);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+    .grant-card .card-body {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 15px;
+        max-height: 400px; /* 👈 Force scrolling within card */
+    }
+
+    /* Title styling */
+    .grant-card .card-title {
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+    }
+
+/* Button at bottom */
+.detail-btn {
+    padding: 10px 15px;
+    border-top: 1px solid var(--medium-gray);
+    background-color: var(--lightest-gray);
+    text-align: right;
+}
+
+    .detail-btn .sm-btn {
+        background-color: var(--dark-purple);
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 6px 14px;
+        border-radius: 6px;
+        border: none;
+    }
+
+        .detail-btn .sm-btn:hover {
+            background-color: var(--light-purple);
+            color: black;
+        }
+
+/* Make all card links dark purple */
+.grant-card .card-title a {
+    color: var(--dark-purple);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+    .grant-card .card-title a:hover {
+        text-decoration: underline;
+        color: black;
+    }
+
+input.form-control {
+    border: 2px solid var(--dark-purple);
+    border-radius: 8px 0 0 8px;
+}
+
+.sm-btn {
+    border-radius: 0 8px 8px 0;
+}
+
