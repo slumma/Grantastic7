@@ -1,4 +1,5 @@
 ﻿using CAREapplication.Pages.DataClasses;
+using CAREapplication.Pages.Scraping;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -636,6 +637,69 @@ namespace CAREapplication.Pages.DB
             cmd.ExecuteNonQuery();
             DBConnection.Close();
         }
+
+
+
+        // SCRAPED GRANTS 
+        public static void InsertNSFGrant(NSFGrant grant)
+        {
+            using SqlConnection conn = new SqlConnection(DBConnection.ConnectionString);
+            conn.Open();
+
+            string query = @"INSERT INTO NSFGrants 
+                    (Title, Link, GrantDescription, PostedDate, DueDate, AwardTypes) 
+                    VALUES 
+                    (@Title, @Link, @GrantDescription, @PostedDate, @DueDate, @AwardTypes)";
+
+            using SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Title", grant.Title ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Link", grant.Link ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@GrantDescription", grant.GrantDescription ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@PostedDate", grant.PostedDate ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@DueDate", grant.DueDate ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@AwardTypes", grant.AwardTypes ?? (object)DBNull.Value);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static bool NSFGrantExists(string link)
+        {
+            using SqlConnection conn = new SqlConnection(DBConnection.ConnectionString);
+            conn.Open();
+
+            string query = "SELECT COUNT(*) FROM NSFGrants WHERE Link = @link";
+            using SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@link", link);
+
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+
+        public static List<NSFGrant> GetAllNSFGrants()
+        {
+            var grants = new List<NSFGrant>();
+            using SqlConnection conn = new SqlConnection(DBConnection.ConnectionString);
+            conn.Open();
+
+            string query = "SELECT * FROM NSFGrants ORDER BY RetrievedDate DESC";
+            using SqlCommand cmd = new SqlCommand(query, conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                grants.Add(new NSFGrant
+                {
+                    Title = reader["Title"].ToString(),
+                    Link = reader["Link"].ToString(),
+                    GrantDescription = reader["GrantDescription"]?.ToString(),
+                    PostedDate = reader["PostedDate"] as DateTime?,
+                    DueDate = reader["DueDate"]?.ToString(),
+                    AwardTypes = reader["AwardTypes"]?.ToString()
+                });
+            }
+
+            return grants;
+        }
+
 
 
     }

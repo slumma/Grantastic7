@@ -1,0 +1,33 @@
+﻿@page
+@model CAREapplication.Pages.Scraping.ScrapeTestModel
+@{
+    ViewData["Title"] = "Scrape NSF Grants";
+}
+
+<h2 class="mt-4">Scraped NSF Grants</h2>
+
+@if (Model.ScrapedGrants.Any())
+{
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var grant in Model.ScrapedGrants)
+        {
+            <div class="col">
+                <div class="card h-100 border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="@grant.Link" target="_blank">@grant.Title</a>
+                        </h5>
+                        <p class="card-text text-muted"><strong>Posted:</strong> @grant.PostedDate?.ToString("MMMM dd, yyyy")</p>
+                        <p class="card-text"><strong>Due:</strong> @grant.DueDate</p>
+                        <p class="card-text"><strong>Award Types:</strong> @grant.AwardTypes</p>
+                        <p class="card-text">@grant.GrantDescription</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning mt-3">No grants found.</div>
+}
