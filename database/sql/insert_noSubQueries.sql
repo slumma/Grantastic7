@@ -53,18 +53,18 @@ VALUES
 (7),
 (5);
 
-INSERT INTO funderPOC (PersonID, FunderID)
+INSERT INTO funderPOC (PersonID, FunderID, CommunicationStatus)
 VALUES
-(8, 1),
-(8, 2),
-(8, 3),
-(8, 4),
-(8, 5),
-(8, 6),
-(9, 7),
-(9, 8),
-(9, 9),
-(9, 10);
+(8, 1, 'Prospect'),
+(8, 2, 'MOU'),
+(8, 3, 'MOU Signed'),
+(8, 4, 'Completed'),
+(8, 5, 'Negotiation'),
+(8, 6, 'Prospect'),
+(9, 7, 'On Hold'),
+(9, 8, 'Initial Contact'),
+(9, 9, 'Active'),
+(9, 10, 'Prospect');
 
 INSERT INTO contact (PersonID, Email, Phone, HomeAddress, City, HomeState, Zip)
 VALUES

@@ -41,18 +41,18 @@ namespace CAREapplication.Pages
                 {
                     FunderID = int.Parse(FunderReader["FunderID"].ToString()),
                     FunderName = FunderReader["FunderName"].ToString(),
-                    FunderStatus = FunderReader["StatusName"].ToString(), 
+                    FunderStatus = FunderReader["StatusName"].ToString(),
                     OrgType = FunderReader["OrgType"].ToString(),
                     BusinessAddress = FunderReader["BusinessAddress"].ToString(),
 
-                    UserID = int.Parse(FunderReader["UserID"].ToString()),
-                    CommunicationStatus = FunderReader["CommunicationStatus"].ToString(),
+                    // Use POC values instead of rep
+                    FirstName = FunderReader["POCFirstName"].ToString(),
+                    LastName = FunderReader["POCLastName"].ToString(),
+                    Email = FunderReader["POCEmail"].ToString(),
+                    Phone = FunderReader["POCPhone"].ToString(),
+                    HomeAddress = FunderReader["POCAddress"].ToString(),
+                    CommunicationStatus = FunderReader["POCCommStatus"].ToString()
 
-                    FirstName = FunderReader["FirstName"].ToString(),
-                    LastName = FunderReader["LastName"].ToString(),
-                    Email = FunderReader["Email"].ToString(),
-                    Phone = FunderReader["Phone"].ToString(),
-                    HomeAddress = FunderReader["HomeAddress"].ToString()
                 });
             }
             DBFunder.DBConnection.Close();

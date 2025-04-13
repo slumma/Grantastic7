@@ -20,24 +20,39 @@ namespace CAREapplication.Pages.DB
             cmdProductRead.Connection = DBConnection;
             cmdProductRead.Connection.ConnectionString = DBConnString;
             cmdProductRead.CommandText = @"SELECT 
-                                                f.FunderID, 
-                                                f.FunderName, 
-                                                fs.StatusName, 
-                                                f.OrgType, 
-                                                f.BusinessAddress,
-                                                fr.UserID, 
-                                                fr.CommunicationStatus, 
-                                                p.FirstName, 
-                                                p.LastName, 
-                                                c.Email, 
-                                                c.Phone, 
-                                                c.HomeAddress
-                                            FROM funder f
-                                            JOIN funderStatus fs ON f.FunderID = fs.FunderID
-                                            JOIN funderRep fr ON f.FunderID = fr.FunderID
-                                            JOIN users u ON u.UserID = fr.UserID
-                                            JOIN person p ON p.UserID = u.UserID
-                                            JOIN contact c ON p.PersonID = c.PersonID;";
+                                            f.FunderID, 
+                                            f.FunderName, 
+                                            fs.StatusName, 
+                                            f.OrgType, 
+                                            f.BusinessAddress,
+
+
+                                            fr.UserID AS RepUserID, 
+                                            fr.CommunicationStatus AS RepCommStatus, 
+                                            p.FirstName AS RepFirstName, 
+                                            p.LastName AS RepLastName, 
+                                            c.Email AS RepEmail, 
+                                            c.Phone AS RepPhone, 
+                                            c.HomeAddress AS RepAddress,
+
+
+                                            poc.FirstName AS POCFirstName,
+                                            poc.LastName AS POCLastName,
+                                            contactPOC.Email AS POCEmail,
+                                            contactPOC.Phone AS POCPhone,
+                                            contactPOC.HomeAddress AS POCAddress,
+                                            fp.CommunicationStatus AS POCCommStatus
+
+                                        FROM funder f
+                                        JOIN funderStatus fs ON f.FunderID = fs.FunderID
+                                        JOIN funderRep fr ON f.FunderID = fr.FunderID
+                                        JOIN users u ON fr.UserID = u.UserID
+                                        JOIN person p ON u.UserID = p.UserID
+                                        JOIN contact c ON p.PersonID = c.PersonID
+                                        JOIN funderPOC fp ON f.FunderID = fp.FunderID
+                                        JOIN person poc ON fp.PersonID = poc.PersonID
+                                        JOIN contact contactPOC ON poc.PersonID = contactPOC.PersonID;
+                                        ";
             cmdProductRead.Connection.Open();
             SqlDataReader tempReader = cmdProductRead.ExecuteReader();
             return tempReader;

@@ -1,6 +1,9 @@
 ﻿@page
 @model CAREapplication.Pages.DetailedBusinessPartnersModel
 @{
+
+
+
 }
 
 <!DOCTYPE html>
@@ -18,6 +21,8 @@
     <link href="styles.css" rel="stylesheet" />
     <link href="/css/partner.details.custom.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-HMHPMtPev+wPpczN/EGIL3g8uLwJ4lDbWZk6yWiJke06GlG+IM4GBoH4Hq6wlVwhMJKzRc5K6Ygc+ZmEdwyqZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
@@ -63,42 +68,54 @@
                         
                         
                         @{
-                            string statusColor = "#808080";
-                            int statusOffset = 314;
+                            var statusMap = new Dictionary<string, int>
+                        {
+                        { "Prospect", 10 },
+                        { "Initial Contact", 25 },
+                        { "Negotiation", 40 },
+                        { "MOU", 55 },
+                        { "MOU Signed", 70 },
+                        { "Active", 85 },
+                        { "Completed", 100 },
+                        { "On Hold", 50 }
+                        };
 
-                            if (Model.funder.CommunicationStatus == "Active")
-                            {
-                                statusColor = "#4CAF50"; // Muted green
-                                statusOffset = 0; // Full circle
-                            }
-                            if (Model.funder.CommunicationStatus == "Pending")
-                            {
-                                statusColor = "#FF9800"; // Muted orange
-                                statusOffset = 157; // Half circle
-                            }
-                            if (Model.funder.CommunicationStatus == "Inactive")
-                            {
-                                statusColor = "#F44336"; // Muted red
-                                statusOffset = 314; // Empty circle
-                            }
+                            int statusPercent = statusMap.ContainsKey(Model.funder.CommunicationStatus)
+                            ? statusMap[Model.funder.CommunicationStatus]
+                            : 0;
+
+                            int dashOffset = 314 - (statusPercent * 314 / 100);
                         }
                         
 
                         <div class="gray-box text-center p-4" style="min-height: 280px;">
                             <h4 class="pt-4 fw-bold">Status Tracking:</h4>
-                            <div class="status-meter my-3 position-relative">
+                            <div class="status-meter my-3 position-relative" style="width: 160px; height: 160px; margin: 0 auto;">
                                 <svg width="160" height="160" viewBox="0 0 120 120">
                                     <circle cx="60" cy="60" r="50" stroke="#E6E6E6" stroke-width="17" fill="none" />
                                     <circle id="statusArc" cx="60" cy="60" r="50"
-                                            stroke="@statusColor"
+                                            stroke="#450084"
                                             stroke-width="17"
                                             fill="none"
                                             stroke-dasharray="314"
-                                            stroke-dashoffset="@statusOffset"
+                                            stroke-dashoffset="@dashOffset"
                                             stroke-linecap="round"
                                             transform="rotate(-90 60 60)" />
                                 </svg>
+
+                                <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 5;">
+                                    @if (Model.funder.CommunicationStatus == "Completed" || Model.funder.CommunicationStatus == "Active")
+                                    {
+                                        <i class="fa-solid fa-check-circle text-success" style="font-size: 2.5rem;"></i>
+                                    }
+                                    else if (Model.funder.CommunicationStatus == "On Hold")
+                                    {
+                                        <i class="fa-solid fa-pause-circle text-warning" style="font-size: 2.5rem;"></i>
+                                    }
+                                </div>
                             </div>
+
+
                             <p><strong>Communication Status:</strong> <span class="text-purple">@Model.funder.CommunicationStatus</span></p>
                         </div>
 
@@ -192,7 +209,6 @@
               const offset = circumference - (percent / 100) * circumference;
               arc.style.strokeDashoffset = offset;
             }
-            updateStatusProgress(75);
 
             function openNoteModal() {
           document.getElementById("noteModal").classList.remove("d-none");
@@ -380,9 +396,6 @@
           const offset = circumference - (percent / 100) * circumference;
           arc.style.strokeDashoffset = offset;
         }
-
-        // Example: Set progress to 75%
-        updateStatusProgress(75);
     </script>
 </body>
 </html>
