@@ -84,20 +84,7 @@ namespace CAREapplication.Pages.DB
             cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
             cmdTaskStaffRead.CommandText = @"SELECT 
-                                                f.FunderID,
-                                                f.FunderName,
-                                                f.OrgType,
-                                                f.BusinessAddress,
-                                                fpo.CommunicationStatus,
-                                                fs.StatusName AS FunderStatus,
-                                                p.FirstName,
-                                                p.LastName,
-                                                c.Email,
-                                                c.Phone,
-                                                c.HomeAddress,
-	                                            c.City,
-	                                            c.HomeState,
-	                                            c.Zip
+                                                *
                                             FROM funder f
                                             JOIN funderPOC fpo ON f.FunderID = fpo.FunderID
                                             JOIN person p ON fpo.PersonID = p.PersonID
@@ -142,6 +129,24 @@ WHERE p.FirstName LIKE '%' + @SearchTerm + '%'
             SqlDataReader tempReader = cmdProjectSearch.ExecuteReader();
 
             return tempReader;
+
+        }
+
+        public static void UpdateCommStatus(int FunderPOCID, String? CommunicationStatus)
+        {
+            string query = @"
+                    UPDATE funderPOC
+                    SET 
+                        CommunicationStatus = @CommunicationStatus
+                    WHERE FunderPOCID = @FunderPOCID;
+                ";
+            SqlCommand cmd = new SqlCommand(query, DBConnection);
+
+            cmd.Parameters.AddWithValue("@CommunicationStatus", CommunicationStatus);
+            cmd.Parameters.AddWithValue("@FunderPOCID", FunderPOCID);
+            DBConnection.Open();
+            cmd.ExecuteNonQuery();
+            DBConnection.Close();
 
         }
 

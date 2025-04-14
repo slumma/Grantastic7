@@ -3,6 +3,7 @@ using CAREapplication.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Reflection;
 
 
@@ -34,7 +35,7 @@ namespace CAREapplication.Pages
                     funder.CommunicationStatus = reader["CommunicationStatus"] != DBNull.Value
                         ? reader["CommunicationStatus"].ToString()
                         : "N/A";
-                    funder.FunderStatus = reader["FunderStatus"]?.ToString() ?? "Unknown";
+                    funder.FunderStatus = reader["StatusName"]?.ToString() ?? "Unknown";
                     funder.FirstName = reader["FirstName"].ToString();
                     funder.LastName = reader["LastName"].ToString();
                     funder.Email = reader["Email"].ToString();
@@ -43,6 +44,7 @@ namespace CAREapplication.Pages
                     funder.City = reader["City"].ToString();
                     funder.HomeState = reader["HomeState"].ToString();
                     funder.Zip = reader["Zip"].ToString();
+                    funder.funderPOCID = Convert.ToInt32(reader["funderPOCID"]);
                 }
                 reader.Close();
 
@@ -50,6 +52,21 @@ namespace CAREapplication.Pages
             DBFunder.DBConnection.Close();
 
             return Page();
+        }
+        //NADEEM FIX
+        public IActionResult OnPostUpdateCommStatus(int? funderPOCID, String? CommunicationStatus)
+        {
+            try
+            {
+                DBFunder.UpdateCommStatus(funderPOCID.Value, CommunicationStatus);
+            }
+            catch (SqlException ex)
+            {
+                Trace.WriteLine($"SQL Error (Update Task): {ex.Message}");
+                ModelState.AddModelError("", "Error updating task: " + ex.Message);
+            }
+
+            return RedirectToPage(new { FunderID = funderPOCID });
         }
 
     }

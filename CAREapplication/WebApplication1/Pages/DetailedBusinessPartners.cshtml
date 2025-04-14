@@ -366,24 +366,30 @@
         <div class="custom-modal bg-white p-4 rounded shadow" style="max-width: 400px; width: 100%;">
             <h5 class="mb-3 text-center">Edit Current Status</h5>
 
-            <div class="mb-3">
-                <label for="statusSelect" class="form-label">Select Status:</label>
-                <select class="form-select" id="statusSelect">
-                    <option value="Prospect">Prospect</option>
-                    <option value="Initial Contact">Initial Contact</option>
-                    <option value="Negotiation">Negotiation</option>
-                    <option value="MOU">MOU</option>
-                    <option value="MOU Signed">MOU Signed</option>
-                    <option value="Active">Active</option>
-                    <option value="Completed">Completed</option>
-                    <option value="On Hold">On Hold</option>
-                </select>
-            </div>
+            <form method="post" asp-page-handler="UpdateCommStatus">
+                <div class="mb-3">
+                    <label for="statusSelect" class="form-label">Select Status:</label>
+                    <select class="form-select" id="statusSelect" name="CommunicationStatus">
+                        <option value="Prospect">Prospect</option>
+                        <option value="Initial Contact">Initial Contact</option>
+                        <option value="Negotiation">Negotiation</option>
+                        <option value="MOU">MOU</option>
+                        <option value="MOU Signed">MOU Signed</option>
+                        <option value="Active">Active</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                    </select>
+                </div>
 
-            <div class="text-end">
-                <button class="btn btn-cancel me-2" onclick="closeProgressModal()">Cancel</button>
-                <button class="save-btn" onclick="saveProgress()">Save</button>
-            </div>
+                <!-- Hidden input for funderPOCID -->
+                <input type="hidden" name="funderPOCID" value="@Model.funder.funderPOCID" />
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-cancel me-2" onclick="closeProgressModal()">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+
         </div>
     </div>
 

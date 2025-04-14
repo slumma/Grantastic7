@@ -17,5 +17,6 @@
         public string? City { get; set; }            
         public string? HomeState { get; set; }        
         public string? Zip { get; set; }
+        public int funderPOCID { get; set; }
     }
 }
