@@ -14,6 +14,7 @@ namespace CAREapplication.Pages
     public class DetailedBusinessPartnersModel : PageModel
     {
         public BusinessPartner funder { get; set; }
+        public FunderNote note { get; set; }
         public IActionResult OnGet(int FunderID)
         {
             // Validate if the user is an admin trying to access the page
@@ -21,6 +22,20 @@ namespace CAREapplication.Pages
             {
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/Index"); // Redirect to login page
+            }
+
+            note = new FunderNote();
+            using (SqlDataReader reader = DBFunder.SingleNoteReader(FunderID))
+            {
+                if (reader.Read())
+                {
+                    note.Contents = reader["Contents"].ToString();
+                    note.DateAdded = DateTime.Parse(reader["DateAdded"].ToString());
+                    note.FirstName = reader["FirstName"].ToString();
+                    note.LastName = reader["LastName"].ToString();
+                }
+                reader.Close();
+
             }
 
             funder = new BusinessPartner();
@@ -53,7 +68,6 @@ namespace CAREapplication.Pages
 
             return Page();
         }
-        //NADEEM FIX
         public IActionResult OnPostUpdateCommStatus(int? funderPOCID, String? CommunicationStatus)
         {
             try

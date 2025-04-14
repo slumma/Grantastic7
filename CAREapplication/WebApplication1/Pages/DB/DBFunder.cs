@@ -149,7 +149,21 @@ WHERE p.FirstName LIKE '%' + @SearchTerm + '%'
             DBConnection.Close();
 
         }
+        public static SqlDataReader SingleNoteReader(int FunderID)
+        {
+            SqlCommand cmdTaskStaffRead = new SqlCommand();
+            cmdTaskStaffRead.Connection = DBConnection;
+            cmdTaskStaffRead.Connection.ConnectionString = DBConnString;
 
+            cmdTaskStaffRead.CommandText = @"SELECT * FROM funderNote fn 
+                                            JOIN funderPOC fp ON fn.AuthorID = fp.PersonID 
+                                            JOIN person p on fp.PersonID = p.PersonID 
+                                            WHERE FunderNoteID = @FunderID;";
+            cmdTaskStaffRead.Parameters.AddWithValue("@FunderID", FunderID);
+            cmdTaskStaffRead.Connection.Open();
+            SqlDataReader tempReader = cmdTaskStaffRead.ExecuteReader();
+            return tempReader;
+        }
 
     }
 }
