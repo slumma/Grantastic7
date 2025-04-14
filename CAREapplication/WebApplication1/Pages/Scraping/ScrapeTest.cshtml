@@ -2,32 +2,132 @@
 @model CAREapplication.Pages.Scraping.ScrapeTestModel
 @{
     ViewData["Title"] = "Scrape NSF Grants";
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<h2 class="mt-4">Scraped NSF Grants</h2>
+<header>
+    <link href="/css/scraped.custom.css" rel="stylesheet" />
+</header>
+
+<h2 class="mt-4">Recent NSF Grants</h2>
+
+<!-- Search + Filter -->
+<div class="text-center mb-4">
+    <div class="form-container">
+        <div class="input-group mb-3 mx-auto" style="max-width: 500px;">
+            <input id="grantSearch" type="text" class="form-control" placeholder="Search scraped grants..." aria-label="Search">
+            <button class="btn btn-dark-purple" type="button">Search</button>
+        </div>
+    </div>
+
+    <div class="mt-2" style="max-width: 200px; margin: 0 auto;">
+        <select id="sortOption" class="form-select" style="font-size: 14px;" aria-label="Sort grants">
+            <option selected disabled>Sort by...</option>
+            <option value="alpha">Alphabetical (A–Z)</option>
+            <option value="due">Due Date</option>
+            <option value="award">Award Type</option>
+        </select>
+    </div>
+</div>
 
 @if (Model.ScrapedGrants.Any())
 {
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div id="grantContainer" class="row row-cols-1 row-cols-md-2 g-4">
         @foreach (var grant in Model.ScrapedGrants)
         {
             <div class="col">
-                <div class="card h-100 border-primary">
+                <div class="grant-card card h-100">
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="@grant.Link" target="_blank">@grant.Title</a>
                         </h5>
                         <p class="card-text text-muted"><strong>Posted:</strong> @grant.PostedDate</p>
-                        <p class="card-text"><strong>Due:</strong> @grant.DueDate</p>
+                        @if (grant.DueDate != null)
+                        {
+                            <p class="card-text"><strong>Due:</strong> @grant.DueDate</p>
+                        }
                         <p class="card-text"><strong>Award Types:</strong> @grant.AwardTypes</p>
                         <p class="card-text">@grant.GrantDescription</p>
+                    </div>
+                    <div class="detail-btn">
+                        <button class="sm-btn">Detailed View</button>
                     </div>
                 </div>
             </div>
         }
     </div>
 }
+
 else
 {
     <div class="alert alert-warning mt-3">No grants found.</div>
 }
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("grantSearch");
+        const sortSelect = document.getElementById("sortOption");
+        const container = document.getElementById("grantContainer");
+
+        function getCards() {
+            return Array.from(container.querySelectorAll(".grant-card"));
+        }
+
+        // Live Search
+        searchInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            getCards().forEach(card => {
+                const title = card.querySelector(".card-title").innerText.toLowerCase();
+                const col = card.closest(".col");
+                if (title.includes(query)) {
+                    col.style.display = "block";
+                } else {
+                    col.style.display = "none";
+                }
+            });
+        });
+
+        // Sorting
+        sortSelect.addEventListener("change", function () {
+            const selected = this.value;
+            const cards = getCards();
+
+            const sorted = cards.sort((a, b) => {
+                if (selected === "alpha") {
+                    return a.querySelector(".card-title").innerText.localeCompare(
+                        b.querySelector(".card-title").innerText
+                    );
+                }
+
+                if (selected === "due") {
+                    const dueA = a.innerHTML.match(/<strong>Due:<\/strong>\s*([\d\-]+)/);
+                    const dueB = b.innerHTML.match(/<strong>Due:<\/strong>\s*([\d\-]+)/);
+                    const dateA = dueA ? new Date(dueA[1]) : new Date(0);
+                    const dateB = dueB ? new Date(dueB[1]) : new Date(0);
+                    return dateA - dateB;
+                }
+
+                if (selected === "award") {
+                    const awardA = a.innerHTML.match(/<strong>Award Types:<\/strong>\s*(.+?)<\/p>/);
+                    const awardB = b.innerHTML.match(/<strong>Award Types:<\/strong>\s*(.+?)<\/p>/);
+                    const textA = awardA ? awardA[1].trim() : "";
+                    const textB = awardB ? awardB[1].trim() : "";
+                    return textA.localeCompare(textB);
+                }
+
+                return 0;
+            });
+
+            // Remove all current cards
+            container.innerHTML = "";
+
+            // Rebuild with sorted cards
+            sorted.forEach(card => {
+                const col = document.createElement("div");
+                col.classList.add("col");
+                col.appendChild(card);
+                container.appendChild(col);
+            });
+        });
+    });
+</script>

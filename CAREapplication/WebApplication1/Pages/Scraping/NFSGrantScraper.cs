@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CAREapplication.Pages.DB;
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 
 namespace CAREapplication.Pages.Scraping
 {
@@ -25,11 +26,22 @@ namespace CAREapplication.Pages.Scraping
 
     public class NSFGrantCsvRow
     {
+        [Name("Title")]
         public string Title { get; set; }
+
+        [Name("Synopsis")]
         public string Synopsis { get; set; }
+
+        [Name("Award Type")]
         public string AwardType { get; set; }
+
+        [Name("Next due date (Y-m-d)")]
         public string NextDueDateYmd { get; set; }
+
+        [Name("Posted date (Y-m-d)")]
         public string PostedDateYmd { get; set; }
+
+        [Name("URL")]
         public string URL { get; set; }
     }
 
@@ -50,13 +62,23 @@ namespace CAREapplication.Pages.Scraping
             var records = csv.GetRecords<NSFGrantCsvRow>();
             foreach (var row in records)
             {
+
+
+                string formattedPostedDate = row.PostedDateYmd;
+
+                if (DateTime.TryParse(row.PostedDateYmd, out DateTime parsedPosted))
+                {
+                    formattedPostedDate = parsedPosted.ToString("MMMM dd, yyyy");
+                }
+
+
                 grants.Add(new NSFGrant
                 {
                     Title = row.Title?.Trim(),
                     GrantDescription = row.Synopsis?.Trim(),
                     AwardTypes = row.AwardType?.Trim(),
                     DueDate = row.NextDueDateYmd?.Trim(),
-                    PostedDate = row.PostedDateYmd?.Trim(),
+                    PostedDate = formattedPostedDate,
                     Link = row.URL?.Trim()
                 });
             }
